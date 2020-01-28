@@ -7,3 +7,4 @@
 1. Verifier que l'adresse mail entrée est correcte
 2. Dans le minControlleur, vérifier si les informations données sont bonnes
 3. Retourner une erreur ou envoyer vers la page d'accueil
+4. regarder si l'adresse n'existe pas !

@@ -9,11 +9,13 @@ $(document).on('click','input[value="Connexion"]',function(){
     var passe = $("#inputPassword").val();
     var check = $("#check").prop("checked");
     console.log(email+" + "+passe);
-    //console.log(check);
-    /////////////////////////////////////////////////////////////////////////
-    // ICI ON LANCE UNE FONCTION QUI VERIFIE QUE L'ADRESSE MAIL EST CORRECTE !
-    /////////////////////////////////////////////////////////////////////////
-   
+    
+    // on verifie que l'adresse mail n'est pas incorrecte
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+        alert("Adresse e-mail valide !");
+        return;
+    } 
+
     $.ajax({
         type: "POST",
         url: "./minControlleur/dataConnexion.php",
@@ -38,9 +40,11 @@ $(document).on('click','input[value="Inscription"]',function(){
     var prenom = $("#prenom").val();
 
     console.log(email+" + "+passe+" + "+nom+" + "+prenom);
-    /////////////////////////////////////////////////////////////////////////
-    // ICI ON LANCE UNE FONCTION QUI VERIFIE QUE L'ADRESSE MAIL EST CORRECTE !
-    /////////////////////////////////////////////////////////////////////////
+    // on verifie que l'adresse mail n'est pas incorrecte
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+        alert("Adresse e-mail valide !");
+        return;
+    } 
    
     /*$.ajax({
         type: "POST",
