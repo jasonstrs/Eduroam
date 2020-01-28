@@ -22,7 +22,10 @@
         //$checked = valider('checked');
 
         // lancer une fonction de connexion
+        // qui va permettre de savoir si l'utilisateur est dans la BDD
     }*/
+
+
 
 
 ?>
