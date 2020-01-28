@@ -6,8 +6,8 @@
 
     echo "OKKK";
 
-    /*if ($pseudo = valider("pseudo") && $passe = valider("passe") ){ // on vérifie que toutes les valeurs sont définies
-        $pseudo = valider('pseudo');
+    /*if ($email = valider("email") && $passe = valider("passe") ){ // on vérifie que toutes les valeurs sont définies
+        $email = valider('email');
         $passe = valider('passe');
 
         echo "OK";

@@ -1,0 +1,9 @@
+-- Connexion --
+1. Vérifier que l'adresse mail entrée est correcte
+2. Dans le minControlleur, retourner une reponse (erreur, correcte...)
+3. Suivant ce que l'on reçoit, afficher les erreurs ou envoyer vers la page d'accueil
+
+-- Inscription --
+1. Verifier que l'adresse mail entrée est correcte
+2. Dans le minControlleur, vérifier si les informations données sont bonnes
+3. Retourner une erreur ou envoyer vers la page d'accueil

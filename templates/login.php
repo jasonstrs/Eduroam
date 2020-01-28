@@ -8,45 +8,85 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 
 // Chargement eventuel des données en cookies
-$login = valider("login", "COOKIE");
+$email = valider("email", "COOKIE");
 $passe = valider("passe", "COOKIE"); 
 if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
+else $checked="";
 
 ?>
 
 
-
-<div class="page-header">
-	<h1 class="text-center">Connexion</h1>
-</div>
-
-
-<p class="lead">
-
-
- <div class="jumbotron">
- <div class="form-group row">
-    <label for="pseudo" class="col-sm-2 col-form-label">Login</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="pseudo" placeholder="Saisir votre login" value="<?php echo $login;?>">
-    </div>
+<div id='mainConnexion'>
+  <div class="page-header">
+    <h1 class="text-center">Connexion</h1>
   </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
-    </div>
-  </div>
-  <div class="checkbox">
-    <label><input type="checkbox" name="remember" id="check" <?php echo $checked;?> >Se souvenir de moi</label>
-  </div>
-  <div class='submit'>
-    <input type="submit" name="action"  value="Connexion" class="btn btn-danger">
-  </div>
+  <div class="jumbotron">
+      <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" placeholder="Saisir votre email" value="<?php echo $email;?>">
+          </div>
+        </div>
+      <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
+        </div>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" name="remember" id="check" <?php echo $checked;?> >Se souvenir de moi</label>
+      </div>
+      <div class='submit'>
+        <input type="submit" name="action"  value="Connexion" class="btn btn-danger">
+      </div>
 
-  <div class='register'>
-     <small class='form-text text-muted'>Vous n'avez pas de compte ? Inscrivez-vous ici</small>
+      <div class='register'>
+        <small id='signUp' class='form-text text-muted'>Vous n'avez pas de compte ? Inscrivez-vous ici</small>
+      </div>
   </div>
 </div>
 
-</p>
+<!--NOM - PRENOM - MAIL - MDP -->
+
+<div id='mainInscription'>
+  <div class="page-header">
+    <h1 class="text-center">Inscription</h1>
+  </div>
+  <div class="jumbotron">
+      <div class="form-group row">
+          <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+          <div class="col-sm-10">
+          <input type="text" class="form-control" id="nom" placeholder="Saisir votre nom">
+        </div>
+      </div>
+
+      <div class="form-group row">
+          <label for="prenom" class="col-sm-2 col-form-label">Pr&eacutenom</label>
+          <div class="col-sm-10">
+          <input type="text" class="form-control" id="prenom" placeholder="Saisir votre prenom">
+          </div>
+      </div>
+
+      <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="emailInscription" placeholder="Saisir votre email">
+          </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPasswordInscription" placeholder="Saisir votre mot de passe">
+        </div>
+      </div>
+     
+      <div class='submit'>
+        <input type="submit" name="action"  value="Inscription" class="btn btn-danger">
+      </div>
+
+      <div class='register'>
+        <small id='signIn' class='form-text text-muted'>Vous avez d&eacutej&agrave un compte ? Connectez-vous ici</small>
+      </div>
+  </div>
+</div>
