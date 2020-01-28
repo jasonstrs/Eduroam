@@ -18,3 +18,9 @@
     display: flex;
     justify-content: end;
 }
+
+#divCheck {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0.5em;
+}

@@ -22,10 +22,12 @@ else $checked="";
   </div>
   <div class="jumbotron">
       <div class="form-group row">
+          
           <label for="email" class="col-sm-2 col-form-label">Email</label>
-          <div class="col-sm-10">
+          <div class="col-sm-10" id='containerMail'>
             <input type="email" class="form-control" id="email" placeholder="Saisir votre email" value="<?php echo $email;?>">
           </div>
+          
         </div>
       <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
@@ -33,8 +35,9 @@ else $checked="";
           <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
         </div>
       </div>
-      <div class="checkbox">
-        <label><input type="checkbox" name="remember" id="check" <?php echo $checked;?> >Se souvenir de moi</label>
+      <div class="custom-control custom-checkbox my-1 mr-sm-2" id='divCheck'>
+        <input type="checkbox" class='custom-control-input' name="remember" id="check" <?php echo $checked;?> >
+        <label class="custom-control-label" for="check">Se souvenir de moi</label>
       </div>
       <div class='submit'>
         <input type="submit" name="action"  value="Connexion" class="btn btn-danger">
@@ -69,7 +72,7 @@ else $checked="";
 
       <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">Email</label>
-          <div class="col-sm-10">
+          <div class="col-sm-10" id='containerMailInscription'>
             <input type="email" class="form-control" id="emailInscription" placeholder="Saisir votre email">
           </div>
       </div>

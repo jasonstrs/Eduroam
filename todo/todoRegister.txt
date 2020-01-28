@@ -1,10 +1,12 @@
+Générer un token
+
+
 -- Connexion --
-1. Vérifier que l'adresse mail entrée est correcte
 2. Dans le minControlleur, retourner une reponse (erreur, correcte...)
 3. Suivant ce que l'on reçoit, afficher les erreurs ou envoyer vers la page d'accueil
+Exemple : 'email ou mot de passe incorrect'
 
 -- Inscription --
-1. Verifier que l'adresse mail entrée est correcte
 2. Dans le minControlleur, vérifier si les informations données sont bonnes
 3. Retourner une erreur ou envoyer vers la page d'accueil
-4. regarder si l'adresse n'existe pas !
+4. regarder si l'adresse n'existe pas ! Si elle existe écrire 'Email déjà existante'

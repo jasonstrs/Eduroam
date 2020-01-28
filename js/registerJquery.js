@@ -12,7 +12,7 @@ $(document).on('click','input[value="Connexion"]',function(){
     
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
-        alert("Adresse e-mail valide !");
+        $("#containerMail").append("<div class='text-danger dangerMail'>Veuillez saisir une adresse mail correcte.</div>");
         return;
     } 
 
@@ -21,7 +21,7 @@ $(document).on('click','input[value="Connexion"]',function(){
         url: "./minControlleur/dataConnexion.php",
         data: {"email":email,"passe":passe,"checked":check},
         success: function(oRep){
-           //console.log(oRep);
+           console.log(oRep);
             /*
             gérer ici s'il y a une erreur de connexion, ou si l'utilisateur 
             est connecté
@@ -42,19 +42,19 @@ $(document).on('click','input[value="Inscription"]',function(){
     console.log(email+" + "+passe+" + "+nom+" + "+prenom);
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
-        alert("Adresse e-mail valide !");
+        $("#containerMailInscription").append("<div class='text-danger dangerMail'>Veuillez saisir une adresse mail correcte.</div>");
+
         return;
     } 
    
     /*$.ajax({
         type: "POST",
-        url: "./minControlleur/dataConnexion.php",
-        data: {"email":email,"passe":passe,"checked":check},
+        url: "./minControlleur/dataInscription.php",
+        data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom},
         success: function(oRep){
            //console.log(oRep);
             /*
-            gérer ici s'il y a une erreur de connexion, ou si l'utilisateur 
-            est connecté
+            
             */
       //  },
     //dataType: "text"
@@ -66,6 +66,7 @@ $(document).on('click','input[value="Inscription"]',function(){
 */
 $(document).on('click','#signUp',function(){
     console.log("Se créer un compte");
+    $(".dangerMail").remove();
     $("#mainInscription").show();
     $("#mainConnexion").hide();
 });
@@ -75,6 +76,7 @@ $(document).on('click','#signUp',function(){
 */
 $(document).on('click','#signIn',function(){
     console.log("Connexion");
+    $(".dangerMail").remove();
     $("#mainConnexion").show();
     $("#mainInscription").hide();
 });
