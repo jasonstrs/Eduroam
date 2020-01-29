@@ -13,7 +13,9 @@ $(document).on('click','input[value="Connexion"]',function(){
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
         $("#containerMail").append("<div class='text-danger dangerMail'>Veuillez saisir une adresse mail correcte.</div>");
+        //
         return;
+
     } 
 
     $.ajax({
