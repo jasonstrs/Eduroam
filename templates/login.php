@@ -26,6 +26,7 @@ else $checked="";
           <label for="email" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10" id='containerMail'>
             <input type="email" class="form-control" id="email" placeholder="Saisir votre email" value="<?php echo $email;?>">
+            <div id="verifMail" class='text-danger'></div>
           </div>
           
         </div>
@@ -74,18 +75,26 @@ else $checked="";
           <label for="email" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10" id='containerMailInscription'>
             <input type="email" class="form-control" id="emailInscription" placeholder="Saisir votre email">
+            <div id='verifMailInscription' class='text-danger'></div>
           </div>
       </div>
 
       <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
+        <label for="inputPasswordInscription" class="col-sm-2 col-form-label">Passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPasswordInscription" placeholder="Saisir votre mot de passe">
         </div>
       </div>
+
+      <div class="form-group row">
+        <label for="inputPasswordConfirm" class="col-sm-2 col-form-label">Confirmation</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPasswordConfirm" placeholder="Confirmer votre mot de passe">
+        </div>
+      </div>
      
       <div class='submit'>
-        <input type="submit" name="action"  value="Inscription" class="btn btn-danger">
+        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-danger" disabled='disabled'>
       </div>
 
       <div class='register'>

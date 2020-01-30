@@ -1,5 +1,7 @@
 $(document).ready(function(){
     $("#mainInscription").hide();
+    $("verifMail").hide();
+    $("verifMailInscription").hide();
 })
 
 // Connexion
@@ -8,14 +10,12 @@ $(document).on('click','input[value="Connexion"]',function(){
     var email = $("#email").val();
     var passe = $("#inputPassword").val();
     var check = $("#check").prop("checked");
-    console.log(email+" + "+passe);
     
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
-        $("#containerMail").append("<div class='text-danger dangerMail'>Veuillez saisir une adresse mail correcte.</div>");
-        //
+        $("verifMail").show();
+        $("#verifMail").append("Veuillez saisir une adresse mail correcte.");
         return;
-
     } 
 
     $.ajax({
@@ -40,14 +40,21 @@ $(document).on('click','input[value="Inscription"]',function(){
     var passe = $("#inputPasswordInscription").val();
     var nom = $("#nom").val();
     var prenom = $("#prenom").val();
+    var confirMDP =$("#inputPasswordConfirm").val(); 
 
-    console.log(email+" + "+passe+" + "+nom+" + "+prenom);
+    
+
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
-        $("#containerMailInscription").append("<div class='text-danger dangerMail'>Veuillez saisir une adresse mail correcte.</div>");
-
+        $("verifMailInscription").show();
+        $("#verifMailInscription").append("Veuillez saisir une adresse mail correcte.");
         return;
     } 
+
+    // on regarde si les mots de passe sont différents
+    if (confirm != passe){
+
+    }
    
     /*$.ajax({
         type: "POST",
@@ -68,9 +75,11 @@ $(document).on('click','input[value="Inscription"]',function(){
 */
 $(document).on('click','#signUp',function(){
     console.log("Se créer un compte");
-    $(".dangerMail").remove();
+    $("#verifMailInscription").hide();
     $("#mainInscription").show();
     $("#mainConnexion").hide();
+    // On désactive le bouton inscription
+    $("#inscription").attr("disabled",true);
 });
 
 /* 
@@ -78,7 +87,7 @@ $(document).on('click','#signUp',function(){
 */
 $(document).on('click','#signIn',function(){
     console.log("Connexion");
-    $(".dangerMail").remove();
+    $("#verifMail").hide();
     $("#mainConnexion").show();
     $("#mainInscription").hide();
 });
