@@ -1,0 +1,47 @@
+
+<head>
+    <style>
+        .conteneur_tipee{
+            position:absolute;
+            width:300px;
+            height:450px;
+            padding:20px;
+            border : 1px black solid;
+            border-radius:10px;
+            top:50px;
+        }
+        
+        .conteneur_tipee:after 
+        {
+            content: "";
+            position: absolute;
+            top: -25px;
+            left: 125px;
+            border-style: solid;
+            border-width: 0px 25px 25px 25px;
+            border-color: #FFFFFF transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+        }
+
+        .conteneur_tipee:before 
+        {
+            content: "";
+            position: absolute;
+            top: -26px;
+            left: 124px;
+            border-style: solid;
+            border-width:0 26px 26px 26px;
+            border-color: #000 transparent;
+            display: block;
+            width: 0;
+            z-index: 0;
+        }
+    </style>
+
+</head>
+
+<div class="conteneur_tipee">
+    <iframe src="//fr.tipeee.com/j-suis-pas-content/embed/thumbnail" width="99%" height="100%" style="border:0;"></iframe>
+</div>
