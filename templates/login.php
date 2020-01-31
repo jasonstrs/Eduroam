@@ -56,11 +56,12 @@ else $checked="";
   <div class="page-header">
     <h1 class="text-center">Inscription</h1>
   </div>
-  <div class="jumbotron">
+  <div class="jumbotron" id='blocInscription'>
       <div class="form-group row">
           <label for="nom" class="col-sm-2 col-form-label">Nom</label>
           <div class="col-sm-10">
           <input type="text" class="form-control" id="nom" placeholder="Saisir votre nom">
+          <div id='verifNomInscription' class='text-danger'></div>
         </div>
       </div>
 
@@ -68,6 +69,7 @@ else $checked="";
           <label for="prenom" class="col-sm-2 col-form-label">Pr&eacutenom</label>
           <div class="col-sm-10">
           <input type="text" class="form-control" id="prenom" placeholder="Saisir votre prenom">
+          <div id='verifPrenomInscription' class='text-danger'></div>
           </div>
       </div>
 
@@ -83,6 +85,7 @@ else $checked="";
         <label for="inputPasswordInscription" class="col-sm-2 col-form-label">Passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPasswordInscription" placeholder="Saisir votre mot de passe">
+          <div id='verifPasswordInscription' class='text-danger'></div>
         </div>
       </div>
 
@@ -90,11 +93,12 @@ else $checked="";
         <label for="inputPasswordConfirm" class="col-sm-2 col-form-label">Confirmation</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPasswordConfirm" placeholder="Confirmer votre mot de passe">
+          <div id='verifPasswordConfirmInscription' class='text-danger'></div>
         </div>
       </div>
      
       <div class='submit'>
-        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-danger" disabled='disabled'>
+        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-danger">
       </div>
 
       <div class='register'>

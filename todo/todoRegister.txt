@@ -10,7 +10,5 @@ Exemple : 'email ou mot de passe incorrect'
 2. Dans le minControlleur, vérifier si les informations données sont bonnes
 3. Retourner une erreur ou envoyer vers la page de Connexion ou confirmer votre mail
 4. regarder si l'adresse n'existe pas ! Si elle existe écrire 'Email déjà existante'
-5. ajouter une confirmation mdp
-6. Mettre un regex mdp
-7. disable le bouton tant que tout est pas correct
+6. Mettre un regex mdp et ajouter les accents regex nom prenom
 8. clear les contenus et sauvegarder mail

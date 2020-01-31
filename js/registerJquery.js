@@ -1,8 +1,18 @@
 $(document).ready(function(){
     $("#mainInscription").hide();
-    $("verifMail").hide();
-    $("verifMailInscription").hide();
+    cacherMsg();
 })
+
+// Cacher les messages d'erreurs
+function cacherMsg(){
+    $("#verifMail").hide();
+    $("#verifMailInscription").hide();
+    $("#verifNomInscription").hide();
+    $("#verifPrenomInscription").hide();
+    $("#verifPasswordInscription").hide();
+    $("#verifPasswordConfirmInscription").hide();
+
+}
 
 // Connexion
 $(document).on('click','input[value="Connexion"]',function(){
@@ -42,20 +52,7 @@ $(document).on('click','input[value="Inscription"]',function(){
     var prenom = $("#prenom").val();
     var confirMDP =$("#inputPasswordConfirm").val(); 
 
-    
 
-    // on verifie que l'adresse mail n'est pas incorrecte
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
-        $("verifMailInscription").show();
-        $("#verifMailInscription").append("Veuillez saisir une adresse mail correcte.");
-        return;
-    } 
-
-    // on regarde si les mots de passe sont différents
-    if (confirm != passe){
-
-    }
-   
     /*$.ajax({
         type: "POST",
         url: "./minControlleur/dataInscription.php",
@@ -87,7 +84,77 @@ $(document).on('click','#signUp',function(){
 */
 $(document).on('click','#signIn',function(){
     console.log("Connexion");
-    $("#verifMail").hide();
+    cacherMsg();
     $("#mainConnexion").show();
     $("#mainInscription").hide();
 });
+
+// on vérifie si les champs sont bien remplis
+$(document).on('keyup','#blocInscription :input',function(){
+    verificationChamps();
+});
+
+///////////////////////////////////////////////
+function verificationChamps(){
+    var flag=1;
+    
+    flag = verifNom() && flag;
+    flag = verifPrenom() && flag;
+    flag = verifEmail() && flag;
+    flag = verifPasse() && flag;
+    flag = verifConfirmationPasse() && flag;
+
+    if (flag == 1){
+        // On réactive le bouton inscription
+         $("#inscription").attr("disabled",false);
+    }
+}
+
+function verifNom(){
+    var nom = $("#nom").val();
+    if(!(/^[a-zA-Z -]+$/.test(nom)) && nom!=""){
+        $("#verifNomInscription").show();
+        $("#verifNomInscription").html("Veuillez saisir un nom correct.");
+        return 0;
+    }
+    return 1;
+}
+
+function verifPrenom(){
+    var prenom = $("#prenom").val();
+    if(!(/^[a-zA-Z -]+$/.test(prenom)) && prenom !=""){
+        $("#verifPrenomInscription").show();
+        $("#verifPrenomInscription").html("Veuillez saisir un prénom correct.");
+        return 0;
+    }
+    return 1;
+}
+
+function verifEmail(){
+    var email = $("#emailInscription").val();
+    // on verifie que l'adresse mail n'est pas incorrecte
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+        $("verifMailInscription").show();
+        $("#verifMailInscription").html("Veuillez saisir une adresse mail correcte.");
+        return 0;
+    }
+    return 1; 
+}
+
+// manque une regex MDP
+function verifPasse(){
+    let result = /^[a-zA-Z ]+$/.test( 'John Doé');
+    console.log(result);
+    return 1;
+}
+
+function verifConfirmationPasse(){
+    var passe = $("#inputPasswordInscription").val();
+    var confirMDP =$("#inputPasswordConfirm").val();
+    if (passe != confirMDP){
+        $("#verifPasswordConfirmInscription").show();
+        $("#verifPasswordConfirmInscription").html("Veuillez saisir un mot de passe identique.");
+        return 0;
+    }
+    return 1;
+}
