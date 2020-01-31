@@ -45,7 +45,8 @@ else $checked="";
       </div>
 
       <div class='register'>
-        <small id='signUp' class='form-text text-muted'>Vous n'avez pas de compte ? Inscrivez-vous ici</small>
+        <small id='signUp' class='form-text text-muted clic'>Vous n'avez pas de compte ? Inscrivez-vous ici</small>
+        <small id='forgotPass' class='form-text text-muted clic'>Mot de passe oubli&eacute ?</small>
       </div>
   </div>
 </div>
@@ -102,7 +103,7 @@ else $checked="";
       </div>
 
       <div class='register'>
-        <small id='signIn' class='form-text text-muted'>Vous avez d&eacutej&agrave un compte ? Connectez-vous ici</small>
+        <small id='signIn' class='form-text text-muted clic'>Vous avez d&eacutej&agrave un compte ? Connectez-vous ici</small>
       </div>
   </div>
 </div>
