@@ -117,6 +117,7 @@ function verifNom(){
         $("#verifNomInscription").html("Veuillez saisir un nom correct.");
         return 0;
     }
+    $("#verifNomInscription").hide(); // Si l'utilisateur a corrigé son erreur, le msg disparait
     return 1;
 }
 
@@ -127,6 +128,7 @@ function verifPrenom(){
         $("#verifPrenomInscription").html("Veuillez saisir un prénom correct.");
         return 0;
     }
+    $("#verifPrenomInscription").hide();
     return 1;
 }
 
@@ -138,23 +140,33 @@ function verifEmail(){
         $("#verifMailInscription").html("Veuillez saisir une adresse mail correcte.");
         return 0;
     }
+    $("verifMailInscription").hide();
     return 1; 
 }
 
-// manque une regex MDP
+
 function verifPasse(){
-    let result = /^[a-zA-Z ]+$/.test( 'John Doé');
-    console.log(result);
+    var passe = $("#inputPasswordInscription").val();
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passe))){
+        $("#verifPasswordInscription").show();
+        $('#verifPasswordInscription').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');
+        return 0;
+    }
+    $("#verifPasswordInscription").hide();
     return 1;
 }
 
 function verifConfirmationPasse(){
     var passe = $("#inputPasswordInscription").val();
-    var confirMDP =$("#inputPasswordConfirm").val();
-    if (passe != confirMDP){
+    var confirmMDP =$("#inputPasswordConfirm").val();
+    if (confirmMDP == "")
+        return 0;
+
+    if (passe != confirmMDP){
         $("#verifPasswordConfirmInscription").show();
         $("#verifPasswordConfirmInscription").html("Veuillez saisir un mot de passe identique.");
         return 0;
     }
+    $("#verifPasswordConfirmInscription").hide();
     return 1;
 }
