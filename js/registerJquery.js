@@ -66,6 +66,14 @@ $(document).on('click','input[value="Inscription"]',function(){
     //dataType: "text"
     //});
 });
+/*
+    Si l'on clique sur mot de passe oublié
+*/
+
+$(document).on("click",'#forgotPass',function(){
+    console.log("mot de passe oublie");
+    
+});
 
 /* 
     Si l'on clique sur créer un compte, on affiche le formulaire d'inscription
