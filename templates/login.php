@@ -1,5 +1,4 @@
 <?php
-
 // Si la page est appelée directement par son adresse, on redirige en passant pas la page index
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
@@ -12,9 +11,15 @@ $email = valider("email", "COOKIE");
 $passe = valider("passe", "COOKIE"); 
 if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
 else $checked="";
-
 ?>
 
+<!DOCTYPE html>
+<html lang='fr'>
+  <head>
+    <title>First Page</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
 
 <div id='mainConnexion'>
   <div class="page-header">
@@ -37,7 +42,7 @@ else $checked="";
         </div>
       </div>
       <div class="custom-control custom-checkbox my-1 mr-sm-2" id='divCheck'>
-        <input type="checkbox" class='custom-control-input' name="remember" id="check" <?php echo $checked;?> >
+        <input type="checkbox" class='custom-control-input' name="remember" id="check" checked="<?php echo $checked;?>" >
         <label class="custom-control-label" for="check">Se souvenir de moi</label>
       </div>
       <div class='submit'>
@@ -46,7 +51,7 @@ else $checked="";
 
       <div class='register'>
         <small id='signUp' class='form-text text-muted clic'>Vous n'avez pas de compte ? Inscrivez-vous ici</small>
-        <small id='forgotPass' class='form-text text-muted clic'>Mot de passe oubli&eacute ?</small>
+        <small id='forgotPass' class='form-text text-muted clic'>Mot de passe oublié ?</small>
       </div>
   </div>
 </div>
@@ -67,7 +72,7 @@ else $checked="";
       </div>
 
       <div class="form-group row">
-          <label for="prenom" class="col-sm-2 col-form-label">Pr&eacutenom</label>
+          <label for="prenom" class="col-sm-2 col-form-label">Prénom</label>
           <div class="col-sm-10">
           <input type="text" class="form-control" id="prenom" placeholder="Saisir votre prenom">
           <div id='verifPrenomInscription' class='text-danger'></div>
@@ -103,7 +108,9 @@ else $checked="";
       </div>
 
       <div class='register'>
-        <small id='signIn' class='form-text text-muted clic'>Vous avez d&eacutej&agrave un compte ? Connectez-vous ici</small>
+        <small id='signIn' class='form-text text-muted clic'>Vous avez déjà un compte ? Connectez-vous ici</small>
       </div>
   </div>
 </div>
+</body>
+</html>
