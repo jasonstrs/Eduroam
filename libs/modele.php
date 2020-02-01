@@ -83,4 +83,21 @@ function passerNonAdmin ($id) {
 	SQLUpdate($SQL);
 }
 
+function selectVilles(){
+	$reponse = array();
+	$SQL = "SELECT idSpectacle,ville FROM spectacle";
+	$SQL = SQLSelect($SQL);
+	$SQL = parcoursRs($SQL);
+	foreach($SQL as $ligne){
+		$SQLNbInteresses = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLNbInteresses = SQLGetChamp($SQLNbInteresses);
+
+		$SQLNbDates = "SELECT Count(*) FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLNbDates = SQLGetChamp($SQLNbDates);
+
+		array_push($reponse,array($ligne['ville'],$SQLNbDates,$SQLNbInteresses));
+	}
+	return $reponse;
+}
+
 ?>
