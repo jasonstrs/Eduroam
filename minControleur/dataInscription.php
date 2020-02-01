@@ -24,6 +24,8 @@
 
         // lancer une fonction de connexion
         // qui va permettre de savoir si l'utilisateur est dans la BDD
+        // verifier si mail existant
+        // lancer la fonction qui envoie un mail
     }*/
 
 

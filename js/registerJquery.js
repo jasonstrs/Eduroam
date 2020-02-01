@@ -5,6 +5,7 @@ $(document).ready(function(){
 
 // Cacher les messages d'erreurs
 function cacherMsg(){
+    $("#envoiMail").hide();
     $("#verifMail").hide();
     $("#verifMailInscription").hide();
     $("#verifNomInscription").hide();
@@ -57,14 +58,17 @@ $(document).on('click','input[value="Inscription"]',function(){
         type: "POST",
         url: "./minControlleur/dataInscription.php",
         data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom},
-        success: function(oRep){
-           //console.log(oRep);
-            /*
-            
-            */
-      //  },
+        success: function(oRep){*/
+           
+            //if (SUCCES){
+                // renvoyer l'utilisateur sur la page de connexion avec un popup 'Un email vous a été envoyé, veuillez confirmer votre adresse mail'
+                //$("#mainInscription").hide();
+                //$("#mainConnexion").hide();
+                // $("#envoiMail").show();
+            //}
+      /*  },
     //dataType: "text"
-    //});
+    //});*/
 });
 /*
     Si l'on clique sur mot de passe oublié

@@ -28,3 +28,8 @@
 .clic {
     cursor: pointer;
 }
+
+#envoiMail{
+    margin-top:40vh;
+     transform:translateY(-50%);
+   }
