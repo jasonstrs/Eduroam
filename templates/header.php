@@ -19,6 +19,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	<!-- Mise en plance des balises script -->
 		<link rel="stylesheet" type="text/css" href="./style/register.css"/>
+		
 		<script src="./libs/jquery-3.4.1.min.js"></script>
 		<script src='./js/registerJquery.js'></script>
 

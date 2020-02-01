@@ -1,0 +1,58 @@
+#titre{
+    width:100%;
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.lead{
+    width:90%;
+    padding:10px;
+    margin-top:40px;
+    margin-left:5%;
+    text-align:center;
+    border:1px black solid;
+    font-size:smaller;
+}
+
+.lead .gras{
+    display:block;
+}
+
+.lead .gras:nth-child(n+2){
+    padding-top:15px;
+    border-top : 1px rgba(0, 0, 0, 0.24) solid;
+}
+
+.ville{
+    position:relative;
+    margin-top:5px;
+}
+
+.ville table{
+    width:100%;
+    text-align:center;
+    border: 1px solid rgba(0, 0, 0, 0.212);
+    border-collapse: unset;
+    border-radius:5px;
+    transition: all 0.5s;
+}
+
+.ville table:hover{
+    background-color: rgb(117, 117, 117);
+    color:white;
+}
+
+.ville table td{
+    margin-top : 15px;
+    margin-bottom:15px;
+    width:33.33%;
+}
+
+.ville table td:nth-child(-n+2){
+    border-right:1px solid rgba(0, 0, 0, 0.212);
+}
+
+.gras{
+    font-weight:bold;
+}
