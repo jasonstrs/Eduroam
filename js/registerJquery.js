@@ -24,17 +24,18 @@ $(document).on('click','input[value="Connexion"]',function(){
     
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
-        $("verifMail").show();
-        $("#verifMail").append("Veuillez saisir une adresse mail correcte.");
+        $("#verifMail").show();
+        $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         return;
     } 
 
     $.ajax({
         type: "POST",
-        url: "./minControlleur/dataConnexion.php",
+        url: "./minControleur/dataConnexion.php",
         data: {"email":email,"passe":passe,"checked":check},
         success: function(oRep){
            console.log(oRep);
+           console.log("Success");
             /*
             gérer ici s'il y a une erreur de connexion, ou si l'utilisateur 
             est connecté
@@ -51,24 +52,26 @@ $(document).on('click','input[value="Inscription"]',function(){
     var passe = $("#inputPasswordInscription").val();
     var nom = $("#nom").val();
     var prenom = $("#prenom").val();
-    var confirMDP =$("#inputPasswordConfirm").val(); 
 
-
-    /*$.ajax({
-        type: "POST",
-        url: "./minControlleur/dataInscription.php",
-        data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom},
-        success: function(oRep){*/
-           
-            //if (SUCCES){
-                // renvoyer l'utilisateur sur la page de connexion avec un popup 'Un email vous a été envoyé, veuillez confirmer votre adresse mail'
-                //$("#mainInscription").hide();
-                //$("#mainConnexion").hide();
-                // $("#envoiMail").show();
-            //}
-      /*  },
-    //dataType: "text"
-    //});*/
+    if (verificationChamps()){ // petite sécurité
+        $.ajax({
+            type: "POST",
+            url: "./minControleur/dataInscription.php",
+            data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom},
+            success: function(oRep){
+    
+                if (oRep == 'Success'){
+                    $("#mainInscription").hide();
+                    $("#mainConnexion").hide();
+                    $("#envoiMail").show();
+                } else if (oRep == 'Exist'){
+                    $("#verifMailInscription").show();
+                    $("#verifMailInscription").html("Adresse mail déjà existante.");
+                }
+            },
+        dataType: "text"
+        });
+    }
 });
 /*
     Si l'on clique sur mot de passe oublié
@@ -120,6 +123,7 @@ function verificationChamps(){
         // On réactive le bouton inscription
          $("#inscription").attr("disabled",false);
     }
+    return 1;
 }
 
 function verifNom(){
@@ -159,6 +163,8 @@ function verifEmail(){
 
 function verifPasse(){
     var passe = $("#inputPasswordInscription").val();
+    if (passe == "")
+        return 0;
     if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passe))){
         $("#verifPasswordInscription").show();
         $('#verifPasswordInscription').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');

@@ -4,8 +4,7 @@
     include_once "../libs/maLibSecurisation.php";
    include_once "../libs/modele.php";
 
-    echo "OKKK";
-    
+    echo 'OK';
 
     /*if ($email = valider("email") && $passe = valider("passe") ){ // on vérifie que toutes les valeurs sont définies
         $email = valider('email');
@@ -31,8 +30,5 @@
             Login ou mot de passe incorrect
         }
     }*/
-
-
-
-
+    
 ?>
