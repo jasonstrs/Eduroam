@@ -22,11 +22,12 @@
             if($nom = valider("nom"))
             {
                 array_push($tab,$nom);
+                array_push($tab,idVilleNom($nom));
                 array_push($tab,verifVilleNom($nom));
                 echo(json_encode($tab));
             }
             else{
-                echo 0;
+                echo false;
             }
             
         break;

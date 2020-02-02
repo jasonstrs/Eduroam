@@ -144,8 +144,16 @@ function selectVilles(){
  */
 function verifVilleNom($nom){
 	$SQL = "SELECT COUNT(*) FROM spectacle WHERE ville='$nom'";
-	if(SQLGetChamp($SQL) == 0)return 1;
-	return 0;
+	if(SQLGetChamp($SQL) == 0)return true;
+	return false;
+}
+
+/**
+ * Renvoie l'id du spectacle qui a pour ville $nom
+ */
+function idVilleNom($nom){
+	$SQL = "SELECT idSpectacle FROM spectacle WHERE ville='$nom'";
+	return SQLGetChamp($SQL);
 }
 
 ?>

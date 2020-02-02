@@ -46,57 +46,75 @@ function afficherResumeVilles(rep){
  * @param {*} nom Nom de la ville dont on veut vérifier l'abscence dans la BDD
  */
 function verifVille(nomVille){
+    var rep;
     $.ajax({
         method:"GET",
         url:"./minControleur/dataSpectacle.php",
+        async:false,
         data:{
             action:"verifVilleNom",
             nom:nomVille
         },
         success:function(oRep){
-            var cont_info;
-            var info;
-            var classes;
-            oRep = JSON.parse(oRep);
             
-            if(oRep[1] == 0){
-                classes = "alert alert-warning";
-                info = "<b>"+oRep[0]+" </b>  a déja des dates!<br> Cliquez ici pour les modifier / en ajouter"
-            }
-            else{
-                classes = "alert alert-success";
-                info = "<b>"+oRep[0]+" </b> n'a pas encore de dates! <br>Veuillez maintenant <b>choisir des dates </b>!"
-            }
-            window.setTimeout(function(){
-                //La ville est déja dans la BDD => On affiche une erreur comportant un lien vers la page de modification de la ville
-                $("#entrerVille").children().last().hide();
-                $("#validerEntreeVille").show(200);
-                cont_info = $("<div/>").addClass(classes).attr("role","alert")
-                .html(info)
-                .css("font-size","smaller").hide();
-                $("#entrerVille").append(cont_info);
-                $("#entrerVille").children().last().slideDown(500);
-                
-            },200);
+            
+            oRep = JSON.parse(oRep);
+            rep = oRep;
+            
+            
         },
         error : function(oRep){
-            console.log("Erreur lors de la récupération des villes.");
+            console.log("Erreur");
+            console.log(oRep);
         } 
     });
+    return rep;
 }
 
 $(document).ready(function(){
     $("#validerEntreeVille").click(function(){
-        var currLoader = loader.clone(1);
-        console.log(currLoader[0]);
-        console.log($("#entrerVille").children().last());
+        var cont_info;
+        var info;
+        var classes;
+        var position = $("#validerEntreeVille").position().left + $("#validerEntreeVille").width()+30;
+        var currLoader = loader.clone(1).css({"position":"absolute","left":position,"margin-top":"-6px"});
+        var reponseVerifVille;
         if(!$("#entrerVille").children().last().is($(this))){
             $("#entrerVille").children().last().remove();
         }
-        $(this).hide()
+        $(this).prop("disabled",true);
         $("#entrerVille").append(currLoader[0]);
         
-        verifVille($("#champTxtVille").val())
+        reponseVerifVille = verifVille($("#champTxtVille").val());
+        /**On récupère :    le nom qui vient d'être entré
+         *                  l'id de la ville en question
+         *                  la ville se trouve déja dans la bdd (false) ou non (true)
+        */
+        if(reponseVerifVille[2] == false){
+            //La ville se trouve déja dans la BDD, on ajoute ou modifie des dates
+            classes = "alert alert-warning";
+            info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>!<br> <a href='./index.php?view=editerSpectacle&ville="+reponseVerifVille[0]+"'>Cliquez ici pour les modifier / en ajouter</a>";
+            $("#listeVilles").delay(500).slideDown(500);
+        }
+        else{
+            //La ville n'est pas dans la BDD, on va choisir de nouvelles dates
+            classes = "alert alert-success";
+            info = "Veuillez <b>choisir des dates</b> pour <b>"+reponseVerifVille[0]+" </b>!";
+            $("#listeVilles").delay(500).slideUp(500);
+        }
+
+        window.setTimeout(function(){
+            //On affiche l'info voulue
+            $("#entrerVille").children().last().hide();
+            $("#validerEntreeVille").prop("disabled",false);
+            cont_info = $("<div/>").addClass(classes).attr("role","alert")
+            .html(info)
+            .css("font-size","smaller").hide();
+            $("#entrerVille").append(cont_info);
+            $("#entrerVille").children().last().slideDown(500);
+            
+        },200);
+
             
             
     });
