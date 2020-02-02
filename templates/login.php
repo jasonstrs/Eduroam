@@ -112,5 +112,10 @@ else $checked="";
       </div>
   </div>
 </div>
+
+<div class="alert alert-success" role="alert" id="envoiMail">
+  <h4 class="alert-heading">Inscription terminée</h4>
+  <p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !</p>
+</div>
 </body>
 </html>
