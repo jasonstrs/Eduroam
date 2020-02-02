@@ -27,6 +27,11 @@
 
 }
 
+#listeVilles{
+    max-height:600px;
+    overflow:auto;
+}
+
 .lead .gras:nth-child(n+2){
     padding-top:15px;
     border-top : 1px rgba(0, 0, 0, 0.24) solid;
@@ -63,4 +68,8 @@
 
 .gras{
     font-weight:bold;
+}
+
+#choisirDates{
+    display:none;
 }

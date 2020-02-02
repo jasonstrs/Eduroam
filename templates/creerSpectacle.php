@@ -33,6 +33,9 @@
         </script>
         
     </div>
+    <div id="choisirDates">
+        <br><span class="gras"></span>
+    </div>
     
 </div>
 
