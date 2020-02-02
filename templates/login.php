@@ -42,7 +42,7 @@ else $checked="";
         </div>
       </div>
       <div class="custom-control custom-checkbox my-1 mr-sm-2" id='divCheck'>
-        <input type="checkbox" class='custom-control-input' name="remember" id="check" checked="<?php echo $checked;?>" >
+        <input type="checkbox" class='custom-control-input' name="remember" id="check" <?php echo $checked;?> >
         <label class="custom-control-label" for="check">Se souvenir de moi</label>
       </div>
       <div class='submit'>
