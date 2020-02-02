@@ -100,4 +100,14 @@ function selectVilles(){
 	return $reponse;
 }
 
+
+/**
+ * Renvoie true si la ville N'EST PAS dans la base de données
+ */
+function verifVilleNom($nom){
+	$SQL = "SELECT COUNT(*) FROM spectacle WHERE ville='$nom'";
+	if(SQLGetChamp($SQL) == 0)return 1;
+	return 0;
+}
+
 ?>

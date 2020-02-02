@@ -22,6 +22,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		
 		<script src="./libs/jquery-3.4.1.min.js"></script>
 		<script src='./js/registerJquery.js'></script>
+		<script src='./js/main.js'></script>
 
 	
 	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
