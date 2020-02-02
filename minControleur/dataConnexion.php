@@ -22,9 +22,14 @@
 
         //$checked = valider('checked');
 
-        // lancer une fonction de connexion
-        // qui va permettre de savoir si l'utilisateur est dans la BDD
-        // email ou password incorrect ou Confirmer votre mail
+        if (utilisateur est dans la BDD){
+            if (confirm son adresse)
+                ON LE CONNECTE
+            else 
+                MESSAGE : Confirmer votre adresse mail
+        } else {
+            Login ou mot de passe incorrect
+        }
     }*/
 
 

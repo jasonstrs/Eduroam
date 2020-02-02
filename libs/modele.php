@@ -5,7 +5,7 @@
 include_once("maLibSQL.pdo.php");
 
 
-function listerUtilisateurs($classe = "both")
+/*function listerUtilisateurs($classe = "both")
 {
 	// NB : la présence du symbole '=' indique la valeur par défaut du paramètre s'il n'est pas fourni
 	// Cette fonction liste les utilisateurs de la base de données 
@@ -81,6 +81,44 @@ function passerAdmin ($id) {
 function passerNonAdmin ($id) {
 	$SQL = "UPDATE users SET premium=0 WHERE id='$id'";
 	SQLUpdate($SQL);
+}*/
+
+/**
+ * Verif si l'utilisateur est dans la BDD 
+ */
+function verifUserBdd($login,$passe)
+{
+	// Vérifie l'identité d'un utilisateur 
+	// dont les identifiants sont passes en paramètre
+	// renvoie faux si user inconnu
+	// renvoie l'id de l'utilisateur si succès
+
+	$SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe'";
+
+	return SQLGetChamp($SQL);
+	// si on avait besoin de plus d'un champ
+	// on aurait du utiliser SQLSelect
+}
+
+/**
+ * Verif si l'utilisateur a confirmé son mail
+ * Return 1 si c'est validé
+ */
+function isConfirm($idUser)
+{
+	// vérifie si l'utilisateur a validé son mail
+	$SQL ="SELECT confirm FROM users WHERE id='$idUser'";
+	if(SQLGetChamp($SQL))return 1;
+	return 0; 
+}
+
+/**
+ * Renvoie true si l'adresse mail est deja dans la BDD
+ */
+function verifExistMail($email){
+	$SQL = "SELECT COUNT(*) FROM users WHERE email='$email'";
+	if(SQLGetChamp($SQL))return 1;
+	return 0; 
 }
 
 function selectVilles(){

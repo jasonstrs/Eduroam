@@ -7,25 +7,14 @@
     echo "OKKK";
     
 
-    /*if ($email = valider("email") && $passe = valider("passe") ){ // on vérifie que toutes les valeurs sont définies
-        $email = valider('email');
-        $passe = valider('passe');
-
-        echo "OK";
-
-        if (valider('checked'))
-            $check = 1;
-        else
-            $check=0;
-
-          
-
-        //$checked = valider('checked');
-
-        // lancer une fonction de connexion
-        // qui va permettre de savoir si l'utilisateur est dans la BDD
-        // verifier si mail existant
-        // lancer la fonction qui envoie un mail
+    /*if ($email = valider("email") && $passe = valider("passe") .............................. ){ // on vérifie que toutes les valeurs sont définies
+       
+        if (l'adresse mail existe deja)
+            On retourne une erreur : Adresse mail déjà existante
+        else {
+            fonction de création user qui se charge aussi d'envoyer le mail 
+            on retourne success et donc on affiche l'alert qui montre l'envoi du mail
+        }
     }*/
 
 
