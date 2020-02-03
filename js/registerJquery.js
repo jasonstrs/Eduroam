@@ -5,6 +5,7 @@ $(document).ready(function(){
 
 // Cacher les messages d'erreurs
 function cacherMsg(){
+    $("#log").hide();
     $("#envoiMail").hide();
     $("#verifMail").hide();
     $("#verifMailInscription").hide();
@@ -27,19 +28,38 @@ $(document).on('click','input[value="Connexion"]',function(){
         $("#verifMail").show();
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         return;
-    } 
-
+    }
+    if (check)
+        check = "remember";
+    else
+        check='noRemember';
+        
     $.ajax({
         type: "POST",
         url: "./minControleur/dataConnexion.php",
         data: {"email":email,"passe":passe,"checked":check},
         success: function(oRep){
            console.log(oRep);
-           console.log("Success");
-            /*
-            gérer ici s'il y a une erreur de connexion, ou si l'utilisateur 
-            est connecté
-            */
+           switch(oRep){
+               case 'incorrect' :
+                   $("#log").show();
+                   $("#log").html("Email et/ou mot de passe incorrect");
+                break;
+
+                case 'noConfirm' :
+                   $("#log").show();
+                   $("#log").html("Veuillez confirmer votre email avant de vous connecter. Recevoir un nouveau mail ?");
+                break;
+
+                case 'success' :
+                   console.log("cas3");
+                   //////// envoyer vers la page d'accueil !
+                break;
+
+                default:
+                    console.log("Il y a un problème inconnu ! Contacter la maintenance.");
+           }
+            
         },
     dataType: "text"
     });

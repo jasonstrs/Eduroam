@@ -62,6 +62,20 @@ function verifUserBdd($email,$passe)
 }
 
 /**
+ * Retourne le hash
+ */
+function hashCode($id)
+{
+	
+	$SQL="SELECT hashCode FROM user WHERE idU='$id'";
+	return SQLGetChamp($SQL);
+	// si on avait besoin de plus d'un champ
+	// on aurait du utiliser SQLSelect
+}
+
+
+
+/**
  * Verif si l'utilisateur a confirmé son mail
  * Return 1 si c'est validé
  */
@@ -71,6 +85,14 @@ function isConfirm($idUser)
 	$SQL ="SELECT code FROM user WHERE idU='$idUser'";
 	if(SQLGetChamp($SQL))return 1;
 	return 0; 
+}
+
+/**
+ * L'utilisateur vient de confirmer son adresse
+ */
+function confirmAdress ($id) {
+	$SQL = "UPDATE user SET code=1 WHERE idU='$id'";
+	SQLUpdate($SQL);
 }
 
 /**

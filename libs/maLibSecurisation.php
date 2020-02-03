@@ -18,23 +18,40 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
  * @param string $password
  * @return false ou true ; un effet de bord est la création de variables de session
  */
-function verifUser($login,$password)
+function verifUser($email,$password,$check)
 {
 	
 	$id = verifUserBdd($email,$password);
 
-	if (!$id) return false; 
-
-	// Cas succès : on enregistre pseudo, idUser dans les variables de session 
-	// il faut appeler session_start ! 
-	// Le controleur le fait déjà !!
-	$_SESSION["email"] = $email;
-	$_SESSION["idUser"] = $id;
-	$_SESSION["passe"] = $password;
-	$_SESSION["connecte"] = true;
-	$_SESSION["heureConnexion"] = date("H:i:s");
-	return true;
+	if (!$id) return "incorrect";
 	
+	// on regarde désormais s'il y a confirmé son adresse :
+
+	if (isConfirm($id)){ // oui c'est confirmé !
+		// Cas succès : on enregistre pseudo, idUser dans les variables de session 
+		// il faut appeler session_start ! 
+		
+		session_start();
+		$_SESSION["email"] = $email;
+		$_SESSION["idUser"] = $id;
+		$_SESSION["hash"] = hashCode($id);
+		$_SESSION["connecte"] = true;
+		$_SESSION["heureConnexion"] = date("H:i:s");
+
+		if ($check == "remember") {
+			setcookie("email",$email , time()+60*60*24*30);
+			setcookie("passe",$password, time()+60*60*24*30);
+			setcookie("remember",true, time()+60*60*24*30);
+		} else {
+			setcookie("email","", time()-3600);
+			setcookie("passe","", time()-3600);
+			setcookie("remember",false, time()-3600);
+		}
+
+		return "success";
+	} else { // l'utilisateur n'a pas confirmé son adresse : 
+		return "noConfirm";
+	}	
 }
 
 

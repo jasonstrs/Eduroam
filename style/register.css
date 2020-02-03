@@ -32,4 +32,8 @@
 #envoiMail{
     margin-top:40vh;
      transform:translateY(-50%);
-   }
+}
+
+#log {
+    text-align: center;
+}

@@ -4,32 +4,15 @@
     include_once "../libs/maLibSecurisation.php";
    include_once "../libs/modele.php";
    include_once "../libs/maLibPHPMailer.php";
-
-    echo 'OK';
    
-    /*if ($email = valider("email") && $passe = valider("passe") ){ // on vérifie que toutes les valeurs sont définies
+    if (valider("email") && valider("passe") && valider("checked")){ // on vérifie que toutes les valeurs sont définies
         $email = valider('email');
-        $passe = valider('passe');
+        $passe = sha1(md5(valider('passe')));
+        $check = valider("checked");
 
-        echo "OK";
-
-        if (valider('checked'))
-            $check = 1;
-        else
-            $check=0;
-
-          
-
-        //$checked = valider('checked');
-
-        if (utilisateur est dans la BDD){
-            if (confirm son adresse)
-                ON LE CONNECTE
-            else 
-                MESSAGE : Confirmer votre adresse mail
-        } else {
-            Login ou mot de passe incorrect
-        }
-    }*/
+        $aux = verifUser($email,$passe,$check); // verifie si l'utilisateur est dans la bdd et si il a confirmé son mail
+                                                // on peut aussi savoir si on garde l'utilisateur en cookie
+        echo $aux;
+    }
     
 ?>

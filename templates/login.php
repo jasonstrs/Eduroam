@@ -26,8 +26,8 @@ else $checked="";
     <h1 class="text-center">Connexion</h1>
   </div>
   <div class="jumbotron">
+  <div id="log" class='text-danger'></div>
       <div class="form-group row">
-          
           <label for="email" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10" id='containerMail'>
             <input type="email" class="form-control" id="email" placeholder="Saisir votre email" value="<?php echo $email;?>">
