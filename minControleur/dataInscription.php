@@ -15,7 +15,8 @@
             echo "Exist";
         } else {
             $hashCode = md5(uniqid(rand(), true));
-            createUser($email,$nom,$prenom,$passe,$hashCode);
+            $id =createUser($email,$nom,$prenom,$passe,$hashCode);
+            
             // on envoie un mail : A AJOUTER
             echo "Success";
         }   

@@ -3,9 +3,10 @@
     include_once "../libs/maLibSQL.pdo.php";
     include_once "../libs/maLibSecurisation.php";
    include_once "../libs/modele.php";
+   include_once "../libs/maLibPHPMailer.php";
 
     echo 'OK';
-
+   
     /*if ($email = valider("email") && $passe = valider("passe") ){ // on vérifie que toutes les valeurs sont définies
         $email = valider('email');
         $passe = valider('passe');

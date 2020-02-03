@@ -117,14 +117,4 @@ function rediriger($url,$qs="")
 	// TODO: on pourrait passer en parametre le message servant au die...
 }
 
-// TODO: intégrer les redirections vers la page index dans une fonction :
-
-/*
-// Si la page est appelée directement par son adresse, on redirige en passant pas la page index
-if (basename($_SERVER["PHP_SELF"]) != "index.php")
-{
-	header("Location:../index.php");
-	die("");
-}
-*/
 ?>
