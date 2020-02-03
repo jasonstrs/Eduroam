@@ -37,3 +37,11 @@
 #log {
     text-align: center;
 }
+
+.newMail {
+    font-style: italic;
+}
+
+.newMail:hover{
+    font-weight: bold;
+}

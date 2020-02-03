@@ -117,5 +117,14 @@ else $checked="";
   <h4 class="alert-heading">Inscription terminée</h4>
   <p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !</p>
 </div>
+
+<div class="form-group row" id='keyPass'>
+  <h4>Mot de passe oublié</h4>
+  <div class="col-sm-10" id='containerMailInscription'>
+    <input type="email" class="form-control" name='email' id="emailRecup" placeholder="Saisir votre email">
+    <div id='verifForgetPass' class='text-danger'></div>
+    <input type='submit' value='Recevoir' id='receive' class='btn btn-danger'>
+  </div>
+</div>
 </body>
 </html>

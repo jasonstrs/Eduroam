@@ -13,7 +13,7 @@ function cacherMsg(){
     $("#verifPrenomInscription").hide();
     $("#verifPasswordInscription").hide();
     $("#verifPasswordConfirmInscription").hide();
-
+    $("#keyPass").hide();
 }
 
 // Connexion
@@ -22,6 +22,9 @@ $(document).on('click','input[value="Connexion"]',function(){
     var email = $("#email").val();
     var passe = $("#inputPassword").val();
     var check = $("#check").prop("checked");
+
+    if (passe == "")
+    return;
     
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
@@ -48,7 +51,11 @@ $(document).on('click','input[value="Connexion"]',function(){
 
                 case 'noConfirm' :
                    $("#log").show();
-                   $("#log").html("Veuillez confirmer votre email avant de vous connecter. Recevoir un nouveau mail ?");
+                   $("#log").html("Veuillez confirmer votre email avant de vous connecter. ");
+                   $("#log").append($("<span class='newMail clic'>Recevoir un mail de confirmation ?</span>").click(function(){
+                       console.log("envoyer un mail pour recevoir une nouvelle confirmation");
+                       sendMailConfirm();
+                   }));
                 break;
 
                 case 'success' :
@@ -99,8 +106,37 @@ $(document).on('click','input[value="Inscription"]',function(){
 
 $(document).on("click",'#forgotPass',function(){
     console.log("mot de passe oublie");
+    cacherMsg();
+    $("#mainInscription").hide();
+    $("#mainConnexion").hide();
+    $("#keyPass").show();
+});
+
+$(document).on("click","#receive",function(){
+    console.log("receive");
+    // on verifie que l'adresse mail n'est pas incorrecte
+    var email = $("#emailRecup").val();
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+        $("#verifForgetPass").show();
+        $("#verifForgetPass").html("Veuillez saisir une adresse mail correcte.");
+        return;
+    }
+    // on envoie une reqûete ajax dans un minControleur
+    // on regarde si l'adresse existe, si oui, on envoie un mail
+    // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
     
 });
+
+/**
+ * Envoi un nouveau mail de confirmation
+ */
+
+ function sendMailConfirm(){
+    cacherMsg();
+    $("#mainInscription").hide();
+    $("#mainConnexion").hide();
+    
+ }
 
 /* 
     Si l'on clique sur créer un compte, on affiche le formulaire d'inscription
