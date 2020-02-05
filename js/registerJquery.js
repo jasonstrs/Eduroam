@@ -197,7 +197,7 @@ $(document).on("click","#receive",function(){
             $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
             return;
         }
-
+        
 
     });
 
