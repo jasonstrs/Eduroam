@@ -16,6 +16,8 @@ function cacherMsg(){
     $("#keyPass").hide();
     $("#checkPass").hide();
     $("#verifForgetPass").hide();
+    $("#verifMailReceive").hide();
+    $("#haveMail").hide();
 }
 
 // Connexion
@@ -110,6 +112,8 @@ $(document).on('click','input[value="Inscription"]',function(){
         });
     }
 });
+
+
 /*
     Si l'on clique sur mot de passe oublié
 */
@@ -139,18 +143,30 @@ $(document).on("click","#receive",function(){
         url: "./minControleur/dataMDP.php",
         data: {"email":email},
         success: function(oRep){
-            if (oRep == "success"){
-                $("#keyPass").hide();
-                $("#envoiMail").show();
-                $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
-            } else if (oRep == "confirm"){
-                $("#verifForgetPass").show();
-                $("#verifForgetPass").html("Adresse mail déjà confirmée. ")
-                $("#verifForgetPass").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
-                    cacherMsg();
-                    $("#mainConnexion").show();
-                    $("#mainInscription").hide();
-                }));
+            switch(oRep){
+                case 'success' :
+                    $("#keyPass").hide();
+                    $("#envoiMail").show();
+                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+                 break;
+ 
+                 case 'confirm' :
+                    $("#verifForgetPass").show();
+                    $("#verifForgetPass").html("Adresse mail déjà confirmée. ")
+                    $("#verifForgetPass").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
+                        cacherMsg();
+                        $("#mainConnexion").show();
+                        $("#mainInscription").hide();
+                    }));
+                 break;
+ 
+                 case 'incorrect' :
+                    $("#verifForgetPass").show();
+                    $("#verifForgetPass").html("Adresse mail inexistante.");
+                 break;
+ 
+                 default:
+                     console.log("Il y a un problème inconnu ! Contacter la maintenance.");
             }
         },
     dataType: "text"
@@ -167,8 +183,24 @@ $(document).on("click","#receive",function(){
     cacherMsg();
     $("#mainInscription").hide();
     $("#mainConnexion").hide();
-    
+    $("#haveMail").show();
  }
+
+    /**
+     * recevoir un nouveau mail
+     */
+
+    $(document).on("click","#receiveMail",function(){
+        // on verifie que l'adresse mail n'est pas incorrecte
+        if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+            $("#verifMailReceive").show();
+            $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
+            return;
+        }
+
+
+    });
+
 
 /* 
     Si l'on clique sur créer un compte, on affiche le formulaire d'inscription
@@ -216,7 +248,7 @@ function verificationChamps(){
 
 function verifNom(){
     var nom = $("#nom").val();
-    if(!(/^[a-zA-Z -]+$/.test(nom)) && nom!=""){
+    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(nom)) && nom!=""){
         $("#verifNomInscription").show();
         $("#verifNomInscription").html("Veuillez saisir un nom correct.");
         return 0;
@@ -227,7 +259,7 @@ function verifNom(){
 
 function verifPrenom(){
     var prenom = $("#prenom").val();
-    if(!(/^[a-zA-Z -]+$/.test(prenom)) && prenom !=""){
+    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(prenom)) && prenom !=""){
         $("#verifPrenomInscription").show();
         $("#verifPrenomInscription").html("Veuillez saisir un prénom correct.");
         return 0;

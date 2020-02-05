@@ -15,7 +15,7 @@
                 echo "success";
             }
         } else {
-            echo "success";
+            echo "incorrect";
         }
     }
     
