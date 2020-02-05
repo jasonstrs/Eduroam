@@ -14,17 +14,17 @@ function cacherMsg(){
     $("#verifPasswordInscription").hide();
     $("#verifPasswordConfirmInscription").hide();
     $("#keyPass").hide();
+    $("#checkPass").hide();
+    $("#verifForgetPass").hide();
 }
 
 // Connexion
 $(document).on('click','input[value="Connexion"]',function(){
     console.log("Connexion");
+    cacherMsg();
     var email = $("#email").val();
     var passe = $("#inputPassword").val();
     var check = $("#check").prop("checked");
-
-    if (passe == "")
-    return;
     
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
@@ -32,6 +32,15 @@ $(document).on('click','input[value="Connexion"]',function(){
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         return;
     }
+
+    
+    if (passe == ""){
+        $("#checkPass").show();
+        $("#checkPass").html("Veuillez saisir un mot de passe.");
+        return;
+    }
+
+
     if (check)
         check = "remember";
     else
@@ -91,6 +100,7 @@ $(document).on('click','input[value="Inscription"]',function(){
                     $("#mainInscription").hide();
                     $("#mainConnexion").hide();
                     $("#envoiMail").show();
+                    $("#envoiMail").html("<h4 class=\"alert-heading\">Inscription terminée</h4><p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !</p>");
                 } else if (oRep == 'Exist'){
                     $("#verifMailInscription").show();
                     $("#verifMailInscription").html("Adresse mail déjà existante.");
@@ -124,6 +134,28 @@ $(document).on("click","#receive",function(){
     // on envoie une reqûete ajax dans un minControleur
     // on regarde si l'adresse existe, si oui, on envoie un mail
     // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
+    $.ajax({
+        type: "POST",
+        url: "./minControleur/dataMDP.php",
+        data: {"email":email},
+        success: function(oRep){
+            if (oRep == "success"){
+                $("#keyPass").hide();
+                $("#envoiMail").show();
+                $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+            } else if (oRep == "confirm"){
+                $("#verifForgetPass").show();
+                $("#verifForgetPass").html("Adresse mail déjà confirmée. ")
+                $("#verifForgetPass").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
+                    cacherMsg();
+                    $("#mainConnexion").show();
+                    $("#mainInscription").hide();
+                }));
+            }
+        },
+    dataType: "text"
+    });
+
     
 });
 

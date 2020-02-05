@@ -39,6 +39,7 @@ else $checked="";
         <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
+          <div id="checkPass" class='text-danger'></div>
         </div>
       </div>
       <div class="custom-control custom-checkbox my-1 mr-sm-2" id='divCheck'>
