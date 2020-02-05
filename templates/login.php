@@ -127,5 +127,15 @@ else $checked="";
     <input type='submit' value='Recevoir' id='receive' class='btn btn-danger'>
   </div>
 </div>
+
+<div class="form-group row" id='haveMail'>
+  <h4>Recevoir un nouveau mail</h4>
+  <div class="col-sm-10" id='receiveNewMail'>
+    <input type="email" class="form-control" name='newM' id="emailReceive" placeholder="Saisir votre email">
+    <div id='verifMailReceive' class='text-danger'></div>
+    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-danger'>
+  </div>
+</div>
+
 </body>
 </html>
