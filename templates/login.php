@@ -16,7 +16,7 @@ else $checked="";
 <!DOCTYPE html>
 <html lang='fr'>
   <script src='./js/registerJquery.js'></script>
-  <link rel = "stylesheet" type = "text/css" href = "./style/register.css" />
+  <link rel="stylesheet" type="text/css" href="./css/register.css">
   <head>
     <title>First Page</title>
     <meta charset="utf-8">
