@@ -1,0 +1,134 @@
+.swiper-slide {
+	display: flex !important;
+	justify-content:center !important;
+}
+
+.swiper-container {
+	height: 350px !important;
+}
+
+#footer {
+	margin-top: 50px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+	border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+
+.fa-flag {
+  color: white;
+}
+
+.customli {
+	border: solid rgba(0, 0, 0, 0.15);
+	border-width: .1rem; 
+	padding: 5px;
+	margin-top: 5px;
+	border-radius: 5px;
+}
+
+.search {
+	width: auto;
+	display: inline-block;
+	vertical-align: middle;
+	float: right;
+}
+
+html, body {
+  overflow-x:hidden;
+  width:100%;
+}
+
+fieldset, label { margin: 0; padding: 0; }
+
+
+.list1 {
+background-color : 	#3c65ca85;
+}
+
+.list2 {
+background-color : 	#69b77091;
+}
+
+.list3 {
+background-color : 	#c3c3c3b5;
+}
+
+/****** Style Star Rating Widget https://codepen.io/jamesbarnett/pen/vlpkh *****/
+
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+
+/****** Style Star Rating Widget https://codepen.io/jamesbarnett/pen/vlpkh *****/
+
+.ratingdisp { 
+  border: none;
+  float: left;
+}
+
+.ratingdisp > input { display: none; } 
+.ratingdisp > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.ratingdisp > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.ratingdisp > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.ratingdisp > input:checked ~ label, /* show gold star when clicked */
+.ratingdisp:not(:checked) { color: #FFD700;  } /* hover previous stars in list */
+
