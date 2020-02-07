@@ -14,7 +14,10 @@
          * Va chercher dans la BDD les villes qui ont été proposées pour un spectacle
          */
         case "chargerVilles" :
-            echo json_encode(selectVilles());
+            if(!($nom = valider("nom")))$nom="";
+
+            echo json_encode(selectVilles($nom));
+            
         break;
         case "verifVilleNom":
             $tab = array();

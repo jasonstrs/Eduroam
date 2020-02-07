@@ -40,6 +40,11 @@
 .ville{
     position:relative;
     margin-top:5px;
+    cursor:pointer;
+}
+
+.desc{
+    display:none;
 }
 
 .ville table{

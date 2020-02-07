@@ -125,21 +125,35 @@ function verifExistMail($email){
 	return 0; 
 }
 
-function selectVilles(){
+function selectVilles($nom = ""){
 	$reponse = array();
-	$SQL = "SELECT idSpectacle,ville FROM spectacle";
+	$SQL = "SELECT idSpectacle,ville,description FROM spectacle";
 	$SQL = SQLSelect($SQL);
 	$SQL = parcoursRs($SQL);
 	foreach($SQL as $ligne){
 		$SQLNbInteresses = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$ligne['idSpectacle'];
 		$SQLNbInteresses = SQLGetChamp($SQLNbInteresses);
 
+		$SQLNbSpecVille = "SELECT COUNT(*) FROM spectacle WHERE ville=\"".$ligne['ville']."\"";
+		$SQLNbSpecVille = SQLGetChamp($SQLNbSpecVille);
+
 		$SQLNbDates = "SELECT Count(*) FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
 		$SQLNbDates = SQLGetChamp($SQLNbDates);
 
-		array_push($reponse,array($ligne['ville'],$SQLNbDates,$SQLNbInteresses));
+		$currRep = array(
+						"id" => $ligne["idSpectacle"],
+						"desc" => $ligne["description"],
+						"ville" => $ligne['ville'],
+						"nbSpecVille" => $SQLNbSpecVille,
+						"nbDates" => $SQLNbDates,
+						"nbInteresses" => $SQLNbInteresses
+				);
+		array_push($reponse,$currRep);
 	}
 	return $reponse;
+	$SQL = "SELECT s.idSpectacle AS id,s.ville AS nom,s.description AS _description
+	, COUNT(ds.idDate),COUNT(su)";
+	
 }
 
 
