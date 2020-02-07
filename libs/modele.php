@@ -124,16 +124,23 @@ function selectVilles($nom = ""){
 		$SQLNbSpecVille = "SELECT COUNT(*) FROM spectacle WHERE ville=\"".$ligne['ville']."\"";
 		$SQLNbSpecVille = SQLGetChamp($SQLNbSpecVille);
 
-		$SQLNbDates = "SELECT Count(*) FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
-		$SQLNbDates = SQLGetChamp($SQLNbDates);
+		$SQLGetDates = "SELECT * FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLGetDates = parcoursRs(SQLSelect($SQLGetDates));
+
+		for( $i=0 ; $i < sizeof($SQLGetDates) ; $i++ ){
+			$date = $SQLGetDates[$i];
+			$SQLNbPers = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$date["idSpectacle"]." AND idDate=".$date["idDate"];
+			$SQLGetDates[$i]["nb"] = SQLGetChamp($SQLNbPers);
+		}
 
 		$currRep = array(
 						"id" => $ligne["idSpectacle"],
 						"desc" => $ligne["description"],
 						"ville" => $ligne['ville'],
 						"nbSpecVille" => $SQLNbSpecVille,
-						"nbDates" => $SQLNbDates,
-						"nbInteresses" => $SQLNbInteresses
+						"nbDates" => sizeof($SQLGetDates),
+						"nbInteresses" => $SQLNbInteresses,
+						"dates" => $SQLGetDates
 				);
 		array_push($reponse,$currRep);
 	}

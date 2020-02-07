@@ -43,7 +43,7 @@
     cursor:pointer;
 }
 
-.desc{
+.descVille{
     display:none;
 }
 
@@ -54,11 +54,13 @@
     border-collapse: unset;
     border-radius:5px;
     transition: all 0.5s;
+    background-color:grey;
+    color:white
 }
 
 .ville table:hover{
-    background-color: rgb(117, 117, 117);
-    color:white;
+    background-color: white;
+    color:black;
 }
 
 .ville table td{
@@ -77,4 +79,19 @@
 
 #choisirDates{
     display:none;
+}
+
+.contDate{
+    display:flex;
+    border:1px black solid;
+    margin:5px;
+    width:80%;
+    margin-left:10%;
+
+}
+
+.date{
+    flex:auto;
+
+    
 }
