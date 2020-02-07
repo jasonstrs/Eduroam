@@ -3,12 +3,13 @@
  * le nombre de dates possibles, et le nombre d'inscrits.
  */
 
-function chargerVilles(){
+function chargerVilles(nomEntre){
     $.ajax({
         method:"GET",
         url:"./minControleur/dataSpectacle.php",
         data:{
-            action:"chargerVilles"
+            action:"chargerVilles",
+            nom:nomEntre
         },
         success:function(oRep){
             afficherResumeVilles(oRep);
@@ -27,14 +28,26 @@ function chargerVilles(){
  */
 function afficherResumeVilles(rep){
     var tab = JSON.parse(rep);
+    var currDesc;
+    var currSpec;
     tab.forEach(element => {
         var currVille = $("<div/>").addClass("ville")
             .append($("<table/>")
-                .append($("<td/>").html(element[0]))
-                .append($("<td/>").html(element[1]+" Date(s)"))
-                .append($("<td/>").html(element[2]+" Inscrit(s)"))
+                .append($("<td/>").html(element.ville))
+                .append($("<td/>").html(element.nbDates+" Date(s)"))
+                .append($("<td/>").html(element.nbInteresses+" Inscrit(s)"))
             )
         ;
+        currVille.click(function(){
+            $(".desc").slideUp();
+            currDesc = $("<div/>").addClass("desc");
+            currDesc.html(element.desc);
+            var oSpec = chargerSpec(element.ville); 
+            //oSPec contient toutes les dates des spectacles 
+            $(this).append(currDesc);
+            /* if(!($(this).next().hasClass("ville")))return; */
+            currDesc.slideDown();
+        });
         $("#listeVilles").append(currVille);
         
     });
