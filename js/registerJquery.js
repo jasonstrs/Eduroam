@@ -29,7 +29,7 @@ $(document).on('click','input[value="Connexion"]',function(){
     var check = $("#check").prop("checked");
     
     // on verifie que l'adresse mail n'est pas incorrecte
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifMail").show();
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         return;
@@ -130,7 +130,7 @@ $(document).on("click","#receive",function(){
     console.log("receive");
     // on verifie que l'adresse mail n'est pas incorrecte
     var email = $("#emailRecup").val();
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifForgetPass").show();
         $("#verifForgetPass").html("Veuillez saisir une adresse mail correcte.");
         return;
@@ -148,16 +148,6 @@ $(document).on("click","#receive",function(){
                     $("#keyPass").hide();
                     $("#envoiMail").show();
                     $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
-                 break;
- 
-                 case 'confirm' :
-                    $("#verifForgetPass").show();
-                    $("#verifForgetPass").html("Adresse mail déjà confirmée. ")
-                    $("#verifForgetPass").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
-                        cacherMsg();
-                        $("#mainConnexion").show();
-                        $("#mainInscription").hide();
-                    }));
                  break;
  
                  case 'incorrect' :
@@ -191,12 +181,49 @@ $(document).on("click","#receive",function(){
      */
 
     $(document).on("click","#receiveMail",function(){
+        console.log('new mail');
         // on verifie que l'adresse mail n'est pas incorrecte
-        if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+        var email = $("#emailReceive").val();
+        if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
+            console.log('new mail2');
             $("#verifMailReceive").show();
             $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
             return;
         }
+
+        $.ajax({
+            type: "POST",
+            url: "./minControleur/mailConfirm.php",
+            data: {"email":email},
+            success: function(oRep){
+                switch(oRep){
+                    case 'success' :
+                        $("#haveMail").hide();
+                        $("#envoiMail").show();
+                        $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+                     break;
+     
+                     case 'confirm' :
+                        $("#verifMailReceive").show();
+                        $("#verifMailReceive").html("Adresse mail déjà confirmée. ")
+                        $("#verifMailReceive").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
+                            cacherMsg();
+                            $("#mainConnexion").show();
+                            $("#mainInscription").hide();
+                        }));
+                     break;
+     
+                     case 'incorrect' :
+                        $("#verifMailReceive").show();
+                        $("#verifMailReceive").html("Adresse mail inexistante.");
+                     break;
+     
+                     default:
+                         console.log("Il y a un problème inconnu ! Contacter la maintenance.");
+                }
+            },
+        dataType: "text"
+        });
         
 
     });
@@ -271,7 +298,7 @@ function verifPrenom(){
 function verifEmail(){
     var email = $("#emailInscription").val();
     // on verifie que l'adresse mail n'est pas incorrecte
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("verifMailInscription").show();
         $("#verifMailInscription").html("Veuillez saisir une adresse mail correcte.");
         return 0;
