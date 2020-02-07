@@ -21,12 +21,12 @@
         <?php 
             mkInput("text","nomVille","","placeholder='Entrer le nom de la ville' class='form-control' id='champTxtVille'");
         ?>
-        <button disabled id="validerEntreeVille" class="btn btn-primary" style="margin-bottom:3px;">Valider</button>
+        <button id="validerEntreeVille" class="btn btn-primary" style="margin-bottom:3px;">Valider</button>
     </div>
     <div id="listeVilles">
         <br><span class="gras">Villes où des spectacles ont déja été proposés : </span>
         Cliquez pour modifier/ajouter des dates, ou consulter les détails pour cette ville
-        <br>(Liste des inscrits par dates, etc)
+        <br>
     
         <script>
             chargerVilles();
