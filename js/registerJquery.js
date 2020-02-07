@@ -29,7 +29,7 @@ $(document).on('click','input[value="Connexion"]',function(){
     var check = $("#check").prop("checked");
     
     // on verifie que l'adresse mail n'est pas incorrecte
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifMail").show();
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         return;
@@ -130,7 +130,7 @@ $(document).on("click","#receive",function(){
     console.log("receive");
     // on verifie que l'adresse mail n'est pas incorrecte
     var email = $("#emailRecup").val();
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifForgetPass").show();
         $("#verifForgetPass").html("Veuillez saisir une adresse mail correcte.");
         return;
@@ -191,8 +191,11 @@ $(document).on("click","#receive",function(){
      */
 
     $(document).on("click","#receiveMail",function(){
+        console.log('new mail');
         // on verifie que l'adresse mail n'est pas incorrecte
-        if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+        var email = $("#emailReceive").val();
+        if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
+            console.log('new mail2');
             $("#verifMailReceive").show();
             $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
             return;
@@ -271,7 +274,7 @@ function verifPrenom(){
 function verifEmail(){
     var email = $("#emailInscription").val();
     // on verifie que l'adresse mail n'est pas incorrecte
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/.test(email))) {
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("verifMailInscription").show();
         $("#verifMailInscription").html("Veuillez saisir une adresse mail correcte.");
         return 0;
