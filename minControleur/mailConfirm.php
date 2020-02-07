@@ -8,9 +8,12 @@
     if (valider("email")){ // on vérifie que toutes les valeurs sont définies
         $email = valider('email');
         if (verifExistMail($email)){ // l'adresse est existante
-           
-                // ici on envoie un mail pour récup le mdp /////////////////////////////////////////////
-            echo "success";
+            if(isConfirmViaMail($email)){ // on regarde si le mail est déjà confirmé
+                echo "confirm";
+            } else {
+                // ici on envoie un mail /////////////////////////////////////////////
+                echo "success";
+            }
         } else {
             echo "incorrect";
         }

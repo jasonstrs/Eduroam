@@ -150,16 +150,6 @@ $(document).on("click","#receive",function(){
                     $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
                  break;
  
-                 case 'confirm' :
-                    $("#verifForgetPass").show();
-                    $("#verifForgetPass").html("Adresse mail déjà confirmée. ")
-                    $("#verifForgetPass").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
-                        cacherMsg();
-                        $("#mainConnexion").show();
-                        $("#mainInscription").hide();
-                    }));
-                 break;
- 
                  case 'incorrect' :
                     $("#verifForgetPass").show();
                     $("#verifForgetPass").html("Adresse mail inexistante.");
@@ -200,6 +190,40 @@ $(document).on("click","#receive",function(){
             $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
             return;
         }
+
+        $.ajax({
+            type: "POST",
+            url: "./minControleur/mailConfirm.php",
+            data: {"email":email},
+            success: function(oRep){
+                switch(oRep){
+                    case 'success' :
+                        $("#haveMail").hide();
+                        $("#envoiMail").show();
+                        $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+                     break;
+     
+                     case 'confirm' :
+                        $("#verifMailReceive").show();
+                        $("#verifMailReceive").html("Adresse mail déjà confirmée. ")
+                        $("#verifMailReceive").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
+                            cacherMsg();
+                            $("#mainConnexion").show();
+                            $("#mainInscription").hide();
+                        }));
+                     break;
+     
+                     case 'incorrect' :
+                        $("#verifMailReceive").show();
+                        $("#verifMailReceive").html("Adresse mail inexistante.");
+                     break;
+     
+                     default:
+                         console.log("Il y a un problème inconnu ! Contacter la maintenance.");
+                }
+            },
+        dataType: "text"
+        });
         
 
     });
