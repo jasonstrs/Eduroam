@@ -28,8 +28,10 @@
 }
 
 #listeVilles{
-    max-height:600px;
-    overflow:auto;
+    margin-top :10px;
+    padding-top:9px;
+    border-top: 1px lightgray solid;
+    text-align:center;
 }
 
 .lead .gras:nth-child(n+2){
@@ -45,6 +47,10 @@
 
 .descVille{
     display:none;
+    width:80%;
+    margin-left:10%;
+    margin-top:5px;
+
 }
 
 .ville .tabVille{
@@ -64,8 +70,8 @@
 }
 
 .ville .tabVille .eltTabVille{
-    margin-top : 15px;
-    margin-bottom:15px;
+    margin-top : 5px;
+    margin-bottom:5px;
 }
 
 .ville .tabVille .eltTabVille:nth-child(-n+3){
@@ -84,13 +90,20 @@
     display:flex;
     border:1px black solid;
     margin:5px;
-    width:80%;
-    margin-left:10%;
-
 }
 
 .date{
     flex:auto;
 
     
+}
+
+#crNouvSpectacle{
+    display: block;
+    text-align:center;
+    background-color:rgb(161, 161, 161);
+}
+
+#crNouvSpectacle:hover{
+    background-color:lightgray;
 }

@@ -11,7 +11,7 @@
 <script src='./js/spectacle.js'></script>
 <h3>
     <div id="titre">
-        Planification des spectacles - Ajouter une ville
+        Planification des spectacles
     </div>
 </h3>
 
@@ -25,8 +25,8 @@
         <img class="loader" src="./ressources/loading.gif" style="width:50px;display:none;"/>
     </div>
     <div id="listeVilles">
-        <br><span class="gras">Villes où des spectacles ont déja été proposés : </span>
-            Cliquez pour modifier/ajouter des dates, ou consulter les détails pour cette ville
+        <span class="gras">Villes où des spectacles ont déja été proposés : </span>
+            Cliquez sur les villes pour afficher toutes les dates.
         <br>
     
         <script>

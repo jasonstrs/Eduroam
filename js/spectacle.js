@@ -31,7 +31,7 @@ function afficherResumeVilles(rep){
     tab.forEach(element => {
         var currVille = $("<div/>").addClass("containerVille").append($("<div/>").addClass("ville")
             .append($("<div/>").addClass("tabVille")
-                .append($("<div/>").addClass("eltTabVille").css("flex","4").html(element.desc))
+                .append($("<div/>").addClass("eltTabVille").css({"flex":"4","font-weight":"bolder"}).html(element.desc))
                 .append($("<div/>").addClass("eltTabVille").css("flex","2").html(element.ville))
                 .append($("<div/>").addClass("eltTabVille").css("flex","1").html(element.nbDates+" Date(s)"))
                 .append($("<div/>").addClass("eltTabVille").css("flex","1").html(element.nbInteresses+" Inscrit(s)"))
@@ -41,17 +41,26 @@ function afficherResumeVilles(rep){
         $("#listeVilles").append(currVille);
         console.log(currVille.data("ville"));
         var data = currVille.data("ville");
-        var currDesc = $("<div/>").addClass("descVille").prepend($("<B/>").html(data["desc"]));
+        var currDesc = $("<div/>").addClass("descVille");
         data["dates"].forEach(element => {
             currDesc.append(
                 $("<div/>").addClass("contDate").append($("<div/>").addClass("date").html(element.dateSpectacle))
-                .append($("<div/>").addClass("date").html(element.nb+" personnes interessée(s)"))
+                .append($("<div/>").addClass("date").html(element.nb+" personne(s) interessée(s)"))
             );
         });
         
+        
         currVille.append(currDesc);
-
+        
         });
+        $("#listeVilles").append(
+            $("<div/>").addClass("containerVille").append(
+                $("<div/>").addClass("ville").append(
+                    $("<div/>").addClass("tabVille").attr("id","crNouvSpectacle").html("Créer un nouveau spectacle")
+                    .css({"background-color":"lighter","text-align":"center","font-weight":"bolder"})
+                    )
+                )
+            );
 }
 
 
@@ -86,6 +95,7 @@ function verifVille(nomVille){
 }
 
 $(document).ready(function(){
+    
     $("#validerEntreeVille").click(function(){
         //Contenu de l'alerte qui sera affichée
         var cont_info;
@@ -101,20 +111,20 @@ $(document).ready(function(){
         var villeEntree = $("#champTxtVille").val();
 
         //On affiche toutes les villes, et on cache les dates
-        $("#listeVilles").slideUp(400);
-        $(".descVille").slideUp();
-        $(".containerVille").delay(200).slideDown();
+        $("#listeVilles").slideUp(300);
+        $(".descVille").delay(500).slideUp(0);
+        $(".containerVille").delay(500).slideDown(0);
         
 
         //Si le bouton n'est pas le dernier élément de la section, on supprime ce dernier élément
         //Le dernier élément ne peut normalement être que le bouton ou une alerte
         if(!$("#entrerVille").children().last().is($(this))){
-            $("#entrerVille").children().last().slideUp(400,function(){$(this).remove()});
+            $("#entrerVille").children().last().slideUp(200,function(){$(this).remove()});
         }
 
         //Si le champ texte est vide, on affiche toutes les villes, ET ON NE LANCE PAS LA REQUETE AJAX
         if(villeEntree == ""){
-            $("#listeVilles").slideDown(400);
+            $("#listeVilles").slideDown(300);
             return;
         }
 
@@ -144,18 +154,19 @@ $(document).ready(function(){
             //La ville se trouve déja dans la BDD, on ajoute ou modifie des dates
             classes = "alert alert-warning";
             info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>! (Voir ci dessous)";
-            //$("#listeVilles").delay(500).slideDown(500);
+            
         }
         else{
             //La ville n'est pas dans la BDD, on va choisir de nouvelles dates
             classes = "alert alert-success";
             info = "Veuillez <b>choisir des dates</b> pour <b>"+reponseVerifVille[0]+" </b>!";
-            $("#listeVilles").delay(100).slideUp(500);
+           
         }
 
-        //On affiche l'info voulue
+        //On affiche l'info voulue (définie par le if...esle précédent)
+
         //On cache le loader
-        $(".loader").children().last().delay(200).hide();
+        $(".loader").children().last().hide();
         //On réactive le bouton
         $("#validerEntreeVille").prop("disabled",false);
         //On affiche l'alerte
@@ -163,20 +174,23 @@ $(document).ready(function(){
         .html(info)
         .css("font-size","smaller").hide();
         $("#entrerVille").append(cont_info);
-        $("#entrerVille").children().last().delay(500).slideDown(400);
+        $("#entrerVille").children().last().slideDown(0);
             
-
+        //On affiche les spectacles dont la ville correspond à la ville entrée.
         $(".containerVille").each(function(){
-            if($(".ville table td:first",$(this)).html().toUpperCase() == $("#champTxtVille").val().toUpperCase()){
-                $(".descVille",$(this)).delay(200).slideDown(200);
+            //On compare les noms en majuscule.
+            if($(".ville .tabVille .eltTabVille:nth-child(2)",$(this)).html().toUpperCase() == $("#champTxtVille").val().toUpperCase()){
+                $(".descVille",$(this)).slideDown(0);
             }
             else{
-                $(this).slideUp(400);
+                $(this).slideUp(0);
             }
         });    
-        $("#listeVilles").delay(500).slideDown(400);
+        if(reponseVerifVille[2] == false)$("#listeVilles").delay(300).slideDown(300);
             
     });
+
+
     //Désactive le bouton si le champ texte est vide
     /* $("#champTxtVille").on("input",function(){
         
@@ -190,10 +204,15 @@ $(document).ready(function(){
     
     $(document).on("click",".ville",function(){
         /* $(".descVille",$(this)) */$(this).next().slideToggle(200);
-        
-
-
     });
     
+    $("#champTxtVille").keyup(function(contexte){
+        if(contexte.originalEvent.key == "Enter"){
+            $("#validerEntreeVille").trigger("click");
+        }
+    });
+
+
+
 
 });
