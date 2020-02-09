@@ -30,10 +30,11 @@ function afficherResumeVilles(rep){
     var tab = JSON.parse(rep);
     tab.forEach(element => {
         var currVille = $("<div/>").addClass("containerVille").append($("<div/>").addClass("ville")
-            .append($("<table/>")
-                .append($("<td/>").html(element.ville))
-                .append($("<td/>").html(element.nbDates+" Date(s)"))
-                .append($("<td/>").html(element.nbInteresses+" Inscrit(s)"))
+            .append($("<div/>").addClass("tabVille")
+                .append($("<div/>").addClass("eltTabVille").css("flex","4").html(element.desc))
+                .append($("<div/>").addClass("eltTabVille").css("flex","2").html(element.ville))
+                .append($("<div/>").addClass("eltTabVille").css("flex","1").html(element.nbDates+" Date(s)"))
+                .append($("<div/>").addClass("eltTabVille").css("flex","1").html(element.nbInteresses+" Inscrit(s)"))
             )
             ).data("ville",element);
         ;        
@@ -120,7 +121,7 @@ $(document).ready(function(){
         //On désactive le bouton tant que la requête ne'st pas terminée
         $(this).prop("disabled",true);
         //On affiche le loader
-        $("#entrerVille").append(currLoader[0]);
+        $(".loader:first").show();
 
         reponseVerifVille = verifVille(villeEntree);
         /* 
@@ -142,7 +143,7 @@ $(document).ready(function(){
         if(reponseVerifVille[2] == false){
             //La ville se trouve déja dans la BDD, on ajoute ou modifie des dates
             classes = "alert alert-warning";
-            info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>! (Voir ci dessous)<br> <a href='./index.php?view=editerSpectacle&ville="+reponseVerifVille[0]+"'>Cliquez ici pour les modifier / en ajouter</a>";
+            info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>! (Voir ci dessous)";
             //$("#listeVilles").delay(500).slideDown(500);
         }
         else{
@@ -154,7 +155,7 @@ $(document).ready(function(){
 
         //On affiche l'info voulue
         //On cache le loader
-        $("#entrerVille").children().last().delay(200).hide();
+        $(".loader").children().last().delay(200).hide();
         //On réactive le bouton
         $("#validerEntreeVille").prop("disabled",false);
         //On affiche l'alerte

@@ -47,29 +47,28 @@
     display:none;
 }
 
-.ville table{
+.ville .tabVille{
     width:100%;
     text-align:center;
     border: 1px solid rgba(0, 0, 0, 0.212);
-    border-collapse: unset;
     border-radius:5px;
     transition: all 0.5s;
     background-color:grey;
-    color:white
+    color:white;
+    display:flex;
 }
 
-.ville table:hover{
+.ville .tabVille:hover{
     background-color: white;
     color:black;
 }
 
-.ville table td{
+.ville .tabVille .eltTabVille{
     margin-top : 15px;
     margin-bottom:15px;
-    width:33.33%;
 }
 
-.ville table td:nth-child(-n+2){
+.ville .tabVille .eltTabVille:nth-child(-n+3){
     border-right:1px solid rgba(0, 0, 0, 0.212);
 }
 
