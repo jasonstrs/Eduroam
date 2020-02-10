@@ -5,9 +5,8 @@
         header("Location:../index.php?view=accueil");
         die("");
     }
-    include("header.php");
 ?>
-<link rel="stylesheet" type="text/css" href="./style/spectacle.css"/>
+<link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <script src='./js/spectacle.js'></script>
 <h3>
     <div id="titre">
