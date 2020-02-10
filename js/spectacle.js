@@ -29,7 +29,7 @@ function chargerVilles(nomEntre){
 function afficherResumeVilles(rep){
     var tab = JSON.parse(rep);
     tab.forEach(element => {
-        var currVille = $("<div/>").addClass("containerVille").append($("<div/>").addClass("ville")
+        var currVille = $("<div/>").addClass("containerVille nonSelectionnable").append($("<div/>").addClass("ville")
             .append($("<div/>").addClass("tabVille")
                 .append($("<div/>").addClass("eltTabVille").css({"flex":"4","font-weight":"bolder"}).html(element.desc))
                 .append($("<div/>").addClass("eltTabVille").css("flex","2").html(element.ville))
@@ -48,17 +48,73 @@ function afficherResumeVilles(rep){
                 .append($("<div/>").addClass("date").html(element.nb+" personne(s) interessée(s)"))
             );
         });
+        currDesc.append($("<div/>").addClass("ajouterDateSpectacle").html("Ajouter une date à ce spectacle")).click(function(){
+            afficherChoixDate(element);
+        });
+        
         
         
         currVille.append(currDesc);
         
         });
         $("#listeVilles").append(
-            $("<div/>").attr("id","boutonCreerSpectacle").html("Créer un nouveau spectacle")
-            .css({"background-color":"lighter","text-align":"center","font-weight":"bolder"})
+            $("<div/>").attr("id","boutonCreerSpectacle").html("Créer un nouveau spectacle").click(function(){
+                afficherChoixDate();
+            })
         );
 }
 
+
+/**
+ * Cette fonction va remplir et afficher en fonction du contexte (element)
+ * la div "choixDates"
+ * 
+ * Si typeof element => object :
+ *      On a fourni un spectacle existant, on n'a donc qu'à choisir les nouvelles dates
+ * Si typeof element => string :
+ *      On a entré un nom de ville, on doit donc choisir la description du spectacle + les dates
+ * Si typeof element => undefined :
+ *      On a rien entré, on doit choisir un nom de ville, une description et des dates.
+ */
+
+function afficherChoixDate(element){
+    var titre;
+    var ville, desc;
+    $("#choisirDates").slideUp(400,function(){
+        $("#champTxtVilleBis").attr("disabled",false);
+        $("#champTxtDescSpectacle").attr("disabled",false);
+        switch(typeof(element)){
+            case "object":
+                //On veut ajouter une/des date(s) à un spectacle existant
+                console.log("objet");
+                titre = "Choix des dates";
+                ville=element.ville;
+                desc = element.desc;
+                $("#champTxtVilleBis").val(ville).attr("disabled",true);
+                $("#champTxtDescSpectacle").val(desc).attr("disabled",true);
+            break;
+            case "string":
+                //On veut créer un nouveau spectacle, dont on a déja specifié la ville
+                console.log("string");
+                titre = "Choix de la description, et des dates";
+                ville=element;
+                $("#champTxtVilleBis").val(ville);
+            break;
+            case "undefined":
+                //On veut créer un nouveau spectacle
+                console.log("undefined");
+                titre = "Création d'un nouveau spectacle";
+            break;
+        }
+        window.setTimeout(function(){$("#choisirDates .gras:first").html(titre)},200);
+        $("#choisirDates").slideDown(300,function(){
+            $('html, body').animate({
+                scrollTop:$("#choisirDates").offset().top
+            }, 'slow');
+        });
+        
+    });  
+}
 
 /**
  * Fonction qui vérifie si la vile dont le nom est passé en paramètre est dans la BDD où non.
@@ -110,6 +166,7 @@ $(document).ready(function(){
         $("#listeVilles").slideUp(300);
         $(".descVille").delay(500).slideUp(0);
         $(".containerVille").delay(500).slideDown(0);
+        $("#choisirDates").slideUp();
         
 
         //Si le bouton n'est pas le dernier élément de la section, on supprime ce dernier élément
@@ -182,7 +239,10 @@ $(document).ready(function(){
                 $(this).slideUp(0);
             }
         });    
-        if(reponseVerifVille[2] == false)$("#listeVilles").delay(300).slideDown(300);
+        if(reponseVerifVille[2] == true)afficherChoixDate(villeEntree);
+        else $("#listeVilles").delay(300).slideDown(300);
+        
+        
             
     });
 
@@ -199,7 +259,7 @@ $(document).ready(function(){
 
     
     $(document).on("click",".ville",function(){
-        $(this).next().slideToggle(300);
+        $(this).next().slideToggle(300,"swing");
     });
     
     $("#champTxtVille").keyup(function(contexte){

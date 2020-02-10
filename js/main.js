@@ -5,3 +5,5 @@ optionsAffichageDate = { weekday: 'long', year: 'numeric', month: 'long', day: '
 //ex : console.log(dateDefaut.toLocaleDateString('fr-FR', optionsAffichageDate));
 
 var loader = $("<img>").attr({"src":"./ressources/loading.gif"}).css({"width":"50px"});
+
+
