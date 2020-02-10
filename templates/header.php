@@ -185,7 +185,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 		        <?php if (valider("connecte","SESSION")) { ?>
 					<li class="nav-item">
-						<a class="nav-link" href="index.php?view=logout"><b>Se déconnecter</b></a>
+						<a class="nav-link" href="index.php?view=accueil" onclick='<?php session_destroy(); ?>'><b>Se déconnecter</b></a>
 					</li>
 				<?php } ?>
 
