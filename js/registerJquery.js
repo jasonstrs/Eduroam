@@ -51,7 +51,7 @@ $(document).on('click','input[value="Connexion"]',function(){
     $.ajax({
         type: "POST",
         url: "./minControleur/dataConnexion.php",
-        data: {"email":email,"passe":passe,"checked":check},
+        data: {"email":email,"passe":passe,"checked":check,"action":'Connexion'},
         success: function(oRep){
            console.log(oRep);
            switch(oRep){
@@ -94,8 +94,8 @@ $(document).on('click','input[value="Inscription"]',function(){
     if (verificationChamps()){ // petite sécurité
         $.ajax({
             type: "POST",
-            url: "./minControleur/dataInscription.php",
-            data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom},
+            url: "./minControleur/dataConnexion.php",
+            data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom,"action":'Inscription'},
             success: function(oRep){
     
                 if (oRep == 'Success'){
@@ -140,14 +140,14 @@ $(document).on("click","#receive",function(){
     // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
     $.ajax({
         type: "POST",
-        url: "./minControleur/dataMDP.php",
-        data: {"email":email},
+        url: "./minControleur/dataConnexion.php",
+        data: {"email":email,"action":"PassWord"},
         success: function(oRep){
             switch(oRep){
                 case 'success' :
                     $("#keyPass").hide();
                     $("#envoiMail").show();
-                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de modifier votre mot de passe !</p>");
                  break;
  
                  case 'incorrect' :
@@ -193,8 +193,8 @@ $(document).on("click","#receive",function(){
 
         $.ajax({
             type: "POST",
-            url: "./minControleur/mailConfirm.php",
-            data: {"email":email},
+            url: "./minControleur/dataConnexion.php",
+            data: {"email":email,"action":"NewMail"},
             success: function(oRep){
                 switch(oRep){
                     case 'success' :
