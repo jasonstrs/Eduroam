@@ -14,16 +14,24 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 <!-- **** H E A D **** -->
 <head>	
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> Manon
 	<link rel="icon" href="ressources/logo.png">
 	<!--<script src="https://kit.fontawesome.com/05f96bf93f.js"></script>-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-	<script src="js/jquery.js"></script>
+	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<<<<<<< HEAD
 	<title>J'suis pas content TV</title>
+=======
+	<title>Je suis pas content TV</title>
+>>>>>>> Manon
 	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 
 	<!-- Liaisons aux fichiers css de Bootstrap -->
@@ -55,11 +63,48 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	</style>
 
+<<<<<<< HEAD
 	
+=======
+>>>>>>> Manon
 	<script>
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
+<<<<<<< HEAD
+=======
+
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(function() {
+        	$("#collapse-navbar").click(function(){
+        		if ($('#logo').css("height")=="100px")
+        		{
+        		    $('#logo').css({
+        				height : '50px',
+        				transition : "all 0.3s"
+					});       			
+        		}
+        		else{
+        			$('#logo').css({
+	        			height : '100px',
+	        			"transition-delay" : "200ms",
+	        			"transition-duration" : "all 0.7s"
+					});
+        		}
+
+
+        	})
+        });
+
+    </script>
+>>>>>>> Manon
 
                 reader.onload = function (e) {
                     $('#preview').attr('src', e.target.result);
@@ -180,5 +225,5 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
   </nav>
   <!-- Begin page content -->
-</div>
+
 <div class="container">
