@@ -54,13 +54,9 @@ function afficherResumeVilles(rep){
         
         });
         $("#listeVilles").append(
-            $("<div/>").addClass("containerVille").append(
-                $("<div/>").addClass("ville").append(
-                    $("<div/>").addClass("tabVille").attr("id","crNouvSpectacle").html("Créer un nouveau spectacle")
-                    .css({"background-color":"lighter","text-align":"center","font-weight":"bolder"})
-                    )
-                )
-            );
+            $("<div/>").attr("id","boutonCreerSpectacle").html("Créer un nouveau spectacle")
+            .css({"background-color":"lighter","text-align":"center","font-weight":"bolder"})
+        );
 }
 
 
@@ -203,7 +199,7 @@ $(document).ready(function(){
 
     
     $(document).on("click",".ville",function(){
-        /* $(".descVille",$(this)) */$(this).next().slideToggle(200);
+        $(this).next().slideToggle(300);
     });
     
     $("#champTxtVille").keyup(function(contexte){
