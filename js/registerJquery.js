@@ -147,7 +147,7 @@ $(document).on("click","#receive",function(){
                 case 'success' :
                     $("#keyPass").hide();
                     $("#envoiMail").show();
-                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de modifier votre mot de passe !</p>");
                  break;
  
                  case 'incorrect' :
