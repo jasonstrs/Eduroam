@@ -5,13 +5,12 @@
         header("Location:../index.php?view=accueil");
         die("");
     }
-    include("header.php");
 ?>
-<link rel="stylesheet" type="text/css" href="./style/spectacle.css"/>
+<link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <script src='./js/spectacle.js'></script>
 <h3>
     <div id="titre">
-        Planification des spectacles - Ajouter une ville
+        Planification des spectacles
     </div>
 </h3>
 
@@ -22,10 +21,11 @@
             mkInput("text","nomVille","","placeholder='Entrer le nom de la ville' class='form-control' id='champTxtVille'");
         ?>
         <button id="validerEntreeVille" class="btn btn-primary" style="margin-bottom:3px;">Valider</button>
+        <img class="loader" src="./ressources/loading.gif" style="width:50px;display:none;"/>
     </div>
     <div id="listeVilles">
-        <br><span class="gras">Villes où des spectacles ont déja été proposés : </span>
-        Cliquez pour modifier/ajouter des dates, ou consulter les détails pour cette ville
+        <span class="gras">Villes où des spectacles ont déja été proposés : </span>
+            Cliquez sur les villes pour afficher toutes les dates.
         <br>
     
         <script>

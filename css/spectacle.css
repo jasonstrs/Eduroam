@@ -28,8 +28,10 @@
 }
 
 #listeVilles{
-    max-height:600px;
-    overflow:auto;
+    margin-top :10px;
+    padding-top:9px;
+    border-top: 1px lightgray solid;
+    text-align:center;
 }
 
 .lead .gras:nth-child(n+2){
@@ -45,31 +47,34 @@
 
 .descVille{
     display:none;
+    width:80%;
+    margin-left:10%;
+    margin-top:5px;
+
 }
 
-.ville table{
+.ville .tabVille{
     width:100%;
     text-align:center;
     border: 1px solid rgba(0, 0, 0, 0.212);
-    border-collapse: unset;
     border-radius:5px;
     transition: all 0.5s;
     background-color:grey;
-    color:white
+    color:white;
+    display:flex;
 }
 
-.ville table:hover{
+.ville .tabVille:hover{
     background-color: white;
     color:black;
 }
 
-.ville table td{
-    margin-top : 15px;
-    margin-bottom:15px;
-    width:33.33%;
+.ville .tabVille .eltTabVille{
+    margin-top : 5px;
+    margin-bottom:5px;
 }
 
-.ville table td:nth-child(-n+2){
+.ville .tabVille .eltTabVille:nth-child(-n+3){
     border-right:1px solid rgba(0, 0, 0, 0.212);
 }
 
@@ -85,13 +90,26 @@
     display:flex;
     border:1px black solid;
     margin:5px;
-    width:80%;
-    margin-left:10%;
-
 }
 
 .date{
     flex:auto;
 
     
+}
+
+#boutonCreerSpectacle{
+    display: block;
+    text-align:center;
+    color:white;
+    border-radius:5px;
+    background-color:rgb(161, 161, 161);
+    margin-top:5px;
+    transition: all 0.5s;
+}
+
+#boutonCreerSpectacle:hover{
+    background-color:lightgray;
+    color:black;
+    cursor:pointer;
 }
