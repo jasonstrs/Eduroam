@@ -176,10 +176,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	        	<?php if (!valider("connecte","SESSION")) { ?>
 					<li class="nav-item">
 						<a class="nav-link" href="index.php?view=login"><b>Se connecter</b></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="index.php?view=inscription"><b>S'inscrire</b></a>
-					</li>
+					</li>		
 				<?php } ?>
 
 
