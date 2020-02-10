@@ -14,13 +14,13 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 <!-- **** H E A D **** -->
 <head>	
-	
 
 	<link rel="icon" href="ressources/logo.png">
-	<!--<script src="https://kit.fontawesome.com/05f96bf93f.js"></script>-->
+	<script src="https://kit.fontawesome.com/05f96bf93f.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="libs/jquery-3.4.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 	
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,7 +30,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<!-- Liaisons aux fichiers css de Bootstrap -->
 
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
-	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
 	<link href="css/sticky-footer.css" rel="stylesheet" />
 	<!--[if lt IE 9]>
 	  <script src="js/html5shiv.js"></script>
@@ -56,7 +56,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	</style>
 
-	
 	<script>
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -72,10 +71,27 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
         $(function() {
         	$("#collapse-navbar").click(function(){
+        		if ($('#logo').css("height")=="100px")
+        		{
+        		    $('#logo').css({
+        				height : '50px',
+        				transition : "all 0.3s"
+					});       			
+        		}
+        		else{
+        			$('#logo').css({
+	        			height : '100px',
+	        			"transition-delay" : "200ms",
+	        			"transition-duration" : "all 0.7s"
+					});
+        		}
+
+
         	})
         });
 
     </script>
+
 </head>
 <!-- **** F I N **** H E A D **** -->
 
