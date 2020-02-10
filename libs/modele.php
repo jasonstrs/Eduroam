@@ -88,6 +88,19 @@ function isConfirm($idUser)
 }
 
 /**
+ * Verif si l'utilisateur a confirmé son mail
+ * Return 1 si c'est validé
+ */
+function isConfirmViaMail($email)
+{
+	// vérifie si l'utilisateur a validé son mail
+	$SQL ="SELECT code FROM user WHERE email='$email'";
+	if(SQLGetChamp($SQL))return 1;
+	return 0; 
+}
+
+
+/**
  * L'utilisateur vient de confirmer son adresse
  */
 function confirmAdress ($id) {
