@@ -11,6 +11,7 @@ $email = valider("email", "COOKIE");
 $passe = valider("passe", "COOKIE"); 
 if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
 else $checked="";
+
 ?>
 
 <!DOCTYPE html>
