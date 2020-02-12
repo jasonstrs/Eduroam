@@ -29,8 +29,7 @@ function verifUser($email,$password,$check)
 	if (isConfirm($id)){ // oui c'est confirmé !
 		// Cas succès : on enregistre pseudo, idUser dans les variables de session 
 		// il faut appeler session_start ! 
-		
-		session_start();
+
 		$_SESSION["email"] = $email;
 		$_SESSION["idUser"] = $id;
 		$_SESSION["hash"] = hashCode($id);
