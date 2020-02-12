@@ -278,7 +278,7 @@ function verifNom(){
     var nom = $("#nom").val();
     if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(nom)) && nom!=""){
         $("#verifNomInscription").show();
-        $("#verifNomInscription").html("Veuillez saisir un nom correct.");
+        $("#verifNomInscription").html("Veuillez saisir un nom correct (uniquement des lettres).");
         return 0;
     }
     $("#verifNomInscription").hide(); // Si l'utilisateur a corrigé son erreur, le msg disparait
@@ -289,7 +289,7 @@ function verifPrenom(){
     var prenom = $("#prenom").val();
     if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(prenom)) && prenom !=""){
         $("#verifPrenomInscription").show();
-        $("#verifPrenomInscription").html("Veuillez saisir un prénom correct.");
+        $("#verifPrenomInscription").html("Veuillez saisir un prénom correct (uniquement des lettres).");
         return 0;
     }
     $("#verifPrenomInscription").hide();
