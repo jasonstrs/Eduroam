@@ -13,8 +13,6 @@ $email = valider("email", "COOKIE");
 $passe = valider("passe", "COOKIE"); 
 if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
 else $checked="";
-
-
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +24,21 @@ else $checked="";
     <meta charset="utf-8">
   </head>
   <body>
+
+<?php
+if (valider("mail","GET")){
+  if (valider("mail","GET") == "fail"){
+    echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
+      Adresse mail inexistante ou déjà confirmée.
+    </div>";
+  } else if (valider("mail","GET") == "success"){
+    echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
+         Adresse mail confirmée. Vous pouvez désormais vous connecter !
+         </div>";
+  }
+}
+
+?>
 
 <div id='mainConnexion'>
   <div class="page-header">

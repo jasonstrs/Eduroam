@@ -29,6 +29,7 @@ session_start();
         
                 $aux = verifUser($email,$passe,$check); // verifie si l'utilisateur est dans la bdd et si il a confirmé son mail
                                                         // on peut aussi savoir si on garde l'utilisateur en cookie
+
                 echo $aux;
             } else { // sécurité
                 header("Location:../index.php?view=accueil");
@@ -47,8 +48,9 @@ session_start();
                 } else {
                     $hashCode = md5(uniqid(rand(), true));
                     $id =createUser($email,$nom,$prenom,$passe,$hashCode);
-                    
+                    $lien = "?action=verificationMail&hash=".$hashCode;
                     // on envoie un mail : A AJOUTER
+                    envoiMail("jxbc9@vmani.com","Finaliser votre inscription",$nom,$prenom,$lien);
                     echo "Success";
                 }   
             } else { // sécurité

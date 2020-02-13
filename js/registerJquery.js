@@ -71,7 +71,6 @@ $(document).on('click','input[value="Connexion"]',function(){
 
                 case 'success' :
                    console.log("cas3");
-                   //////// envoyer vers la page d'accueil !
                    location.replace("index.php?view=accueil");
                 break;
 

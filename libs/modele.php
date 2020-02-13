@@ -73,6 +73,18 @@ function hashCode($id)
 	// on aurait du utiliser SQLSelect
 }
 
+/**
+ * Retourne le id
+ */
+function getIdViaHash($hash)
+{
+	
+	$SQL="SELECT idU FROM user WHERE hashCode='$hash'";
+	return SQLGetChamp($SQL);
+	// si on avait besoin de plus d'un champ
+	// on aurait du utiliser SQLSelect
+}
+
 
 
 /**
