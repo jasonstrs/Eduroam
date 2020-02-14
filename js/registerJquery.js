@@ -92,18 +92,20 @@ $(document).on('click','input[value="Inscription"]',function(){
     var prenom = $("#prenom").val();
 
     if (verificationChamps()){ // petite sécurité
+        $("#inscription").attr("disabled",true);
         $.ajax({
             type: "POST",
             url: "./minControleur/dataConnexion.php",
             data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom,"action":'Inscription'},
             success: function(oRep){
-    
+                
                 if (oRep == 'Success'){
                     $("#mainInscription").hide();
                     $("#mainConnexion").hide();
                     $("#envoiMail").show();
                     $("#envoiMail").html("<h4 class=\"alert-heading\">Inscription terminée</h4><p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !</p>");
                 } else if (oRep == 'Exist'){
+                    $("#inscription").attr("disabled",false);
                     $("#verifMailInscription").show();
                     $("#verifMailInscription").html("Adresse mail déjà existante.");
                 }
@@ -127,7 +129,7 @@ $(document).on("click",'#forgotPass',function(){
 });
 
 $(document).on("click","#receive",function(){
-    console.log("receive");
+    
     // on verifie que l'adresse mail n'est pas incorrecte
     var email = $("#emailRecup").val();
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
@@ -138,6 +140,7 @@ $(document).on("click","#receive",function(){
     // on envoie une reqûete ajax dans un minControleur
     // on regarde si l'adresse existe, si oui, on envoie un mail
     // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
+    $("#receive").attr("disabled",true);
     $.ajax({
         type: "POST",
         url: "./minControleur/dataConnexion.php",
@@ -151,6 +154,7 @@ $(document).on("click","#receive",function(){
                  break;
  
                  case 'incorrect' :
+                    $("#receive").attr("disabled",false);
                     $("#verifForgetPass").show();
                     $("#verifForgetPass").html("Adresse mail inexistante.");
                  break;
@@ -190,7 +194,7 @@ $(document).on("click","#receive",function(){
             $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
             return;
         }
-
+        $("#receiveMail").attr("disabled",true);
         $.ajax({
             type: "POST",
             url: "./minControleur/dataConnexion.php",
@@ -204,6 +208,7 @@ $(document).on("click","#receive",function(){
                      break;
      
                      case 'confirm' :
+                        $("#receiveMail").attr("disabled",false);
                         $("#verifMailReceive").show();
                         $("#verifMailReceive").html("Adresse mail déjà confirmée. ")
                         $("#verifMailReceive").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
@@ -214,6 +219,7 @@ $(document).on("click","#receive",function(){
                      break;
      
                      case 'incorrect' :
+                        $("#receiveMail").attr("disabled",false);
                         $("#verifMailReceive").show();
                         $("#verifMailReceive").html("Adresse mail inexistante.");
                      break;

@@ -4,46 +4,6 @@
 // inclure ici la librairie faciliant les requêtes SQL
 include_once("maLibSQL.pdo.php");
 
-
-/*
-
-
-
-function verifUserBdd($login,$passe)
-{
-	// Vérifie l'identité d'un utilisateur 
-	// dont les identifiants sont passes en paramètre
-	// renvoie faux si user inconnu
-	// renvoie l'id de l'utilisateur si succès
-
-	$SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe'";
-
-	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
-}
-
-function verifChamp($nomChamp,$valueChamp,$table){
-	$SQL = "SELECT $nomChamp FROM $table";
-	$reponse = parcoursRS(SQLSelect($SQL));
-	foreach($reponse as $champs){
-		foreach($champs as $data){
-			if($valueChamp == $data)return 0;
-		}
-	}
-	return 1;
-}
-
-function passerAdmin ($id) {
-	$SQL = "UPDATE users SET premium=1 WHERE id='$id'";
-	SQLUpdate($SQL);
-}
-
-function passerNonAdmin ($id) {
-	$SQL = "UPDATE users SET premium=0 WHERE id='$id'";
-	SQLUpdate($SQL);
-}*/
-
 /**
  * Verif si l'utilisateur est dans la BDD 
  */
@@ -57,8 +17,6 @@ function verifUserBdd($email,$passe)
 	$SQL="SELECT idU FROM user WHERE email='$email' AND passe='$passe'";
 
 	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
 }
 
 /**
@@ -69,8 +27,20 @@ function hashCode($id)
 	
 	$SQL="SELECT hashCode FROM user WHERE idU='$id'";
 	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
+}
+
+function getPrenom($id)
+{
+	
+	$SQL="SELECT prenom FROM user WHERE idU='$id'";
+	return SQLGetChamp($SQL);
+}
+
+function getNom($id)
+{
+	
+	$SQL="SELECT nom FROM user WHERE idU='$id'";
+	return SQLGetChamp($SQL);
 }
 
 /**
@@ -81,8 +51,13 @@ function getIdViaHash($hash)
 	
 	$SQL="SELECT idU FROM user WHERE hashCode='$hash'";
 	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
+}
+
+function getIdViaMail($email)
+{
+	
+	$SQL="SELECT idU FROM user WHERE email='$email'";
+	return SQLGetChamp($SQL);
 }
 
 
@@ -111,6 +86,13 @@ function isConfirmViaMail($email)
 	return 0; 
 }
 
+/**
+ * L'utilisateur vient de changer son mdp
+ */
+function changePass ($id,$newPasse) {
+	$SQL = "UPDATE user SET passe='$newPasse' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
 
 /**
  * L'utilisateur vient de confirmer son adresse

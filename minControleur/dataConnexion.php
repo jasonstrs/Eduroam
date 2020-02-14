@@ -49,9 +49,10 @@ session_start();
                     $hashCode = md5(uniqid(rand(), true));
                     $id =createUser($email,$nom,$prenom,$passe,$hashCode);
                     $lien = "?action=verificationMail&hash=".$hashCode;
-                    // on envoie un mail : A AJOUTER
-                    envoiMail("jxbc9@vmani.com","Finaliser votre inscription",$nom,$prenom,$lien);
                     echo "Success";
+                    // on envoie un mail : A AJOUTER
+                    envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
+                    
                 }   
             } else { // sécurité
                 header("Location:../index.php?view=accueil");
@@ -62,9 +63,15 @@ session_start();
             if (valider("email","POST")){ // on vérifie que toutes les valeurs sont définies
                 $email = valider('email',"POST");
                 if (verifExistMail($email)){ // l'adresse est existante
-                   
+                    $id = getIdViaMail($email);
+                    $hashCode = hashCode($id);
+                    $prenom = getPrenom($id);
+                    $nom = getNom($id);
+                    $lien = "?action=verificationPassword&hash=".$hashCode;
                         // ici on envoie un mail pour récup le mdp /////////////////////////////////////////////
+                
                     echo "success";
+                    envoiMailPass("jason.sautieres@gmail.com","Mot de passe",$nom,$prenom,$lien);
                 } else {
                     echo "incorrect";
                 }
@@ -80,8 +87,13 @@ session_start();
                     if(isConfirmViaMail($email)){ // on regarde si le mail est déjà confirmé
                         echo "confirm";
                     } else {
-                        // ici on envoie un mail /////////////////////////////////////////////
+                        $id = getIdViaMail($email);
+                        $hashCode = hashCode($id);
+                        $prenom = getPrenom($id);
+                        $nom = getNom($id);
+                        $lien = "?action=verificationMail&hash=".$hashCode;
                         echo "success";
+                        envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
                     }
                 } else {
                     echo "incorrect";

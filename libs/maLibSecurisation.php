@@ -53,6 +53,14 @@ function verifUser($email,$password,$check)
 }
 
 
+function newPasse($hashCode){
+	echo "<form method='POST' action='#'>";
+	echo "<input name='newP' type='password'>";
+	echo "<input type='submit'>";
+	echo "</form>";
+}
+
+
 
 
 /**
