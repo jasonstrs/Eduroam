@@ -1,6 +1,0 @@
--- MDP oublie --
-3. Lorsqu'on appuie sur valider, vérifier avec les REGEX et vérifier que les deux passes sont identiques
-4. Si tout validé, $flag=1 et qs='success'
-5. Si pas validé, $flag=0 et on appelle une nouvelle fois la fonction new Passe
-6. Préciser qu'est ce qu'un MDP correct, pareil que 'mdp oublié'
-7. Gérer la page login.php, savoir ce que l'on renvoie !

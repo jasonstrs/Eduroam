@@ -68,10 +68,9 @@ session_start();
                     $prenom = getPrenom($id);
                     $nom = getNom($id);
                     $lien = "?action=verificationPassword&hash=".$hashCode;
-                        // ici on envoie un mail pour récup le mdp /////////////////////////////////////////////
                 
                     echo "success";
-                    envoiMailPass("jason.sautieres@gmail.com","Mot de passe",$nom,$prenom,$lien);
+                    envoiMailPass($email,"Mot de passe",$nom,$prenom,$lien);
                 } else {
                     echo "incorrect";
                 }

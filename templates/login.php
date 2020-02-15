@@ -26,14 +26,26 @@ else $checked="";
   <body>
 
 <?php
-if (valider("mail","GET")){
-  if (valider("mail","GET") == "fail"){
+if (valider("mail","GET")){ // si on clic sur le nouveau mail de confirmation
+  if (valider("mail","GET") == "fail"){ // ERREUR
     echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
       Adresse mail inexistante ou déjà confirmée.
     </div>";
-  } else if (valider("mail","GET") == "success"){
+  } else if (valider("mail","GET") == "success"){ // SUCCÉS
     echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
          Adresse mail confirmée. Vous pouvez désormais vous connecter !
+         </div>";
+  }
+}
+
+if (valider("pass","GET")){ // si on demande à changer de MDP
+  if (valider("pass","GET") == "fail"){ // ERREUR
+    echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
+      Lien erroné, le mot de passe n'a pas pu être changé.
+    </div>";
+  } else if (valider("pass","GET") == "success"){ //SUCCÉS
+    echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
+         Le mot de passe a été modifié. Vous pouvez désormais vous connecter !
          </div>";
   }
 }

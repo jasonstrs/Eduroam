@@ -49,7 +49,7 @@ switch($action){
             if ($flag){ // si le form a déjà été lancé et qu'on a récupéré les MDP
                 if (preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#",$newPasse)){ // on teste si le MDP respecte la norme
                     if ($newPasse == $newPasseBis) { // on teste si les deux MDP sont identiques
-                        //changePass($id,sha1(md5("NEW PASSE")));
+                        changePass($id,sha1(md5($newPasse)));
                         $qs="success";
                     } else {
                         echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
@@ -64,7 +64,7 @@ switch($action){
                     $flag=0;
                     newPasse($hash);
                 }
-            } else // on relance la fonction car premier clic sur le lien
+            } else // on lance la fonction car premier clic sur le lien
                 newPasse($hash);
         } else { // probleme de HASH
             $qs="fail";
