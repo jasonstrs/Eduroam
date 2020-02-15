@@ -52,34 +52,6 @@ function verifUser($email,$password,$check)
 	}	
 }
 
-
-function newPasse($hashCode){
-echo "<form method='POST' action='#' name='form'>";
-	echo "<div class=\"jumbotron\">";
-    echo "<div class=\"form-group row\">";
-    echo    "<label for=\"inputPasswordInscription\" class=\"col-sm-2 col-form-label\">Mot de passe</label>";
-    echo    "<div class=\"col-sm-10\">";
-	echo     "<input type=\"password\" class=\"form-control\" id=\"inputPasswordInscription\" name=\"newP\" placeholder=\"Saisir votre mot de passe\">";
-	echo    "<small id='signIn' class='form-text text-muted'>Le mot de passe doit contenir au minimum 8 caractères dont 1 majuscule, 1 minuscule et 1 chiffre.</small>";
-    echo    "</div>";
-    echo  "</div>";
-	echo	"<div class=\"form-group row\">";
-    echo    "<label for=\"inputPasswordConfirm\" class=\"col-sm-2 col-form-label\">Confirmation</label>";
-    echo    "<div class=\"col-sm-10\">";
-    echo      "<input type=\"password\" class=\"form-control\" id=\"inputPasswordConfirm\" name=\"newPbis\" placeholder=\"Confirmer votre mot de passe\">";
-    echo    "</div>";
-    echo "</div>";
-    echo  "<div class='submit'>";
-    echo    "<input type=\"submit\" value=\"Modifier\" class=\"btn btn-danger\">";
-    echo  "</div>";
-	echo "</div>";
-	echo "<input type='hidden' name='form' value='true'>";
-echo "</form>";
-}
-
-
-
-
 /**
  * Fonction à placer au début de chaque page privée
  * Cette fonction redirige vers la page $urlBad en envoyant un message d'erreur 
@@ -100,7 +72,3 @@ function securiser($urlBad,$urlGood=false)
 }
 
 ?>
-
-<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />
-<link href="../css/register.css" rel="stylesheet" />
-<link href="../css/sticky-footer.css" rel="stylesheet" />

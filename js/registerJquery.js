@@ -98,7 +98,7 @@ $(document).on('click','input[value="Inscription"]',function(){
             url: "./minControleur/dataConnexion.php",
             data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom,"action":'Inscription'},
             success: function(oRep){
-                
+                console.log(oRep);
                 if (oRep == 'Success'){
                     $("#mainInscription").hide();
                     $("#mainConnexion").hide();

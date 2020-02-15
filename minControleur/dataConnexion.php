@@ -49,10 +49,8 @@ session_start();
                     $hashCode = md5(uniqid(rand(), true));
                     $id =createUser($email,$nom,$prenom,$passe,$hashCode);
                     $lien = "?action=verificationMail&hash=".$hashCode;
-                    echo "Success";
-                    // on envoie un mail : A AJOUTER
                     envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
-                    
+                    echo "Success";
                 }   
             } else { // sécurité
                 header("Location:../index.php?view=accueil");
@@ -68,9 +66,9 @@ session_start();
                     $prenom = getPrenom($id);
                     $nom = getNom($id);
                     $lien = "?action=verificationPassword&hash=".$hashCode;
-                
-                    echo "success";
                     envoiMailPass($email,"Mot de passe",$nom,$prenom,$lien);
+                    echo "success";
+                    
                 } else {
                     echo "incorrect";
                 }
@@ -91,8 +89,9 @@ session_start();
                         $prenom = getPrenom($id);
                         $nom = getNom($id);
                         $lien = "?action=verificationMail&hash=".$hashCode;
-                        echo "success";
                         envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
+                        echo "success";
+                        
                     }
                 } else {
                     echo "incorrect";
