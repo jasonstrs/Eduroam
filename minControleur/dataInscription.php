@@ -5,11 +5,11 @@
    include_once "../libs/modele.php";
 
     
-    if (valider("email") && valider("passe") && valider("nom") && valider("prenom")){
-        $email = valider("email");
-        $passe = sha1(md5(valider("passe")));
-        $nom = valider("nom");
-        $prenom=valider("prenom");
+    if (valider("email","POST") && valider("passe","POST") && valider("nom","POST") && valider("prenom","POST")){
+        $email = valider("email","POST");
+        $passe = sha1(md5(valider("passe","POST")));
+        $nom = valider("nom","POST");
+        $prenom=valider("prenom","POST");
         
         if (verifExistMail($email)){
             echo "Exist";

@@ -20,7 +20,6 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
  */
 function verifUser($email,$password,$check)
 {
-	
 	$id = verifUserBdd($email,$password);
 
 	if (!$id) return "incorrect";

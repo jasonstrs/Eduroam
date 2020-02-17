@@ -2,7 +2,7 @@
 // Si la page est appelée directement par son adresse, on redirige en passant pas la page index
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
-	header("Location:../index.php?view=login");
+	header("Location:../index.php?view=accueil");
 	die("");
 }
 
@@ -15,6 +15,8 @@ else $checked="";
 
 <!DOCTYPE html>
 <html lang='fr'>
+  <script src='./js/registerJquery.js'></script>
+  <link rel="stylesheet" type="text/css" href="./css/register.css">
   <head>
     <title>First Page</title>
     <meta charset="utf-8">
@@ -39,6 +41,7 @@ else $checked="";
         <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
+          <div id="checkPass" class='text-danger'></div>
         </div>
       </div>
       <div class="custom-control custom-checkbox my-1 mr-sm-2" id='divCheck'>
@@ -126,5 +129,15 @@ else $checked="";
     <input type='submit' value='Recevoir' id='receive' class='btn btn-danger'>
   </div>
 </div>
+
+<div class="form-group row" id='haveMail'>
+  <h4>Recevoir un nouveau mail</h4>
+  <div class="col-sm-10" id='receiveNewMail'>
+    <input type="email" class="form-control" name='newM' id="emailReceive" placeholder="Saisir votre email">
+    <div id='verifMailReceive' class='text-danger'></div>
+    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-danger'>
+  </div>
+</div>
+
 </body>
 </html>
