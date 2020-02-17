@@ -5,6 +5,10 @@
     font-weight:bold;
 }
 
+input[type="text"]{
+    margin-bottom:5px;
+}
+
 #champTxtVille{
     width:50%;
     display:inline-block;
@@ -41,7 +45,6 @@
 
 .ville{
     position:relative;
-    margin-top:5px;
     cursor:pointer;
 }
 
@@ -49,8 +52,12 @@
     display:none;
     width:80%;
     margin-left:10%;
-    margin-top:5px;
+    /* margin-top:5px; */
 
+}
+
+.containerVille{
+    margin-top:5px;
 }
 
 .ville .tabVille{
@@ -72,15 +79,15 @@
 .ville .tabVille .eltTabVille{
     margin-top : 5px;
     margin-bottom:5px;
+    /* -webkit-user-select: none; // Safari 
+    -ms-user-select: none; // IE 10+ and Edge 
+    user-select: none; // Standard syntax  */
 }
 
 .ville .tabVille .eltTabVille:nth-child(-n+3){
     border-right:1px solid rgba(0, 0, 0, 0.212);
 }
 
-.gras{
-    font-weight:bold;
-}
 
 #choisirDates{
     display:none;
@@ -93,17 +100,42 @@
 }
 
 .date{
-    flex:auto;
-
-    
+    flex:auto;    
 }
 
-#crNouvSpectacle{
+#boutonCreerSpectacle{
     display: block;
     text-align:center;
+    color:white;
+    font-weight:bolder;
+    border-radius:5px;
     background-color:rgb(161, 161, 161);
+    margin-top:5px;
+    transition: all 0.5s;
 }
 
-#crNouvSpectacle:hover{
+#boutonCreerSpectacle:hover{
     background-color:lightgray;
+    color:black;
+    cursor:pointer;
+}
+
+.ajouterDateSpectacle{
+    display:inline-block;
+    text-align:center;
+    margin-top:5px;
+    padding:5px;
+    border:1px black solid;
+    border-radius:5px;
+}
+
+.methodeChoixDates{
+    display:inline-block;
+    width:200px;
+}
+
+#champTxtVilleBis{
+}
+
+#champTxtDescSpectacle{
 }

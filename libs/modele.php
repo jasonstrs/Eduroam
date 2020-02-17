@@ -125,6 +125,22 @@ function verifExistMail($email){
 	return 0; 
 }
 
+
+//Charge les spectacles présents dans la BDD
+//Renvoie la structure suivante : 
+/*id : id du spectacle,
+            desc : description du spectacle,
+            ville : ville où va avoir lieu le spectacle,
+            nbSpecVille : nombre de spectacles pour cette ville
+            nbDates : nombre de dates total
+            nbInteresses : nombre de personnes interessées
+            dates : [
+                idSpectacle,
+                idDate,
+                date,
+                nb : nombre de personnes pour cette date
+			]
+*/
 function selectVilles($nom = ""){
 	$reponse = array();
 	$SQL = "SELECT idSpectacle,ville,description FROM spectacle";
@@ -179,6 +195,11 @@ function verifVilleNom($nom){
 function idVilleNom($nom){
 	$SQL = "SELECT idSpectacle FROM spectacle WHERE ville='$nom'";
 	return SQLGetChamp($SQL);
+}
+
+
+function isSuperAdmin($id,$hash){
+	return SQLGetChamp("SELECT superadmin FROM user WHERE idU='$id' AND hashCode='$hash'");
 }
 
 ?>

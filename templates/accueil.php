@@ -1,1 +1,1 @@
-<a href="./index.php?view=creerSpectacle">Créer un spectacle</a>
+<a href="./index.php?view=planiSpectacles">Créer un spectacle</a>
