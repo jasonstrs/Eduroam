@@ -29,14 +29,14 @@ function chargerVilles(nomEntre){
 function afficherResumeVilles(rep){
     var tab = JSON.parse(rep);
     tab.forEach(element => {
-        var currVille = $("<div/>").addClass("containerVille nonSelectionnable").append($("<div/>").addClass("ville")
+        var currVille = $("<div/>").data("ville",element).addClass("containerVille nonSelectionnable").append($("<div/>").addClass("ville")
             .append($("<div/>").addClass("tabVille")
                 .append($("<div/>").addClass("eltTabVille").css({"flex":"4","font-weight":"bolder"}).html(element.desc))
                 .append($("<div/>").addClass("eltTabVille").css("flex","2").html(element.ville))
                 .append($("<div/>").addClass("eltTabVille").css("flex","1").html(element.nbDates+" Date(s)"))
                 .append($("<div/>").addClass("eltTabVille").css("flex","1").html(element.nbInteresses+" Inscrit(s)"))
             )
-            ).data("ville",element);
+            )
         ;        
         $("#listeVilles").append(currVille);
         console.log(currVille.data("ville"));
@@ -48,9 +48,10 @@ function afficherResumeVilles(rep){
                 .append($("<div/>").addClass("date").html(element.nb+" personne(s) interessée(s)"))
             );
         });
-        currDesc.append($("<div/>").addClass("ajouterDateSpectacle").html("Ajouter une date à ce spectacle")).click(function(){
+        currDesc.append($("<div/>").addClass("ajouterDateSpectacle pointer").html("Ajouter une date à ce spectacle").click(function(){
+            $("body").data("idSpectacle",$(this).parent().parent().data("ville").id);
             afficherChoixDate(element);
-        });
+        }));
         
         
         
@@ -59,6 +60,7 @@ function afficherResumeVilles(rep){
         });
         $("#listeVilles").append(
             $("<div/>").attr("id","boutonCreerSpectacle").html("Créer un nouveau spectacle").click(function(){
+                $("body").data("idSpectacle",null);
                 afficherChoixDate();
             })
         );
@@ -81,8 +83,8 @@ function afficherChoixDate(element){
     var titre;
     var ville, desc;
     $("#choisirDates").slideUp(400,function(){
-        $("#champTxtVilleBis").attr("disabled",false);
-        $("#champTxtDescSpectacle").attr("disabled",false);
+        $("#champTxtVilleBis").val("").attr("disabled",false);
+        $("#champTxtDescSpectacle").val("").attr("disabled",false);
         switch(typeof(element)){
             case "object":
                 //On veut ajouter une/des date(s) à un spectacle existant
@@ -106,6 +108,7 @@ function afficherChoixDate(element){
                 titre = "Création d'un nouveau spectacle";
             break;
         }
+        $(".champnomDesc").trigger("input");
         window.setTimeout(function(){$("#choisirDates .gras:first").html(titre)},200);
         $("#choisirDates").slideDown(300,function(){
             $('html, body').animate({
@@ -145,6 +148,8 @@ function verifVille(nomVille){
     });
     return rep;
 }
+
+var selectDate = $("<input/>").attr({"type":"date"}).addClass("inputDate pointer");
 
 $(document).ready(function(){
     
@@ -216,7 +221,7 @@ $(document).ready(function(){
            
         }
 
-        //On affiche l'info voulue (définie par le if...esle précédent)
+        //On affiche l'info voulue (définie par le if...else précédent)
 
         //On cache le loader
         $(".loader").children().last().hide();
@@ -261,7 +266,11 @@ $(document).ready(function(){
     $(document).on("click",".ville",function(){
         $(this).next().slideToggle(300,"swing");
     });
-    
+
+
+    /**
+     * Donne la possibilité d'appuyer sur Entrée pour choisir une ville, plutôt que de devoir cliquer sur le bouton
+     */
     $("#champTxtVille").keyup(function(contexte){
         if(contexte.originalEvent.key == "Enter"){
             $("#validerEntreeVille").trigger("click");
@@ -269,6 +278,75 @@ $(document).ready(function(){
     });
 
 
+    /**
+     * Ajoute les input Date
+     */
+    $("#boutonSelectDates").click(function(){
+        $("#selectionDesDates").empty().append(selectDate.clone(1));
+        $("#selectionDesDates").append($("<div/>").attr("id","ajouterInputDate").addClass("pointer").html("+").click(function(){
+            $(this).before(selectDate.clone(1));
+        }));
+    });
 
+    /**
+     * Si au moins l'un des input date est rempli, affiche le bouton de validation.
+     */
+    $(document).on("input",".inputDate",function(){
+        $("#boutonValiderDates").slideUp(0);
+        $(".inputDate").each(function(flag){
+            var date = $(this)[0].value;
+            if(date!=""){
+                $("#boutonValiderDates").slideDown(0);
+            }
+        });
+    });
+
+    /**
+     * Si l'un des 2 champs texte "ville" ou "description" sont vides, le bouton pour continuer est désactivé.
+     */
+    $(".champnomDesc").on("input",function(){
+        if($("#champTxtVilleBis").val()!="" && $("#champTxtDescSpectacle").val()!="")$("#boutonSelectDates").attr("disabled",false);
+        else $("#boutonSelectDates").attr("disabled",true);
+    });
+
+    /**
+     * Quand on appuie sur le bouton de confirmation, affiche un modal qui résume tout le spectacle qui va être crée :
+     * ville, description et dates
+     */
+    $("#boutonValiderDates").click(function(){
+        var tabDatesJS = new Array();
+        var tabDatesHTML = "";
+        var contenu;
+        var i=1;
+        var requete = new Object();
+        var ville = $("#champTxtVilleBis").val();
+        var desc = $("#champTxtDescSpectacle").val();
+        $(".inputDate").each(function(flag){
+            var date = $(this)[0].value;
+            if(date!=""){
+                tabDatesJS.push(date);
+            }
+        });
+        console.log(tabDatesJS);
+        tabDatesJS.sort(function(a, b){
+            //A compléter : fonction de tri et de suppression des doublons.
+        });
+        console.log(tabDatesJS);
+        tabDatesJS.forEach(element => {
+            tabDatesHTML+="<tr><th scope='row'>"+ i++ +"</th><td>"+element+"</td></tr>";
+        });
+        contenu = "<h5> Ville :  "+ville
+        +"<br>Decription : "+desc
+        +"<br>Dates : </h5><table class='table table-hover center'> <thead><tr><th scope='col'>#</th><th scope='col'>Année - Mois - Jour</th></tr></thead><tbody>"+tabDatesHTML+"</table>";
+
+        requete = {
+            method:"POST",
+            url:"./minControleur/dataSpectacle.php",
+            data:{"action":"creerSpectacle","idSpectacle":$("body").data("idSpectacle"),"dates":tabDatesJS,"ville":ville,"desc":desc}
+        }
+
+        creerModal("modalConfirmerDate","Confirmation de l'ajout des dates",contenu,"Confirmer","btn-success",requete);
+        $("#modalConfirmerDate").modal();
+    });
 
 });
