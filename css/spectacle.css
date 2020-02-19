@@ -134,8 +134,31 @@ input[type="text"]{
     width:200px;
 }
 
-#champTxtVilleBis{
+.inputDate{
+    display:block;
+    width:20%;
+    margin-left:40%;
+    margin-top:5px;
+    border-radius:5px;
 }
 
-#champTxtDescSpectacle{
+#ajouterInputDate{
+    width:20%;
+    margin-left:40%;
+    margin-top:5px;
+    border-radius:5px;
+    border:1px black outset;
+    background-color:white;
+    color:black;
+    transition:all 0.2s;
+}
+
+#ajouterInputDate:hover{
+    border: 1px black inset;
+    background-color:grey;
+    color:white;
+}
+
+#boutonValiderDates{
+    display:none;
 }
