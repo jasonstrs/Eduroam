@@ -1,0 +1,18 @@
+h3 {
+    text-align: center;
+}
+
+.divForm {
+    display: inline-flex;
+}
+
+.img_profil {
+    height: 30px;
+    width: 30px;
+    margin-top: 3px;
+    margin-left: 2px;
+}
+
+.clic{
+    cursor: pointer;
+}
