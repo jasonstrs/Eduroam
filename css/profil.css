@@ -16,3 +16,7 @@ h3 {
 .clic{
     cursor: pointer;
 }
+
+.divForm > input {
+    margin-right: 5px;
+}

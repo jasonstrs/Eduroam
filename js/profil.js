@@ -3,6 +3,7 @@ $(document).ready(function(){
     $("#inputFirstName3").attr("disabled",true);
     $("#inputPassword3").attr("disabled",true);
     $("#inputName3").attr("disabled",true);
+    
     $.ajax({
         type: "GET",
         url: "./minControleur/profil.php",
@@ -55,32 +56,127 @@ function ajoutImgValidation(refInput){
     var refParent = $(refInput).parent();
     $(refParent).append($("<img src='./ressources/addConv.png' class='img_profil clic'>").click(function(){
         // lancement d'une fonction de validation ! Et écrire dans la BDD
-        
+        validationChangement(refInput);
     }));
 
     $(refParent).append($("<img src='./ressources/close.png' class='img_profil clic'>").click(function(){
         // lancement d'une fonction de retour en arrière !
-        $(refInput).val($(refInput).parent().data("contenu"));
-        $(refInput).attr("disabled",true);
-        $(".divForm img").remove();
-        afficherModif();
+        retourArriere(refInput);
     }));
 }
 
 /**
  * Lorsque l'on relache une touche en étant focus sur une modification
- * Si on appuie ESCAP on retourne en arrière
- * Si on appuie sur ENTREE on valide
+ * Si on appuie sur ENTREE on valide avec focus
  */
 $(document).on("keyup",".divForm input",function(contexte){
-    if (contexte.keyCode == 27){ // un appui sur ESCAP 
-        $(this).val($(this).parent().data("contenu"));
-        $(this).attr("disabled",true);
-        $(".divForm img").remove();
-        afficherModif();
-    }
-    
     if (contexte.keyCode == 13){ // un appui sur ENTREE 
-        
+        validationChangement(this);
     } 
 })
+
+/**
+ * Lorsque l'on relache une touche en étant focus sur une modification
+ * Si on appuie sur ESCAP on réinitialise le tout
+ * Pas de sélecteur car le ESCAP se fait sur toute la page
+ */
+$(document).on("keyup",function(contexte){
+    
+    if (contexte.keyCode == 27){ // un appui sur ESCAP 
+        $(".divForm input").each(function(){
+            if (!($(this).attr("disabled"))) // si le champs est pas disabled
+                retourArriere(this); // c'est le champs qui est modifié
+        }); 
+    }
+})
+
+/**
+ * Fonction qui permet de revenir au contenu initial
+ * @param {Référence sur le input} refInput 
+ */
+function retourArriere(refInput){
+    $("#checkPass").remove();
+    $("#checkName").remove();
+    $("#checkFirstName").remove();
+    $(refInput).val($(refInput).parent().data("contenu"));
+    $(refInput).attr("disabled",true);
+    $(".divForm img").remove();
+    afficherModif();
+}
+
+/**
+ * Vérifie si les champs entrés sont corrects
+ * @param {Référence sur le input} refInput 
+ */
+function validationChangement(refInput){
+    $(refInput).attr("disabled",true);
+    var contenu = $(refInput).val();
+    var flag=0;
+    var action="";
+    if ($(refInput).is("#inputPassword3")){ // on effectue la verification MOT DE PASSE
+        flag = verificationPassWord(contenu,refInput);
+        action="pass";
+    }
+    else if ($(refInput).is("#inputName3")){  // on effectue la verification PRENOM
+        flag = verificationPrenom(contenu,refInput);
+        action="prenom";
+    }
+    else { // on effectue la verification NOM
+        flag = verificationNom(contenu,refInput);
+        action="nom";
+    }
+
+    if (flag) // le champ entré est un succès !
+        modificationBDD(refInput,action,contenu);
+    else // l'utilisateur doit faire des modifications correctes
+        $(refInput).attr("disabled",false); 
+}
+
+function modificationBDD(refInput,action,contenu){
+    console.log("modification BDD");
+    $(".divForm img").remove();
+    afficherModif();
+}
+
+/**
+ * Vérification si le mot de passe est correct
+ * @param {Contenu du input} contenu 
+ */
+function verificationPassWord(contenu,refInput){
+    
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(contenu)) || contenu == ""){
+        $(refInput).parent().append("<div id='checkPass' class='text-danger'></div>");
+        $('#checkPass').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');
+        return 0;
+    }
+    $("#checkPass").remove();
+    return 1;
+}
+
+/**
+ * Vérification si le nom est correct
+ * @param {Contenu du input} contenu 
+ */
+function verificationNom(contenu,refInput){
+    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(contenu)) && contenu !=""){
+        $(refInput).parent().append("<div id='checkFirstName' class='text-danger'></div>");
+        $("#checkFirstName").html("Veuillez saisir un nom correct (uniquement des lettres et non vide).");
+        return 0;
+    }
+    $("#checkFirstName").remove();
+    return 1;
+}
+
+/**
+ * Vérification si le prenom est correct
+ * @param {Contenu du input} contenu 
+ */
+function verificationPrenom(contenu,refInput){
+    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(contenu)) && contenu !=""){
+        $(refInput).parent().append("<div id='checkName' class='text-danger'></div>");
+        $("#checkName").html("Veuillez saisir un prenom correct (uniquement des lettres et non vide).");
+        return 0;
+    }
+    $("#checkName").remove();
+    return 1;
+}
