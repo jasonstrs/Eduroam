@@ -1,21 +1,21 @@
 $(document).ready(function(){
-    $("#inputEmail3").attr("disabled",true);
-    $("#inputFirstName3").attr("disabled",true);
-    $("#inputPassword3").attr("disabled",true);
-    $("#inputName3").attr("disabled",true);
+    $("#inputEmail").attr("disabled",true);
+    $("#inputFirstName").attr("disabled",true);
+    $("#inputPassword").attr("disabled",true);
+    $("#inputName").attr("disabled",true);
     
     $.ajax({
         type: "GET",
-        url: "./minControleur/profil.php",
+        url: "./minControleur/dataProfil.php",
         data: {"action":"getParams"},
         success: function(oRep){
             // oRep[0] == prenom
             // oRep[1] == nom
             // oRep[2] == pass
             // oRep[3] == mail
-            $("#inputName3").attr("value",oRep[0]);
-            $("#inputFirstName3").attr("value",oRep[1]);
-            $("#inputEmail3").attr("value",oRep[2]);
+            $("#inputFirstName").attr("value",oRep[0]);
+            $("#inputName").attr("value",oRep[1]);
+            $("#inputEmail").attr("value",oRep[2]);
             afficherModif();
         },
     dataType: "json"
@@ -113,43 +113,62 @@ function validationChangement(refInput){
     var contenu = $(refInput).val();
     var flag=0;
     var action="";
-    if ($(refInput).is("#inputPassword3")){ // on effectue la verification MOT DE PASSE
+    if ($(refInput).is("#inputPassword")){ // on effectue la verification MOT DE PASSE
         flag = verificationPassWord(contenu,refInput);
-        action="pass";
+        action="mot de passe";
     }
-    else if ($(refInput).is("#inputName3")){  // on effectue la verification PRENOM
-        flag = verificationPrenom(contenu,refInput);
-        action="prenom";
-    }
-    else { // on effectue la verification NOM
+    else if ($(refInput).is("#inputName")){  // on effectue la verification PRENOM
         flag = verificationNom(contenu,refInput);
         action="nom";
     }
+    else { // on effectue la verification NOM
+        flag = verificationPrenom(contenu,refInput);
+        action="prénom";
+    }
 
     if (flag) // le champ entré est un succès !
-        modificationBDD(refInput,action,contenu);
+        modificationBDD(action,contenu);
     else // l'utilisateur doit faire des modifications correctes
         $(refInput).attr("disabled",false); 
 }
 
-function modificationBDD(refInput,action,contenu){
+function modificationBDD(action,contenu){
     console.log("modification BDD");
     $(".divForm img").remove();
     afficherModif();
+
+    $.ajax({
+        type: "POST",
+        url: "./minControleur/dataProfil.php",
+        data: {"action":action,"contenu":contenu},
+        success: function(oRep){
+            console.log(oRep);
+            
+            if (oRep == "Success"){
+                $(".alert").remove(); // on supprime les anciennes alertes ! pour éviter le spam sur l'écran
+                $(".container").prepend("<div class='center alert alert-success alert-dismissible fade show' role='alert'>Votre <strong>"
+                +action+"</strong> a été modifié avec succès.<button type=\"button\" " + 
+                "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
+            }
+            // faire apparaitre un popup de succès si success
+            // si error : problème contacter la maintenance
+        },
+    dataType: "text"
+    });
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Vérification si le mot de passe est correct
  * @param {Contenu du input} contenu 
  */
 function verificationPassWord(contenu,refInput){
-    
+    $("#checkPass").remove();
     if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(contenu)) || contenu == ""){
         $(refInput).parent().append("<div id='checkPass' class='text-danger'></div>");
         $('#checkPass').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');
         return 0;
     }
-    $("#checkPass").remove();
     return 1;
 }
 
@@ -158,12 +177,12 @@ function verificationPassWord(contenu,refInput){
  * @param {Contenu du input} contenu 
  */
 function verificationNom(contenu,refInput){
+    $("#checkFirstName").remove();
     if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(contenu)) && contenu !=""){
         $(refInput).parent().append("<div id='checkFirstName' class='text-danger'></div>");
         $("#checkFirstName").html("Veuillez saisir un nom correct (uniquement des lettres et non vide).");
         return 0;
     }
-    $("#checkFirstName").remove();
     return 1;
 }
 
@@ -172,11 +191,12 @@ function verificationNom(contenu,refInput){
  * @param {Contenu du input} contenu 
  */
 function verificationPrenom(contenu,refInput){
+    $("#checkName").remove();
     if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(contenu)) && contenu !=""){
         $(refInput).parent().append("<div id='checkName' class='text-danger'></div>");
         $("#checkName").html("Veuillez saisir un prenom correct (uniquement des lettres et non vide).");
         return 0;
     }
-    $("#checkName").remove();
     return 1;
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

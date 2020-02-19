@@ -60,8 +60,6 @@ function getIdViaMail($email)
 	return SQLGetChamp($SQL);
 }
 
-
-
 /**
  * Verif si l'utilisateur a confirmé son mail
  * Return 1 si c'est validé
@@ -93,6 +91,24 @@ function changePass ($id,$newPasse) {
 	$SQL = "UPDATE user SET passe='$newPasse' WHERE idU='$id'";
 	SQLUpdate($SQL);
 }
+
+/**
+ * L'utilisateur vient de changer son prenom
+ */
+function changeFirstName ($id,$new) {
+	$SQL = "UPDATE user SET prenom='$new' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
+
+/**
+ * L'utilisateur vient de changer son nom
+ */
+function changeName ($id,$new) {
+	$SQL = "UPDATE user SET nom='$new' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
+
+
 
 /**
  * L'utilisateur vient de confirmer son adresse
