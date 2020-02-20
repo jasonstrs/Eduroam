@@ -7,15 +7,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 ?>
 
-<!DOCTYPE html>
-<html lang='fr'>
   <script src='./js/profil.js'></script>
   <link rel="stylesheet" type="text/css" href="./css/profil.css">
-  <head>
-    <title>First Page</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+  
   <div>
         <h3>Voici votre profil</h3>
         <div class="form-group row">
@@ -43,5 +37,3 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
             </div>
         </div>
   </div>
-  </body>
-</html>

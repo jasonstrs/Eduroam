@@ -143,15 +143,16 @@ function modificationBDD(action,contenu){
         data: {"action":action,"contenu":contenu},
         success: function(oRep){
             console.log(oRep);
-            
-            if (oRep == "Success"){
-                $(".alert").remove(); // on supprime les anciennes alertes ! pour éviter le spam sur l'écran
+            $(".alert").remove(); // on supprime les anciennes alertes ! pour éviter le spam sur l'écran
+            if (oRep == "Success"){ // le changement a eu lieu
                 $(".container").prepend("<div class='center alert alert-success alert-dismissible fade show' role='alert'>Votre <strong>"
                 +action+"</strong> a été modifié avec succès.<button type=\"button\" " + 
                 "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
+            } else { // ERREUR
+                $(".container").prepend("<div class='center alert alert-danger alert-dismissible fade show' role='alert'>Votre <strong>"
+                +action+"</strong> n'a pas pu être modifié. Veuillez contacter la maintenance pour plus d'information.<button type=\"button\" " + 
+                "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
             }
-            // faire apparaitre un popup de succès si success
-            // si error : problème contacter la maintenance
         },
     dataType: "text"
     });
