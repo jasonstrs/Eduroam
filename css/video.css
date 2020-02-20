@@ -1,0 +1,37 @@
+
+.item {
+	margin-bottom: 15px; 
+	list-style: none;
+}
+.item-txt {
+	font-size: 13px;
+    font-weight: 500;
+}
+.item-img {
+	margin: 0 5px;
+    width: 120px;
+    height: 68px;
+    overflow: hidden;
+}
+
+.item-img img {
+	position: relative;
+    top: -11px;
+}
+
+.page-header {
+    text-align: center;
+}
+
+#results {
+    text-align: left;
+}
+
+#results a {
+    text-decoration: none;
+    color: black;
+}
+
+.lead {
+    text-align: center;
+}
