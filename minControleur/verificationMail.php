@@ -74,7 +74,7 @@ switch($action){
 }
 
 if ($flag)
-    header("Location:../index.php?view=login&".$add."=".$qs); // sinon on renvoie
+    header("Location:http://localhost/Eduroam/index.php?view=login&".$add."=".$qs); // sinon on renvoie
 
 
 ?>

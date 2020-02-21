@@ -15,16 +15,10 @@ if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 else $checked="";
 ?>
 
-<!DOCTYPE html>
-<html lang='fr'>
-  <script src='./js/registerJquery.js'></script>
-  <link rel="stylesheet" type="text/css" href="./css/register.css">
-  <head>
-    <title>First Page</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
 
+<script src='./js/registerJquery.js'></script>
+<link rel="stylesheet" type="text/css" href="./css/register.css">
+ 
 <?php
 if (valider("mail","GET")){ // si on clic sur le nouveau mail de confirmation
   if (valider("mail","GET") == "fail"){ // ERREUR
@@ -49,7 +43,6 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
          </div>";
   }
 }
-
 ?>
 
 <div id='mainConnexion'>
@@ -67,7 +60,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
           
         </div>
       <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
+        <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
           <div id="checkPass" class='text-danger'></div>
@@ -120,7 +113,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
       </div>
 
       <div class="form-group row">
-        <label for="inputPasswordInscription" class="col-sm-2 col-form-label">Passe</label>
+        <label for="inputPasswordInscription" class="col-sm-2 col-form-label">Mot de passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPasswordInscription" placeholder="Saisir votre mot de passe">
           <div id='verifPasswordInscription' class='text-danger'></div>
@@ -167,6 +160,3 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
     <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-danger'>
   </div>
 </div>
-
-</body>
-</html>

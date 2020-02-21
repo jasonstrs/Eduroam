@@ -32,6 +32,7 @@ var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dia
  * 
  */
 function creerModal(id,titre,contenu,confirmation,couleur,requete){
+    console.log(requete);
 var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
                 $("<div/>").addClass('modal-dialog').attr("role","document").append(
                     $("<div/>").addClass("modal-content").append(
@@ -50,14 +51,19 @@ var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dia
                         ).append(
                             $("<button/>").addClass("btn "+couleur).attr({"type":"button"}).html(confirmation).click(function(){
                                 $.ajax({
-                                    requete
+                                    method:requete.method,
+                                    url:requete.url,
+                                    data:requete.data
                                 })
                             })
                         )
                     
                     )
                 )
-            );
+            ).on("hidden.bs.modal",function(e){
+                console.log("On supprime le modal");
+                $(this).remove();
+            });
 
 $("body").append(modal);
 }

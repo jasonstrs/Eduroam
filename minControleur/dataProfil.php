@@ -11,9 +11,10 @@
         die("");
     }
     
+    $id = valider("idUser","SESSION");
+
     switch($action){
         case 'getParams' :
-            $id = valider('idUser','SESSION');
             $tab=array();
             $prenom = getPrenom($id);
             $nom = getNom($id);
@@ -22,6 +23,27 @@
             array_push($tab,valider("email","SESSION"));
             echo (json_encode($tab));
         break;
+
+        case 'mot de passe' :
+            $pass = sha1(md5(valider("contenu","POST")));
+            changePass($id,$pass);
+            echo 'Success';
+        break;
+
+        case 'prénom' :
+            $prenom = valider("contenu","POST");
+            changeFirstName($id,$prenom);
+            echo 'Success';
+        break;
+
+        case 'nom' :
+            $nom = valider("contenu","POST");
+            changeName($id,$nom);
+            echo 'Success';
+        break;
+
+        default :
+            echo "ERROR";
     }
 
 ?>
