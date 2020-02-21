@@ -30,7 +30,6 @@ $search=valider("search","GET");
                 <ul id="results"></ul>
                 <p><button id="prev" type="button" class="btn btn-light" style="display:none;">Previous</button>
                 <button id="next" type="button" class="btn btn-light" style="display:none;">Next</button></p>
-                <button id="actualiser" type="button" class="btn btn-light">Actualiser</button>
             </div>
         </div>
     </div>

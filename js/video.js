@@ -4,7 +4,7 @@ $(function() {
 	$("form").on("submit", function(e) {
 		e.preventDefault();
 		$("#pageToken").val("");
-		//callApi();
+		callApi();
 		if($("#search").val())
 			history.pushState("", "",  "index.php?view=video&search="+$("#search").val());
 		else 
@@ -13,7 +13,7 @@ $(function() {
 
 	$("#search-button").on( "click", function( event ) {
 		$("#pageToken").val("");
-		//callApi();
+		callApi();
 		if($("#search").val())
 			history.pushState("", "",  "index.php?view=video&search="+$("#search").val());
 		else 
@@ -22,15 +22,11 @@ $(function() {
 
 	$("#next").on( "click", function( event ) {
 		$("#pageToken").val($("#next").data("token"));
-		//callApi();
+		callApi();
 	});
 
 	$("#prev").on( "click", function( event ) {
 		$("#pageToken").val($("#prev").data("token"));
-		//callApi();
-	});
-
-	$("#actualiser").on( "click", function( event ) {
 		callApi();
 	});
 
@@ -45,75 +41,63 @@ $(function() {
 	//$(window).on("resize", resetVideoHeight);
 });
 
-function callApi(nToken) {
-	var nextToken = nToken;
+function callApi() {
 	// prepare the request
 	var request = gapi.client.youtube.search.list({
 		part: "snippet",
 		type: "video",
-		maxResults: 50,
+		q: encodeURIComponent($("#search").val()).replace(/%20/g, "+"),
+		maxResults: 10,
 		order: "date",
 		//publishedAfter: "2015-01-01T00:00:00Z",
 		channelId: "UC9NB2nXjNtRabu3YLPB16Hg",
-		pageToken: nextToken,
-	});
+		//forMine: true,
+		pageToken:$("#pageToken").val(),
+	}); 
 	// execute the request
 	request.execute(function(response) {
 		console.log(response);
-		var flag = 0;
 		var results = response.result;
-		//var tab = {'1':'test','2':{'1':'lol','2':'mdr'},'3':'test3'};
-		//console.log(tab);
+		$("#next").data("token", results.nextPageToken);
+		$("#prev").data("token", results.prevPageToken);
 		if(results.items.length==0) {
-			console.log("Fini par items.length");
-			endApi();
+			$("#pageToken").val($("#prev").data("token"));
+			$("#next").prop( "disabled", true );
 		}
 		else {
-			$.ajax({
-				type: "POST",
-				url: "./minControleur/video.php",
-				data: {"action":"add", "videos":response},
-				success: function(oRep){
-					console.log(oRep);
-					nextToken = oRep;
-					if (typeof response.nextPageToken !== "undefined") {
-						nextToken = response.nextPageToken;
-						//console.log(nextToken);
-						callApi(nextToken);
-					}
-					else {
-						console.log("Fini par nextPageToken");
-						endApi();
-					}
-				},
-				dataType: "text"
-			});
+			$("#results").html("");
+			if (typeof response.prevPageToken === "undefined") {$("#prev").prop( "disabled", true );}else{$("#prev").prop( "disabled", false );}
+			if (typeof response.nextPageToken === "undefined") {$("#next").prop( "disabled", true );}else{$("#next").prop( "disabled", false );}
 		}
-		/*$.each(results.items, function(index, item) {
+		$.each(results.items, function(index, item) {
 			var vid=$("<li>").addClass("media item");
 			vid.append($("<div>").addClass("item-img").append($("<a>").attr("href", 'index.php?view=watchvideo&id='+item.id.videoId).append($("<img>").attr("src", item.snippet.thumbnails.default.url))));
 			vid.append($("<div>").addClass("media-body item-txt").append($("<a>").attr("href", 'index.php?view=watchvideo&id='+item.id.videoId).append($("<span>").html(item.snippet.title))));
 			$("#results").append(vid);
-		});*/
+			/* $.get("tpl/item.html", function(data) {
+				$("#results").append(tplawesome(data, [{"title":item.snippet.title, "videoid":item.id.videoId}]));
+			}); */
+		});
+		
+		if (typeof response.nextPageToken === "undefined" && typeof response.prevPageToken === "undefined") {
+			$("#next").hide();
+			$("#prev").hide();
+		} else {
+			$("#next").show();
+			$("#prev").show();
+		}
+		//resetVideoHeight();
 	});
 }
 
-function endApi() {
-	$.ajax({
-		type: "POST",
-		url: "./minControleur/video.php",
-		data: {"action":"check"},
-		success: function(oRep){
-			console.log("Fini.")
-		},
-		dataType: "text"
-	});
+function resetVideoHeight() {
+	$(".video").css("height", $("#results").width() * 9/16);
 }
 
 function init() {
 	gapi.client.setApiKey("AIzaSyBJ0QWmqfhRruL_iy1U5KAoCy4yPbxoHxk");
 	gapi.client.load("youtube", "v3", function() {
-		//callApi();
+		callApi();
 	});
 }
 //AIzaSyAAt7wGTR0i4T7H0IXmFfheOo9mzG1nK58
