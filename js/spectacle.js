@@ -5,7 +5,7 @@
 
 function chargerVilles(nomEntre){
     $.ajax({
-        method:"GET",
+        method:"POST",
         url:"./minControleur/dataSpectacle.php",
         data:{
             action:"chargerVilles",
@@ -342,7 +342,13 @@ $(document).ready(function(){
         requete = {
             method:"POST",
             url:"./minControleur/dataSpectacle.php",
-            data:{"action":"creerSpectacle","idSpectacle":$("body").data("idSpectacle"),"dates":tabDatesJS,"ville":ville,"desc":desc}
+            data:{
+                "action":"ajouterDates",
+                "idSpectacle":$("body").data("idSpectacle"),
+                "dates":tabDatesJS,
+                "ville":ville,
+                "desc":desc
+            }
         }
 
         creerModal("modalConfirmerDate","Confirmation de l'ajout des dates",contenu,"Confirmer","btn-success",requete);

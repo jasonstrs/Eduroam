@@ -212,4 +212,14 @@ function isSuperAdmin($id,$hash){
 	return SQLGetChamp("SELECT superadmin FROM user WHERE idU='$id' AND hashCode='$hash'");
 }
 
+
+function creerSpectacle($ville,$description){
+	$SQL = "INSERT INTO spectacle (ville,description) VALUES ('$ville','$description')";
+	return SQLInsert($SQL);
+}
+
+function ajouterDateSpectacle($id,$date){
+	$SQL = "INSERT INTO date_spectacle (idSpectacle,dateSpectacle) VALUES ($id,'$date')";
+	return SQLInsert($SQL);
+}
 ?>
