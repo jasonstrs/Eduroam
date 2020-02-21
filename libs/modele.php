@@ -222,4 +222,41 @@ function ajouterDateSpectacle($id,$date){
 	$SQL = "INSERT INTO date_spectacle (idSpectacle,dateSpectacle) VALUES ($id,'$date')";
 	return SQLInsert($SQL);
 }
+
+/**
+ * Fonctions pour les vidéos
+ */
+
+function addVideo($id, $date, $title, $description, $thumbnails) {
+	$SQL = "INSERT INTO video VALUES('0','$id','$date','$title','$description','$thumbnails','1')";
+	SQLUpdate($SQL);
+}
+
+function verifExistVideo($id){
+	$SQL = "SELECT COUNT(*) FROM video WHERE videoId='$id'";
+	if(SQLGetChamp($SQL))return 1;
+	return 0; 
+}
+
+function setChecked($id) {
+	$SQL = "UPDATE video SET checked=1 WHERE videoId='$id'";
+	SQLUpdate($SQL);
+}
+
+function setDesc($id, $description) {
+	$SQL = "UPDATE video SET description='$description' WHERE videoId='$id'";
+	SQLUpdate($SQL);
+}
+
+function clearChecked() {
+	$SQL = "UPDATE video SET checked=0";
+	SQLUpdate($SQL);
+}
+
+function deleteUnchecked() {
+	$SQL = "DELETE FROM video WHERE checked=0";
+	SQLUpdate($SQL);
+}
+
+
 ?>
