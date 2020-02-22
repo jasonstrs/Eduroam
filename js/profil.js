@@ -26,7 +26,7 @@ $(document).ready(function(){
  * Fonction qui permet d'afficher les boutons permettant la modification des champs
  */
 function afficherModif(){
-    $(".divForm").append($("<img src='./ressources/edit.png' class='img_profil clic'>").click(function(){
+    $(".divForm").append($("<img src='./ressources/icons/pencil.svg' class='img_profil clic'>").click(function(){
         // lancement d'une fonction de modification !
         modifierChamps(this);
     }));
@@ -54,12 +54,12 @@ function modifierChamps(ref){
  */
 function ajoutImgValidation(refInput){
     var refParent = $(refInput).parent();
-    $(refParent).append($("<img src='./ressources/addConv.png' class='img_profil clic'>").click(function(){
+    $(refParent).append($("<img src='./ressources/icons/check.svg' class='img_profil clic'>").click(function(){
         // lancement d'une fonction de validation ! Et écrire dans la BDD
         validationChangement(refInput);
     }));
 
-    $(refParent).append($("<img src='./ressources/close.png' class='img_profil clic'>").click(function(){
+    $(refParent).append($("<img src='./ressources/icons/X.svg' class='img_profil clic'>").click(function(){
         // lancement d'une fonction de retour en arrière !
         retourArriere(refInput);
     }));
