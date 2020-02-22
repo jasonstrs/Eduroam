@@ -21,10 +21,22 @@ function chargerVilles(nomEntre){
 }
 
 /**
- * Affiche toutes les villes où des spectacles sont en cours de création
- * sous la forme Ville | Nb de dates | Nb d'inscrits (toutes dates confondues)
+ * Affiche les spectacles sont en cours de création
+ * sous la forme Description | Ville | Nb de dates | Nb d'inscrits (toutes dates confondues)
  * 
- * @param {*} rep tableau [nomDeLaVille,NbDeDates,NbDInscrits]
+ * @param {array} rep structure suivante : 
+ *			id : id du spectacle,
+            desc : description du spectacle,
+            ville : ville où va avoir lieu le spectacle,
+            nbSpecVille : nombre de spectacles pour cette ville
+            nbDates : nombre de dates total
+            nbInteresses : nombre de personnes interessées
+            dates : [
+                idSpectacle,
+                idDate,
+                date,
+                nb : nombre de personnes pour cette date
+            ]
  */
 function afficherResumeVilles(rep){
     var tab = JSON.parse(rep);
@@ -39,31 +51,57 @@ function afficherResumeVilles(rep){
             )
         ;        
         $("#listeVilles").append(currVille);
-        console.log(currVille.data("ville"));
         var data = currVille.data("ville");
         var currDesc = $("<div/>").addClass("descVille");
-        data["dates"].forEach(element => {
+        var contenuModal;
+        var requete;
+        data["dates"].forEach(date => {
             currDesc.append(
-                $("<div/>").addClass("contDate").append($("<div/>").addClass("date").html(element.dateSpectacle))
-                .append($("<div/>").addClass("date").html(element.nb+" personne(s) interessée(s)"))
+                $("<div/>").addClass("contDate").append(
+                    $("<div/>").addClass("date").html(date.dateSpectacle)
+                ).append(
+                    $("<div/>").addClass("date").html(date.nb+" personne(s) interessée(s)")
+                ).append(
+                    $("<div/>").addClass("suppDate").html("&times;").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    .click(function(){
+                        console.log($(this).data());
+                        requete = {
+                            method:"POST",
+                            url:"./minControleur/dataSpectacle.php",
+                            data:{
+                                "action":"supprDate",
+                                "idSpectacle":$(this).data("idSpec"),
+                                "idDate":$(this).data("idDate")
+                            },
+                            success:function(oRep){
+                                console.log(oRep);
+                                console.log("Date supprimée");
+                                $("#modalSupprDate").modal('dispose');
+                                document.location.reload();
+                            }
+                        }
+                        contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
+                        contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
+
+                        creerModal("modalSupprDate","Supprimer cette date?",contenuModal,"Supprimer","btn-danger",requete);
+                        $("#modalSupprDate").modal();
+                    })
+                )
             );
         });
         currDesc.append($("<div/>").addClass("ajouterDateSpectacle pointer").html("Ajouter une date à ce spectacle").click(function(){
             $("body").data("idSpectacle",$(this).parent().parent().data("ville").id);
             afficherChoixDate(element);
         }));
-        
-        
-        
         currVille.append(currDesc);
         
-        });
-        $("#listeVilles").append(
-            $("<div/>").attr("id","boutonCreerSpectacle").html("Créer un nouveau spectacle").click(function(){
-                $("body").data("idSpectacle",null);
-                afficherChoixDate();
-            })
-        );
+    });
+    $("#listeVilles").append(
+        $("<div/>").attr("id","boutonCreerSpectacle").html("Créer un nouveau spectacle").click(function(){
+            $("body").data("idSpectacle",null);
+            afficherChoixDate();
+        })
+    );
 }
 
 
@@ -134,12 +172,8 @@ function verifVille(nomVille){
             nom:nomVille
         },
         success:function(oRep){
-            
-            
             oRep = JSON.parse(oRep);
-            rep = oRep;
-            
-            
+            rep = oRep;  
         },
         error : function(oRep){
             console.log("Erreur");
@@ -149,10 +183,19 @@ function verifVille(nomVille){
     return rep;
 }
 
+
+/**
+ * input type="date"
+ */
 var selectDate = $("<input/>").attr({"type":"date"}).addClass("inputDate pointer");
 
 $(document).ready(function(){
     
+    /**
+     * Au clic sur le bouton de recherche de ville
+     * Si la ville est déja en bdd, affiche les spectacles en attente dans cette ville
+     * Sinon propose de choisir des dates pour la ville
+     */
     $("#validerEntreeVille").click(function(){
         //Contenu de l'alerte qui sera affichée
         var cont_info;
@@ -208,7 +251,8 @@ $(document).ready(function(){
             ]
         
         */
-        if(reponseVerifVille[2] == false){
+       console.log(reponseVerifVille);
+        if(reponseVerifVille[1] == false){
             //La ville se trouve déja dans la BDD, on ajoute ou modifie des dates
             classes = "alert alert-warning";
             info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>! (Voir ci dessous)";
@@ -244,8 +288,8 @@ $(document).ready(function(){
                 $(this).slideUp(0);
             }
         });    
-        if(reponseVerifVille[2] == true)afficherChoixDate(villeEntree);
-        else $("#listeVilles").delay(300).slideDown(300);
+        afficherChoixDate(villeEntree);
+        if(reponseVerifVille[1] == false)$("#listeVilles").delay(300).slideDown(300);
         
         
             

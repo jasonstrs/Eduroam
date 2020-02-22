@@ -24,8 +24,8 @@
         <img class="loader" src="./ressources/loading.gif" style="width:50px;display:none;"/>
     </div>
     <div id="listeVilles">
-        <span class="gras">Villes où des spectacles ont déja été proposés : </span>
-            Cliquez sur les villes pour afficher toutes les dates.
+        <span class="gras">Spectacles en attente :</span>
+            Cliquez pour afficher toutes les dates.
         <br>
     
         <script>

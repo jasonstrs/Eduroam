@@ -48,6 +48,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			height: 45px;
 		}
 		.navbar {
+			z-index:99;
 			position:fixed; 
 			background-color: #c8912a;
 			width : 100%;

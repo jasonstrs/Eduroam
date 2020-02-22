@@ -48,10 +48,6 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 		default : // si le template correspondant à l'argument existe, on l'affiche
 			if (file_exists("templates/$view.php"))
 				include("templates/$view.php");
-			else{
-				header("Location:./index.php?view=accueil");
-        		die("");
-			}
 		break;
 
 	}

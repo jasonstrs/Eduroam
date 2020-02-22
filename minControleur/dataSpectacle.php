@@ -23,7 +23,6 @@
             if($nom = valider("nom"))
             {
                 array_push($tab,$nom);
-                array_push($tab,idVilleNom($nom));
                 array_push($tab,verifVilleNom($nom));
                 echo(json_encode($tab));
             }
@@ -39,19 +38,19 @@
              * Pour le savoir, on  vérifie si l'idSpectacle renvoyé n'est pas null
              */
             $nouv = 0;
-            if(!($dates = valider("dates"))){
+            if(!($dates = valider("dates","POST"))){
                 header("Location:../index.php?view=planiSpectacle");
                 die("");
             }
-            if(!($idSpec = valider("idSpectacle")))$nouv = 1;
+            if(!($idSpec = valider("idSpectacle","POST")))$nouv = 1;
             if($nouv == 0){
                 //Si on ajoute une date à un spectacle existant
 
             }
             else{
                 //Si on crée entièrement un spectacle
-                if($ville = valider("ville"))
-                if($desc = valider("desc")){
+                if($ville = valider("ville","POST"))
+                if($desc = valider("desc","POST")){
                    $idSpec = creerSpectacle($ville,$desc); //On crée le spectacle et on récupère son id
                 }
             }
@@ -59,6 +58,10 @@
                 if($currDate != "")
                     ajouterDateSpectacle($idSpec,$currDate);
             }
+        break;
+        case "supprDate":
+            if($date  = valider("idDate","POST"))
+                supprimerDate($date);
         break;
     }
     

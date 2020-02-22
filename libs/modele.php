@@ -29,6 +29,12 @@ function hashCode($id)
 	return SQLGetChamp($SQL);
 }
 
+function isSuperAdmin($id,$hash){
+	return SQLGetChamp("SELECT superadmin FROM user WHERE idU='$id' AND hashCode='$hash'");
+}
+
+
+
 function getPrenom($id)
 {
 	
@@ -138,7 +144,7 @@ function verifExistMail($email){
 
 //Charge les spectacles présents dans la BDD
 //Renvoie la structure suivante : 
-/*id : id du spectacle,
+/*			id : id du spectacle,
             desc : description du spectacle,
             ville : ville où va avoir lieu le spectacle,
             nbSpecVille : nombre de spectacles pour cette ville
@@ -151,7 +157,7 @@ function verifExistMail($email){
                 nb : nombre de personnes pour cette date
 			]
 */
-function selectVilles($nom = ""){
+function selectVilles(){
 	$reponse = array();
 	$SQL = "SELECT idSpectacle,ville,description FROM spectacle";
 	$SQL = SQLSelect($SQL);
@@ -184,8 +190,8 @@ function selectVilles($nom = ""){
 		array_push($reponse,$currRep);
 	}
 	return $reponse;
-	$SQL = "SELECT s.idSpectacle AS id,s.ville AS nom,s.description AS _description
-	, COUNT(ds.idDate),COUNT(su)";
+	/* $SQL = "SELECT s.idSpectacle AS id,s.ville AS nom,s.description AS _description
+	, COUNT(ds.idDate),COUNT(su)"; */
 	
 }
 
@@ -199,18 +205,6 @@ function verifVilleNom($nom){
 	return false;
 }
 
-/**
- * Renvoie l'id du spectacle qui a pour ville $nom
- */
-function idVilleNom($nom){
-	$SQL = "SELECT idSpectacle FROM spectacle WHERE ville='$nom'";
-	return SQLGetChamp($SQL);
-}
-
-
-function isSuperAdmin($id,$hash){
-	return SQLGetChamp("SELECT superadmin FROM user WHERE idU='$id' AND hashCode='$hash'");
-}
 
 
 function creerSpectacle($ville,$description){
@@ -221,6 +215,11 @@ function creerSpectacle($ville,$description){
 function ajouterDateSpectacle($id,$date){
 	$SQL = "INSERT INTO date_spectacle (idSpectacle,dateSpectacle) VALUES ($id,'$date')";
 	return SQLInsert($SQL);
+}
+
+function supprimerDate($idDate){
+	$SQL = "DELETE FROM date_spectacle WHERE idDate = $idDate";
+	return SQLDelete($SQL);
 }
 
 /**

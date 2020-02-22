@@ -53,7 +53,9 @@ var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dia
                                 $.ajax({
                                     method:requete.method,
                                     url:requete.url,
-                                    data:requete.data
+                                    data:requete.data,
+                                    success:requete.success,
+                                    error:requete.error
                                 })
                             })
                         )

@@ -35,7 +35,8 @@ function verifUser($email,$password,$check)
 		$_SESSION["hash"] = hashCode($id);
 		$_SESSION["connecte"] = true;
 		$_SESSION["heureConnexion"] = date("H:i:s");
-
+		if(isSuperAdmin($id,hashCode($id)))$_SESSION["admin"] = 1;
+		else $_SESSION["admin"] = 0;
 		if ($check == "remember") {
 			setcookie("email",$email , time()+60*60*24*30);
 			setcookie("passe",$password, time()+60*60*24*30);
