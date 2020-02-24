@@ -28,6 +28,11 @@ switch($action){
 	case 'check' : 
 		deleteUnchecked();
 		clearChecked();
+    break;
+  
+    case 'count' : 
+        $search = valider("search","POST");
+        echo getVideosCount($search);
 	break;
 
 }

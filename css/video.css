@@ -35,3 +35,8 @@
 .lead {
     text-align: center;
 }
+
+.pagination {
+    font-size: 1rem;
+    font-weight: 400;
+}
