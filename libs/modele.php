@@ -268,6 +268,30 @@ function getVideos($search='', $page='', $limite, $notID='') {
 	return $tab; 
 }
 
+function getVideosByDateSup($date, $notID='', $limite) {
+	//echo $page;
+	$SQL = "SELECT * FROM video WHERE publishedAt>='$date' AND videoId NOT LIKE '$notID' ORDER BY publishedAt ASC LIMIT $limite";
+	//echo $SQL;
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getVideosByDateInf($date, $notID='', $limite) {
+	//echo $page;
+	$SQL = "SELECT * FROM video WHERE publishedAt<='$date' AND videoId NOT LIKE '$notID' ORDER BY publishedAt DESC LIMIT $limite";
+	//echo $SQL;
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getDateById($id) {
+	$SQL = "SELECT publishedAt FROM video WHERE videoId='$id'";
+	$rs = SQLGetChamp($SQL);
+	return $rs; 
+}
+
 function getVideosCount($search) {
 	$SQL = "SELECT COUNT(*) FROM video WHERE title LIKE '%$search%' OR description LIKE '%$search%'"; 
 	$rs = SQLGetChamp($SQL);

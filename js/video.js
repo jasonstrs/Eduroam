@@ -125,6 +125,7 @@ function insertSearch() {
 		search : $("#search").val(),
 		page : $('#hiddenpage').val()-1,
 		videoParPage : nbVid,
+		type : "video",
 	});
 }
 

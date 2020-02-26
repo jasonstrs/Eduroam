@@ -32,6 +32,8 @@ function insertSearch() {
 	$("#results").load("./templates/videosearch.php", {
 		videoParPage : 10,
 		notID: $("#videoId").val(),
+		type : "watchvideo",
+		date : $("#videoDate").val(),
 	});
 }
 
