@@ -10,7 +10,7 @@ include_once "libs/modele.php";
 echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang='fr'>
 
 <!-- **** H E A D **** -->
 <head>	
@@ -18,9 +18,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<link rel="icon" href="ressources/logo.png">
 	<script src="https://kit.fontawesome.com/05f96bf93f.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="libs/jquery-3.4.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+	<script src="js/main.js"></script>
 	
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -32,6 +33,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
 
 	<link href="css/sticky-footer.css" rel="stylesheet" />
+	<link href="css/main.css" rel="stylesheet" />
 	<!--[if lt IE 9]>
 	  <script src="js/html5shiv.js"></script>
 	  <script src="js/respond.min.js"></script>
@@ -46,6 +48,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			height: 45px;
 		}
 		.navbar {
+			z-index:99;
 			position:fixed; 
 			background-color: #c8912a;
 			width : 100%;
@@ -176,16 +179,13 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	        	<?php if (!valider("connecte","SESSION")) { ?>
 					<li class="nav-item">
 						<a class="nav-link" href="index.php?view=login"><b>Se connecter</b></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="index.php?view=inscription"><b>S'inscrire</b></a>
-					</li>
+					</li>		
 				<?php } ?>
 
 
 		        <?php if (valider("connecte","SESSION")) { ?>
 					<li class="nav-item">
-						<a class="nav-link" href="index.php?view=logout"><b>Se déconnecter</b></a>
+						<a class="nav-link" href="minControleur/dataConnexion?action=logout"><b>Se déconnecter</b></a>
 					</li>
 				<?php } ?>
 

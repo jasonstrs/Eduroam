@@ -4,46 +4,6 @@
 // inclure ici la librairie faciliant les requêtes SQL
 include_once("maLibSQL.pdo.php");
 
-
-/*
-
-
-
-function verifUserBdd($login,$passe)
-{
-	// Vérifie l'identité d'un utilisateur 
-	// dont les identifiants sont passes en paramètre
-	// renvoie faux si user inconnu
-	// renvoie l'id de l'utilisateur si succès
-
-	$SQL="SELECT id FROM users WHERE pseudo='$login' AND passe='$passe'";
-
-	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
-}
-
-function verifChamp($nomChamp,$valueChamp,$table){
-	$SQL = "SELECT $nomChamp FROM $table";
-	$reponse = parcoursRS(SQLSelect($SQL));
-	foreach($reponse as $champs){
-		foreach($champs as $data){
-			if($valueChamp == $data)return 0;
-		}
-	}
-	return 1;
-}
-
-function passerAdmin ($id) {
-	$SQL = "UPDATE users SET premium=1 WHERE id='$id'";
-	SQLUpdate($SQL);
-}
-
-function passerNonAdmin ($id) {
-	$SQL = "UPDATE users SET premium=0 WHERE id='$id'";
-	SQLUpdate($SQL);
-}*/
-
 /**
  * Verif si l'utilisateur est dans la BDD 
  */
@@ -57,8 +17,6 @@ function verifUserBdd($email,$passe)
 	$SQL="SELECT idU FROM user WHERE email='$email' AND passe='$passe'";
 
 	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
 }
 
 /**
@@ -69,11 +27,44 @@ function hashCode($id)
 	
 	$SQL="SELECT hashCode FROM user WHERE idU='$id'";
 	return SQLGetChamp($SQL);
-	// si on avait besoin de plus d'un champ
-	// on aurait du utiliser SQLSelect
+}
+
+function isSuperAdmin($id,$hash){
+	return SQLGetChamp("SELECT superadmin FROM user WHERE idU='$id' AND hashCode='$hash'");
 }
 
 
+
+function getPrenom($id)
+{
+	
+	$SQL="SELECT prenom FROM user WHERE idU='$id'";
+	return SQLGetChamp($SQL);
+}
+
+function getNom($id)
+{
+	
+	$SQL="SELECT nom FROM user WHERE idU='$id'";
+	return SQLGetChamp($SQL);
+}
+
+/**
+ * Retourne le id
+ */
+function getIdViaHash($hash)
+{
+	
+	$SQL="SELECT idU FROM user WHERE hashCode='$hash'";
+	return SQLGetChamp($SQL);
+}
+
+function getIdViaMail($email)
+{
+	
+	$SQL="SELECT idU FROM user WHERE email='$email'";
+	return SQLGetChamp($SQL);
+}
 
 /**
  * Verif si l'utilisateur a confirmé son mail
@@ -98,6 +89,31 @@ function isConfirmViaMail($email)
 	if(SQLGetChamp($SQL))return 1;
 	return 0; 
 }
+
+/**
+ * L'utilisateur vient de changer son mdp
+ */
+function changePass ($id,$newPasse) {
+	$SQL = "UPDATE user SET passe='$newPasse' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
+
+/**
+ * L'utilisateur vient de changer son prenom
+ */
+function changeFirstName ($id,$new) {
+	$SQL = "UPDATE user SET prenom='$new' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
+
+/**
+ * L'utilisateur vient de changer son nom
+ */
+function changeName ($id,$new) {
+	$SQL = "UPDATE user SET nom='$new' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
+
 
 
 /**
@@ -125,21 +141,58 @@ function verifExistMail($email){
 	return 0; 
 }
 
+
+//Charge les spectacles présents dans la BDD
+//Renvoie la structure suivante : 
+/*			id : id du spectacle,
+            desc : description du spectacle,
+            ville : ville où va avoir lieu le spectacle,
+            nbSpecVille : nombre de spectacles pour cette ville
+            nbDates : nombre de dates total
+            nbInteresses : nombre de personnes interessées
+            dates : [
+                idSpectacle,
+                idDate,
+                date,
+                nb : nombre de personnes pour cette date
+			]
+*/
 function selectVilles(){
 	$reponse = array();
-	$SQL = "SELECT idSpectacle,ville FROM spectacle";
+	$SQL = "SELECT idSpectacle,ville,description FROM spectacle";
 	$SQL = SQLSelect($SQL);
 	$SQL = parcoursRs($SQL);
 	foreach($SQL as $ligne){
 		$SQLNbInteresses = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$ligne['idSpectacle'];
 		$SQLNbInteresses = SQLGetChamp($SQLNbInteresses);
 
-		$SQLNbDates = "SELECT Count(*) FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
-		$SQLNbDates = SQLGetChamp($SQLNbDates);
+		$SQLNbSpecVille = "SELECT COUNT(*) FROM spectacle WHERE ville=\"".$ligne['ville']."\"";
+		$SQLNbSpecVille = SQLGetChamp($SQLNbSpecVille);
 
-		array_push($reponse,array($ligne['ville'],$SQLNbDates,$SQLNbInteresses));
+		$SQLGetDates = "SELECT * FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLGetDates = parcoursRs(SQLSelect($SQLGetDates));
+
+		for( $i=0 ; $i < sizeof($SQLGetDates) ; $i++ ){
+			$date = $SQLGetDates[$i];
+			$SQLNbPers = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$date["idSpectacle"]." AND idDate=".$date["idDate"];
+			$SQLGetDates[$i]["nb"] = SQLGetChamp($SQLNbPers);
+		}
+
+		$currRep = array(
+						"id" => $ligne["idSpectacle"],
+						"desc" => $ligne["description"],
+						"ville" => $ligne['ville'],
+						"nbSpecVille" => $SQLNbSpecVille,
+						"nbDates" => sizeof($SQLGetDates),
+						"nbInteresses" => $SQLNbInteresses,
+						"dates" => $SQLGetDates
+				);
+		array_push($reponse,$currRep);
 	}
 	return $reponse;
+	/* $SQL = "SELECT s.idSpectacle AS id,s.ville AS nom,s.description AS _description
+	, COUNT(ds.idDate),COUNT(su)"; */
+	
 }
 
 
@@ -152,12 +205,73 @@ function verifVilleNom($nom){
 	return false;
 }
 
+
+
+function creerSpectacle($ville,$description){
+	$SQL = "INSERT INTO spectacle (ville,description) VALUES ('$ville','$description')";
+	return SQLInsert($SQL);
+}
+
+function ajouterDateSpectacle($id,$date){
+	$SQL = "INSERT INTO date_spectacle (idSpectacle,dateSpectacle) VALUES ($id,'$date')";
+	return SQLInsert($SQL);
+}
+
+function supprimerDate($idDate){
+	$SQL = "DELETE FROM date_spectacle WHERE idDate = $idDate";
+	return SQLDelete($SQL);
+}
+
 /**
- * Renvoie l'id du spectacle qui a pour ville $nom
+ * Fonctions pour les vidéos
  */
-function idVilleNom($nom){
-	$SQL = "SELECT idSpectacle FROM spectacle WHERE ville='$nom'";
-	return SQLGetChamp($SQL);
+
+function addVideo($id, $date, $title, $description, $thumbnails) {
+	$SQL = "INSERT INTO video VALUES('0','$id','$date','$title','$description','$thumbnails','1')";
+	SQLUpdate($SQL);
+}
+
+function verifExistVideo($id){
+	$SQL = "SELECT COUNT(*) FROM video WHERE videoId='$id'";
+	if(SQLGetChamp($SQL))return 1;
+	return 0; 
+}
+
+function setChecked($id) {
+	$SQL = "UPDATE video SET checked=1 WHERE videoId='$id'";
+	SQLUpdate($SQL);
+}
+
+function setDesc($id, $description) {
+	$SQL = "UPDATE video SET description='$description' WHERE videoId='$id'";
+	SQLUpdate($SQL);
+}
+
+function clearChecked() {
+	$SQL = "UPDATE video SET checked=0";
+	SQLUpdate($SQL);
+}
+
+function deleteUnchecked() {
+	$SQL = "DELETE FROM video WHERE checked=0";
+	SQLUpdate($SQL);
+}
+
+function getVideos($search='', $page='', $limite, $notID='') {
+	$offset = ($page!= '') ? "OFFSET ".$page*$limite : "" ;
+	$notID = ($notID!= '') ? "AND videoId NOT LIKE '".$notID."'" : "" ;
+	//echo $page;
+	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $notID ORDER BY publishedAt DESC LIMIT $limite $offset";
+	//echo $SQL;
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getVideosCount($search) {
+	$SQL = "SELECT COUNT(*) FROM video WHERE title LIKE '%$search%' OR description LIKE '%$search%'"; 
+	$rs = SQLGetChamp($SQL);
+	return $rs;
 }
 
 ?>

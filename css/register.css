@@ -1,0 +1,47 @@
+.checkbox {
+    display: flex;
+    justify-content: center;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+}
+
+#check {
+    margin-right: 10px;
+}
+
+.register {
+    color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#divCheck {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0.5em;
+}
+
+.clic {
+    cursor: pointer;
+}
+
+#envoiMail{
+    margin-top:40vh;
+     transform:translateY(-50%);
+}
+
+#log {
+    text-align: center;
+}
+
+.newMail {
+    font-style: italic;
+}
+
+.newMail:hover{
+    font-weight: bold;
+}

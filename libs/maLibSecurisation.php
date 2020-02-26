@@ -20,7 +20,6 @@ include_once "modele.php";	// Car on utilise la fonction connecterUtilisateur()
  */
 function verifUser($email,$password,$check)
 {
-	
 	$id = verifUserBdd($email,$password);
 
 	if (!$id) return "incorrect";
@@ -30,14 +29,14 @@ function verifUser($email,$password,$check)
 	if (isConfirm($id)){ // oui c'est confirmé !
 		// Cas succès : on enregistre pseudo, idUser dans les variables de session 
 		// il faut appeler session_start ! 
-		
-		session_start();
+
 		$_SESSION["email"] = $email;
 		$_SESSION["idUser"] = $id;
 		$_SESSION["hash"] = hashCode($id);
 		$_SESSION["connecte"] = true;
 		$_SESSION["heureConnexion"] = date("H:i:s");
-
+		if(isSuperAdmin($id,hashCode($id)))$_SESSION["admin"] = 1;
+		else $_SESSION["admin"] = 0;
 		if ($check == "remember") {
 			setcookie("email",$email , time()+60*60*24*30);
 			setcookie("passe",$password, time()+60*60*24*30);
@@ -53,9 +52,6 @@ function verifUser($email,$password,$check)
 		return "noConfirm";
 	}	
 }
-
-
-
 
 /**
  * Fonction à placer au début de chaque page privée

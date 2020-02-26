@@ -15,7 +15,7 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 	include_once "libs/maLibForms.php";
 
 	echo "<head><link rel='stylesheet' media='screen' type='text/css' href='css/style.css'/></head>";
-
+	//ok
 	// on récupère le paramètre view éventuel 
 	$view = valider("view"); 
 	/* valider automatise le code suivant :
@@ -48,6 +48,7 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 		default : // si le template correspondant à l'argument existe, on l'affiche
 			if (file_exists("templates/$view.php"))
 				include("templates/$view.php");
+		break;
 
 	}
 

@@ -1,0 +1,26 @@
+h3 {
+    text-align: center;
+}
+
+.img_profil {
+    height: 30px;
+    width: 30px;
+    margin-bottom: 2px;
+}
+
+.clic{
+    cursor: pointer;
+}
+
+.divForm > input {
+    margin-right: 5px;
+}
+
+#inputFirstName,#inputName,#inputPassword,#inputEmail {
+    display: inline-block;
+    width: 90%;
+}
+
+.center {
+    text-align: center;
+}

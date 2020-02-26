@@ -1,10 +1,12 @@
 <?php
 // Si la page est appelée directement par son adresse, on redirige en passant pas la page index
+
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
-	header("Location:../index.php?view=login");
+	header("Location:../index.php?view=accueil");
 	die("");
 }
+
 
 // Chargement eventuel des données en cookies
 $email = valider("email", "COOKIE");
@@ -13,13 +15,35 @@ if ($checked = valider("remember", "COOKIE")) $checked = "checked";
 else $checked="";
 ?>
 
-<!DOCTYPE html>
-<html lang='fr'>
-  <head>
-    <title>First Page</title>
-    <meta charset="utf-8">
-  </head>
-  <body>
+
+<script src='./js/registerJquery.js'></script>
+<link rel="stylesheet" type="text/css" href="./css/register.css">
+ 
+<?php
+if (valider("mail","GET")){ // si on clic sur le nouveau mail de confirmation
+  if (valider("mail","GET") == "fail"){ // ERREUR
+    echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
+      Adresse mail inexistante ou déjà confirmée.
+    </div>";
+  } else if (valider("mail","GET") == "success"){ // SUCCÉS
+    echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
+         Adresse mail confirmée. Vous pouvez désormais vous connecter !
+         </div>";
+  }
+}
+
+if (valider("pass","GET")){ // si on demande à changer de MDP
+  if (valider("pass","GET") == "fail"){ // ERREUR
+    echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
+      Lien erroné, le mot de passe n'a pas pu être changé.
+    </div>";
+  } else if (valider("pass","GET") == "success"){ //SUCCÉS
+    echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
+         Le mot de passe a été modifié. Vous pouvez désormais vous connecter !
+         </div>";
+  }
+}
+?>
 
 <div id='mainConnexion'>
   <div class="page-header">
@@ -36,7 +60,7 @@ else $checked="";
           
         </div>
       <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Passe</label>
+        <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
           <div id="checkPass" class='text-danger'></div>
@@ -89,7 +113,7 @@ else $checked="";
       </div>
 
       <div class="form-group row">
-        <label for="inputPasswordInscription" class="col-sm-2 col-form-label">Passe</label>
+        <label for="inputPasswordInscription" class="col-sm-2 col-form-label">Mot de passe</label>
         <div class="col-sm-10">
           <input type="password" class="form-control" id="inputPasswordInscription" placeholder="Saisir votre mot de passe">
           <div id='verifPasswordInscription' class='text-danger'></div>
@@ -127,5 +151,12 @@ else $checked="";
     <input type='submit' value='Recevoir' id='receive' class='btn btn-danger'>
   </div>
 </div>
-</body>
-</html>
+
+<div class="form-group row" id='haveMail'>
+  <h4>Recevoir un nouveau mail</h4>
+  <div class="col-sm-10" id='receiveNewMail'>
+    <input type="email" class="form-control" name='newM' id="emailReceive" placeholder="Saisir votre email">
+    <div id='verifMailReceive' class='text-danger'></div>
+    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-danger'>
+  </div>
+</div>
