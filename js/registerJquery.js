@@ -28,21 +28,40 @@ $(document).on('click','input[value="Connexion"]',function(){
     var passe = $("#inputPassword").val();
     var check = $("#check").prop("checked");
     
+    connexion(email,passe,check);
+});
+
+
+$(document).on("keyup","#email",function(contexte){
+   if (contexte.keyCode == 13){
+        var email = $("#email").val();
+        var passe = $("#inputPassword").val();
+        var check = $("#check").prop("checked");
+        connexion(email,passe,check);
+   } 
+});
+
+$(document).on("keyup","#inputPassword",function(contexte){
+    if (contexte.keyCode == 13){ // appuie sur Entrée
+         var email = $("#email").val();
+         var passe = $("#inputPassword").val();
+         var check = $("#check").prop("checked");
+         connexion(email,passe,check);
+    } 
+ });
+
+ function connexion(email,passe,check){
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifMail").show();
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         return;
     }
-
-    
     if (passe == ""){
         $("#checkPass").show();
         $("#checkPass").html("Veuillez saisir un mot de passe.");
         return;
     }
-
-
     if (check)
         check = "remember";
     else
@@ -65,7 +84,7 @@ $(document).on('click','input[value="Connexion"]',function(){
                    $("#log").html("Veuillez confirmer votre email avant de vous connecter. ");
                    $("#log").append($("<span class='newMail clic'>Recevoir un mail de confirmation ?</span>").click(function(){
                        console.log("envoyer un mail pour recevoir une nouvelle confirmation");
-                       sendMailConfirm();
+                       sendMailConfirm(email);
                    }));
                 break;
 
@@ -81,7 +100,8 @@ $(document).on('click','input[value="Connexion"]',function(){
         },
     dataType: "text"
     });
-});
+ }
+
 
 // Inscription
 $(document).on('click','input[value="Inscription"]',function(){
@@ -126,6 +146,7 @@ $(document).on("click",'#forgotPass',function(){
     $("#mainInscription").hide();
     $("#mainConnexion").hide();
     $("#keyPass").show();
+    $("#emailRecup").attr("value",$("#email").val());
 });
 
 $(document).on("click","#receive",function(){
@@ -173,11 +194,12 @@ $(document).on("click","#receive",function(){
  * Envoi un nouveau mail de confirmation
  */
 
- function sendMailConfirm(){
+ function sendMailConfirm(email){
     cacherMsg();
     $("#mainInscription").hide();
     $("#mainConnexion").hide();
     $("#haveMail").show();
+    $("#emailReceive").attr("value",email);
  }
 
     /**
