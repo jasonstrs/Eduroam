@@ -171,6 +171,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				  	<a class="dropdown-item orange" href="index.php?view=gererrole"><b>Gérer les rôles</b></a>
 					<a class="dropdown-item orange" href="index.php?view=creerrole"><b>Créer un nouveau rôle</b></a>
 					<a class="dropdown-item orange" href="index.php?view=gereruser"><b>Gérer les utilisateurs</b></a>
+					<a class="dropdown-item orange" href="index.php?view=planiSpectacles"><b>Planification des spectacles</b></a>
 				  </div>
 				</div>
 			<?php } ?>

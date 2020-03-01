@@ -169,7 +169,7 @@ function selectVilles(){
 		$SQLNbSpecVille = "SELECT COUNT(*) FROM spectacle WHERE ville=\"".$ligne['ville']."\"";
 		$SQLNbSpecVille = SQLGetChamp($SQLNbSpecVille);
 
-		$SQLGetDates = "SELECT * FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLGetDates = "SELECT * FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle']." AND valide='0'";
 		$SQLGetDates = parcoursRs(SQLSelect($SQLGetDates));
 
 		for( $i=0 ; $i < sizeof($SQLGetDates) ; $i++ ){
@@ -221,6 +221,18 @@ function supprimerDate($idDate){
 	$SQL = "DELETE FROM date_spectacle WHERE idDate = $idDate";
 	return SQLDelete($SQL);
 }
+
+function supprimerSpectacle($id){
+	$SQL = "DELETE FROM spectacle WHERE idSpectacle = $id";
+	return SQLDelete($SQL);
+}
+
+function validerDate($id){
+	$SQL = "UPDATE date_spectacle SET valide='1' WHERE idDate='$id'";
+	return SQLUpdate($SQL);
+}
+
+
 
 /**
  * Fonctions pour les vidéos
