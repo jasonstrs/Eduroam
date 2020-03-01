@@ -57,14 +57,14 @@ function afficherResumeVilles(rep){
         var requete;
         data["dates"].forEach(date => {
             currDesc.append(
+                //Bouton pour supprimer une date
                 $("<div/>").addClass("contDate").append(
                     $("<div/>").addClass("date").html(date.dateSpectacle)
                 ).append(
-                    $("<div/>").addClass("date").html(date.nb+" personne(s) interessée(s)")
+                    $("<div/>").addClass("date").html("<b>"+date.nb+"</b> personne(s) interessée(s)")
                 ).append(
                     $("<div/>").addClass("suppDate").html("&times;").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
                     .click(function(){
-                        console.log($(this).data());
                         requete = {
                             method:"POST",
                             url:"./minControleur/dataSpectacle.php",
@@ -86,13 +86,61 @@ function afficherResumeVilles(rep){
                         creerModal("modalSupprDate","Supprimer cette date?",contenuModal,"Supprimer","btn-danger",requete);
                         $("#modalSupprDate").modal();
                     })
-                )
+                ).append(
+                    //Bouton pour valider une date
+                    $("<div/>").addClass("validDate").html("&check;").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    .click(function(){
+                        requete = {
+                            method:"POST",
+                            url:"./minControleur/dataSpectacle.php",
+                            data:{
+                                "action":"validerDate",
+                                "idSpectacle":$(this).data("idSpec"),
+                                "idDate":$(this).data("idDate")
+                            },
+                            success:function(oRep){
+                                console.log(oRep);
+                                console.log("Date validée");
+                                $("#modalValidDate").modal('dispose');
+                                document.location.reload();
+                            }
+                        }
+                        contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
+                        contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
+                        contenuModal += "<br>Voulez vous valider cette date?<br>Elle n'apparaîtra plus sur cette page et les personnes interessées reçevront un mail.";
+
+                        creerModal("modalValidDate","Valider cette date?",contenuModal,"Valider","btn-success",requete);
+                        $("#modalValidDate").modal();
+                    }))
             );
         });
-        currDesc.append($("<div/>").addClass("ajouterDateSpectacle pointer").html("Ajouter une date à ce spectacle").click(function(){
+        currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-primary").html("Ajouter une date à ce spectacle").click(function(){
             $("body").data("idSpectacle",$(this).parent().parent().data("ville").id);
             afficherChoixDate(element);
         }));
+        currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-danger").html("Supprimer ce spectacle").click(function(){
+            var spectacle = $(this).parent().parent().data("ville");
+            console.log(spectacle);
+            var contenuModal = "Voulez vous vraiment supprimer le spectacle \""+spectacle.desc+"\" à "+spectacle.ville+"?";
+            var requete ={
+                method:"POST",
+                url:"./mincontroleur/dataSpectacle.php",
+                data:{
+                    action:"supprSpectacle",
+                    id:spectacle.id
+                },
+                success:function(oRep){
+                    console.log(oRep);
+                    console.log("Spectacle supprimé");
+                    $("#modalSupprSpectacle").modal('dispose');
+                    document.location.reload();
+                }
+                
+            };
+            creerModal("modalSupprSpectacle","Supprimer un spectacle",contenuModal,"Supprimer","btn-danger",requete);
+            $("#modalSupprSpectacle").modal();
+        }));
+        
         currVille.append(currDesc);
         
     });
@@ -392,6 +440,12 @@ $(document).ready(function(){
                 "dates":tabDatesJS,
                 "ville":ville,
                 "desc":desc
+            },
+            success:function(oRep){
+                console.log(oRep);
+                console.log("Spectacle Créé");
+                $("#modalConfirmerDate").modal('dispose');
+                document.location.reload();
             }
         }
 

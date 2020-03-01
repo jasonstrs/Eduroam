@@ -63,6 +63,14 @@
             if($date  = valider("idDate","POST"))
                 supprimerDate($date);
         break;
+        case "supprSpectacle":
+            if($date  = valider("id","POST"))
+                supprimerSpectacle($date);
+        break;
+        case "validerDate":
+            if($date  = valider("idDate","POST"))
+                validerDate($date);
+        break;
     }
     
     
