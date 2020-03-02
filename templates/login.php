@@ -71,7 +71,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
         <label class="custom-control-label" for="check">Se souvenir de moi</label>
       </div>
       <div class='submit'>
-        <input type="submit" name="action"  value="Connexion" class="btn btn-danger">
+        <input type="submit" name="action"  value="Connexion" class="btn orange">
       </div>
 
       <div class='register'>
