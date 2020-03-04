@@ -16,15 +16,30 @@ $search=valider("search","GET");
     <div class="lead">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form action="#">
-                <input type="hidden" id="hiddenpage" name="hiddenpage" value="1"/>
-                <input type="hidden" id="nbserie" name="hiddenpage" value="1"/>
+                <form action="#" class="menu p-4" autocomplete="off">
+                    <input type="hidden" id="hiddenpage" name="hiddenpage" value="1"/>
+                    <input type="hidden" id="nbserie" name="hiddenpage" value="1"/>
                     <div class="input-group mb-3">
                         <input id="search" type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="search" value="<?php echo $search ?>">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="search-button">
                                <img src="./ressources/icons/search.svg" alt="" title="search">
                             </button>
+                        </div>
+                    </div>
+                    <div>
+                    <button class="btn btn-outline-secondary" type="button" id="filter-button">
+                        Plus d'options
+                    </button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                Posté après le : <br/>
+                                <input autocomplete="no" class="form-control date" type="text" name="jour" id="posteApres" size=7 readonly>
+                            </div>
+                            <div class="col-md-6">
+                                Posté avant le : <br/>
+                                <input autocomplete="no" class="form-control date" type="text" name="jour" id="posteAvant" size=7 readonly>
+                            </div>
                         </div>
                     </div>
                 </form>
