@@ -1,25 +1,25 @@
 
 
 $(function() {
-
 	$("#posteAvant").datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: "dd/mm/yy",
+		dateFormat: "yy-mm-dd",
 	});
 
 	$("#posteApres").datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: "dd/mm/yy",
+		dateFormat: "yy-mm-dd",
 	});
 
 	$("#posteAvant").change(function(){
-		
-		var today = new Date($(this).val());
-		console.log(today.toString());
-	})
+		insertSearch();
+	});
 	
+	$("#posteApres").change(function(){
+		insertSearch();
+	});
 
 	$("form").on("submit", function(e) {
 		e.preventDefault();
@@ -135,6 +135,8 @@ function insertSearch() {
 	$("#results").load("./templates/videosearch.php", {
 		search : $("#search").val(),
 		page : $('#hiddenpage').val()-1,
+		avant : $("#posteAvant").val(),
+		apres : $("#posteApres").val(),
 		videoParPage : nbVid,
 		type : "video",
 	});
@@ -256,3 +258,7 @@ $("#pagination").ready(function(){
 	insertSearch();
 	pagination();
 });
+
+$("#disp-filtres").click(function(){
+	$("#filtres").toggle();
+})
