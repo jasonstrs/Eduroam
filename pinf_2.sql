@@ -21,12 +21,14 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `pinf`
 --
-
+CREATE DATABASE pinf;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `article`
 --
+
+use pinf;
 
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE IF NOT EXISTS `article` (
