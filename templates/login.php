@@ -57,7 +57,6 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
             <input type="email" class="form-control" id="email" placeholder="Saisir votre email" value="<?php echo $email;?>">
             <div id="verifMail" class='text-danger'></div>
           </div>
-          
         </div>
       <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
@@ -71,7 +70,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
         <label class="custom-control-label" for="check">Se souvenir de moi</label>
       </div>
       <div class='submit'>
-        <input type="submit" name="action"  value="Connexion" class="btn orange">
+        <input type="submit" name="action"  value="Connexion" class="btn btn-outline-secondary">
       </div>
 
       <div class='register'>
@@ -129,7 +128,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
       </div>
      
       <div class='submit'>
-        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-danger">
+        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-outline-secondary">
       </div>
 
       <div class='register'>
@@ -148,7 +147,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
   <div class="col-sm-10" id='containerMailInscription'>
     <input type="email" class="form-control" name='email' id="emailRecup" placeholder="Saisir votre email">
     <div id='verifForgetPass' class='text-danger'></div>
-    <input type='submit' value='Recevoir' id='receive' class='btn btn-danger'>
+    <input type='submit' value='Recevoir' id='receive' class='btn btn-outline-secondary'>
   </div>
 </div>
 
@@ -157,6 +156,6 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
   <div class="col-sm-10" id='receiveNewMail'>
     <input type="email" class="form-control" name='newM' id="emailReceive" placeholder="Saisir votre email">
     <div id='verifMailReceive' class='text-danger'></div>
-    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-danger'>
+    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-outline-secondary'>
   </div>
 </div>
