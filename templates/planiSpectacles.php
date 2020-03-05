@@ -20,7 +20,7 @@
         <?php 
             mkInput("text","nomVille","","placeholder='Entrer le nom de la ville' class='form-control' id='champTxtVille'");
         ?>
-        <button id="validerEntreeVille" class="btn btn-primary" style="margin-bottom:3px;">Valider</button>
+        <button id="validerEntreeVille" class="btn btn-outline-primary" style="margin-bottom:3px;">Valider</button>
         <img class="loader" src="./ressources/loading.gif" style="width:50px;display:none;"/>
     </div>
     <div id="listeVilles">
@@ -43,9 +43,9 @@
             mkInput("text","descSpec",""
             ,"placeholder='Entrer la description du spectacle' class='form-control champNomDesc' id='champTxtDescSpectacle'");
         ?>
-            <button type="button" id="boutonSelectDates" class="btn btn-primary methodeChoixDates" disabled>Selectionner des dates</button>
+            <button type="button" id="boutonSelectDates" class="btn btn-outline-primary methodeChoixDates" disabled>Selectionner des dates</button>
             <br><div id="selectionDesDates"></div>
-            <br><button type="button" id="boutonValiderDates" class="btn btn-primary methodeChoixDates" data-toggle="modal" data-target="#modalConfirmDates">Valider ces dates</button>
+            <br><button type="button" id="boutonValiderDates" class="btn btn-outline-primary methodeChoixDates" data-toggle="modal" data-target="#modalConfirmDates">Valider ces dates</button>
     </div>
     
 </div>

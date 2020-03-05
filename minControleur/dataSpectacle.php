@@ -56,7 +56,7 @@
             }
             foreach($dates as $currDate){
                 if($currDate != "")
-                    ajouterDateSpectacle($idSpec,$currDate);
+                    echo "ID ajout : ".ajouterDateSpectacle($idSpec,$currDate);
             }
         break;
         case "supprDate":
