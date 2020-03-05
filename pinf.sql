@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 27 fév. 2020 à 13:10
--- Version du serveur :  5.7.24
--- Version de PHP :  7.3.1
+-- Généré le :  jeu. 05 mars 2020 à 08:36
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -93,6 +93,8 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
+  `valide` int(11) NOT NULL,
+  `lien` int(11) NOT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
@@ -101,15 +103,15 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
 -- Déchargement des données de la table `date_spectacle`
 --
 
-INSERT INTO `date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`) VALUES
-(1, 4, '2020-03-19'),
-(2, 2, '2020-02-21'),
-(3, 4, '2020-02-12'),
-(4, 3, '2020-02-22'),
-(5, 1, '2020-02-28'),
-(6, 3, '2020-02-26'),
-(7, 4, '2020-02-15'),
-(8, 1, '2020-02-05');
+INSERT INTO `date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
+(1, 4, '2020-03-19', 0, 0),
+(2, 2, '2020-02-21', 0, 0),
+(3, 4, '2020-02-12', 0, 0),
+(4, 3, '2020-02-22', 0, 0),
+(5, 1, '2020-02-28', 0, 0),
+(6, 3, '2020-02-26', 0, 0),
+(7, 4, '2020-02-15', 0, 0),
+(8, 1, '2020-02-05', 0, 0);
 
 -- --------------------------------------------------------
 

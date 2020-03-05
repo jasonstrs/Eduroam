@@ -269,11 +269,14 @@ function deleteUnchecked() {
 	SQLUpdate($SQL);
 }
 
-function getVideos($search='', $page='', $limite, $notID='') {
+function getVideos($search='', $page='', $limite, $notID='', $apres, $avant) {
+	setlocale(LC_TIME, "fr_FR");
 	$offset = ($page!= '') ? "OFFSET ".$page*$limite : "" ;
 	$notID = ($notID!= '') ? "AND videoId NOT LIKE '".$notID."'" : "" ;
+	$apres = ($apres!= '') ? "AND publishedAt >'".$apres."'" : "" ;
+	$avant = ($avant!= '') ? "AND publishedAt <'".$avant."'" : "" ;
 	//echo $page;
-	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $notID ORDER BY publishedAt DESC LIMIT $limite $offset";
+	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $notID $apres $avant ORDER BY publishedAt DESC LIMIT $limite $offset";
 	//echo $SQL;
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);

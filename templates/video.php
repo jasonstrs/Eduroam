@@ -28,24 +28,24 @@ $search=valider("search","GET");
                         </div>
                     </div>
                     <div>
-                    <button class="btn btn-outline-secondary" type="button" id="filter-button">
-                        Plus d'options
-                    </button>
-                        <div class="row">
-                            <div class="col-md-6">
-                                Posté après le : <br/>
-                                <input autocomplete="no" class="form-control date" type="text" name="jour" id="posteApres" size=7 readonly>
-                            </div>
-                            <div class="col-md-6">
-                                Posté avant le : <br/>
-                                <input autocomplete="no" class="form-control date" type="text" name="jour" id="posteAvant" size=7 readonly>
+                        <button class="btn btn-outline-secondary" type="button" id="disp-filtres">
+                            Plus d'options
+                        </button>
+                        <div id="filtres" class="hidden"> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Posté après le : <br/>
+                                    <input class="form-control date" type="text" name="jour" id="posteApres" size=7 readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    Posté avant le : <br/>
+                                    <input class="form-control date" type="text" name="jour" id="posteAvant" size=7 readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <ul id="results"></ul>
-                <!-- <p><button id="prev" type="button" class="btn btn-light" style="display:none;">Previous</button>
-                <button id="next" type="button" class="btn btn-light" style="display:none;">Next</button></p> -->
                 <nav id="pagination" aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item page-down disabled" id="previouspageli">
