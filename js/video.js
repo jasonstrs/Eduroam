@@ -5,18 +5,18 @@ $(function() {
 	$("#posteAvant").datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: "yy-mm-dd",
+		dateFormat: "dd/mm/yy",
 	});
 
 	$("#posteApres").datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: "yy-mm-dd",
+		dateFormat: "dd/mm/yy",
 	});
 
 	$("#posteAvant").change(function(){
+		
 		var today = new Date($(this).val());
-		//var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 		console.log(today.toString());
 	})
 	
