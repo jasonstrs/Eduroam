@@ -18,11 +18,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<link rel="icon" href="ressources/logo.png">
 	<script src="https://kit.fontawesome.com/05f96bf93f.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-	<script src="libs/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 	<script src="js/main.js"></script>
-	
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>J'suis pas content TV</title>
@@ -34,6 +34,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	<link href="css/sticky-footer.css" rel="stylesheet" />
 	<link href="css/main.css" rel="stylesheet" />
+	<link href="css/jquery-ui.css" rel="stylesheet" />
 	<!--[if lt IE 9]>
 	  <script src="js/html5shiv.js"></script>
 	  <script src="js/respond.min.js"></script>
@@ -133,8 +134,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		  </div>
 		</div>
 		<?php } ?>
-		
-
 
             <?php if (valider("connecte","SESSION")) { ?>
         		<li class="nav-item">
