@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 05 mars 2020 à 08:36
+-- Généré le :  jeu. 05 mars 2020 à 09:47
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -93,25 +93,21 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) NOT NULL,
-  `lien` int(11) NOT NULL,
+  `valide` int(11) DEFAULT 0,
+  `lien` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `date_spectacle`
 --
 
 INSERT INTO `date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
-(1, 4, '2020-03-19', 0, 0),
-(2, 2, '2020-02-21', 0, 0),
-(3, 4, '2020-02-12', 0, 0),
-(4, 3, '2020-02-22', 0, 0),
-(5, 1, '2020-02-28', 0, 0),
-(6, 3, '2020-02-26', 0, 0),
-(7, 4, '2020-02-15', 0, 0),
-(8, 1, '2020-02-05', 0, 0);
+(26, 14, '2020-03-19', 0, NULL),
+(27, 14, '2020-03-27', 0, NULL),
+(28, 14, '2020-03-28', 0, NULL),
+(29, 14, '2020-04-29', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -173,17 +169,14 @@ CREATE TABLE IF NOT EXISTS `spectacle` (
   `ville` tinytext NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `spectacle`
 --
 
 INSERT INTO `spectacle` (`idSpectacle`, `ville`, `description`) VALUES
-(1, 'Paris', 'Spectacle 1'),
-(2, 'Lille', 'spectacle 2'),
-(3, 'Marseille', 'spectacle 3'),
-(4, 'Brest', 'spectacle 4');
+(14, 'a', 'a');
 
 -- --------------------------------------------------------
 
@@ -201,20 +194,6 @@ CREATE TABLE IF NOT EXISTS `spectacle_user` (
   KEY `idU` (`idU`),
   KEY `idSpectacle` (`idSpectacle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `spectacle_user`
---
-
-INSERT INTO `spectacle_user` (`idDate`, `idU`, `idSpectacle`) VALUES
-(1, 2, 4),
-(2, 2, 2),
-(3, 2, 4),
-(4, 1, 3),
-(5, 2, 1),
-(6, 1, 3),
-(7, 1, 4),
-(8, 1, 1);
 
 -- --------------------------------------------------------
 

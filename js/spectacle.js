@@ -40,6 +40,9 @@ function chargerVilles(nomEntre){
  */
 function afficherResumeVilles(rep){
     var tab = JSON.parse(rep);
+    if(tab.length == 0){
+        $("#listeVilles").append($("<div/>").html("<I><B>Aucun spectacle en attente</B></I>").css("margin","20px"));
+    }
     tab.forEach(element => {
         var currVille = $("<div/>").data("ville",element).addClass("containerVille nonSelectionnable").append($("<div/>").addClass("ville")
             .append($("<div/>").addClass("tabVille")
@@ -83,7 +86,7 @@ function afficherResumeVilles(rep){
                         contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
                         contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
 
-                        creerModal("modalSupprDate","Supprimer cette date?",contenuModal,"Supprimer","btn-danger",requete);
+                        creerModal("modalSupprDate","Supprimer cette date?",contenuModal,"Supprimer","btn-outline-danger",requete);
                         $("#modalSupprDate").modal();
                     })
                 ).append(
@@ -109,16 +112,16 @@ function afficherResumeVilles(rep){
                         contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
                         contenuModal += "<br>Voulez vous valider cette date?<br>Elle n'apparaîtra plus sur cette page et les personnes interessées reçevront un mail.";
 
-                        creerModal("modalValidDate","Valider cette date?",contenuModal,"Valider","btn-success",requete);
+                        creerModal("modalValidDate","Valider cette date?",contenuModal,"Valider","btn btn-outline-success",requete);
                         $("#modalValidDate").modal();
                     }))
             );
         });
-        currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-primary").html("Ajouter une date à ce spectacle").click(function(){
+        currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-outline-primary").html("Ajouter une date à ce spectacle").click(function(){
             $("body").data("idSpectacle",$(this).parent().parent().data("ville").id);
             afficherChoixDate(element);
         }));
-        currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-danger").html("Supprimer ce spectacle").click(function(){
+        currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-outline-danger").html("Supprimer ce spectacle").click(function(){
             var spectacle = $(this).parent().parent().data("ville");
             console.log(spectacle);
             var contenuModal = "Voulez vous vraiment supprimer le spectacle \""+spectacle.desc+"\" à "+spectacle.ville+"?";
@@ -137,7 +140,7 @@ function afficherResumeVilles(rep){
                 }
                 
             };
-            creerModal("modalSupprSpectacle","Supprimer un spectacle",contenuModal,"Supprimer","btn-danger",requete);
+            creerModal("modalSupprSpectacle","Supprimer un spectacle",contenuModal,"Supprimer","btn btn-danger",requete);
             $("#modalSupprSpectacle").modal();
         }));
         
@@ -449,7 +452,7 @@ $(document).ready(function(){
             }
         }
 
-        creerModal("modalConfirmerDate","Confirmation de l'ajout des dates",contenu,"Confirmer","btn-success",requete);
+        creerModal("modalConfirmerDate","Confirmation de l'ajout des dates",contenu,"Confirmer","btn-outline-success",requete);
         $("#modalConfirmerDate").modal();
     });
 
