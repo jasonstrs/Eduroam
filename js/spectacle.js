@@ -66,7 +66,7 @@ function afficherResumeVilles(rep){
                 ).append(
                     $("<div/>").addClass("date").html("<b>"+date.nb+"</b> personne(s) interessée(s)")
                 ).append(
-                    $("<div/>").addClass("suppDate").html("&times;").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    $("<div/>").addClass("validDate").html("<i class='fas fa-check'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
                     .click(function(){
                         requete = {
                             method:"POST",
@@ -91,7 +91,7 @@ function afficherResumeVilles(rep){
                     })
                 ).append(
                     //Bouton pour valider une date
-                    $("<div/>").addClass("validDate").html("&check;").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    $("<div/>").addClass("suppDate").html("<i class='fas fa-times'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
                     .click(function(){
                         requete = {
                             method:"POST",
