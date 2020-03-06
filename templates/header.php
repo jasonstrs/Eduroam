@@ -55,6 +55,15 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			width : 100%;
 		}
 
+		.aligner_images {
+			display:flex;
+			align-items:center;
+		}
+
+		.aligner_images > *{
+			margin-right:10px;
+		} 
+
 
 		
 
@@ -92,7 +101,24 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 
         	})
-        });
+		});
+		
+		window.twttr = (function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0],
+		t = window.twttr || {};
+	if (d.getElementById(id)) return t;
+	js = d.createElement(s);
+	js.id = id;
+	js.src = "https://platform.twitter.com/widgets.js";
+	fjs.parentNode.insertBefore(js, fjs);
+
+	t._e = [];
+	t.ready = function(f) {
+		t._e.push(f);
+	};
+
+	return t;
+	}(document, "script", "twitter-wjs"));
 
     </script>
 
@@ -154,7 +180,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 		<ul class="navbar-nav mt-2 mt-lg-0">
 
-			<li class="nav-item">
+			<li class="nav-item aligner_images" >
+				<a class="twitter-follow-button"
+				href="https://twitter.com/Jasonstrs"
+				data-size="large">
+				Follow @Jasonstrs</a>
 				<img src="ressources/discord.png" height="40px" width="40px"/>
 
 				<img src="ressources/tipeee.png" height="40px" width="40px" />
