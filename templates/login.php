@@ -9,8 +9,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 
 // Chargement eventuel des données en cookies
+//  -> identifiant
+//  -> case à cocher
 $email = valider("email", "COOKIE");
-$passe = valider("passe", "COOKIE"); 
 if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
 else $checked="";
 ?>
@@ -62,7 +63,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
       <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
         <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="">
           <div id="checkPass" class='text-danger'></div>
         </div>
       </div>
