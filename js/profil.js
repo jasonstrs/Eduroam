@@ -85,7 +85,7 @@ $(document).on("keyup",function(contexte){
         $(".divForm input").each(function(){
             if (!($(this).attr("disabled"))) // si le champs est pas disabled
                 retourArriere(this); // c'est le champs qui est modifié
-        }); 
+        });
     }
 })
 
@@ -126,7 +126,20 @@ function validationChangement(refInput){
     }
 
     if (flag) // le champ entré est un succès !
-        modificationBDD(action,contenu);
+        if (action == "prénom"){
+            // on lance un modal pour confirmer le MDP
+            // A continuer !
+            creerModal("modalVerif","Veuillez confirmer votre mot de passe","BONJOUR","Aurevoir","btn-danger",{});
+            $("#modalVerif").modal(); 
+            // Remettre l'ancien champs si non changement,
+            // remettre les anciens boutons d'édition
+            // si bon mdp, on le change
+            // on peut changer avec ENTREE ou VALIDER
+
+
+            
+        } else // sinon on lance directement la modif en BDD
+            modificationBDD(action,contenu);
     else // l'utilisateur doit faire des modifications correctes
         $(refInput).attr("disabled",false); 
 }
