@@ -72,6 +72,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			margin-right:10px;
 		} 
 
+		#iFrame_twitter {
+			display:none;
+		}
+
 
 		
 
@@ -118,6 +122,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	js = d.createElement(s);
 	js.id = id;
 	js.src = "https://platform.twitter.com/widgets.js";
+	
 	fjs.parentNode.insertBefore(js, fjs);
 
 	t._e = [];
@@ -189,10 +194,10 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		<ul class="navbar-nav mt-2 mt-lg-0">
 
 			<li class="nav-item aligner_images" >
-				<a class="twitter-follow-button"
-				href="https://twitter.com/Jasonstrs"
+				<a id="iFrame_twitter" class="twitter-follow-button"
+				href="https://twitter.com/gregtabibian"
 				data-size="large">
-				Follow @Jasonstrs</a>
+				Follow @gregtabibian</a>
 				<img src="ressources/discord.png" height="40px" width="40px"/>
 
 				<img src="ressources/tipeee.png" height="40px" width="40px" />

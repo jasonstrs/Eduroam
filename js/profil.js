@@ -11,8 +11,7 @@ $(document).ready(function(){
         success: function(oRep){
             // oRep[0] == prenom
             // oRep[1] == nom
-            // oRep[2] == pass
-            // oRep[3] == mail
+            // oRep[2] == mail
             $("#inputFirstName").attr("value",oRep[0]);
             $("#inputName").attr("value",oRep[1]);
             $("#inputEmail").attr("value",oRep[2]);
