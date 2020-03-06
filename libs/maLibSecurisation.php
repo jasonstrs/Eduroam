@@ -29,7 +29,7 @@ function verifUser($email,$password,$check)
 	if (isConfirm($id)){ // oui c'est confirmé !
 		// Cas succès : on enregistre pseudo, idUser dans les variables de session 
 		// il faut appeler session_start ! 
-
+		$chemin = "/Eduroam/"; //Chemin où seront stockés les cookies
 		$_SESSION["email"] = $email;
 		$_SESSION["idUser"] = $id;
 		$_SESSION["hash"] = hashCode($id);
@@ -38,13 +38,11 @@ function verifUser($email,$password,$check)
 		if(isSuperAdmin($id,hashCode($id)))$_SESSION["admin"] = 1;
 		else $_SESSION["admin"] = 0;
 		if ($check == "remember") {
-			setcookie("email",$email , time()+60*60*24*30);
-			setcookie("passe",$password, time()+60*60*24*30);
-			setcookie("remember",true, time()+60*60*24*30);
+			setcookie("email",$email , time()+60*60*24*30,$chemin);
+			setcookie("remember",true, time()+60*60*24*30,$chemin);
 		} else {
-			setcookie("email","", time()-3600);
-			setcookie("passe","", time()-3600);
-			setcookie("remember",false, time()-3600);
+			setcookie("email","", time()-3600,$chemin);
+			setcookie("remember",false, time()-3600,$chemin);
 		}
 
 		return "success";
