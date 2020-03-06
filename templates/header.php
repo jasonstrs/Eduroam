@@ -2,7 +2,15 @@
 // Si la page est appelée directement par son adresse, on redirige en passant pas la page index
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
-	header("Location:../index.php");
+	header("Location:../index.php?view=accueil");
+	die("");
+}
+if (valider("view","GET")!="accueil" && 
+	valider("view","GET")!="login" && 
+	//Rajouter ici les autres pages accessibles lorsque l'on est deconnecté
+	!valider("connecte","SESSION"))
+{
+	header("Location:./index.php?view=accueil");
 	die("");
 }
 include_once "libs/modele.php";
