@@ -93,7 +93,7 @@ $(document).on("keyup",function(contexte){
  * Fonction qui permet de revenir au contenu initial
  * @param {Référence sur le input} refInput 
  */
-function retourArriere(refInput){
+var retourArriere = function retourArriere(refInput){
     $("#checkPass").remove();
     $("#checkName").remove();
     $("#checkFirstName").remove();
@@ -126,21 +126,28 @@ function validationChangement(refInput){
     }
 
     if (flag) // le champ entré est un succès !
-        if (action == "prénom"){
+        if (action == "mot de passe"){
             // on lance un modal pour confirmer le MDP
-            // A continuer !
-            var test = function(){
-                console.log("YESS");
+            // On crée la fonction de vérification
+            var test = function(refInput){
+                
+                if ($("#inputPassword").val() == $(refInput).val()){ // si deux mots de passe identiques
+                    // CHGMT BDD
+                    modificationBDD(action,contenu);
+                    return 1;
+                }
+                else {
+                    $("#checkVerifPass").remove(); // si la vérification existe déjà
+                    $(refInput).parent().prepend("<div id='checkVerifPass' class='text-danger center'></div>")
+                    $('#checkVerifPass').html('Veuillez saisir un mot de passe identique');
+                    return 0;
+                }
             }
-            creerModalVerif("bb","Confirmer votre mot de passe","Modifier","btn-success","text","Saisir mot de passe",test);
-            $("#bb").modal();
-            // Remettre l'ancien champs si non changement,
-            // remettre les anciens boutons d'édition
-            // si bon mdp, on le change
-            // on peut changer avec ENTREE ou VALIDER
+            creerModalVerif("pass","Confirmer votre mot de passe","Modifier","btn-outline-secondary","password","Saisir mot de passe",
+            test,function(){retourArriere($("#inputPassword"))}
+            ,1);
+            $("#pass").modal();
 
-
-            
         } else // sinon on lance directement la modif en BDD
             modificationBDD(action,contenu);
     else // l'utilisateur doit faire des modifications correctes

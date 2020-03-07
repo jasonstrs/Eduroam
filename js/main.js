@@ -82,9 +82,10 @@ $("body").append(modal);
  * @param {string} couleur Couleur du bouton de confirmation (en classes bootstrap, ex: btn-warning pour jaune, btn-primary pour bleu,btn-danger pour rouge)
  * @param {string} type_du_input Type du input mis dans le body du modal
  * @param {string} placeholder Placeholder à saisir dans le input
- * @param {function} fonction_success Permet de saisir la fonction lorsque l'on clique sur la validation
+ * @param {function} function_success Permet de saisir la fonction lorsque l'on clique sur la validation
+ * @param {boolean} boolean Permet de savoir si lorsque l'on détruit le popup, on effectue la fonction echec
  */
-function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder,fonction_success){
+function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder,function_success,function_echec,boolean){
 
     var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
                     $("<div/>").addClass('modal-dialog').attr("role","document").append(
@@ -97,22 +98,28 @@ function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder
                                 )
                             )
                         ).append(
-                            $("<div/>").addClass("modal-body").html('<input type="' + type_du_input+ '" class="form-control" id="verif_pass_modal" placeholder="' + placeholder +'">')
+                            $("<div/>").addClass("modal-body").html('<input type="' + type_du_input+ '" class="form-control" id="verifChamps" placeholder="' + placeholder +'">')
     
                         ).append(
                             $("<div/>").addClass("modal-footer").append(
                                 $("<button/>").addClass("btn btn-danger").attr({"type":"button","data-dismiss":"modal"}).html("Fermer")
                             ).append(
-                                $("<button/>").addClass("btn "+couleur).attr({"type":"button"}).html(confirmation).click(function(){
-                                    fonction_success();
+                                $("<button/>").addClass("btn "+couleur).attr({"type":"button"}).html(confirmation).click(function(){     
+                                    if (function_success($("#verifChamps"))){ // si on a success, on destroy l'ensemble
+                                        $(modal).remove();
+                                        $(".fade").remove();
+                                        
+                                        if (boolean)
+                                            function_echec();
+                                    }
                                 })
                             )
-                        
                         )
                     )
                 ).on("hidden.bs.modal",function(e){
                     console.log("On supprime le modal");
                     $(this).remove();
+                    function_echec();
                 });
     
     $("body").append(modal);
