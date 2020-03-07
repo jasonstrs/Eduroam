@@ -135,6 +135,8 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	}(document, "script", "twitter-wjs"));
 
     </script>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0"></script>
+
 
 </head>
 <!-- **** F I N **** H E A D **** -->
@@ -194,10 +196,13 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 		<ul class="navbar-nav mt-2 mt-lg-0">
 
-			<li class="nav-item aligner_images" >
+			<li class="nav-item aligner_images">
+				<div class="fb-like" data-href="https://www.facebook.com/pascontenttv/" data-width="50" data-layout="button_count" 
+				data-action="like" data-size="large" data-share="false"></div>
+
 				<a id="iFrame_twitter" class="twitter-follow-button"
 				href="https://twitter.com/gregtabibian"
-				data-size="large">
+				data-size="large" data-show-count="false">
 				Follow @gregtabibian</a>
 				<img src="ressources/discord.png" height="40px" width="40px"/>
 
