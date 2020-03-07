@@ -104,8 +104,7 @@ function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder
                                 $("<button/>").addClass("btn btn-danger").attr({"type":"button","data-dismiss":"modal"}).html("Fermer")
                             ).append(
                                 $("<button/>").addClass("btn "+couleur).attr({"type":"button"}).html(confirmation).click(function(){
-                                    // lancer la verif de MDP
-                                    // fonction_success
+                                    fonction_success();
                                 })
                             )
                         

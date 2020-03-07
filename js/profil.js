@@ -129,7 +129,10 @@ function validationChangement(refInput){
         if (action == "prénom"){
             // on lance un modal pour confirmer le MDP
             // A continuer !
-            creerModalVerif("bb","Confirmer votre mot de passe","Modifier","btn-success","text","Saisir mot de passe","");
+            var test = function(){
+                console.log("YESS");
+            }
+            creerModalVerif("bb","Confirmer votre mot de passe","Modifier","btn-success","text","Saisir mot de passe",test);
             $("#bb").modal();
             // Remettre l'ancien champs si non changement,
             // remettre les anciens boutons d'édition
