@@ -58,6 +58,7 @@ function afficherResumeVilles(rep){
         var currDesc = $("<div/>").addClass("descVille");
         var contenuModal;
         var requete;
+        if(data["dates"]["length"] == 0) currDesc.append($("<div/>").html("<I><B>Aucune date pour ce spectacle</B></I>").css("margin","10px"));
         data["dates"].forEach(date => {
             currDesc.append(
                 //Bouton pour supprimer une date
@@ -72,36 +73,12 @@ function afficherResumeVilles(rep){
                             method:"POST",
                             url:"./minControleur/dataSpectacle.php",
                             data:{
-                                "action":"supprDate",
-                                "idSpectacle":$(this).data("idSpec"),
-                                "idDate":$(this).data("idDate")
-                            },
-                            success:function(oRep){
-                                console.log(oRep);
-                                console.log("Date supprimée");
-                                $("#modalSupprDate").modal('dispose');
-                                document.location.reload();
-                            }
-                        }
-                        contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
-                        contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
-
-                        creerModal("modalSupprDate","Supprimer cette date?",contenuModal,"Supprimer","btn-outline-danger",requete);
-                        $("#modalSupprDate").modal();
-                    })
-                ).append(
-                    //Bouton pour valider une date
-                    $("<div/>").addClass("suppDate").html("<i class='fas fa-times'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
-                    .click(function(){
-                        requete = {
-                            method:"POST",
-                            url:"./minControleur/dataSpectacle.php",
-                            data:{
                                 "action":"validerDate",
                                 "idSpectacle":$(this).data("idSpec"),
-                                "idDate":$(this).data("idDate")
+                                "idDate":$(this).data("idDate"),
                             },
                             success:function(oRep){
+
                                 console.log(oRep);
                                 console.log("Date validée");
                                 $("#modalValidDate").modal('dispose');
@@ -111,10 +88,59 @@ function afficherResumeVilles(rep){
                         contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
                         contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
                         contenuModal += "<br>Voulez vous valider cette date?<br>Elle n'apparaîtra plus sur cette page et les personnes interessées reçevront un mail.";
+                        contenuModal += "<input type='text' id='champTxtLienDate' placeholder='Entrer le lien vers la vente de billets pour cette date' class='form-control' />";
+                        
 
                         creerModal("modalValidDate","Valider cette date?",contenuModal,"Valider","btn btn-outline-success",requete);
                         $("#modalValidDate").modal();
+                    })
+                    
+                ).append(
+                    //Bouton pour valider une date
+                    $("<div/>").addClass("suppDate").html("<i class='fas fa-times'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    .click(function(){
+                        /**                                                                                                                             
+                         *                                      CREATION DU MODAL DE VALIDATION DE DATE                                                 
+                         */
+                        var id = "modalValiderDate";
+                        var     contenu = "Valider cette date : <B>"+$(this).data("date")+"</B> du spectacle <B>"+$(this).data("desc")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
+                                contenu += "Les gens interessés reçevront un mail leur confirmant la validation. (Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a>";
+                                contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)";
+                        var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
+                            $("<div/>").addClass('modal-dialog').attr("role","document").append(
+                                $("<div/>").addClass("modal-content").append(
+                                    $("<div/>").addClass("modal-header").append(
+                                        $("<h5/>").addClass("modal-title").attr("id",id).html("Valider une date")
+                                    ).append(
+                                        $("<button/>").addClass("close").attr({"type":"button","data-dismiss":"modal","aria-label":"Close"}).append(
+                                            $("<span/>").html("&times;").attr("aria-hidden","true")
+                                        )
+                                    )
+                                ).append(
+                                    $("<div/>").addClass("modal-body").html(contenu+'<input type="' + type_du_input+ '" class="form-control" id="verif_pass_modal" placeholder="' + placeholder +'">')
+            
+                                ).append(
+                                    $("<div/>").addClass("modal-footer").append(
+                                        $("<button/>").addClass("btn btn-danger").attr({"type":"button","data-dismiss":"modal"}).html("Fermer")
+                                    ).append(
+                                        $("<button/>").addClass("btn "+couleur).attr({"type":"button"}).html(confirmation).click(function(){
+                                            // lancer la verif de MDP
+                                            // fonction_success
+                                        })
+                                    )
+                                
+                                )
+                            )
+                        ).on("hidden.bs.modal",function(e){
+                            console.log("On supprime le modal");
+                            $(this).remove();
+                        });
+                        $("body").append(modal);
+                        /**                                                                                                                             
+                         *                                      FIN CREATION DU MODAL DE VALIDATION DE DATE                                                 
+                         */
                     }))
+                        
             );
         });
         currDesc.append($("<button/>").addClass("ajouterDateSpectacle pointer btn btn-outline-primary").html("Ajouter une date à ce spectacle").click(function(){
@@ -177,7 +203,6 @@ function afficherChoixDate(element){
         switch(typeof(element)){
             case "object":
                 //On veut ajouter une/des date(s) à un spectacle existant
-                console.log("objet");
                 titre = "Choix des dates";
                 ville=element.ville;
                 desc = element.desc;
@@ -193,7 +218,6 @@ function afficherChoixDate(element){
             break;
             case "undefined":
                 //On veut créer un nouveau spectacle
-                console.log("undefined");
                 titre = "Création d'un nouveau spectacle";
             break;
         }
