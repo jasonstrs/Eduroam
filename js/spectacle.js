@@ -69,45 +69,15 @@ function afficherResumeVilles(rep){
                 ).append(
                     $("<div/>").addClass("validDate").html("<i class='fas fa-check'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
                     .click(function(){
-                        requete = {
-                            method:"POST",
-                            url:"./minControleur/dataSpectacle.php",
-                            data:{
-                                "action":"validerDate",
-                                "idSpectacle":$(this).data("idSpec"),
-                                "idDate":$(this).data("idDate"),
-                            },
-                            success:function(oRep){
-
-                                console.log(oRep);
-                                console.log("Date validée");
-                                $("#modalValidDate").modal('dispose');
-                                document.location.reload();
-                            }
-                        }
-                        contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
-                        contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
-                        contenuModal += "<br>Voulez vous valider cette date?<br>Elle n'apparaîtra plus sur cette page et les personnes interessées reçevront un mail.";
-                        contenuModal += "<input type='text' id='champTxtLienDate' placeholder='Entrer le lien vers la vente de billets pour cette date' class='form-control' />";
-                        
-
-                        creerModal("modalValidDate","Valider cette date?",contenuModal,"Valider","btn btn-outline-success",requete);
-                        $("#modalValidDate").modal();
-                    })
-                    
-                ).append(
-                    //Bouton pour valider une date
-                    $("<div/>").addClass("suppDate").html("<i class='fas fa-times'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
-                    .click(function(){
                         /**                                                                                                                             
                          *                                      CREATION DU MODAL DE VALIDATION DE DATE                                                 
                          */
                         var id = "modalValiderDate";
                         var     contenu = "Valider cette date : <B>"+$(this).data("date")+"</B> du spectacle <B>"+$(this).data("desc")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
-                                contenu += "Les gens interessés reçevront un mail leur confirmant la validation. (Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a>";
-                                contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)";
+                                contenu += "Les gens interessés reçevront un mail leur confirmant la validation. <br>( Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a> )<br><br>";
+                                contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)<br>";
                         var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
-                            $("<div/>").addClass('modal-dialog').attr("role","document").append(
+                            $("<div/>").addClass('modal-dialog modal-lg').attr("role","document").append(
                                 $("<div/>").addClass("modal-content").append(
                                     $("<div/>").addClass("modal-header").append(
                                         $("<h5/>").addClass("modal-title").attr("id",id).html("Valider une date")
@@ -117,15 +87,28 @@ function afficherResumeVilles(rep){
                                         )
                                     )
                                 ).append(
-                                    $("<div/>").addClass("modal-body").html(contenu+'<input type="' + type_du_input+ '" class="form-control" id="verif_pass_modal" placeholder="' + placeholder +'">')
+                                    $("<div/>").addClass("modal-body").html(contenu+'<input type=text class="form-control" id="txtLienValidDate" placeholder="Entrer le lien de la vente de billets">')
             
                                 ).append(
                                     $("<div/>").addClass("modal-footer").append(
-                                        $("<button/>").addClass("btn btn-danger").attr({"type":"button","data-dismiss":"modal"}).html("Fermer")
+                                        $("<button/>").addClass("btn btn-secondary").attr({"type":"button","data-dismiss":"modal"}).html("Fermer")
                                     ).append(
-                                        $("<button/>").addClass("btn "+couleur).attr({"type":"button"}).html(confirmation).click(function(){
-                                            // lancer la verif de MDP
-                                            // fonction_success
+                                        $("<button/>").addClass("btn btn-outline-success").data("idDate",$(this).data("idDate")).attr({"type":"button"}).html("Valider la Date").click(function(){
+                                            $.ajax({
+                                                method:"POST",
+                                                url:"./minControleur/dataSpectacle.php",
+                                                data:{
+                                                    "action":"validDate",
+                                                    "idDate":$(this).data("idDate"),
+                                                    "lien":$("#txtLienValidDate").val()
+                                                },
+                                                success:function(oRep){
+                                                    console.log(oRep);
+                                                    console.log("Date validée");
+                                                    $("#modalValiderDate").modal('dispose');
+                                                    document.location.reload();
+                                                }
+                                            })
                                         })
                                     )
                                 
@@ -139,6 +122,38 @@ function afficherResumeVilles(rep){
                         /**                                                                                                                             
                          *                                      FIN CREATION DU MODAL DE VALIDATION DE DATE                                                 
                          */
+                        $("#modalValiderDate").modal();
+                    })
+                    
+                ).append(
+                    //Bouton pour supprimer une date
+                    $("<div/>").addClass("suppDate").html("<i class='fas fa-times'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    .click(function(){
+                        
+                        requete = {
+                            method:"POST",
+                            url:"./minControleur/dataSpectacle.php",
+                            data:{
+                                "action":"supprDate",
+                                "idSpectacle":$(this).data("idSpec"),
+                                "idDate":$(this).data("idDate"),
+                            },
+                            success:function(oRep){
+
+                                console.log(oRep);
+                                console.log("Date supprimée");
+                                $("#modalSupprDate").modal('dispose');
+                                document.location.reload();
+                            }
+                        }
+                        contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
+                        contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
+                        contenuModal += "<br>Voulez vous <B>supprimer cette date</B> ? ";
+
+                        
+
+                        creerModal("modalSupprDate","Supprimer cette date?",contenuModal,"Supprimer","btn btn-outline-danger",requete);
+                        $("#modalSupprDate").modal();
                     }))
                         
             );
