@@ -143,10 +143,10 @@ function validationChangement(refInput){
                     return 0;
                 }
             }
-            creerModalVerif("pass","Confirmer votre mot de passe","Modifier","btn-outline-secondary","password","Saisir mot de passe",
+            creerModalVerif("passWd","Confirmer votre mot de passe","Modifier","btn-outline-secondary","password","Saisir mot de passe",
             test,function(){retourArriere($("#inputPassword"))}
             ,1);
-            $("#pass").modal();
+            $("#passWd").modal();
 
         } else // sinon on lance directement la modif en BDD
             modificationBDD(action,contenu);
