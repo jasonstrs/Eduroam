@@ -324,4 +324,38 @@ function getVideosCount($search) {
 	return $rs;
 }
 
+/**
+ * Fonctions pour les rôles
+ */
+
+function addRole($nom, $droits) {
+	$SQL = "INSERT INTO role VALUES('0','$nom', '".json_encode($droits)."')";
+	SQLUpdate($SQL);
+}
+
+function getDroitByRole($idRole, $droit) {
+	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(droits, '$.$droit')) FROM `role` WHERE idRole=$idRole;"; 
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function getDroitByUser($idUser, $droit) {
+	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(role.droits, '$.$droit')) FROM role, user_role WHERE role.idRole=user_role.idRole AND user_role.idU=$idUser;"; 
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function getDroit($droit) {
+	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(role.droits, '$.$droit')) FROM role, user_role WHERE role.idRole=user_role.idRole AND user_role.idU=".valider("idUser","SESSION").";"; 
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function getRoles() {
+	$SQL = "SELECT idRole, nom FROM role";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
 ?>
