@@ -5,6 +5,9 @@
         header("Location:../index.php?view=accueil");
         die("");
     }
+    if(valider("view","GET")=="planiSpectacles") {
+        echo "Vous n'avez pas accés à cette page";
+    } else {
 ?>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <script src='js/spectacle.js'></script>
@@ -49,5 +52,5 @@
     </div>
     
 </div>
-
+<?php } ?>
     
