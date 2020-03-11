@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 11 mars 2020 à 14:31
--- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.3.12
+-- Généré le :  mer. 11 mars 2020 à 16:23
+-- Version du serveur :  5.7.24
+-- Version de PHP :  7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) DEFAULT 0,
+  `valide` int(11) DEFAULT '0',
   `lien` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
@@ -131,8 +131,8 @@ CREATE TABLE IF NOT EXISTS `idee_ville` (
 
 DROP TABLE IF EXISTS `notif_spectacle`;
 CREATE TABLE IF NOT EXISTS `notif_spectacle` (
-  `nbMin` int(11) NOT NULL DEFAULT 100,
-  `nbRappel` int(11) NOT NULL DEFAULT 50,
+  `nbMin` int(11) NOT NULL DEFAULT '100',
+  `nbRappel` int(11) NOT NULL DEFAULT '50',
   `mailNbInt` text NOT NULL,
   `objNbInt` tinytext NOT NULL,
   `mailIdeeVille` text NOT NULL,
@@ -151,9 +151,17 @@ CREATE TABLE IF NOT EXISTS `notif_spectacle` (
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `idRole` int(11) NOT NULL AUTO_INCREMENT,
-  `droits` text NOT NULL,
+  `nom` text NOT NULL,
+  `droits` json NOT NULL,
   PRIMARY KEY (`idRole`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `role`
+--
+
+INSERT INTO `role` (`idRole`, `nom`, `droits`) VALUES
+(8, 'admin', '{\"video\": \"1\", \"annonce\": \"1\", \"spectacle\": \"1\", \"utilisateurs\": \"1\"}');
 
 -- --------------------------------------------------------
 
@@ -254,6 +262,13 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   PRIMARY KEY (`idU`,`idRole`),
   KEY `idRole` (`idRole`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `user_role`
+--
+
+INSERT INTO `user_role` (`idU`, `idRole`) VALUES
+(3, 8);
 
 -- --------------------------------------------------------
 
