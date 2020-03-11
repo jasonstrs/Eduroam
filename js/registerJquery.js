@@ -32,8 +32,8 @@ $(document).on('click','input[value="Connexion"]',function(){
 });
 
 
-$(document).on("keyup","#email",function(contexte){
-   if (contexte.keyCode == 13){
+$(document).on("keyup","#email,#inputPassword",function(contexte){
+   if (contexte.keyCode == 13){ // appuie sur Entrée
         var email = $("#email").val();
         var passe = $("#inputPassword").val();
         var check = $("#check").prop("checked");
@@ -41,27 +41,25 @@ $(document).on("keyup","#email",function(contexte){
    } 
 });
 
-$(document).on("keyup","#inputPassword",function(contexte){
-    if (contexte.keyCode == 13){ // appuie sur Entrée
-         var email = $("#email").val();
-         var passe = $("#inputPassword").val();
-         var check = $("#check").prop("checked");
-         connexion(email,passe,check);
-    } 
- });
+ //////////////////////////////////////////////////////////////////////////////////////////////
 
  function connexion(email,passe,check){
     // on verifie que l'adresse mail n'est pas incorrecte
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifMail").show();
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
+        $("#email").addClass("is-invalid"); // l'adresse mail est invalide
         return;
     }
+    $("#email").removeClass("is-invalid"); // on enlvève la classe invalide
+
     if (passe == ""){
         $("#checkPass").show();
         $("#checkPass").html("Veuillez saisir un mot de passe.");
+        $("#inputPassword").addClass('is-invalid');
         return;
     }
+    $("#inputPassword").removeClass('is-invalid');
     if (check)
         check = "remember";
     else
@@ -156,8 +154,11 @@ $(document).on("click","#receive",function(){
     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
         $("#verifForgetPass").show();
         $("#verifForgetPass").html("Veuillez saisir une adresse mail correcte.");
+        $("#emailRecup").addClass("is-invalid");
         return;
     }
+    $("#emailRecup").removeClass("is-invalid");
+
     // on envoie une reqûete ajax dans un minControleur
     // on regarde si l'adresse existe, si oui, on envoie un mail
     // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
@@ -211,11 +212,12 @@ $(document).on("click","#receive",function(){
         // on verifie que l'adresse mail n'est pas incorrecte
         var email = $("#emailReceive").val();
         if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
-            console.log('new mail2');
             $("#verifMailReceive").show();
             $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
+            $("#emailReceive").addClass('is-invalid');
             return;
         }
+        $("#emailReceive").removeClass('is-invalid');
         $("#receiveMail").attr("disabled",true);
         $.ajax({
             type: "POST",
@@ -261,7 +263,6 @@ $(document).on("click","#receive",function(){
     Si l'on clique sur créer un compte, on affiche le formulaire d'inscription
 */
 $(document).on('click','#signUp',function(){
-    console.log("Se créer un compte");
     $("#verifMailInscription").hide();
     $("#mainInscription").show();
     $("#mainConnexion").hide();
@@ -273,7 +274,6 @@ $(document).on('click','#signUp',function(){
     Si l'on clique sur se connecter, on affiche le formulaire de connexion
 */
 $(document).on('click','#signIn',function(){
-    console.log("Connexion");
     cacherMsg();
     $("#mainConnexion").show();
     $("#mainInscription").hide();
@@ -306,6 +306,13 @@ function verifNom(){
     if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(nom)) && nom!=""){
         $("#verifNomInscription").show();
         $("#verifNomInscription").html("Veuillez saisir un nom correct (uniquement des lettres).");
+        $("#nom").addClass('is-invalid');
+        return 0;
+    }
+    if (nom !='')
+        $("#nom").removeClass('is-invalid').addClass('is-valid');
+    else{
+        $("#nom").removeClass('is-valid'); // si l'utilisateur met un bon nom et le changer après
         return 0;
     }
     $("#verifNomInscription").hide(); // Si l'utilisateur a corrigé son erreur, le msg disparait
@@ -317,8 +324,16 @@ function verifPrenom(){
     if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(prenom)) && prenom !=""){
         $("#verifPrenomInscription").show();
         $("#verifPrenomInscription").html("Veuillez saisir un prénom correct (uniquement des lettres).");
+        $("#prenom").addClass('is-invalid');
         return 0;
     }
+    if (prenom != '')
+        $("#prenom").removeClass('is-invalid').addClass('is-valid');
+    else{
+        $("#prenom").removeClass('is-valid'); // si l'utilisateur met un bon nom et le changer après
+        return 0;
+    }
+
     $("#verifPrenomInscription").hide();
     return 1;
 }
@@ -326,25 +341,41 @@ function verifPrenom(){
 function verifEmail(){
     var email = $("#emailInscription").val();
     // on verifie que l'adresse mail n'est pas incorrecte
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
-        $("verifMailInscription").show();
+
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email)) && email != '' ) {
+        $("#verifMailInscription").show();
         $("#verifMailInscription").html("Veuillez saisir une adresse mail correcte.");
+        $("#emailInscription").addClass('is-invalid');
         return 0;
     }
-    $("verifMailInscription").hide();
+
+    if (email != ''){
+        $("#emailInscription").addClass('is-valid').removeClass('is-invalid');
+    } else {
+        $("#verifMailInscription").hide();
+        $("#emailInscription").removeClass('is-valid is-invalid'); // si l'utilisateur met un bon mail et le change après
+        return 0;
+    }
+    $("#verifMailInscription").hide();
     return 1; 
 }
 
 
 function verifPasse(){
     var passe = $("#inputPasswordInscription").val();
-    if (passe == "")
+    if (passe == ""){
+        $("#inputPasswordInscription").removeClass('is-invalid is-valid');
+        $("#verifPasswordInscription").hide();
         return 0;
+    }
+        
     if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passe))){
         $("#verifPasswordInscription").show();
         $('#verifPasswordInscription').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');
+        $("#inputPasswordInscription").addClass('is-invalid');
         return 0;
     }
+    $("#inputPasswordInscription").addClass('is-valid').removeClass('is-invalid');
     $("#verifPasswordInscription").hide();
     return 1;
 }
@@ -352,14 +383,21 @@ function verifPasse(){
 function verifConfirmationPasse(){
     var passe = $("#inputPasswordInscription").val();
     var confirmMDP =$("#inputPasswordConfirm").val();
-    if (confirmMDP == "")
+
+    if (confirmMDP == ""){
+        $("#inputPasswordConfirm").removeClass('is-invalid is-valid');
+        $("#verifPasswordConfirmInscription").hide();
         return 0;
+    }
+    
 
     if (passe != confirmMDP){
         $("#verifPasswordConfirmInscription").show();
         $("#verifPasswordConfirmInscription").html("Veuillez saisir un mot de passe identique.");
+        $("#inputPasswordConfirm").addClass('is-invalid');
         return 0;
     }
+    $("#inputPasswordConfirm").addClass('is-valid').removeClass('is-invalid');
     $("#verifPasswordConfirmInscription").hide();
     return 1;
 }
