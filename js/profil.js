@@ -244,4 +244,4 @@ $(document).on("change","#switch",function(){
 
     // ici il faut passer une requete
 
-})
+});
