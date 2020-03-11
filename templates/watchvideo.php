@@ -11,6 +11,7 @@ $video = valider("id", "GET");
 ?>
 	<link rel="stylesheet" href="css/video.css">
 	<br/><br/>
+	<input type="hidden" id="videoDate" value="<?php echo getDateById($video) ?>">
 	<input type="hidden" id="videoId" value="<?php echo $video ?>">
 	<div class="lead">
 		<div class="row">

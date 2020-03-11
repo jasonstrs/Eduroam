@@ -2,7 +2,15 @@
 // Si la page est appelée directement par son adresse, on redirige en passant pas la page index
 if (basename($_SERVER["PHP_SELF"]) != "index.php")
 {
-	header("Location:../index.php");
+	header("Location:../index.php?view=accueil");
+	die("");
+}
+if (valider("view","GET")!="accueil" && 
+	valider("view","GET")!="login" && 
+	//Rajouter ici les autres pages accessibles lorsque l'on est deconnecté
+	!valider("connecte","SESSION"))
+{
+	header("Location:./index.php?view=accueil");
 	die("");
 }
 include_once "libs/modele.php";
@@ -18,11 +26,12 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<link rel="icon" href="ressources/logo.png">
 	<script src="https://kit.fontawesome.com/05f96bf93f.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-	<script src="libs/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 	<script src="js/main.js"></script>
-	
+	<script src="https://kit.fontawesome.com/739ebaa1a4.js" crossorigin="anonymous"></script>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>J'suis pas content TV</title>
@@ -34,6 +43,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 	<link href="css/sticky-footer.css" rel="stylesheet" />
 	<link href="css/main.css" rel="stylesheet" />
+	<link href="css/jquery-ui.css" rel="stylesheet" />
 	<!--[if lt IE 9]>
 	  <script src="js/html5shiv.js"></script>
 	  <script src="js/respond.min.js"></script>
@@ -52,6 +62,19 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			position:fixed; 
 			background-color: #c8912a;
 			width : 100%;
+		}
+
+		.aligner_images {
+			display:flex;
+			align-items:center;
+		}
+
+		.aligner_images > *{
+			margin-right:10px;
+		} 
+
+		#iFrame_twitter {
+			display:none;
 		}
 
 
@@ -91,9 +114,29 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 
         	})
-        });
+		});
+		
+		window.twttr = (function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0],
+		t = window.twttr || {};
+	if (d.getElementById(id)) return t;
+	js = d.createElement(s);
+	js.id = id;
+	js.src = "https://platform.twitter.com/widgets.js";
+	
+	fjs.parentNode.insertBefore(js, fjs);
+
+	t._e = [];
+	t.ready = function(f) {
+		t._e.push(f);
+	};
+
+	return t;
+	}(document, "script", "twitter-wjs"));
 
     </script>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0"></script>
+
 
 </head>
 <!-- **** F I N **** H E A D **** -->
@@ -133,8 +176,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		  </div>
 		</div>
 		<?php } ?>
-		
-
 
             <?php if (valider("connecte","SESSION")) { ?>
         		<li class="nav-item">
@@ -155,7 +196,14 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 		<ul class="navbar-nav mt-2 mt-lg-0">
 
-			<li class="nav-item">
+			<li class="nav-item aligner_images">
+				<div class="fb-like" data-href="https://www.facebook.com/pascontenttv/" data-width="50" data-layout="button_count" 
+				data-action="like" data-size="large" data-share="false"></div>
+
+				<a id="iFrame_twitter" class="twitter-follow-button"
+				href="https://twitter.com/gregtabibian"
+				data-size="large" data-show-count="false">
+				Follow @gregtabibian</a>
 				<img src="ressources/discord.png" height="40px" width="40px"/>
 
 				<img src="ressources/tipeee.png" height="40px" width="40px" />
@@ -171,6 +219,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				  	<a class="dropdown-item orange" href="index.php?view=gererrole"><b>Gérer les rôles</b></a>
 					<a class="dropdown-item orange" href="index.php?view=creerrole"><b>Créer un nouveau rôle</b></a>
 					<a class="dropdown-item orange" href="index.php?view=gereruser"><b>Gérer les utilisateurs</b></a>
+					<a class="dropdown-item orange" href="index.php?view=planiSpectacles"><b>Planification des spectacles</b></a>
 				  </div>
 				</div>
 			<?php } ?>
@@ -197,5 +246,5 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
   </nav>
   <!-- Begin page content -->
-
-<div class="container">
+  <br>
+<div class="container"> 

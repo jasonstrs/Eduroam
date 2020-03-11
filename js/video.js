@@ -1,6 +1,26 @@
-function tplawesome(e,t){res=e;for(var n=0;n<t.length;n++){res=res.replace(/\{\{(.*?)\}\}/g,function(e,r){return t[n][r]})}return res}
+
 
 $(function() {
+	$("#posteAvant").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: "yy-mm-dd",
+	});
+
+	$("#posteApres").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: "yy-mm-dd",
+	});
+
+	$("#posteAvant").change(function(){
+		insertSearch();
+	});
+	
+	$("#posteApres").change(function(){
+		insertSearch();
+	});
+
 	$("form").on("submit", function(e) {
 		e.preventDefault();
 		resetPagination();
@@ -10,6 +30,7 @@ $(function() {
 			history.pushState("", "",  "index.php?view=video&search="+$("#search").val());
 		else 
 			history.pushState("", "",  "index.php?view=video");
+		
 	});
 
 	$("#search-button").on( "click", function( event ) {
@@ -21,16 +42,6 @@ $(function() {
 		else 
 			history.pushState("", "",  "index.php?view=video");
 	});
-
-	/* $("#next").on( "click", function( event ) {
-		$("#pageToken").val($("#next").data("token"));
-		insertSearch();
-	});
-
-	$("#prev").on( "click", function( event ) {
-		$("#pageToken").val($("#prev").data("token"));
-		insertSearch();
-	}); */
 
 	$("#actualiser").on( "click", function( event ) {
 		callApi();
@@ -61,7 +72,7 @@ function callApi(nToken) {
 	});
 	// execute the request
 	request.execute(function(response) {
-		console.log(response);
+		//console.log(response);
 		var flag = 0;
 		var results = response.result;
 		//var tab = {'1':'test','2':{'1':'lol','2':'mdr'},'3':'test3'};
@@ -124,7 +135,10 @@ function insertSearch() {
 	$("#results").load("./templates/videosearch.php", {
 		search : $("#search").val(),
 		page : $('#hiddenpage').val()-1,
+		avant : $("#posteAvant").val(),
+		apres : $("#posteApres").val(),
 		videoParPage : nbVid,
+		type : "video",
 	});
 }
 
@@ -148,7 +162,7 @@ function countVideos() {
 	   
 	   
 		success : function(data){
-			console.log(data);
+			//console.log(data);
 			$("#nbserie").val(data);
 		},
 	   
@@ -172,7 +186,7 @@ function pagination() {
 	var page=$('#hiddenpage').val();
 	//console.log(page);
 	var nbSerie=$('#nbserie').val();
-	console.log(nbSerie);
+	//console.log(nbSerie);
 	var nbSeriePage = nbVid;
 	var nbPage = Math.ceil(nbSerie / nbSeriePage); 
 	//console.log(nbPage);
@@ -244,3 +258,7 @@ $("#pagination").ready(function(){
 	insertSearch();
 	pagination();
 });
+
+$("#disp-filtres").click(function(){
+	$("#filtres").toggle();
+})

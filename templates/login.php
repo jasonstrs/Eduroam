@@ -9,8 +9,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 
 // Chargement eventuel des données en cookies
+//  -> identifiant
+//  -> case à cocher
 $email = valider("email", "COOKIE");
-$passe = valider("passe", "COOKIE"); 
 if ($checked = valider("remember", "COOKIE")) $checked = "checked"; 
 else $checked="";
 ?>
@@ -57,12 +58,11 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
             <input type="email" class="form-control" id="email" placeholder="Saisir votre email" value="<?php echo $email;?>">
             <div id="verifMail" class='text-danger'></div>
           </div>
-          
         </div>
       <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
         <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="<?php echo $passe;?>">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Saisir votre mot de passe" value="">
           <div id="checkPass" class='text-danger'></div>
         </div>
       </div>
@@ -71,7 +71,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
         <label class="custom-control-label" for="check">Se souvenir de moi</label>
       </div>
       <div class='submit'>
-        <input type="submit" name="action"  value="Connexion" class="btn btn-danger">
+        <input type="submit" name="action"  value="Connexion" class="btn btn-outline-secondary">
       </div>
 
       <div class='register'>
@@ -129,7 +129,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
       </div>
      
       <div class='submit'>
-        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-danger">
+        <input type="submit" id='inscription' name="action"  value="Inscription" class="btn btn-outline-secondary">
       </div>
 
       <div class='register'>
@@ -148,7 +148,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
   <div class="col-sm-10" id='containerMailInscription'>
     <input type="email" class="form-control" name='email' id="emailRecup" placeholder="Saisir votre email">
     <div id='verifForgetPass' class='text-danger'></div>
-    <input type='submit' value='Recevoir' id='receive' class='btn btn-danger'>
+    <input type='submit' value='Recevoir' id='receive' class='btn btn-outline-secondary'>
   </div>
 </div>
 
@@ -157,6 +157,6 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
   <div class="col-sm-10" id='receiveNewMail'>
     <input type="email" class="form-control" name='newM' id="emailReceive" placeholder="Saisir votre email">
     <div id='verifMailReceive' class='text-danger'></div>
-    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-danger'>
+    <input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-outline-secondary'>
   </div>
 </div>

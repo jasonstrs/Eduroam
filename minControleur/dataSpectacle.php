@@ -56,12 +56,21 @@
             }
             foreach($dates as $currDate){
                 if($currDate != "")
-                    ajouterDateSpectacle($idSpec,$currDate);
+                    echo "ID ajout : ".ajouterDateSpectacle($idSpec,$currDate);
             }
         break;
         case "supprDate":
             if($date  = valider("idDate","POST"))
                 supprimerDate($date);
+        break;
+        case "supprSpectacle":
+            if($date  = valider("id","POST"))
+                supprimerSpectacle($date);
+        break;
+        case "validDate":
+            if(!($lien = valider("lien","POST")))$lien = "";
+            if($date  = valider("idDate","POST"))
+                validerDate($date,$lien);
         break;
     }
     

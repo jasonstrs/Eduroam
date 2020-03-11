@@ -141,6 +141,13 @@ function verifExistMail($email){
 	return 0; 
 }
 
+/**
+ * 
+ * 			FONCTIONS POUR LES SPECTACLES
+ * 
+ */
+
+
 
 //Charge les spectacles présents dans la BDD
 //Renvoie la structure suivante : 
@@ -169,7 +176,7 @@ function selectVilles(){
 		$SQLNbSpecVille = "SELECT COUNT(*) FROM spectacle WHERE ville=\"".$ligne['ville']."\"";
 		$SQLNbSpecVille = SQLGetChamp($SQLNbSpecVille);
 
-		$SQLGetDates = "SELECT * FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLGetDates = "SELECT * FROM date_spectacle WHERE idSpectacle=".$ligne['idSpectacle']." AND valide='0'";
 		$SQLGetDates = parcoursRs(SQLSelect($SQLGetDates));
 
 		for( $i=0 ; $i < sizeof($SQLGetDates) ; $i++ ){
@@ -190,8 +197,6 @@ function selectVilles(){
 		array_push($reponse,$currRep);
 	}
 	return $reponse;
-	/* $SQL = "SELECT s.idSpectacle AS id,s.ville AS nom,s.description AS _description
-	, COUNT(ds.idDate),COUNT(su)"; */
 	
 }
 
@@ -221,6 +226,24 @@ function supprimerDate($idDate){
 	$SQL = "DELETE FROM date_spectacle WHERE idDate = $idDate";
 	return SQLDelete($SQL);
 }
+
+function supprimerSpectacle($id){
+	$SQL = "DELETE FROM spectacle WHERE idSpectacle = $id";
+	return SQLDelete($SQL);
+}
+
+function validerDate($id,$lien){
+	$SQL = "UPDATE date_spectacle SET valide='1',lien='$lien' WHERE idDate='$id'";
+	return SQLUpdate($SQL);
+}
+
+
+/**
+ * 
+ * 			FIN FONCTIONS POUR LES SPECTACLES
+ * 
+ */
+
 
 /**
  * Fonctions pour les vidéos
@@ -257,15 +280,42 @@ function deleteUnchecked() {
 	SQLUpdate($SQL);
 }
 
-function getVideos($search='', $page='', $limite, $notID='') {
+function getVideos($search='', $page='', $limite, $notID='', $apres, $avant) {
+	setlocale(LC_TIME, "fr_FR");
 	$offset = ($page!= '') ? "OFFSET ".$page*$limite : "" ;
 	$notID = ($notID!= '') ? "AND videoId NOT LIKE '".$notID."'" : "" ;
+	$apres = ($apres!= '') ? "AND publishedAt >'".$apres."'" : "" ;
+	$avant = ($avant!= '') ? "AND publishedAt <'".$avant."'" : "" ;
 	//echo $page;
-	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $notID ORDER BY publishedAt DESC LIMIT $limite $offset";
+	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $notID $apres $avant ORDER BY publishedAt DESC LIMIT $limite $offset";
 	//echo $SQL;
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
 	return $tab; 
+}
+
+function getVideosByDateSup($date, $notID='', $limite) {
+	//echo $page;
+	$SQL = "SELECT * FROM video WHERE publishedAt>='$date' AND videoId NOT LIKE '$notID' ORDER BY publishedAt ASC LIMIT $limite";
+	//echo $SQL;
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getVideosByDateInf($date, $notID='', $limite) {
+	//echo $page;
+	$SQL = "SELECT * FROM video WHERE publishedAt<='$date' AND videoId NOT LIKE '$notID' ORDER BY publishedAt DESC LIMIT $limite";
+	//echo $SQL;
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getDateById($id) {
+	$SQL = "SELECT publishedAt FROM video WHERE videoId='$id'";
+	$rs = SQLGetChamp($SQL);
+	return $rs; 
 }
 
 function getVideosCount($search) {

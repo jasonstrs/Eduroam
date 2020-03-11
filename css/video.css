@@ -40,3 +40,20 @@
     font-size: 1rem;
     font-weight: 400;
 }
+
+.menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+	font-size: 13px;
+    font-weight: 500;
+}
+
+.date {
+    width:auto;
+    display:inline-block;
+    background-color: white !important;
+}
+
+.hidden {
+    display: none;
+}
