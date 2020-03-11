@@ -72,6 +72,15 @@
             if($date  = valider("idDate","POST"))
                 validerDate($date,$lien);
         break;
+        case "nbDates":
+            $tab = array();
+            if($valid = valider("val","POST")){
+                if($valid==2)$valid=0;
+                $tab["rep"] = nbDates($valid);
+                $tab["valid"]=$valid;
+                echo(json_encode($tab));
+            }
+        break;
     }
     
     

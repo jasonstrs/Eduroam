@@ -199,3 +199,23 @@ input[type="text"]{
 #boutonValiderDates{
     display:none;
 }
+
+.nbDates{
+    border:1px rgb(62, 62, 255) solid;
+    position:absolute;
+    right:20px;
+    font-size:67%;
+    background-color:rgb(62, 62, 255);
+    color:white;
+    padding-left:8px;
+    padding-right:8px;
+    border-radius:50px;
+    display: inline-flex;
+    align-items:center;
+}
+
+.nbDates > img{
+    margin-left:5px;
+    max-width:20px;
+    max-height:20px;
+}

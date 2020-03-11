@@ -127,7 +127,7 @@ function afficherResumeVilles(rep){
                     
                 ).append(
                     //Bouton pour supprimer une date
-                    $("<div/>").addClass("suppDate").html("<i class='fas fa-times'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
+                    $("<div/>").addClass("suppDate").html("<i class='fas fa-trash-alt'></i>").data({"idSpec":element.id,"idDate":date.idDate,"date":date.dateSpectacle,"ville":element.ville,"desc":element.desc})
                     .click(function(){
                         
                         requete = {

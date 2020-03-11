@@ -211,8 +211,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		
 			
 			<?php if (valider("connecte","SESSION") && valider("admin","SESSION")==1) { ?>
-				<div class="dropdown navbar-nav">
-				  <a class="nav-link dropdown-toggle text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<li class="nav-item">
+          			<a class="nav-link" href="index.php?view=admin"><b>Administration</b></a>
+        		</li>
+				<!-- <div class="dropdown navbar-nav">
+				  <a class="nav-link text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<b>Administration</b>
 				  </a>
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color: #c8912a">
@@ -221,7 +224,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 					<a class="dropdown-item orange" href="index.php?view=gereruser"><b>Gérer les utilisateurs</b></a>
 					<a class="dropdown-item orange" href="index.php?view=planiSpectacles"><b>Planification des spectacles</b></a>
 				  </div>
-				</div>
+				</div> -->
 			<?php } ?>
 
 

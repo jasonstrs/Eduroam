@@ -13,7 +13,7 @@
 <script src='js/spectacle.js'></script>
 <h3>
     <div id="titre">
-        Planification des spectacles
+        Gestion des spectacles
     </div>
 </h3>
 

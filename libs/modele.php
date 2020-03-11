@@ -238,6 +238,11 @@ function validerDate($id,$lien){
 }
 
 
+function nbDates($valid){
+	$SQL="SELECT COUNT(*) FROM date_spectacle WHERE valide=$valid";
+	return SQLGetChamp($SQL);
+}
+
 /**
  * 
  * 			FIN FONCTIONS POUR LES SPECTACLES
