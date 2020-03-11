@@ -11,8 +11,7 @@ $(document).ready(function(){
         success: function(oRep){
             // oRep[0] == prenom
             // oRep[1] == nom
-            // oRep[2] == pass
-            // oRep[3] == mail
+            // oRep[2] == mail
             $("#inputFirstName").attr("value",oRep[0]);
             $("#inputName").attr("value",oRep[1]);
             $("#inputEmail").attr("value",oRep[2]);
@@ -86,7 +85,7 @@ $(document).on("keyup",function(contexte){
         $(".divForm input").each(function(){
             if (!($(this).attr("disabled"))) // si le champs est pas disabled
                 retourArriere(this); // c'est le champs qui est modifié
-        }); 
+        });
     }
 })
 
@@ -94,7 +93,7 @@ $(document).on("keyup",function(contexte){
  * Fonction qui permet de revenir au contenu initial
  * @param {Référence sur le input} refInput 
  */
-function retourArriere(refInput){
+var retourArriere = function retourArriere(refInput){
     $("#checkPass").remove();
     $("#checkName").remove();
     $("#checkFirstName").remove();
@@ -127,7 +126,30 @@ function validationChangement(refInput){
     }
 
     if (flag) // le champ entré est un succès !
-        modificationBDD(action,contenu);
+        if (action == "mot de passe"){
+            // on lance un modal pour confirmer le MDP
+            // On crée la fonction de vérification
+            var test = function(refInput){
+                
+                if ($("#inputPassword").val() == $(refInput).val()){ // si deux mots de passe identiques
+                    // CHGMT BDD
+                    modificationBDD(action,contenu);
+                    return 1;
+                }
+                else {
+                    $("#checkVerifPass").remove(); // si la vérification existe déjà
+                    $(refInput).parent().prepend("<div id='checkVerifPass' class='text-danger center'></div>")
+                    $('#checkVerifPass').html('Veuillez saisir un mot de passe identique');
+                    return 0;
+                }
+            }
+            creerModalVerif("passWd","Confirmer votre mot de passe","Modifier","btn-outline-secondary","password","Saisir mot de passe",
+            test,function(){retourArriere($("#inputPassword"))}
+            ,1);
+            $("#passWd").modal();
+
+        } else // sinon on lance directement la modif en BDD
+            modificationBDD(action,contenu);
     else // l'utilisateur doit faire des modifications correctes
         $(refInput).attr("disabled",false); 
 }

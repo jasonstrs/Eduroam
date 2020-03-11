@@ -141,6 +141,13 @@ function verifExistMail($email){
 	return 0; 
 }
 
+/**
+ * 
+ * 			FONCTIONS POUR LES SPECTACLES
+ * 
+ */
+
+
 
 //Charge les spectacles présents dans la BDD
 //Renvoie la structure suivante : 
@@ -190,8 +197,6 @@ function selectVilles(){
 		array_push($reponse,$currRep);
 	}
 	return $reponse;
-	/* $SQL = "SELECT s.idSpectacle AS id,s.ville AS nom,s.description AS _description
-	, COUNT(ds.idDate),COUNT(su)"; */
 	
 }
 
@@ -227,11 +232,17 @@ function supprimerSpectacle($id){
 	return SQLDelete($SQL);
 }
 
-function validerDate($id){
-	$SQL = "UPDATE date_spectacle SET valide='1' WHERE idDate='$id'";
+function validerDate($id,$lien){
+	$SQL = "UPDATE date_spectacle SET valide='1',lien='$lien' WHERE idDate='$id'";
 	return SQLUpdate($SQL);
 }
 
+
+/**
+ * 
+ * 			FIN FONCTIONS POUR LES SPECTACLES
+ * 
+ */
 
 
 /**

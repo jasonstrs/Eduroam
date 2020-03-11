@@ -67,9 +67,10 @@
             if($date  = valider("id","POST"))
                 supprimerSpectacle($date);
         break;
-        case "validerDate":
+        case "validDate":
+            if(!($lien = valider("lien","POST")))$lien = "";
             if($date  = valider("idDate","POST"))
-                validerDate($date);
+                validerDate($date,$lien);
         break;
     }
     

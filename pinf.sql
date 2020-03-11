@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 05 mars 2020 à 09:47
+-- Généré le :  mer. 11 mars 2020 à 14:31
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `pinf`
 --
-
 
 -- --------------------------------------------------------
 
@@ -98,17 +97,15 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
   `lien` int(11) DEFAULT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `date_spectacle`
 --
 
 INSERT INTO `date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
-(26, 14, '2020-03-19', 0, NULL),
-(27, 14, '2020-03-27', 0, NULL),
-(28, 14, '2020-03-28', 0, NULL),
-(29, 14, '2020-04-29', 0, NULL);
+(31, 15, '2020-03-19', 0, NULL),
+(33, 15, '2020-03-28', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -125,6 +122,25 @@ CREATE TABLE IF NOT EXISTS `idee_ville` (
   PRIMARY KEY (`id_idee_ville`),
   KEY `idU_idee_ville` (`idU`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `notif_spectacle`
+--
+
+DROP TABLE IF EXISTS `notif_spectacle`;
+CREATE TABLE IF NOT EXISTS `notif_spectacle` (
+  `nbMin` int(11) NOT NULL DEFAULT 100,
+  `nbRappel` int(11) NOT NULL DEFAULT 50,
+  `mailNbInt` text NOT NULL,
+  `objNbInt` tinytext NOT NULL,
+  `mailIdeeVille` text NOT NULL,
+  `objIdeeVille` tinytext NOT NULL,
+  `mailSpectValid` text NOT NULL,
+  `objSpectValid` tinytext NOT NULL,
+  `heureNotif` time NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -170,14 +186,14 @@ CREATE TABLE IF NOT EXISTS `spectacle` (
   `ville` tinytext NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `spectacle`
 --
 
 INSERT INTO `spectacle` (`idSpectacle`, `ville`, `description`) VALUES
-(14, 'a', 'a');
+(15, 'Paris', 'Spectacle 2020');
 
 -- --------------------------------------------------------
 
@@ -190,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `spectacle_user` (
   `idDate` int(11) NOT NULL,
   `idU` int(11) NOT NULL,
   `idSpectacle` int(11) NOT NULL,
+  `notif` tinyint(4) NOT NULL COMMENT '0:pas de notif prévue; 1 : notif en attente ; 2 : notif envoyée',
   PRIMARY KEY (`idDate`,`idU`,`idSpectacle`),
   KEY `idDate` (`idDate`),
   KEY `idU` (`idU`),
@@ -222,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `hashCode`) VALUES
 (1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, '0'),
 (2, 'tata@gmail.com', 'TATA', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, '0'),
-(3, 'clementboyaval@gmail.com', 'Clément', 'Boyaval', '0ea97408e22da28e7c02244c20287d49077951fc', 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
+(3, 'clementboyaval@gmail.com', 'Clément', 'Boyaval', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
 
 -- --------------------------------------------------------
 
