@@ -10,7 +10,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
   <script src='./js/profil.js'></script>
   <link rel="stylesheet" type="text/css" href="./css/profil.css">
   
-  <div>
+  <div id="mainProfil">
         <h3>Voici votre profil</h3>
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
@@ -36,4 +36,5 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
                 <input type="password" class="form-control" id="inputPassword">
             </div>
         </div>
+        
   </div>

@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("#inputFirstName").attr("disabled",true);
     $("#inputPassword").attr("disabled",true);
     $("#inputName").attr("disabled",true);
-    
+    afficherNotif();
     $.ajax({
         type: "GET",
         url: "./minControleur/dataProfil.php",
@@ -20,6 +20,16 @@ $(document).ready(function(){
     dataType: "json"
     });
 })
+
+function afficherNotif(){
+    // LANCER UNE REQUETE AJAX QUI REGARDE SI c'EST COCHE ou NON DANS LA BDD
+
+    var notif = '<div class="custom-control custom-switch">'+
+                    '<input type="checkbox" class="custom-control-input" id="switch" checked="true">'+
+                    '<label class="custom-control-label" for="switch">Recevoir les notifications par email</label>'+
+                '</div>';
+    $("#mainProfil").append(notif);
+}
 
 /**
  * Fonction qui permet d'afficher les boutons permettant la modification des champs
@@ -223,3 +233,15 @@ function verificationPrenom(contenu,refInput){
     return 1;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$(document).on("change","#switch",function(){
+    console.log($(this));
+    if ($(this).is(':checked')){ // ici il faut passer une requête
+        console.log('coché');
+    } else {
+        console.log('non coché'); 
+    }
+
+    // ici il faut passer une requete
+
+});
