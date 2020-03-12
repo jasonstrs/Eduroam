@@ -219,3 +219,11 @@ input[type="text"]{
     max-width:20px;
     max-height:20px;
 }
+
+.card-header > h5 > button{
+    vertical-align:initial;
+}
+
+.card-header > h5 > i{
+    font-size:0.75rem;
+}
