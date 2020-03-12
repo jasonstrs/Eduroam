@@ -1,23 +1,105 @@
 $(document).ready(function(){
-    $("#mainInscription").hide();
     cacherMsg();
 })
+
+
+// form Inscription
+function formInscription(){
+    var form = "<div id='mainInscription'>"+
+    '<div class="page-header">'+
+      '<h1 class="text-center">Inscription</h1>'+
+    '</div>'+
+    '<div class="jumbotron" id="blocInscription">'+
+        '<div class="form-group row">'+
+            '<label for="nom" class="col-sm-2 col-form-label">Nom</label>'+
+            '<div class="col-sm-10">'+
+            '<input type="text" class="form-control" id="nom" placeholder="Saisir votre nom">'+
+            "<div id='verifNomInscription' class='text-danger'></div>"+
+          '</div>'+
+        '</div>'+
+        '<div class="form-group row">'+
+            '<label for="prenom" class="col-sm-2 col-form-label">Prénom</label>'+
+            '<div class="col-sm-10">'+
+            '<input type="text" class="form-control" id="prenom" placeholder="Saisir votre prenom">'+
+            "<div id='verifPrenomInscription' class='text-danger'></div>"+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group row">'+
+            '<label for="email" class="col-sm-2 col-form-label">Email</label>'+
+            '<div class="col-sm-10" id="containerMailInscription">'+
+              '<input type="email" class="form-control" id="emailInscription" placeholder="Saisir votre email">'+
+              "<div id='verifMailInscription' class='text-danger'></div>"+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group row">'+
+          '<label for="inputPasswordInscription" class="col-sm-2 col-form-label">Mot de passe</label>'+
+          '<div class="col-sm-10">'+
+            '<input type="password" class="form-control" id="inputPasswordInscription" placeholder="Saisir votre mot de passe">'+
+            "<div id='verifPasswordInscription' class='text-danger'></div>"+
+          '</div>'+
+        '</div>'+
+
+        '<div class="form-group row">'+
+          '<label for="inputPasswordConfirm" class="col-sm-2 col-form-label">Confirmation</label>'+
+          '<div class="col-sm-10">'+
+            '<input type="password" class="form-control" id="inputPasswordConfirm" placeholder="Confirmer votre mot de passe">'+
+            "<div id='verifPasswordConfirmInscription' class='text-danger'></div>"+
+          '</div>'+
+        '</div>'+
+        "<div class='submit'>"+
+          '<input type="submit" id="inscription" name="action"  value="Inscription" class="btn btn-outline-secondary">'+
+        '</div>'+
+       "<div class='register'>"+
+          "<small id='signIn' class='form-text text-muted clic'>Vous avez déjà un compte ? Connectez-vous ici</small>"+
+        "</div>"+
+    "</div>"+
+  "</div>";
+
+  $("#mainConnexion").hide();
+  $("#form").html(form);
+  $("#verifMailInscription").hide();
+  $("#verifNomInscription").hide();
+  $("#verifPrenomInscription").hide();
+  $("#verifPasswordInscription").hide();
+  $("#verifPasswordConfirmInscription").hide();
+}
+
+
+// MDP oublié
+function formMDP(){
+    var form = "<div class='form-group row' id='keyPass'>"+
+    "<h4>Mot de passe oublié</h4>"+
+    '<div class="col-sm-10" id="containerMailInscription">'+
+      '<input type="email" class="form-control" name="email" id="emailRecup" placeholder="Saisir votre email">'+
+      "<div id='verifForgetPass' class='text-danger'></div>"+
+      "<input type='submit' value='Recevoir' id='receive' class='btn btn-outline-secondary'>"+
+    '</div>'+
+  "</div>";
+  $("#mainConnexion").hide();
+  $("#form").html(form);
+}
+
+// newMail
+function formNewMail(){
+    var form = "<div class='form-group row' id='haveMail'>"+
+    '<h4>Recevoir un nouveau mail</h4>'+
+    "<div class='col-sm-10' id='receiveNewMail'>"+
+      '<input type="email" class="form-control" name="newM" id="emailReceive" placeholder="Saisir votre email">'+
+      "<div id='verifMailReceive' class='text-danger'></div>"+
+      "<input type='submit' value='Recevoir un mail' id='receiveMail' class='btn btn-outline-secondary'>"+
+    "</div>"+
+ "</div>";
+ $("#mainConnexion").hide();
+ $("#form").html(form);
+ $("#verifMailReceive").hide();
+}
 
 // Cacher les messages d'erreurs
 function cacherMsg(){
     $("#log").hide();
     $("#envoiMail").hide();
     $("#verifMail").hide();
-    $("#verifMailInscription").hide();
-    $("#verifNomInscription").hide();
-    $("#verifPrenomInscription").hide();
-    $("#verifPasswordInscription").hide();
-    $("#verifPasswordConfirmInscription").hide();
-    $("#keyPass").hide();
     $("#checkPass").hide();
-    $("#verifForgetPass").hide();
-    $("#verifMailReceive").hide();
-    $("#haveMail").hide();
 }
 
 // Connexion
@@ -139,11 +221,7 @@ $(document).on('click','input[value="Inscription"]',function(){
 */
 
 $(document).on("click",'#forgotPass',function(){
-    console.log("mot de passe oublie");
-    cacherMsg();
-    $("#mainInscription").hide();
-    $("#mainConnexion").hide();
-    $("#keyPass").show();
+    formMDP();
     $("#emailRecup").attr("value",$("#email").val());
 });
 
@@ -263,8 +341,7 @@ $(document).on("click","#receive",function(){
     Si l'on clique sur créer un compte, on affiche le formulaire d'inscription
 */
 $(document).on('click','#signUp',function(){
-    $("#verifMailInscription").hide();
-    $("#mainInscription").show();
+    formInscription();
     $("#mainConnexion").hide();
     // On désactive le bouton inscription
     $("#inscription").attr("disabled",true);
@@ -275,8 +352,8 @@ $(document).on('click','#signUp',function(){
 */
 $(document).on('click','#signIn',function(){
     cacherMsg();
+    $("#mainInscription").remove();
     $("#mainConnexion").show();
-    $("#mainInscription").hide();
 });
 
 // on vérifie si les champs sont bien remplis
