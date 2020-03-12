@@ -29,8 +29,66 @@ function envoiMail($email,$subject,$nom,$prenom,$lien){
         // Content
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = $subject;
-        $mail->Body    = "<h4>Merci de votre inscription</h4><p>Vous venez de vous inscrire sur le site ...... Afin de pouvoir vous connecter, vous devez confirmer votre
-        adresse mail.<a href=\"localhost/Eduroam/minControleur/verificationMail".$lien."\"  style=\"cursor:pointer;\"> Pour cela, Veuillez cliquer ici ! </a></p>";
+        $mail->Body    = "
+
+        <!doctype html>
+        <html lang='fr'>
+        <head>
+            <meta charset='utf-8'>
+            <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css\" integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" crossorigin=\"anonymous\">
+            <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js\" integrity=\"sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6\" crossorigin=\"anonymous\"></script>
+        
+            <style type='text/css'>
+            button {
+                color:red;
+                cursor:pointer;
+            
+            }
+
+            button:hover {
+                color: #fff;
+                background-color: #dc3545;
+                border-color: #dc3545;
+                text-decoration:none;
+                display: inline-block;
+                font-weight: 400;
+                text-align:center;
+                user-select:none;
+                border: 1px solid transparent
+                font-size:1rem;
+                line-height:1.5;
+                
+            }
+            
+
+            </style>
+        </head>
+        <body style='text-align:center;'>
+        
+        <div>
+            <h3 style='margin-bottom=0px;'><b>Avant de <span style='color:red;'>commencer...</span></b></h3>
+            <p>Veuillez vérifier votre adresse mail afin de pouvoir vous connecter</p>
+            <button>Confirmer votre adresse mail</button>
+        </div>
+        </body>
+        </html>
+        
+        ";
+        
+        //        <img src='http://localhost/Eduroam/ressources/logo.png'>
+
+        /*<style>
+
+        img {
+            max-width: 70px;
+            max-height: 70px;
+        }
+    
+        </style>
+        
+        <h4>Merci de votre inscription</h4><p>Vous venez de vous inscrire sur le site ...... Afin de pouvoir vous connecter, vous devez confirmer votre
+        adresse mail.<a href=\"localhost/Eduroam/minControleur/verificationMail".$lien."\"  style=\"cursor:pointer;\"> Pour cela, Veuillez cliquer ici ! </a></p>*/
+
         $mail->AltBody = "This is the body in plain text for non-HTML mail clients";
 
         $mail->send();
