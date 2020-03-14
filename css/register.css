@@ -49,3 +49,18 @@
 .orange {
     background-color: #c8912a;
 }
+
+#keyPass, #haveMail {
+    flex-direction: column;
+    align-items: center;
+}
+
+#containerMailInscription,#receiveNewMail {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#receive,#receiveMail {
+    margin-top:8px;
+}

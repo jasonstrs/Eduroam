@@ -67,7 +67,7 @@ function formInscription(){
 
 // MDP oublié
 function formMDP(){
-    var form = "<div class='form-group row' id='keyPass'>"+
+    var form = "<div class='form-group row container jumbotron' id='keyPass'>"+
     "<h4>Mot de passe oublié</h4>"+
     '<div class="col-sm-10" id="containerMailInscription">'+
       '<input type="email" class="form-control" name="email" id="emailRecup" placeholder="Saisir votre email">'+
@@ -81,7 +81,7 @@ function formMDP(){
 
 // newMail
 function formNewMail(){
-    var form = "<div class='form-group row' id='haveMail'>"+
+    var form = "<div class='form-group row container jumbotron' id='haveMail'>"+
     '<h4>Recevoir un nouveau mail</h4>'+
     "<div class='col-sm-10' id='receiveNewMail'>"+
       '<input type="email" class="form-control" name="newM" id="emailReceive" placeholder="Saisir votre email">'+
@@ -274,10 +274,8 @@ $(document).on("click","#receive",function(){
  */
 
  function sendMailConfirm(email){
-    cacherMsg();
-    $("#mainInscription").hide();
     $("#mainConnexion").hide();
-    $("#haveMail").show();
+    formNewMail();
     $("#emailReceive").attr("value",email);
  }
 
