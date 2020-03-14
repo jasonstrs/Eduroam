@@ -225,48 +225,54 @@ $(document).on("click",'#forgotPass',function(){
     $("#emailRecup").attr("value",$("#email").val());
 });
 
+function getNewPass(){
+     // on verifie que l'adresse mail n'est pas incorrecte
+     var email = $("#emailRecup").val();
+     if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
+         $("#verifForgetPass").show();
+         $("#verifForgetPass").html("Veuillez saisir une adresse mail correcte.");
+         $("#emailRecup").addClass("is-invalid");
+         return;
+     }
+     $("#emailRecup").removeClass("is-invalid");
+ 
+     // on envoie une reqûete ajax dans un minControleur
+     // on regarde si l'adresse existe, si oui, on envoie un mail
+     // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
+     $("#receive").attr("disabled",true);
+     $.ajax({
+         type: "POST",
+         url: "./minControleur/dataConnexion.php",
+         data: {"email":email,"action":"PassWord"},
+         success: function(oRep){
+             switch(oRep){
+                 case 'success' :
+                     $("#keyPass").hide();
+                     $("#envoiMail").show();
+                     $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de modifier votre mot de passe !</p>");
+                  break;
+  
+                  case 'incorrect' :
+                     $("#receive").attr("disabled",false);
+                     $("#verifForgetPass").show();
+                     $("#verifForgetPass").html("Adresse mail inexistante.");
+                  break;
+  
+                  default:
+                      console.log("Il y a un problème inconnu ! Contacter la maintenance.");
+             }
+         },
+     dataType: "text"
+     });
+}
+
 $(document).on("click","#receive",function(){
-    
-    // on verifie que l'adresse mail n'est pas incorrecte
-    var email = $("#emailRecup").val();
-    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
-        $("#verifForgetPass").show();
-        $("#verifForgetPass").html("Veuillez saisir une adresse mail correcte.");
-        $("#emailRecup").addClass("is-invalid");
-        return;
-    }
-    $("#emailRecup").removeClass("is-invalid");
+    getNewPass();
+});
 
-    // on envoie une reqûete ajax dans un minControleur
-    // on regarde si l'adresse existe, si oui, on envoie un mail
-    // si l'adresse saisie est correcte, vous allez recevoir un mail pour modifier votre mdp
-    $("#receive").attr("disabled",true);
-    $.ajax({
-        type: "POST",
-        url: "./minControleur/dataConnexion.php",
-        data: {"email":email,"action":"PassWord"},
-        success: function(oRep){
-            switch(oRep){
-                case 'success' :
-                    $("#keyPass").hide();
-                    $("#envoiMail").show();
-                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de modifier votre mot de passe !</p>");
-                 break;
- 
-                 case 'incorrect' :
-                    $("#receive").attr("disabled",false);
-                    $("#verifForgetPass").show();
-                    $("#verifForgetPass").html("Adresse mail inexistante.");
-                 break;
- 
-                 default:
-                     console.log("Il y a un problème inconnu ! Contacter la maintenance.");
-            }
-        },
-    dataType: "text"
-    });
-
-    
+$(document).on("keyup","#emailRecup",function(e){
+    if (e.keyCode == 13)
+        getNewPass();
 });
 
 /**
@@ -279,59 +285,65 @@ $(document).on("click","#receive",function(){
     $("#emailReceive").attr("value",email);
  }
 
+ function getNewMail(){
+    // on verifie que l'adresse mail n'est pas incorrecte
+    var email = $("#emailReceive").val();
+    if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
+        $("#verifMailReceive").show();
+        $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
+        $("#emailReceive").addClass('is-invalid');
+        return;
+    }
+    $("#emailReceive").removeClass('is-invalid');
+    $("#receiveMail").attr("disabled",true);
+    $.ajax({
+        type: "POST",
+        url: "./minControleur/dataConnexion.php",
+        data: {"email":email,"action":"NewMail"},
+        success: function(oRep){
+            switch(oRep){
+                case 'success' :
+                    $("#haveMail").hide();
+                    $("#envoiMail").show();
+                    $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
+                 break;
+ 
+                 case 'confirm' :
+                    $("#receiveMail").attr("disabled",false);
+                    $("#verifMailReceive").show();
+                    $("#verifMailReceive").html("Adresse mail déjà confirmée. ")
+                    $("#verifMailReceive").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
+                        cacherMsg();
+                        $("#mainConnexion").show();
+                        $("#mainInscription").hide();
+                    }));
+                 break;
+ 
+                 case 'incorrect' :
+                    $("#receiveMail").attr("disabled",false);
+                    $("#verifMailReceive").show();
+                    $("#verifMailReceive").html("Adresse mail inexistante.");
+                 break;
+ 
+                 default:
+                     console.log("Il y a un problème inconnu ! Contacter la maintenance.");
+            }
+        },
+    dataType: "text"
+    });
+ }
+
     /**
      * recevoir un nouveau mail
      */
 
     $(document).on("click","#receiveMail",function(){
-        console.log('new mail');
-        // on verifie que l'adresse mail n'est pas incorrecte
-        var email = $("#emailReceive").val();
-        if (!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test(email))) {
-            $("#verifMailReceive").show();
-            $("#verifMailReceive").html("Veuillez saisir une adresse mail correcte.");
-            $("#emailReceive").addClass('is-invalid');
-            return;
-        }
-        $("#emailReceive").removeClass('is-invalid');
-        $("#receiveMail").attr("disabled",true);
-        $.ajax({
-            type: "POST",
-            url: "./minControleur/dataConnexion.php",
-            data: {"email":email,"action":"NewMail"},
-            success: function(oRep){
-                switch(oRep){
-                    case 'success' :
-                        $("#haveMail").hide();
-                        $("#envoiMail").show();
-                        $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de confirmer votre mail !</p>");
-                     break;
-     
-                     case 'confirm' :
-                        $("#receiveMail").attr("disabled",false);
-                        $("#verifMailReceive").show();
-                        $("#verifMailReceive").html("Adresse mail déjà confirmée. ")
-                        $("#verifMailReceive").append($("<span class='newMail clic'>Revenir à la page de connexion ?<span>").click(function(){
-                            cacherMsg();
-                            $("#mainConnexion").show();
-                            $("#mainInscription").hide();
-                        }));
-                     break;
-     
-                     case 'incorrect' :
-                        $("#receiveMail").attr("disabled",false);
-                        $("#verifMailReceive").show();
-                        $("#verifMailReceive").html("Adresse mail inexistante.");
-                     break;
-     
-                     default:
-                         console.log("Il y a un problème inconnu ! Contacter la maintenance.");
-                }
-            },
-        dataType: "text"
-        });
-        
+        getNewMail();
+    });
 
+    $(document).on("keyup","#emailReceive",function(e){
+        if (e.keyCode == 13)
+        getNewMail();
     });
 
 

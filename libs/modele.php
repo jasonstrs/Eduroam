@@ -114,8 +114,14 @@ function changeName ($id,$new) {
 	SQLUpdate($SQL);
 }
 
-
-
+/**
+ * On change le hashCode d'un user
+ */
+function changeHash($oldHash,$id,$newHash){
+	$SQL="UPDATE user SET hashCode='$newHash' WHERE hashCode='$oldHash' AND idU='$id'";
+	SQLUpdate($SQL);
+}
+	
 /**
  * L'utilisateur vient de confirmer son adresse
  */

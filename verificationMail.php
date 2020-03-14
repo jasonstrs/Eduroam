@@ -49,6 +49,7 @@ switch($action){
         if ($id){
             confirmAdress($id);
             $qs="success";
+            changeHash($hash,$id,md5(uniqid(rand(), true)));
         } else {
             $qs="fail";
         }
@@ -65,6 +66,7 @@ switch($action){
                     if ($newPasse == $newPasseBis) { // on teste si les deux MDP sont identiques
                         changePass($id,sha1(md5($newPasse)));
                         $qs="success";
+                        changeHash($hash,$id,md5(uniqid(rand(), true)));
                     } else {
                         echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
                             Saisir un mot de passe identique.</div>";
