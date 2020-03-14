@@ -1,9 +1,21 @@
 <?php
-include_once "../libs/maLibUtils.php";
-include_once "../libs/maLibSQL.pdo.php";
-include_once "../libs/maLibSecurisation.php";
-include_once "../libs/modele.php";
-include_once "../libs/maLibPHPMailer.php";
+include_once "./libs/maLibUtils.php";
+include_once "./libs/maLibSQL.pdo.php";
+include_once "./libs/maLibSecurisation.php";
+include_once "./libs/modele.php";
+include_once "./libs/maLibPHPMailer.php";
+
+echo "<link href='bootstrap/css/bootstrap.css' rel='stylesheet' />";
+echo "<script src=\"bootstrap/js/bootstrap.js\"></script>";
+
+// Variable qui va permettre d'envoyer les mails
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+$url = "https://";   
+else  
+$url = "http://";   
+// Append the host(domain name, ip) to the URL.   
+$url.= $_SERVER['HTTP_HOST']; 
+
 
 $flag=0;
 
@@ -20,6 +32,8 @@ if (valider("action","GET")) {
     }
     else
         header("Location:../index.php?view=accueil"); // sinon on renvoie
+} else {
+    die("Un problème est survenu ! Veuillez contacter la maintenance.");
 }
 
 $qs ="";
@@ -74,7 +88,7 @@ switch($action){
 }
 
 if ($flag)
-    header("Location:http://localhost/Eduroam/index.php?view=login&".$add."=".$qs); // sinon on renvoie
+    header("Location:". $url ."/Eduroam/index.php?view=login&".$add."=".$qs); // sinon on renvoie
 
 
 ?>

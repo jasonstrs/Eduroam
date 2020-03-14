@@ -20,7 +20,8 @@ function envoiMail($email,$subject,$nom,$prenom,$lien){
         $mail->Username   = 'testpinf@gmail.com';                     // SMTP username
         $mail->Password   = 'Azerty59';                               // SMTP password
         $mail->SMTPSecure = "tls";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-        $mail->Port       = 587;                                    // TCP port to connect to
+        $mail->Port       = 587;  
+        $mail->CharSet = 'UTF-8';                                  // TCP port to connect to
 
         //Recipients
         $mail->setFrom('erreur@example.com', 'J\'suis pas content TV');
@@ -29,44 +30,23 @@ function envoiMail($email,$subject,$nom,$prenom,$lien){
         // Content
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = $subject;
-        $mail->Body    = "
-
-        <!doctype html>
-        <html lang='fr'>
-        <head>
-            <meta charset='utf-8'>
-        </head>
-        <body style='text-align:center;'>
-        
-        <div>
-            <h3 style='margin-bottom=0px;'><b>Avant de <span style='color:red;'>commencer...</span></b></h3>
-            <p>Veuillez vérifier votre adresse mail afin de pouvoir vous connecter</p>
-            <button style='
-                color: #fff;
-                background-color: #dc3545;
-                border-color: #dc3545;        
-            ' style='cursor:pointer'>Confirmer votre adresse mail</button>
-            
-        </div>
-        </body>
+        //$mail->Body = file_get_contents('mail.html');
+        $mail->Body="
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset=\"UTF-8\">
+            </head>
+            <body>
+            <div>
+                <h3 style='margin-bottom:0px;'><b>Avant de <span style='color:red;'>commencer...</span></b></h3>
+                <p>Veuillez valider votre adresse mail afin de pouvoir vous connecter</p>
+                <a style='cursor:pointer; text-decoration:none; color:red;' href='". $lien ."'><i>Pour confirmer celle-ci, veuillez cliquer ici !<i></a>
+            </div>
+            </body>
         </html>
-        
         ";
         
-        //        <img src='http://localhost/Eduroam/ressources/logo.png'>
-
-        /*<style>
-
-        img {
-            max-width: 70px;
-            max-height: 70px;
-        }
-    
-        </style>
-        
-        <h4>Merci de votre inscription</h4><p>Vous venez de vous inscrire sur le site ...... Afin de pouvoir vous connecter, vous devez confirmer votre
-        adresse mail.<a href=\"localhost/Eduroam/minControleur/verificationMail".$lien."\"  style=\"cursor:pointer;\"> Pour cela, Veuillez cliquer ici ! </a></p>*/
-
         $mail->AltBody = "This is the body in plain text for non-HTML mail clients";
 
         $mail->send();
@@ -101,7 +81,24 @@ function envoiMailPass($email,$subject,$nom,$prenom,$lien){
         // Content
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = $subject;
-        $mail->Body    = "<h4>Mot de passe oublié</h4><p>Vous venez de demander un nouveau mot de passe. <a href=\"localhost/Eduroam/minControleur/verificationMail".$lien."\"  style=\"cursor:pointer;\"> Pour le modifier, Veuillez cliquer ici ! </a></p>";
+        $mail->Body    = "
+        
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset=\"UTF-8\">
+            </head>
+            <body>
+            <div>
+                <h3 style='margin-bottom:0px;'><b>Mot de passe oublié</b></h3>
+                <p>Vous venez de demander un nouveau mot de passe.</p>
+                <a style='cursor:pointer; text-decoration:none; color:red;' href='". $lien ."'><i>Pour le modifier, veuillez cliquer ici !<i></a>
+            </div>
+            </body>
+        </html>
+        
+        
+        ";
         $mail->AltBody = "This is the body in plain text for non-HTML mail clients";
 
         $mail->send();
