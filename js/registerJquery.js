@@ -67,8 +67,9 @@ function formInscription(){
 
 // MDP oublié
 function formMDP(){
-    var form = "<div class='form-group row container jumbotron' id='keyPass'>"+
-    "<h4>Mot de passe oublié</h4>"+
+    var form = '<div class="page-header">'+
+        '<h1 class="text-center">Mot de passe oublié</h1></div>'+
+    "<div class='form-group row container jumbotron' id='keyPass'>"+
     '<div class="col-sm-10" id="containerMailInscription">'+
       '<input type="email" class="form-control" name="email" id="emailRecup" placeholder="Saisir votre email">'+
       "<div id='verifForgetPass' class='text-danger'></div>"+
@@ -81,8 +82,9 @@ function formMDP(){
 
 // newMail
 function formNewMail(){
-    var form = "<div class='form-group row container jumbotron' id='haveMail'>"+
-    '<h4>Recevoir un nouveau mail</h4>'+
+    var form = '<div class="page-header">'+
+    '<h1 class="text-center">Recevoir un nouveau mail</h1></div>'+
+    "<div class='form-group row container jumbotron' id='haveMail'>"+
     "<div class='col-sm-10' id='receiveNewMail'>"+
       '<input type="email" class="form-control" name="newM" id="emailReceive" placeholder="Saisir votre email">'+
       "<div id='verifMailReceive' class='text-danger'></div>"+
