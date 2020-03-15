@@ -56,7 +56,7 @@ session_start();
                 } else {
                     $hashCode = md5(uniqid(rand(), true));
                     $id =createUser($email,$nom,$prenom,$passe,$hashCode);
-                    $lien = $url . '/Eduroam/verificationMail.php?action=verificationMail&hash='.$hashCode;
+                    $lien = $url . '/Eduroam/controleur.php?action=verificationMail&hash='.$hashCode;
                     envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
                     echo "Success";
                 }   
@@ -73,7 +73,7 @@ session_start();
                     $hashCode = hashCode($id);
                     $prenom = getPrenom($id);
                     $nom = getNom($id);
-                    $lien = $url . '/Eduroam/verificationMail.php?action=verificationPassword&hash='.$hashCode;
+                    $lien = $url . '/Eduroam/controleur.php?action=verificationPassword&hash='.$hashCode;
                     envoiMailPass($email,"Mot de passe",$nom,$prenom,$lien);
                     echo "success";
                     
@@ -96,7 +96,7 @@ session_start();
                         $hashCode = hashCode($id);
                         $prenom = getPrenom($id);
                         $nom = getNom($id);
-                        $lien = $url . '/Eduroam/verificationMail.php?action=verificationMail&hash='.$hashCode;
+                        $lien = $url . '/Eduroam/controleur.php?action=verificationMail&hash='.$hashCode;
                         envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
                         echo "success";
                         
