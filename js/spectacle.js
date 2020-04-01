@@ -63,7 +63,7 @@ function afficherResumeVilles(rep){
             currDesc.append(
                 //Bouton pour supprimer une date
                 $("<div/>").addClass("contDate").append(
-                    $("<div/>").addClass("date").html(date.dateSpectacle)
+                    $("<div/>").addClass("date").html(traduireDate(date.dateSpectacle))
                 ).append(
                     $("<div/>").addClass("date").html("<b>"+date.nb+"</b> personne(s) interessée(s)")
                 ).append(
@@ -103,7 +103,6 @@ function afficherResumeVilles(rep){
                                                     "lien":$("#txtLienValidDate").val()
                                                 },
                                                 success:function(oRep){
-                                                    console.log(oRep);
                                                     console.log("Date validée");
                                                     $("#modalValiderDate").modal('dispose');
                                                     document.location.reload();
@@ -140,7 +139,6 @@ function afficherResumeVilles(rep){
                             },
                             success:function(oRep){
 
-                                console.log(oRep);
                                 console.log("Date supprimée");
                                 $("#modalSupprDate").modal('dispose');
                                 document.location.reload();
@@ -174,7 +172,6 @@ function afficherResumeVilles(rep){
                     id:spectacle.id
                 },
                 success:function(oRep){
-                    console.log(oRep);
                     console.log("Spectacle supprimé");
                     $("#modalSupprSpectacle").modal('dispose');
                     document.location.reload();
@@ -277,7 +274,9 @@ function verifVille(nomVille){
 /**
  * input type="date"
  */
-var selectDate = $("<input/>").attr({"type":"date"}).addClass("inputDate pointer");
+var selectDate = $("<input/>").attr({"type":"date"}).addClass("inputDate pointer").change(function(){
+    if($(this).val()=="" && $(".inputDate").length > 1)$(this).remove();
+});
 
 $(document).ready(function(){
     
@@ -341,11 +340,10 @@ $(document).ready(function(){
             ]
         
         */
-       console.log(reponseVerifVille);
         if(reponseVerifVille[1] == false){
             //La ville se trouve déja dans la BDD, on ajoute ou modifie des dates
             classes = "alert alert-warning";
-            info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>! (Voir ci dessous)";
+            info = "Des dates sont déja prévues à <b>"+reponseVerifVille[0]+" </b>! (Voir ci dessous)<br>Vous pouvez ajouter des dates aux spectacles existants, ou créer un nouveau spectacle";
             
         }
         else{
@@ -411,36 +409,27 @@ $(document).ready(function(){
         }
     });
 
-
-    /**
-     * Ajoute les input Date
-     */
-    $("#boutonSelectDates").click(function(){
-        $("#selectionDesDates").empty().append(selectDate.clone(1));
-        $("#selectionDesDates").append($("<div/>").attr("id","ajouterInputDate").addClass("pointer").html("+").click(function(){
-            $(this).before(selectDate.clone(1));
-        }));
-    });
-
     /**
      * Si au moins l'un des input date est rempli, affiche le bouton de validation.
      */
     $(document).on("input",".inputDate",function(){
+        $('html, body').animate({scrollTop:$(".inputDate").last().offset().top}, 'slow');
         $("#boutonValiderDates").slideUp(0);
-        $(".inputDate").each(function(flag){
+        $(".inputDate").each(function(){
             var date = $(this)[0].value;
             if(date!=""){
                 $("#boutonValiderDates").slideDown(0);
             }
         });
+       
     });
 
     /**
      * Si l'un des 2 champs texte "ville" ou "description" sont vides, le bouton pour continuer est désactivé.
      */
     $(".champnomDesc").on("input",function(){
-        if($("#champTxtVilleBis").val()!="" && $("#champTxtDescSpectacle").val()!="")$("#boutonSelectDates").attr("disabled",false);
-        else $("#boutonSelectDates").attr("disabled",true);
+        if($("#champTxtVilleBis").val()!="" && $("#champTxtDescSpectacle").val()!="")$("#groupSelectDates").children().attr("disabled",false);
+        else $("#groupSelectDates").children().attr("disabled",true);
     });
 
     /**
@@ -455,23 +444,24 @@ $(document).ready(function(){
         var requete = new Object();
         var ville = $("#champTxtVilleBis").val();
         var desc = $("#champTxtDescSpectacle").val();
+        var methodeChoix = $("#groupSelectDates").data("current");
+       
         $(".inputDate").each(function(flag){
             var date = $(this)[0].value;
             if(date!=""){
                 tabDatesJS.push(date);
             }
         });
-        console.log(tabDatesJS);
-        tabDatesJS.sort(function(a, b){
-            //A compléter : fonction de tri et de suppression des doublons.
-        });
-        console.log(tabDatesJS);
+        
+        
+        
+        tabDatesJS.sort(diffDate);
         tabDatesJS.forEach(element => {
-            tabDatesHTML+="<tr><th scope='row'>"+ i++ +"</th><td>"+element+"</td></tr>";
+            tabDatesHTML+="<tr><th scope='row'>"+ i++ +"</th><td>"+traduireDate(element)+"</td></tr>";
         });
         contenu = "<h5> Ville :  "+ville
         +"<br>Decription : "+desc
-        +"<br>Dates : </h5><table class='table table-hover center'> <thead><tr><th scope='col'>#</th><th scope='col'>Année - Mois - Jour</th></tr></thead><tbody>"+tabDatesHTML+"</table>";
+        +"<br>Dates : </h5><table class='table table-hover center'> <thead><tr><th scope='col'>#</th><th scope='col'>Date</th></tr></thead><tbody>"+tabDatesHTML+"</table>";
 
         requete = {
             method:"POST",
@@ -484,7 +474,6 @@ $(document).ready(function(){
                 "desc":desc
             },
             success:function(oRep){
-                console.log(oRep);
                 console.log("Spectacle Créé");
                 $("#modalConfirmerDate").modal('dispose');
                 document.location.reload();
@@ -493,6 +482,117 @@ $(document).ready(function(){
 
         creerModal("modalConfirmerDate","Confirmation de l'ajout des dates",contenu,"Confirmer","btn-outline-success",requete);
         $("#modalConfirmerDate").modal();
+    });
+
+    $("#groupSelectDates").click(function(contexte){
+        $("#selectionDesDates").empty();
+        $("#boutonValiderDates").slideUp(0);
+        $(this).data("current",contexte.target.value);
+        switch(contexte.target.value){
+            case "select1by1":
+                $("#selectionDesDates").empty().append(selectDate.clone(1));
+                $("#selectionDesDates").append($("<div/>").attr("id","ajouterInputDate").addClass("pointer").html("<i style='margin:5px;' class='fas fa-plus'></i>").click(function(){
+                    
+                    $(this).before(selectDate.clone(1));
+                    $('html, body').animate({
+                        scrollTop:$(this).offset().top
+                    }, 'slow');
+                }));
+            break;
+            case "selectPas":
+                /**
+                 * On veut sélectionner, par exemple, tous les vendredi pendant 2 mois.
+                 * On sélectionne le 1er vendredi, le dernier vendredi, et on met un pas de 7.
+                 */
+                $("#selectionDesDates").append(
+                    $("<span/>").html("Date de début").append(
+                        $("<input/>").attr("type","date").attr("id","dateDebutPas").addClass("inputDatePas inputPas")
+                    )
+                );
+                $("#selectionDesDates").append(
+                    $("<span/>").html("Date de fin").append(
+                        $("<input/>").attr("type","date").attr("id","dateFinPas").addClass("inputDatePas inputPas")
+                    )
+                );
+                $("#selectionDesDates").append(
+                    $("<span/>").html("Pas (ex: pas de 3 : sélectionne tous les 3 jours de 'Date de début' à 'Date de fin')").append("<br/>").append(
+                        $("<input/>").attr({"type":"number","id":"pas","min":1,"max":14,"value":7}).addClass("inputPas")
+                    )
+                );
+            break;
+            case "selectPlage":
+            break;
+        }
+        $('html, body').animate({scrollTop:$("#selectionDesDates").offset().top}, 'slow');
+    });
+
+    $(document).on("change",".inputPas",function(){
+        var verif=0;
+        $(".inputPas").each(function(){
+            if($(this).val()=="")verif++;
+        });
+        $("#boutonValiderDates").slideUp(0);
+        $(".boutonCalculerDates").remove();
+        $(".inputDate").remove();
+        if(verif == 0){
+            //Si tous les champs sont remplis
+            var dateDebut = $("#dateDebutPas").val();
+            var dateFin =  $("#dateFinPas").val();
+            var pas = $("#pas").val();
+            var erreurDates="";
+            var verif = 0;
+            
+            if(diffDate(dateDebut,dateFin)>=0){
+                erreurDates = $("<div/>").addClass("alert alert-danger alerteErreurDates").css("margin-top","10px")
+                .html("La <B>date de fin</B> doit être <B>strictement supérieure</B> à la <B>date de début</B> ! ");
+                if($(".alerteErreurDates").length == 0)$("#selectionDesDates").append(erreurDates); 
+                $('html, body').animate({scrollTop:$("#selectionDesDates").offset().top}, 'slow');
+                verif++;
+            }
+            else $(".alerteErreurDates").remove();
+
+            if(pas<1 || pas >14){
+                erreurPas = $("<div/>").addClass("alert alert-danger alerteErreurPas").css("margin-top","10px")
+                .html("Le <B>pas</B> doit être compris entre <B>1 et 14</B> ! ");
+                if($(".alerteErreurPas").length == 0)$("#selectionDesDates").append(erreurPas); 
+                $('html, body').animate({scrollTop:$("#selectionDesDates").offset().top}, 'slow');
+                verif++;
+            }
+            else $(".alerteErreurPas").remove();
+
+            if(verif == 0){
+                //Si aucune erreur dans le choix des dates et du pas...
+                //On affiche un bouton qui va lancer les calculs.
+                /* date = moment();
+                date = assignerDateMoment(dateDebut,date); */
+                $("#selectionDesDates").append($("<br/>"));
+                $("#selectionDesDates").append($("<button/>").addClass("btn btn-outline-primary boutonCalculerDates").html("Calculer les dates").attr("type","button")
+                .click(function(){
+                    $("#boutonValiderDates").slideUp(0);
+                    $(".inputDate").remove();
+                    momentDebut = moment($("#dateDebutPas")[0]["valueAsDate"]);
+                    momentDebutSave = moment($("#dateDebutPas")[0]["valueAsDate"]);
+                    momentFin = moment($("#dateFinPas")[0]["valueAsDate"]);
+
+                    diff = momentFin.diff(momentDebut,'days');
+                    nbJours = Math.floor((diff/pas));
+                    currDate = selectDate.clone(1).val(momentDebut.format("YYYY-MM-DD"));
+                    $("#selectionDesDates").append($(currDate));
+
+                    for(var i=0;i<nbJours;i++){
+                        momentDebut.add(pas,'days');
+                        currDate = selectDate.clone(1).val(momentDebut.format("YYYY-MM-DD"));
+                        $("#selectionDesDates").append($(currDate));
+                        
+                    }
+                    $('html, body').animate({scrollTop:$("#selectionDesDates").offset().top}, 'slow');
+                    $("#boutonValiderDates").slideDown(0);
+                }));
+
+            }
+
+        }
+        
     });
 
 });

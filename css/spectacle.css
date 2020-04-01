@@ -25,6 +25,7 @@ input[type="text"]{
     background-color:rgb(236, 236, 236);
     box-shadow:1px 1px 1px rgba(0, 0, 0, 0.432);;
     z-index:0;
+    padding-bottom:100px;
 }
 
 .lead .gras{
@@ -171,7 +172,7 @@ input[type="text"]{
     width:200px;
 }
 
-.inputDate{
+.inputDate,.inputDatePas{
     display:block;
     width:20%;
     margin-left:40%;
@@ -226,4 +227,38 @@ input[type="text"]{
 
 .card-header > h5 > i{
     font-size:0.75rem;
+}
+
+table{
+    text-align:center;
+}
+
+.statsSpectaclesCollapse{
+    padding:20px;
+}
+
+.suppDateStats{
+    color:red;
+    text-align:center;
+}
+
+.suppDateStats:hover{
+    cursor:pointer;
+    background-color:red;
+    color:white;
+}
+
+.validDateStats{
+    color:green;
+    text-align:center;
+}
+
+.validDateStats:hover{
+    cursor:pointer;
+    background-color:green;
+    color:white;
+}
+
+.boutonCalculerDates{
+    margin:10px;
 }

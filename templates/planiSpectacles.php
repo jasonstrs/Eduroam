@@ -35,7 +35,7 @@
             chargerVilles();
         </script>
         
-    </div>
+    </div> 
     <div id="choisirDates">
         <br><span class="gras"></span>
         <?php
@@ -46,7 +46,11 @@
             mkInput("text","descSpec",""
             ,"placeholder='Entrer la description du spectacle' class='form-control champNomDesc' id='champTxtDescSpectacle'");
         ?>
-            <button type="button" id="boutonSelectDates" class="btn btn-outline-primary methodeChoixDates" disabled>Selectionner des dates</button>
+            <!-- <button type="button" id="boutonSelectDates" class="btn btn-outline-primary methodeChoixDates" disabled>Selectionner des dates</button> -->
+            <div class="btn-group" role="group" aria-label="Basic example" id="groupSelectDates">
+                <button type="button" class="btn btn-outline-primary" value="select1by1">Sélectionner des dates une par une</button>
+                <button type="button" class="btn btn-outline-primary" value="selectPas">Sélectionner un début, une fin, un pas</button>
+            </div>
             <br><div id="selectionDesDates"></div>
             <br><button type="button" id="boutonValiderDates" class="btn btn-outline-primary methodeChoixDates" data-toggle="modal" data-target="#modalConfirmDates">Valider ces dates</button>
     </div>
