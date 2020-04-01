@@ -170,7 +170,7 @@ function selectVilles(){
 	$SQL = SQLSelect($SQL);
 	$SQL = parcoursRs($SQL);
 	foreach($SQL as $ligne){
-		$SQLNbInteresses = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$ligne['idSpectacle'];
+		$SQLNbInteresses = "SELECT COUNT(*) FROM spectacle_user su,date_spectacle ds WHERE ds.idSpectacle=".$ligne['idSpectacle']." AND ds.idDate=su.idDate";
 		$SQLNbInteresses = SQLGetChamp($SQLNbInteresses);
 
 		$SQLNbSpecVille = "SELECT COUNT(*) FROM spectacle WHERE ville=\"".$ligne['ville']."\"";
@@ -181,7 +181,7 @@ function selectVilles(){
 
 		for( $i=0 ; $i < sizeof($SQLGetDates) ; $i++ ){
 			$date = $SQLGetDates[$i];
-			$SQLNbPers = "SELECT COUNT(*) FROM spectacle_user WHERE idSpectacle=".$date["idSpectacle"]." AND idDate=".$date["idDate"];
+			$SQLNbPers = "SELECT COUNT(*) FROM spectacle_user su,date_spectacle ds WHERE ds.idSpectacle=".$date["idSpectacle"]." AND su.idDate=".$date["idDate"]." AND ds.idDate=su.idDate";
 			$SQLGetDates[$i]["nb"] = SQLGetChamp($SQLNbPers);
 		}
 
@@ -240,6 +240,37 @@ function validerDate($id,$lien){
 
 function nbDates($valid){
 	$SQL="SELECT COUNT(*) FROM date_spectacle WHERE valide=$valid";
+	return SQLGetChamp($SQL);
+}
+
+function chargerDates($valid,$tri){
+	
+	$order="ORDER BY ";
+	switch($tri){
+		case "nbInscrits":
+			$order="";
+		break;
+		case "date":
+			$order.="d.dateSpectacle";
+		break;
+		case "ville":
+			$order.="s.ville";
+		break;
+		case "spectacle":
+			$order.="s.description";
+		break;
+		default:
+		break;
+	}
+
+
+	
+	$SQL="SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=$valid $order";
+	return parcoursRs(SQLSelect($SQL));
+}
+
+function nbInscritsDate($idDate){
+	$SQL="SELECT COUNT(*) FROM spectacle_user WHERE idDate='$idDate'";
 	return SQLGetChamp($SQL);
 }
 

@@ -81,6 +81,29 @@
                 echo(json_encode($tab));
             }
         break;
+        case "chargerDates":
+            $tab = array();
+            if(!($tri = valider("tri","POST")))$tri = "nbInscrits";
+            if($valid = valider("val","POST")){
+                if($valid==2)$valid=0;
+                $tab["rep"] = chargerDates($valid,$tri);
+                foreach($tab["rep"] as $key => $date){
+                    $tab["rep"][$key]["nbInscrits"] = nbInscritsDate($date["idDate"]);
+                }  
+                if($tri == "nbInscrits"){
+                    //On trie le tableau en fonction du nombre d'inscrits
+                    function cmp($a, $b){
+                        if ($a['nbInscrits']>$b['nbInscrits']) {
+                            return -1;
+                        }
+                        return 1;
+                    }
+                    usort($tab["rep"],'cmp');  
+                }    
+                $tab["valid"]=$valid;
+                echo(json_encode($tab));
+            }
+        break;
     }
     
     
