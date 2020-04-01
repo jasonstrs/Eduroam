@@ -1,3 +1,9 @@
+$(document).ready(function(){
+    console.log("On charge les dates en fr");
+    moment.locale("fr");
+})
+
+
 dateDefaut = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
 
 optionsAffichageDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -123,4 +129,66 @@ function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder
                 });
     
     $("body").append(modal);
+}
+
+
+/**
+ * Transforme une date informatique (yyyy-mm-dd) au format français (jj/mm/aaaa)
+ * @param {string} date 
+ */
+function traduireDate(date){
+    tab = date.split("-");
+    ndate=tab[2]+"/"+tab[1]+"/"+tab[0];
+    return ndate;
+
+}
+
+
+/**
+ * Fait la différence entre 2 dates au format yyyy-mm-dd
+ * 
+ * @return <0 si date1 < date2 ; >0 si date 1 > date2 ; 0 si les deux dates sont égales
+ * 
+ * @param {string} date1 
+ * @param {string} date2 
+ */
+function diffDate(date1,date2){
+    var tab1 = date1.split("-");
+    var annee1 = tab1[0];
+    var mois1 = tab1[1];
+    var jour1 = tab1[2];
+
+    var tab2 = date2.split("-");
+    var annee2 = tab2[0];
+    var mois2 = tab2[1];
+    var jour2 = tab2[2];
+
+    if(annee1 != annee2){
+        //Si les 2 années sont différentes, on peut déja différencier les dates
+        if(annee1 < annee2)return -1;
+        else return 1
     }
+    else if(mois1 != mois2){
+        //Si les années sont identiques, on compare les mois
+        if(mois1 < mois2)return -1;
+        else return 1;
+    }
+    else if(jour1 != jour2){
+        //Si les mois sont identiques, on compare les jours
+        if(jour1 < jour2)return -1;
+        else return 1;
+    }
+    return 0;
+}
+
+/**
+ * Décompose date et assigne les valeurs au moment
+ * @param {string} _date 
+ * @param {moment} _moment 
+ */
+function assignerDateMoment(_date,_moment){
+    var tab = _date.split("-");
+    console.log(tab);
+    _moment.set({"year":parseInt(tab[0]),"month":parseInt(tab[1]-1),"date":parseInt(tab[2])});
+    return _moment;
+}
