@@ -64,6 +64,11 @@ $(".new").click(function(){
             $(this).addClass("editing").removeClass("new").html("<i class='fas fa-check' style='color:green;'></i>");
             $(this).next().html("<i class='fas fa-times' style='color:red;'></i>");
             $roleForm.show();
+            $("#name").val("");
+            $("#video").attr("checked", false);
+            $("#spectacle").attr("checked", false);
+            $("#user").attr("checked", false);
+            $("#annonce").attr("checked", false);
             $collapse.append($roleForm);
             $(".edit").hide();
             $(".remove").hide();
