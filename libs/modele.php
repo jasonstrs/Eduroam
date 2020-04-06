@@ -381,6 +381,8 @@ function addRole($nom, $droits) {
 function deleteRole($idRole){
 	$SQL = "DELETE FROM role WHERE idRole = $idRole";
 	return SQLDelete($SQL);
+	$SQL = "DELETE FROM user_role WHERE idRole = $idRole";
+	return SQLDelete($SQL);
 }
 
 function editRole($idRole, $nom, $droits){
