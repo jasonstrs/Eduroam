@@ -28,29 +28,73 @@ Vous n'avez pas accés à cette page
 		</div>
 
 		<?php foreach ($roles as $role) { ?>
-		<div class="mt-2">
+		<div class="mt-2" id="<?php echo $role["idRole"]; ?>">
 			<div class="row">
 				<div class="col-5 offset-3 list-role">
 					<?php echo $role["nom"]; ?>
 				</div>
 				<div class="col-2 text-right list-role">
-					<a href="#" class="text-decoration-none text-body">
-						<svg class="bi bi-pencil" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							<path fill-rule="evenodd" d="M13.293 3.293a1 1 0 011.414 0l2 2a1 1 0 010 1.414l-9 9a1 1 0 01-.39.242l-3 1a1 1 0 01-1.266-1.265l1-3a1 1 0 01.242-.391l9-9zM14 4l2 2-9 9-3 1 1-3 9-9z" clip-rule="evenodd"/>
-							<path fill-rule="evenodd" d="M14.146 8.354l-2.5-2.5.708-.708 2.5 2.5-.708.708zM5 12v.5a.5.5 0 00.5.5H6v.5a.5.5 0 00.5.5H7v.5a.5.5 0 00.5.5H8v-1.5a.5.5 0 00-.5-.5H7v-.5a.5.5 0 00-.5-.5H5z" clip-rule="evenodd"/>
-						</svg>
+					<a class="edit text-decoration-none text-body m-3" data-toggle="collapse" href="#collapse<?php echo $role["idRole"]; ?>" role="button" aria-expanded="false" aria-controls="collapse<?php echo $role["idRole"]; ?>">
+						<i class="fas fa-pen"></i>
 					</a>
-					<a href="#" class="text-decoration-none text-body">
-						<svg class="bi bi-trash" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							<path d="M7.5 7.5A.5.5 0 018 8v6a.5.5 0 01-1 0V8a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V8a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V8z"/>
-							<path fill-rule="evenodd" d="M16.5 5a1 1 0 01-1 1H15v9a2 2 0 01-2 2H7a2 2 0 01-2-2V6h-.5a1 1 0 01-1-1V4a1 1 0 011-1H8a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM6.118 6L6 6.059V15a1 1 0 001 1h6a1 1 0 001-1V6.059L13.882 6H6.118zM4.5 5V4h11v1h-11z" clip-rule="evenodd"/>
-						</svg>
+					<a href="#" class="remove text-decoration-none text-body" idRole="<?php echo $role["idRole"]; ?>">
+						<i class="fas fa-trash-alt" style="color:red;"></i>
 					</a>
 				</div>      
 			</div>
+			<div class="collapse" id="collapse<?php echo $role["idRole"]; ?>" roleName="<?php echo $role["nom"]; ?>" 
+			video="<?php echo getDroitByRole($role["idRole"], "video"); ?>" spectacle="<?php echo getDroitByRole($role["idRole"], "spectacle"); ?>" 
+			user="<?php echo getDroitByRole($role["idRole"], "utilisateurs"); ?>" annonce="<?php echo getDroitByRole($role["idRole"], "annonce"); ?>">
+			</div>
 		</div>
-	
 		<?php } ?>
+
+		<div class="mt-2">
+			<div class="row">
+				<div class="col-5 offset-3 list-role">
+					Créer un nouveau rôle
+				</div>
+				<div class="col-2 text-right list-role">
+					<a class="new text-decoration-none m-3" data-toggle="collapse" href="#collapseNew" role="button" aria-expanded="false" aria-controls="collapseNew" style="color: black;">
+						<i class="fas fa-plus"></i>
+					</a>
+					<a href="#" class="cancelNew text-decoration-none text-body">
+					</a>
+				</div>      
+			</div>
+			<div class="collapse" id="collapseNew">
+			</div>
+		</div>
+
+
+		<div id="roleForm" style="display:none;" class="col-7 offset-3 mt-1">
+			<div class="input-group flex-nowrap">
+				<input type="text" class="form-control" placeholder="Nom du rôle" aria-label="Nome du rôle" autocomplete="no" id="name" name="name">
+			</div>
+			Droits : <br/>
+			<div class="row">
+				<div class="col-6">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="video" name="video">
+						<label class="form-check-label" for="defaultCheck1">Vidéos</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="spectacle" name="spectacle">
+						<label class="form-check-label" for="defaultCheck1">Spectacles</label>
+					</div>
+					</div>
+				<div class="col-6">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="user" name="user">
+						<label class="form-check-label" for="defaultCheck1">Utilisateurs</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="annonce" name="annonce">
+						<label class="form-check-label" for="defaultCheck1">Annonces</label>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
@@ -60,7 +104,7 @@ Vous n'avez pas accés à cette page
 			$.ajax({
 				type: "POST",
 				url: "./minControleur/testRole.php",
-				data: {"nom":"test", "droits":{"video":1, "spectacle":1, "utilisateurs":1, "annonce":1,}},
+				data: {"nom":"test", "droits":{"video":1, "spectacle":0, "utilisateurs":0, "annonce":0,}},
 				success: function(oRep){
 					console.log("Fini.");
 					console.log(oRep);
@@ -70,5 +114,5 @@ Vous n'avez pas accés à cette page
 		})
 	</script> -->
 
-
+	<script src='js/role.js'></script>
 <?php } ?>
