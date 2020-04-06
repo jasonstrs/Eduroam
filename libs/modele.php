@@ -373,6 +373,19 @@ function getVideosCount($search) {
 function addRole($nom, $droits) {
 	$SQL = "INSERT INTO role VALUES('0','$nom', '".json_encode($droits)."')";
 	SQLUpdate($SQL);
+	$SQL = "SELECT idRole FROM role ORDER BY idRole DESC";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function deleteRole($idRole){
+	$SQL = "DELETE FROM role WHERE idRole = $idRole";
+	return SQLDelete($SQL);
+}
+
+function editRole($idRole, $nom, $droits){
+	$SQL = "UPDATE role SET nom='$nom', droits='".json_encode($droits)."' WHERE idRole='$idRole'";
+	SQLUpdate($SQL);
 }
 
 function getDroitByRole($idRole, $droit) {
