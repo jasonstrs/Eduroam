@@ -43,7 +43,7 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
             <?php include("users.php"); ?>
         </div>
         <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
-            <?php include("role.php"); ?>
+           qsdqsdz
         </div>
     </div>
 </div>

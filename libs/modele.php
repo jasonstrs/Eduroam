@@ -373,8 +373,8 @@ function getVideosCount($search) {
 function addRole($nom, $droits) {
 	$SQL = "INSERT INTO role VALUES('0','$nom', '".json_encode($droits)."')";
 	SQLUpdate($SQL);
-	$SQL = "SELECT idRole FROM role ORDER BY idRole DESC";
-	$rs = SQLGetChamp($SQL);
+	$SQL2 = "SELECT idRole FROM role ORDER BY idRole DESC";
+	$rs = SQLGetChamp($SQL2);
 	return $rs;
 }
 
@@ -422,7 +422,7 @@ function countUsers() {
 }
 
 function searchUsersByTag($tag) {
-	$SQL = "SELECT * FROM user WHERE email LIKE '%$tag%' OR prenom LIKE '%$tag%' OR nom LIKE '%$tag%' LIMIT 5";
+	$SQL = "SELECT * FROM user WHERE email LIKE '$tag%' OR prenom LIKE '$tag%' OR nom LIKE '$tag%' LIMIT 5";
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
 	return $tab; 

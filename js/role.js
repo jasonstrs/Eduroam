@@ -1,4 +1,5 @@
 $(document).on("click",".editing", function(){
+	//console.log("On click sur un .editing");
 	let $collapse=$($(this).attr("href"));
 	let $roleForm=$("#roleForm");
 	let id=$(this).attr("idRole");
@@ -20,7 +21,7 @@ $(document).on("click",".editing", function(){
 			setTimeout(function(){
 				updateRole(id, $("#name").val(), video, spectacle, user, annonce);
 			},150)
-			console.log("Fini.");
+			//console.log("Fini.");
 		},
 		dataType: "text"
 	});
@@ -28,6 +29,7 @@ $(document).on("click",".editing", function(){
 });
 
 $(document).on("click",".edit", function(){
+	//console.log("On click sur un .edit");
 	let $collapse=$($(this).attr("href"));
 	let $roleForm=$("#roleForm");
 	$(this).addClass("editing").removeClass("edit").html("<i class='fas fa-check' style='color:green;'></i>");
@@ -60,7 +62,7 @@ $(document).on("click",".remove", function(){
 		success: function(oRep){
 			$("#collapseNew").append($roleForm);
 			div.remove();
-			console.log("Fini.");
+			//console.log("Fini.");
 		},
 		dataType: "text"
 	});
@@ -77,6 +79,7 @@ $(document).on("click",".cancel", function(){
 });
 
 $(document).on("click",".new", function(){
+	//console.log("On click sur un .New");
 	let $collapse=$("#collapseNew");
 	let $roleForm=$("#roleForm");
 	if(!$(".editing").length) {
@@ -96,6 +99,7 @@ $(document).on("click",".new", function(){
 });
 
 $(document).on("click",".editingNew", function(){
+	//console.log("On click sur un .editingNew");
 	let $collapse=$("#collapseNew");
 	let $roleForm=$("#roleForm");
 	if ($("#name").val().replace(/^\s+|\s+$/g, "").length != 0){
@@ -112,6 +116,7 @@ $(document).on("click",".editingNew", function(){
 			url: "./minControleur/dataRole.php",
 			data: {"action":"add", "nom":$("#name").val(), "droits":{"video": video, "spectacle": spectacle, "utilisateurs": user, "annonce": annonce,}},
 			success: function(oRep){
+				//console.log("Wtf mon bro ?");
 				updateRole(parseInt(oRep), $("#name").val(), video, spectacle, user, annonce)
 			},
 			dataType: "text"
@@ -122,6 +127,7 @@ $(document).on("click",".editingNew", function(){
 		$("#name").addClass("is-invalid");
 		$("#nameError").show();
 	}
+	return false;
 });
 
 $(document).on("click",".cancelNew", function(){

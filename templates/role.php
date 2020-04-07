@@ -77,21 +77,21 @@ Vous n'avez pas accés à cette page
 				<div class="col-6">
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value="" id="video" name="video">
-						<label class="form-check-label" for="defaultCheck1">Vidéos</label>
+						<label class="form-check-label" for="video">Vidéos</label>
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value="" id="spectacle" name="spectacle">
-						<label class="form-check-label" for="defaultCheck1">Spectacles</label>
+						<label class="form-check-label" for="spectacle">Spectacles</label>
 					</div>
 					</div>
 				<div class="col-6">
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value="" id="user" name="user">
-						<label class="form-check-label" for="defaultCheck1">Utilisateurs</label>
+						<label class="form-check-label" for="user">Utilisateurs</label>
 					</div>
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" value="" id="annonce" name="annonce">
-						<label class="form-check-label" for="defaultCheck1">Annonces</label>
+						<label class="form-check-label" for="annonce">Annonces</label>
 					</div>
 				</div>
 			</div>

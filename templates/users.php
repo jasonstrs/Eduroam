@@ -5,7 +5,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	header("Location:../index.php?view=accueil");
 	die("");
 } 
-if(valider("view","GET")=="role") {
+if(valider("view","GET")=="users") {
 ?>
 Vous n'avez pas accés à cette page
 <?php } else { ?>
@@ -16,9 +16,13 @@ Vous n'avez pas accés à cette page
 		<p>Nombre d'utilisateurs inscrits : <?php echo countUsers();?></p>
 	</div>
 	<div class="row">
-		<input type="text" size="8" class="form-control offset-3 col-6" placeholder="Chercher un utilisateur" aria-label="Chercher un utilisateur" autocomplete="no" id="userSearch" name="userSearch">
+		<input type="text" class="form-control offset-3 col-6" placeholder="Chercher un utilisateur" aria-label="Chercher un utilisateur" autocomplete="no" id="userSearch" name="userSearch">
 		<div id="userResult" class="offset-3 col-6">
 		</div>
+	</div>
+	<hr>
+	<div id="dispUser" style="display: none;">
+		
 	</div>
 	<script src='js/users.js'></script>
 <?php } ?>
