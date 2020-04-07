@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("#inputFirstName").attr("disabled",true);
     $("#inputPassword").attr("disabled",true);
     $("#inputName").attr("disabled",true);
-    afficherNotif();
+    
     $.ajax({
         type: "GET",
         url: "./minControleur/dataProfil.php",
@@ -16,6 +16,7 @@ $(document).ready(function(){
             $("#inputName").attr("value",oRep[1]);
             $("#inputEmail").attr("value",oRep[2]);
             afficherModif();
+            afficherNotif();
         },
     dataType: "json"
     });
@@ -236,10 +237,10 @@ function verificationPrenom(contenu,refInput){
 
 $(document).on("change","#switch",function(){
     console.log($(this));
-    if ($(this).is(':checked')){ // ici il faut passer une requête
+    var choice=0; // non coché
+    if ($(this).is(':checked')){ // si il est coché
         console.log('coché');
-    } else {
-        console.log('non coché'); 
+        choice=1;
     }
 
     // ici il faut passer une requete

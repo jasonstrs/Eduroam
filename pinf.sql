@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 11 mars 2020 à 16:23
--- Version du serveur :  5.7.24
--- Version de PHP :  7.3.1
+-- Généré le :  mar. 07 avr. 2020 à 14:58
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -236,6 +236,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `passe` text NOT NULL,
   `superadmin` tinyint(1) NOT NULL,
   `code` tinyint(1) NOT NULL,
+  `banni` tinyint(1) NOT NULL DEFAULT '0',
+  `choice` tinyint(1) NOT NULL DEFAULT '1',
   `hashCode` text NOT NULL,
   PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -244,10 +246,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `hashCode`) VALUES
-(1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, '0'),
-(2, 'tata@gmail.com', 'TATA', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, '0'),
-(3, 'clementboyaval@gmail.com', 'Clément', 'Boyaval', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
+INSERT INTO `user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `banni`, `choice`, `hashCode`) VALUES
+(1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, 0, 1, '0'),
+(2, 'tata@gmail.com', 'TATA', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0'),
+(3, 'clementboyaval@gmail.com', 'Clément', 'Boyaval', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
 
 -- --------------------------------------------------------
 
@@ -323,7 +325,7 @@ INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `th
 (28, 'ChI_hOpB4ys', '2019-09-21', 'BALKANY EN ZONZON &amp; YANN BARTHES TROP MIGNON ! (Vive La France ! #S02E14)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/ChI_hOpB4ys/default.jpg', 0),
 (29, 'RmTJYdOgyMU', '2019-09-19', 'Tous unis contre le RN, Gad Elmaleh nous invite &amp; Villani a Paris ! (Vive la France ! #S02E13)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/RmTJYdOgyMU/default.jpg', 0),
 (30, 'rXnQh2bFk1U', '2019-09-18', 'RETRAITES, ECOLOGIE MARQUE REPÈRE &amp; VIVRE ENSEMBLE  ! (Vive la France ! #S02E12)', 'Voici le mail de Jahbulon ! (et non son \"numéro\" comme dit dans la vidéo lol) : brokjah@gmail.com · Pour me soutenir sur T I P E E E ...', 'https://i.ytimg.com/vi/rXnQh2bFk1U/default.jpg', 0),
-(31, 'IehYhLkjSow', '2019-09-14', 'ADP : Empêchons la pire privatisation de l’histoire ! (Ft. pleins de gens) [Le OFF #10]', 'Rarement un projet de privatisation n\'aura été aussi injustifiable et mal fichu. Le gouvernement s\'apprête à vendre, à un prix sous-estimé, un monopole qu\'il ne ...', 'https://i.ytimg.com/vi/IehYhLkjSow/default.jpg', 0),
+(31, 'IehYhLkjSow', '2019-09-14', 'ADP : Empêchons la pire privatisation de l’histoire ! (Ft. pleins de gens) [Le OFF #10]', 'Rarement un projet de privatisation n\'aura été aussi injustifiable et mal fichu. Le gouvernement s\'apprête à vendre, à un prix sous-estimé, un monopole qu\'il ne ...', 'https://i.ytimg.com/vi/IehYhLkjSow/default.jpg', 0),
 (32, 'rC7anXckvfM', '2019-09-11', 'TROP DE PROGREEEEEEEEEES ! (Sauf pour Yann Moix) [Vive la France #S02E11]', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/rC7anXckvfM/default.jpg', 0),
 (33, 'VGVJTlTc520', '2019-09-10', 'BENALLA DETER, CASTANER LE MYTHO &amp; ECOLOGIE DECOMPLEXEE ! (Vive la France ! #S02E10)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/VGVJTlTc520/default.jpg', 0),
 (34, 'TKhN2zXLE8w', '2019-09-09', 'ACTE 43, NICO IS BACK &amp; JUSTICE POUR LES GALLINACÉS ! (Vive la France ! #S02E09)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/TKhN2zXLE8w/default.jpg', 0),
