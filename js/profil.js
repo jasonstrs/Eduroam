@@ -12,21 +12,27 @@ $(document).ready(function(){
             // oRep[0] == prenom
             // oRep[1] == nom
             // oRep[2] == mail
+            // oRep[3] == choice
             $("#inputFirstName").attr("value",oRep[0]);
             $("#inputName").attr("value",oRep[1]);
             $("#inputEmail").attr("value",oRep[2]);
             afficherModif();
-            afficherNotif();
+            
+            var ch=''; // permet de savoir si on doit cocher ou non le switch
+            if (oRep[3] == 1)
+                ch='checked';
+
+            afficherNotif(ch);
         },
     dataType: "json"
     });
 })
 
-function afficherNotif(){
+function afficherNotif(choice){
     // LANCER UNE REQUETE AJAX QUI REGARDE SI c'EST COCHE ou NON DANS LA BDD
 
     var notif = '<div class="custom-control custom-switch">'+
-                    '<input type="checkbox" class="custom-control-input" id="switch" checked="true">'+
+                    '<input type="checkbox" class="custom-control-input" id="switch" '+choice + ' >'+
                     '<label class="custom-control-label" for="switch">Recevoir les notifications par email</label>'+
                 '</div>';
     $("#mainProfil").append(notif);
@@ -233,16 +239,22 @@ function verificationPrenom(contenu,refInput){
     }
     return 1;
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).on("change","#switch",function(){
     console.log($(this));
     var choice=0; // non coché
     if ($(this).is(':checked')){ // si il est coché
-        console.log('coché');
         choice=1;
     }
 
-    // ici il faut passer une requete
+    $.ajax({
+        type: "POST",
+        url: "./minControleur/dataProfil.php",
+        data: {"action":"changeValue","choice":choice},
+        success: function(oRep){
+           
+        },
+    dataType: "text"
+    });
 
 });

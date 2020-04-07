@@ -42,6 +42,11 @@ function getPrenom($id)
 	return SQLGetChamp($SQL);
 }
 
+function getChoice($id) {
+	$SQL="SELECT choice FROM user WHERE idU='$id'";
+	return SQLGetChamp($SQL);
+}
+
 function getNom($id)
 {
 	
@@ -95,6 +100,14 @@ function isConfirmViaMail($email)
  */
 function changePass ($id,$newPasse) {
 	$SQL = "UPDATE user SET passe='$newPasse' WHERE idU='$id'";
+	SQLUpdate($SQL);
+}
+
+/**
+ * L'utilisateur vient de changer son choix de recevoir des mails
+ */
+function changeValue ($id,$choice) {
+	$SQL = "UPDATE user SET choice='$choice' WHERE idU='$id'";
 	SQLUpdate($SQL);
 }
 

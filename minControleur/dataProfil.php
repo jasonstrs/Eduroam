@@ -18,15 +18,23 @@
             $tab=array();
             $prenom = getPrenom($id);
             $nom = getNom($id);
+            $choice = getChoice($id);
             array_push($tab,$prenom);
             array_push($tab,$nom);
             array_push($tab,valider("email","SESSION"));
+            array_push($tab,$choice);
             echo (json_encode($tab));
         break;
 
         case 'mot de passe' :
             $pass = sha1(md5(valider("contenu","POST")));
             changePass($id,$pass);
+            echo 'Success';
+        break;
+
+        case 'changeValue' :
+            $choice = valider("choice","POST");
+            changeValue($id,$choice);
             echo 'Success';
         break;
 
