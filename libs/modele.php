@@ -373,6 +373,21 @@ function getVideosCount($search) {
 function addRole($nom, $droits) {
 	$SQL = "INSERT INTO role VALUES('0','$nom', '".json_encode($droits)."')";
 	SQLUpdate($SQL);
+	$SQL = "SELECT idRole FROM role ORDER BY idRole DESC";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function deleteRole($idRole){
+	$SQL = "DELETE FROM role WHERE idRole = $idRole";
+	return SQLDelete($SQL);
+	$SQL = "DELETE FROM user_role WHERE idRole = $idRole";
+	return SQLDelete($SQL);
+}
+
+function editRole($idRole, $nom, $droits){
+	$SQL = "UPDATE role SET nom='$nom', droits='".json_encode($droits)."' WHERE idRole='$idRole'";
+	SQLUpdate($SQL);
 }
 
 function getDroitByRole($idRole, $droit) {
@@ -399,5 +414,19 @@ function getRoles() {
 	$tab = parcoursRs($rs);
 	return $tab; 
 }
+
+function countUsers() {
+	$SQL = "SELECT COUNT(*) FROM `user`";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function searchUsersByTag($tag) {
+	$SQL = "SELECT * FROM user WHERE email LIKE '%$tag%' OR prenom LIKE '%$tag%' OR nom LIKE '%$tag%' LIMIT 5";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+//SELECT * FROM user WHERE email LIKE '%cl%' OR prenom LIKE '%cl%' OR nom LIKE '%cl%'
 
 ?>

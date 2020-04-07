@@ -15,7 +15,7 @@ Vous n'avez pas accés à cette page
 
 	<link rel="stylesheet" href="css/role.css">
 
-	<div class="mt-5">
+	<div id="roleContainer" class="mt-5">
 		
 		<div>
 			<div class="row">
@@ -28,13 +28,13 @@ Vous n'avez pas accés à cette page
 		</div>
 
 		<?php foreach ($roles as $role) { ?>
-		<div class="mt-2" id="<?php echo $role["idRole"]; ?>">
+		<div class="mt-2" id="role<?php echo $role["idRole"]; ?>">
 			<div class="row">
 				<div class="col-5 offset-3 list-role">
 					<?php echo $role["nom"]; ?>
 				</div>
 				<div class="col-2 text-right list-role">
-					<a class="edit text-decoration-none text-body m-3" data-toggle="collapse" href="#collapse<?php echo $role["idRole"]; ?>" role="button" aria-expanded="false" aria-controls="collapse<?php echo $role["idRole"]; ?>">
+					<a class="edit text-decoration-none text-body m-3" href="#collapse<?php echo $role["idRole"]; ?>" idRole="<?php echo $role["idRole"]; ?>">
 						<i class="fas fa-pen"></i>
 					</a>
 					<a href="#" class="remove text-decoration-none text-body" idRole="<?php echo $role["idRole"]; ?>">
@@ -49,13 +49,13 @@ Vous n'avez pas accés à cette page
 		</div>
 		<?php } ?>
 
-		<div class="mt-2">
+		<div id="createRole" class="mt-2">
 			<div class="row">
 				<div class="col-5 offset-3 list-role">
 					Créer un nouveau rôle
 				</div>
 				<div class="col-2 text-right list-role">
-					<a class="new text-decoration-none m-3" data-toggle="collapse" href="#collapseNew" role="button" aria-expanded="false" aria-controls="collapseNew" style="color: black;">
+					<a class="new text-decoration-none m-3" href="#collapseNew" style="color: black;">
 						<i class="fas fa-plus"></i>
 					</a>
 					<a href="#" class="cancelNew text-decoration-none text-body">
@@ -71,6 +71,7 @@ Vous n'avez pas accés à cette page
 			<div class="input-group flex-nowrap">
 				<input type="text" class="form-control" placeholder="Nom du rôle" aria-label="Nome du rôle" autocomplete="no" id="name" name="name">
 			</div>
+			<div id="nameError" class="text-danger" style="display:none;">Veuillez saisir un nom correct.</div>
 			Droits : <br/>
 			<div class="row">
 				<div class="col-6">
