@@ -415,4 +415,18 @@ function getRoles() {
 	return $tab; 
 }
 
+function countUsers() {
+	$SQL = "SELECT COUNT(*) FROM `user`";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function searchUsersByTag($tag) {
+	$SQL = "SELECT * FROM user WHERE email LIKE '%$tag%' OR prenom LIKE '%$tag%' OR nom LIKE '%$tag%' LIMIT 5";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+//SELECT * FROM user WHERE email LIKE '%cl%' OR prenom LIKE '%cl%' OR nom LIKE '%cl%'
+
 ?>

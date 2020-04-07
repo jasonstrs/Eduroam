@@ -20,10 +20,10 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
             <a class="nav-link" id="role-tab" data-toggle="tab" href="#role" role="tab" aria-controls="role" aria-selected="false">Rôles</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false">Utilisateurs</a>
+            <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Utilisateurs</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="video-tab" data-toggle="tab" href="#video" role="tab" aria-controls="video" aria-selected="false">Vidéos</a>
+            <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">Vidéos</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -39,8 +39,12 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
             <?php include("role.php"); ?>
         </div>
 
-        <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">...</div>
-        <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab">...</div>
+        <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+            <?php include("users.php"); ?>
+        </div>
+        <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
+            <?php include("role.php"); ?>
+        </div>
     </div>
 </div>
 

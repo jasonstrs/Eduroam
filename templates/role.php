@@ -28,7 +28,7 @@ Vous n'avez pas accés à cette page
 		</div>
 
 		<?php foreach ($roles as $role) { ?>
-		<div class="mt-2" id="<?php echo $role["idRole"]; ?>">
+		<div class="mt-2" id="role<?php echo $role["idRole"]; ?>">
 			<div class="row">
 				<div class="col-5 offset-3 list-role">
 					<?php echo $role["nom"]; ?>

@@ -1,6 +1,6 @@
 $(document).on("click",".editing", function(){
-	$collapse=$($(this).attr("href"));
-	$roleForm=$("#roleForm");
+	let $collapse=$($(this).attr("href"));
+	let $roleForm=$("#roleForm");
 	let id=$(this).attr("idRole");
 	$(this).addClass("edit").removeClass("editing").html("<i class='fas fa-pen'></i>");
 	$(this).next().addClass("remove").removeClass("cancel").html("<i class='fas fa-trash-alt' style='color:red;'></i>");
@@ -28,8 +28,8 @@ $(document).on("click",".editing", function(){
 });
 
 $(document).on("click",".edit", function(){
-	$collapse=$($(this).attr("href"));
-	$roleForm=$("#roleForm");
+	let $collapse=$($(this).attr("href"));
+	let $roleForm=$("#roleForm");
 	$(this).addClass("editing").removeClass("edit").html("<i class='fas fa-check' style='color:green;'></i>");
 	$(this).next().addClass("cancel").removeClass("remove").html("<i class='fas fa-times' style='color:red;'></i>");
 	$roleForm.show();
@@ -51,7 +51,8 @@ $(document).on("click",".edit", function(){
 });
 
 $(document).on("click",".remove", function(){
-	let div=$("#"+$(this).attr("idRole"));
+	let div=$("#role"+$(this).attr("idRole"));
+	let $roleForm=$("#roleForm");
 	$.ajax({
 		type: "POST",
 		url: "./minControleur/dataRole.php",
@@ -76,8 +77,8 @@ $(document).on("click",".cancel", function(){
 });
 
 $(document).on("click",".new", function(){
-	$collapse=$("#collapseNew");
-	$roleForm=$("#roleForm");
+	let $collapse=$("#collapseNew");
+	let $roleForm=$("#roleForm");
 	if(!$(".editing").length) {
 		$(this).addClass("editingNew").removeClass("new").html("<i class='fas fa-check' style='color:green;'></i>");
 		$(this).next().html("<i class='fas fa-times' style='color:red;'></i>");
@@ -95,8 +96,8 @@ $(document).on("click",".new", function(){
 });
 
 $(document).on("click",".editingNew", function(){
-	$collapse=$("#collapseNew");
-	$roleForm=$("#roleForm");
+	let $collapse=$("#collapseNew");
+	let $roleForm=$("#roleForm");
 	if ($("#name").val().replace(/^\s+|\s+$/g, "").length != 0){
 		$(this).addClass("new").removeClass("editingNew").html("<i class='fas fa-plus'></i>");
 		$(this).next().html("");
@@ -142,10 +143,11 @@ function resetError() {
 }
 
 function updateRole(id, name, video, spectacle, user, annonce) {
+	let $roleForm=$("#roleForm");
 	$("#collapseNew").append($roleForm);
 	let div = "";
-	if(!$("#"+id).length) {
-		div += `<div class="mt-2" id="`+id+`">`
+	if(!$("#role"+id).length) {
+		div += `<div class="mt-2" id="role`+id+`">`
 	}
 	div += `<div class="row">
 				<div class="col-5 offset-3 list-role">
@@ -164,12 +166,11 @@ function updateRole(id, name, video, spectacle, user, annonce) {
 			video="`+video+`" spectacle="`+spectacle+`" 
 			user="`+user+`" annonce="`+annonce+`">
 			</div>`
-	if(!$("#"+id).length) {
+	if(!$("#role"+id).length) {
 		div += `</div>`
 		$("#createRole").before(div);
 	}
 	else {
-		$("#"+id).html(div);
+		$("#role"+id).html(div);
 	}
-	console.log(div);
 }
