@@ -2,8 +2,14 @@
     border-bottom: 1px solid #d4d4d4;
     border-left: 1px solid #d4d4d4;
     border-right: 1px solid #d4d4d4;
+    background-color: white;
     padding: 8px;
     cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 98;
 }
 
 .userResult:hover {
