@@ -9,26 +9,26 @@
         $id = getIdViaHash($hash); // sécurité !
 
         if ($id){ // s'il y a un id, et donc le hash est correct
-            echo "<h3 style='text-align:center;'>Changer votre mot de passe</h3>";
-            echo "<div class=\"jumbotron container\" id='mainForm'>";
-            echo 	"<div class=\"form-group row\">";
-            echo    "<label for=\"inputPassword\" class=\"col-sm-2 col-form-label\">Mot de passe</label>";
-            echo    "<div class=\"col-sm-10\">";
-            echo     "<input type=\"password\" class=\"form-control\" id=\"inputPassword\" name=\"newP\" placeholder=\"Saisir votre mot de passe\">";
-            echo    "<div id='checkPass' class='text-danger'></div>";
-            echo    "</div>";
-            echo    "</div>";
-            echo	"<div class=\"form-group row\">";
-            echo    "<label for=\"inputPasswordConfirm\" class=\"col-sm-2 col-form-label\">Confirmation</label>";
-            echo    "<div class=\"col-sm-10\">";
-            echo      "<input type=\"password\" class=\"form-control\" id=\"inputPasswordConfirm\" name=\"newPbis\" placeholder=\"Confirmer votre mot de passe\">";
-            echo "<div id='checkPassConfirm' class='text-danger'></div>";
-            echo    "</div>";
-            echo 	"</div>";
-            echo  "<div class='submit' style='display:flex;justify-content:center;'>";
-            echo    "<input type=\"submit\" value=\"Modifier\" class=\"btn btn-outline-secondary\" disabled='true'>";
-            echo  "</div>";
-            echo "</div>";
+            echo "<h3 style='text-align:center;'>Changer votre mot de passe</h3>
+                <div class=\"jumbotron container\" id='mainForm'>
+                <div class=\"form-group row\">
+                <label for=\"inputPassword\" class=\"col-sm-2 col-form-label\">Mot de passe</label>
+                <div class=\"col-sm-10\">
+                <input type=\"password\" class=\"form-control\" id=\"inputPassword\" name=\"newP\" placeholder=\"Saisir votre mot de passe\">
+                <div id='checkPass' class='text-danger'></div>
+                </div>
+                </div>
+                <div class=\"form-group row\">
+                <label for=\"inputPasswordConfirm\" class=\"col-sm-2 col-form-label\">Confirmation</label>
+                <div class=\"col-sm-10\">
+                <input type=\"password\" class=\"form-control\" id=\"inputPasswordConfirm\" name=\"newPbis\" placeholder=\"Confirmer votre mot de passe\">
+                <div id='checkPassConfirm' class='text-danger'></div>
+                </div>
+                </div>
+                <div class='submit' style='display:flex;justify-content:center;'>
+                <input type=\"submit\" value=\"Modifier\" class=\"btn btn-outline-secondary\" disabled='true'>
+                </div>
+                </div>";
 
         } else // sinon on redirige
             $flag=1;
@@ -36,8 +36,13 @@
         $flag=1;
     }
 
-    //if ($flag)
-     // header("Location:../index.php?view=accueil");
+    if ($flag) {
+        echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
+        Lien erroné, le mot de passe n'a pas pu être changé.
+        </div>";
+    }
+
+
 
 ?>
 

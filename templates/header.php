@@ -14,11 +14,7 @@ if (valider("view","GET")!="accueil" &&
 	header("Location:./index.php?view=accueil");
 	die("");
 }
-if (valider("view","GET")=="changementPasse" && !isset($_SESSION['hashModifPass']))
-{
-	header("Location:./index.php?view=accueil");
-	die("");
-}
+
 include_once "libs/modele.php";
 // Pose qq soucis avec certains serveurs...
 echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";

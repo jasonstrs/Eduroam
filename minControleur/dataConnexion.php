@@ -116,14 +116,11 @@ session_start();
             
             if ($id) {
                 changePass($id,$passe);
-                //changeHash($hash,$id,md5(uniqid(rand(), true)));
+                changeHash($hash,$id,md5(uniqid(rand(), true)));
                 echo 'SUCCESS';
             } else {
                 echo 'ERROR';
             }
-            
-            
-            
         break;
 
     }
