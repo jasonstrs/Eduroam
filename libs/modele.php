@@ -435,11 +435,10 @@ function countUsers() {
 }
 
 function searchUsersByTag($tag) {
-	$SQL = "SELECT * FROM user WHERE email LIKE '$tag%' OR prenom LIKE '$tag%' OR nom LIKE '$tag%' OR CONCAT(prenom, ' ', nom) LIKE '$tag%' OR CONCAT(nom, ' ', prenom) LIKE '$tag%' LIMIT 5";
+	$SQL = "SELECT * FROM user WHERE CONCAT(prenom, ' ', nom, ' (', email, ')') LIKE '$tag%' OR CONCAT(nom, ' ', prenom, ' (', email, ')') LIKE '$tag%' OR CONCAT(email, ' (', prenom, ' ', nom, ')') LIKE '$tag%' LIMIT 5";
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
 	return $tab; 
 }
-//SELECT * FROM user WHERE email LIKE '%cl%' OR prenom LIKE '%cl%' OR nom LIKE '%cl%'
 
 ?>

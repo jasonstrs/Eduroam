@@ -45,7 +45,7 @@ Vous n'avez pas accés à cette page
 			</div>
 			<div id="changePassDiv" class="hidden">
 				<div class="form-group row" id="pass">
-					<label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
+					<label for="inputPassword" class="col-sm-2 col-form-label">Nouveau mot de passe</label>
 					<div class="col-sm-10 divForm">
 						<input type="password" class="form-control" id="inputPassword">
 					</div>
