@@ -86,5 +86,5 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
 </div>
 
 
-  <div class="alert alert-success" role="alert" id="envoiMail">
+  <div class="alert alert-success" role="alert" style="display:none" id="envoiMail">
   </div>
