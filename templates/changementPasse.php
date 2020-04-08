@@ -4,8 +4,8 @@
 
     if (isset($_SESSION['hashModifPass'])){
         $hash = $_SESSION['hashModifPass'];
-       // unset($_SESSION["hashModifPass"]); // on clear la variable
-        //session_destroy();
+        unset($_SESSION["hashModifPass"]); // on clear la variable
+        session_destroy();
         $id = getIdViaHash($hash); // sécurité !
 
         if ($id){ // s'il y a un id, et donc le hash est correct
