@@ -38,7 +38,7 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
     echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
       Lien erroné, le mot de passe n'a pas pu être changé.
     </div>";
-  } else if (valider("pass","GET") == "success"){ //SUCCÉS
+  } else if (valider("pass","GET") == "success"){ //SUCCES
     echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
          Le mot de passe a été modifié. Vous pouvez désormais vous connecter !
          </div>";

@@ -57,10 +57,13 @@
 
 #containerMailInscription,#receiveNewMail {
     display: flex;
-    align-items: center;
     flex-direction: column;
 }
 
 #receive,#receiveMail {
     margin-top:8px;
+}
+
+#log {
+    margin-bottom: 10px;
 }

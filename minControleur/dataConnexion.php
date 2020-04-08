@@ -109,6 +109,23 @@ session_start();
             }
         break;
 
+        case 'modificationPasse' :
+            $hash = valider("hash","POST");
+            $passe = sha1(md5(valider("passe","POST")));
+            $id = getIdViaHash($hash);
+            
+            if ($id) {
+                changePass($id,$passe);
+                //changeHash($hash,$id,md5(uniqid(rand(), true)));
+                echo 'SUCCESS';
+            } else {
+                echo 'ERROR';
+            }
+            
+            
+            
+        break;
+
     }
     
 ?>
