@@ -72,7 +72,7 @@ function callApi(nToken) {
 	});
 	// execute the request
 	request.execute(function(response) {
-		//console.log(response);
+		console.log(response);
 		var flag = 0;
 		var results = response.result;
 		//var tab = {'1':'test','2':{'1':'lol','2':'mdr'},'3':'test3'};

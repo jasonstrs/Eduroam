@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    console.log("On charge les dates en fr");
+    //console.log("On charge les dates en fr");
     moment.locale("fr");
 })
 

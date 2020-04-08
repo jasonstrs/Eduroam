@@ -21,6 +21,14 @@
     padding: 0;
 }
 
-#userSearch{
+#userSearch {
     z-index: 99;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
