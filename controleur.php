@@ -16,7 +16,6 @@ $url = "http://";
 // Append the host(domain name, ip) to the URL.   
 $url.= $_SERVER['HTTP_HOST']; 
 
-
 $flag=0;
 
 if (valider("form","POST")){
