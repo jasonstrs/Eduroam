@@ -167,19 +167,12 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
           <a class="nav-link" href="index.php?view=accueil"><b>Accueil </b><span class="sr-only">(current)</span></a>
         </li>
 		
-       	<?php if (valider("connecte","SESSION")) { ?>
-		<div class="dropdown navbar-nav">
-		  <a class="nav-link dropdown-toggle text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<b>Spectacle</b>
-		  </a>
-		  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color: #c8912a">
-			<a class="dropdown-item orange" href="index.php?view=preinscription"><b>Préinscription</b></a>
-			<a class="dropdown-item orange" href="index.php?view=inscription"><b>Inscription</b></a>
-		  </div>
-		</div>
-		<?php } ?>
+       	
 
             <?php if (valider("connecte","SESSION")) { ?>
+				<li class="nav-item">
+          			<a class="nav-link" href="index.php?view=spectacles"><b>Spectacles</b></a>
+        		</li>
         		<li class="nav-item">
           			<a class="nav-link" href="index.php?view=profil"><b>Profil</b></a>
         		</li>

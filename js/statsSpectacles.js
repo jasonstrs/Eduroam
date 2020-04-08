@@ -100,7 +100,7 @@ function chargerDates(valide){
 /**
  * AU CHARGEMENT DE LA PAGE
  */
-$("#accordion").ready(function(){
+$("#accordionStats").ready(function(){
     
     nbDates(2);
     chargerDates(2);
