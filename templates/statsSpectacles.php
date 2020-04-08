@@ -10,7 +10,7 @@
 </select>
 <br/>
 
-<div id="accordion">
+<div id="accordionStats">
   <div class="card " >
     <div class="card-header pointer" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
       <h5 class="mb-0 nonSelectionnable">
@@ -22,7 +22,7 @@
       </h5>
     </div>
 
-    <div id="collapseOne" class="collapse statsSpectaclesCollapse" aria-labelledby="headingOne" data-parent="#accordion">
+    <div id="collapseOne" class="collapse statsSpectaclesCollapse" aria-labelledby="headingOne" data-parent="#accordionStats">
       <div class="card-body">
       </div>
     </div>
@@ -37,7 +37,7 @@
         <span class="nbDates" id="nbDatesValidees">Chargement <img src="./ressources/loading.gif" /></span>
       </h5>
     </div>
-    <div id="collapseTwo" class="collapse statsSpectaclesCollapse" aria-labelledby="headingTwo" data-parent="#accordion">
+    <div id="collapseTwo" class="collapse statsSpectaclesCollapse" aria-labelledby="headingTwo" data-parent="#accordionStats">
       <div class="card-body">
         Cliquer sur une date pour accéder à la vente de billets.
       </div>
