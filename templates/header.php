@@ -7,6 +7,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 if (valider("view","GET")!="accueil" && 
 	valider("view","GET")!="login" && 
+	valider("view","GET")!="changementPasse" && 
 	//Rajouter ici les autres pages accessibles lorsque l'on est deconnecté
 	!valider("connecte","SESSION"))
 {

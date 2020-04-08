@@ -16,14 +16,8 @@ $url = "http://";
 // Append the host(domain name, ip) to the URL.   
 $url.= $_SERVER['HTTP_HOST']; 
 
-
 $flag=0;
 
-if (valider("form","POST")){
-    $flag=1; // on a lancé le form
-    $newPasse = valider("newP","POST"); // on récupère les MDP
-    $newPasseBis = valider("newPbis","POST");
-}
 
 if (valider("action","GET")) {
     if (valider("action","GET") == "verificationMail" || valider("action","GET") == "verificationPassword"){
@@ -61,27 +55,12 @@ switch($action){
         $id = getIdViaHash($hash); // on regarde si le hash est correct
         $add="pass"; // on s'occupe du cas 'pass'
         if ($id){ // si on a récupéré l'ID
-            if ($flag){ // si le form a déjà été lancé et qu'on a récupéré les MDP
-                if (preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#",$newPasse)){ // on teste si le MDP respecte la norme
-                    if ($newPasse == $newPasseBis) { // on teste si les deux MDP sont identiques
-                        changePass($id,sha1(md5($newPasse)));
-                        $qs="success";
-                        changeHash($hash,$id,md5(uniqid(rand(), true)));
-                    } else {
-                        echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
-                            Saisir un mot de passe identique.</div>";
-                        $flag=0;
-                        newPasse($hash);
-                    }
-                } else { // sinon on ne respecte pas le format de MDP
-                    echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
-                    Saisir un mot de passe correct (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre).
-                    </div>";
-                    $flag=0;
-                    newPasse($hash);
-                }
-            } else // on lance la fonction car premier clic sur le lien
-                newPasse($hash);
+           
+            session_start();
+            $_SESSION['hashModifPass']=$hash;
+            
+            header("Location:../Eduroam/index.php?view=changementPasse");
+
         } else { // probleme de HASH
             $qs="fail";
             $flag=1;

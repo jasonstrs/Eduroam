@@ -119,6 +119,7 @@ function rediriger($url,$qs="")
 
 
 function newPasse($hashCode){
+	include '../templates/header.php';
 	echo "<form method='POST' action='#' name='form'>";
 	echo "<div class=\"jumbotron container\">";
     echo 	"<div class=\"form-group row\">";

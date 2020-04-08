@@ -41,7 +41,7 @@ function envoiMail($email,$subject,$nom,$prenom,$lien){
             <div>
                 <h3 style='margin-bottom:0px;'><b>Avant de <span style='color:red;'>commencer...</span></b></h3>
                 <p>Veuillez valider votre adresse mail afin de pouvoir vous connecter</p>
-                <a style='cursor:pointer; text-decoration:none; color:red;' href='". $lien ."'><i>Pour confirmer celle-ci, veuillez cliquer ici !<i></a>
+                <a style='' href='". $lien ."'><i>Pour la confirmer, veuillez cliquer <i> ici ! </a>
             </div>
             </body>
         </html>
@@ -92,7 +92,7 @@ function envoiMailPass($email,$subject,$nom,$prenom,$lien){
             <div>
                 <h3 style='margin-bottom:0px;'><b>Mot de passe oublié</b></h3>
                 <p>Vous venez de demander un nouveau mot de passe.</p>
-                <a style='cursor:pointer; text-decoration:none; color:red;' href='". $lien ."'><i>Pour le modifier, veuillez cliquer ici !<i></a>
+                <a style='' href='". $lien ."'><i>Pour le modifier, veuillez cliquer <i>ici !</a>
             </div>
             </body>
         </html>
