@@ -12,7 +12,7 @@
     z-index: 98;
 }
 
-.userResult:hover {
+.activeResult {
     background-color: #e9e9e9;
 }
 

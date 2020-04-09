@@ -428,6 +428,19 @@ function getRoles() {
 	return $tab; 
 }
 
+function getRolesIdByUser($idUser) {
+	$SQL = "SELECT idRole FROM user_role WHERE idU='$idUser'";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function checkIfUserHasRole($idUser, $idRole) {
+	$SQL = "SELECT COUNT(idRole) FROM user_role WHERE idU='$idUser' AND idRole='$idRole';";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
 function countUsers() {
 	$SQL = "SELECT COUNT(*) FROM `user`";
 	$rs = SQLGetChamp($SQL);
@@ -439,6 +452,45 @@ function searchUsersByTag($tag) {
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
 	return $tab; 
+}
+
+function editUser ($idU, $email, $prenom, $nom) {
+	$SQL = "UPDATE user SET prenom='$prenom', nom='$nom', email='$email' WHERE idU='$idU'";
+	SQLUpdate($SQL);
+}
+
+function setAdmin($idU) {
+	$SQL = "UPDATE user SET superadmin=1 WHERE idU='$idU'";
+	SQLUpdate($SQL);
+}
+
+function removeAdmin($idU) {
+	$SQL = "UPDATE user SET superadmin=0 WHERE idU='$idU'";
+	SQLUpdate($SQL);
+}
+
+function giveRole($idU, $idRole) {
+	if(!checkIfUserHasRole($idU, $idRole)) {
+		$SQL = "INSERT INTO user_role VALUES('$idU','$idRole')";
+		SQLUpdate($SQL);
+	}
+}
+
+function removeRole($idU, $idRole) {
+	if(checkIfUserHasRole($idU, $idRole)) {
+		$SQL = "DELETE FROM user_role WHERE idU='$idU' AND idRole='$idRole'";
+		SQLDelete($SQL);
+	}
+}
+
+function banUser($idU) {
+	$SQL = "UPDATE user SET banni=1 WHERE idU='$idU'";
+	SQLUpdate($SQL);
+}
+
+function unbanUser($idU) {
+	$SQL = "UPDATE user SET banni=0 WHERE idU='$idU'";
+	SQLUpdate($SQL);
 }
 
 ?>

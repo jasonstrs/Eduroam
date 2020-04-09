@@ -11,17 +11,19 @@ Vous n'avez pas accés à cette page
 <?php } else { ?>
 
 	<link rel="stylesheet" href="css/users.css">
-
+	<div id="containerUser"></div>
 	<div class="mt-2">
 		<p>Nombre d'utilisateurs inscrits : <?php echo countUsers();?></p>
 	</div>
 	<div class="row">
 		<input type="text" class="form-control offset-3 col-6" placeholder="Chercher un utilisateur" aria-label="Chercher un utilisateur" autocomplete="no" id="userSearch" name="userSearch">
 		<div id="userResult" class="offset-3 col-6">
+		<p class="hidden"></p>
 		</div>
 	</div>
 	<hr>
-	<div id="dispUser" class="">
+	<div id="dispUser" class="hidden">
+		<input id="idUserInput" type="hidden" value="0"/>
 		<div class="form-group row">
 				<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 				<div class="col-sm-10">
@@ -44,21 +46,37 @@ Vous n'avez pas accés à cette page
 				<span class="offset-sm-2 font-weight-light text-info pointer changepass">Changer le mot de passe</span>
 			</div>
 			<div id="changePassDiv" class="hidden">
+				<input id="changepass" type="hidden" value="0"/>
 				<div class="form-group row" id="pass">
-					<label for="inputPassword" class="col-sm-2 col-form-label">Nouveau mot de passe</label>
+					<label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
 					<div class="col-sm-10 divForm">
 						<input type="password" class="form-control" id="inputPassword">
 					</div>
 				</div>
-				<div class="form-group row" id="passConfirm">
-					<label for="inputConfirmPassword" class="col-sm-2 col-form-label">Confirmer le mot de passe</label>
-					<div class="col-sm-10 divForm">
-						<input type="password" class="form-control" id="inputConfirmPassword">
+				<div class="form-group row" id="pass">
+					<span class="offset-sm-2 font-weight-light text-info pointer changepass">Ne pas changer le mot de passe</span>
+				</div>
+			</div>
+			<?php if(valider("admin","SESSION")==1) { ?>
+			<div class="offset-sm-2 custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="switchAdmin">
+                <label class="custom-control-label" for="switchAdmin">Administrateur</label>
+            </div>
+			<?php } ?> <br/>
+			<div class="offset-sm-2">
+				Attribuer des rôles :
+				<input id="upToDate" type="hidden" value="0"/>
+				<div id="addRole" class="row">
+					<div class="col-sm-5" id="roleLeft">
+					</div>
+					<div class="col-sm-5" id="roleRight">
 					</div>
 				</div>
-				<div class="form-group row" id="pass">
-					<span class="offset-sm-2 font-weight-light text-info pointer validepass">Valider le mot de passe</span>
-				</div>
+			</div><br/>
+			<div class="row">
+				<button id="saveUser" type="button" class="btn btn-outline-secondary offset-sm-2">Sauvegarder</button>
+				<button id="banUser" type="button" class="btn btn-outline-secondary  offset-sm-1">Bannir</button>
+				<button id="unbanUser" type="button" class="btn btn-outline-secondary  offset-sm-1">Débannir</button>
 			</div>
 		</div>
 	</div>
