@@ -81,6 +81,15 @@
                 echo(json_encode($tab));
             }
         break;
+        case "nbDatesUser":
+            $tab = array();
+            if($choix = valider("val","POST"))
+            if($idU = valider("idU","POST")){
+                $tab["rep"] = nbDatesUser($choix,$idU);
+                $tab["valid"]=intval($choix);
+                echo(json_encode($tab));
+            }
+        break;
         case "chargerDates":
             $tab = array();
             if(!($tri = valider("tri","POST")))$tri = "nbInscrits";

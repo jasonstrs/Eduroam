@@ -1,6 +1,5 @@
 <?php
 
-
 // inclure ici la librairie faciliant les requêtes SQL
 include_once("maLibSQL.pdo.php");
 
@@ -291,6 +290,32 @@ function chargerDates($valid,$tri){
 function nbInscritsDate($idDate){
 	$SQL="SELECT COUNT(*) FROM spectacle_user WHERE idDate='$idDate'";
 	return SQLGetChamp($SQL);
+}
+
+function nbDatesUser($choix,$id){
+
+	switch($choix){
+		case 1:
+			//Dates validées
+			$SQL="SELECT COUNT(*) FROM date_spectacle WHERE valide=1";
+		break;
+		case 2:
+			//Dates en attente
+			$SQL="SELECT COUNT(*) FROM date_spectacle WHERE valide=0";
+		break;
+		case 3:
+			//Dates validées user
+			$SQL="SELECT COUNT(*) FROM date_spectacle ds, spectacle_user su WHERE su.idU=$id AND su.idDate = ds.idDate AND valide=1";
+			
+		break;
+		case 4:
+			//Dates en attente user
+			$SQL="SELECT COUNT(*) FROM date_spectacle ds, spectacle_user su WHERE su.idU=$id AND su.idDate = ds.idDate AND valide=0";
+		break;
+	}
+
+	return SQLGetChamp($SQL);
+
 }
 
 /**

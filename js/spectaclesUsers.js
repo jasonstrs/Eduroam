@@ -1,23 +1,41 @@
-
-
 /**
  * Récupère le nombre de dates
  * valide : 1 -> dates validées
  *          2 -> dates en attente
+ *          3 -> en attente & user interessé
+ *          4 -> validé & user interessé
  */
 function nbDates(valide){
     $.ajax({
         method:"POST",
         url:"./minControleur/dataSpectacle.php",
         data:{
-            action:"nbDates",
+            action:"nbDatesUser",
             val:valide,
-            tri:$("#selectTri").val()
+            idU:$("#valIdUser").val()
         },
         success:function(oRep){
             var tab = JSON.parse(oRep);
-            var id="#nbDatesEnAttente";
-            if(tab.valid == 1)id="#nbDatesValidees";
+            var id;
+            console.log(tab);
+            switch(tab.valid){
+                case 1:
+                    id="#nbDatesValidees";
+                break;
+                case 2:
+                    id="#nbDatesEnAttente";
+                break;
+                case 3:
+                    id="#nbVosDatesEnAttente";
+                break;
+                case 4:
+                    id="#nbVosDatesValidees";
+                break;
+                default:
+                    console.log("Erreur lors du chargement du nombre de dates");
+                break;
+            }
+            console.log(id);
             $(id).html(tab.rep);
         },
         error:function(oRep){
@@ -100,16 +118,17 @@ function chargerDatesStats(valide){
 /**
  * AU CHARGEMENT DE LA PAGE
  */
-$("#accordionStats").ready(function(){
-    
+$("#accordionUser").ready(function(){
+    console.log("L'accordéon User est chargé");
     nbDates(2);
-    chargerDatesStats(2);
+    //chargerDatesUser(2);
     nbDates(1);
-    chargerDatesStats(1);
+    //chargerDatesUser(1);
+    nbDates(3);
+    nbDates(4);
     $("#selectTri").change(function(){
-        console.log($(this).val());
-        chargerDatesStats(2);
-        chargerDatesStats(1);
+        //chargerDatesUser(2);
+        //chargerDatesUser(1);
     });
 });
 

@@ -10,7 +10,7 @@
     } else {
 ?>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
-<script src='js/spectacle.js'></script>
+<script src='js/spectacles.js'></script>
 <h3>
     <div id="titre">
         Gestion des spectacles

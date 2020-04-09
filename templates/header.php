@@ -43,7 +43,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<!-- Liaisons aux fichiers css de Bootstrap -->
 
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
-
 	<link href="css/sticky-footer.css" rel="stylesheet" />
 	<link href="css/main.css" rel="stylesheet" />
 	<link href="css/jquery-ui.css" rel="stylesheet" />

@@ -233,7 +233,8 @@ table{
     text-align:center;
 }
 
-.statsSpectaclesCollapse{
+.statsSpectaclesCollapse i{
+    display:block;
     padding:20px;
 }
 

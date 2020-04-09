@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 07 avr. 2020 à 14:58
--- Version du serveur :  5.7.26
--- Version de PHP :  7.2.18
+-- Généré le :  jeu. 09 avr. 2020 à 11:33
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -93,11 +93,11 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) DEFAULT '0',
-  `lien` int(11) DEFAULT NULL,
+  `valide` int(11) DEFAULT 0,
+  `lien` text DEFAULT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `date_spectacle`
@@ -105,7 +105,29 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
 
 INSERT INTO `date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
 (31, 15, '2020-03-19', 0, NULL),
-(33, 15, '2020-03-28', 0, NULL);
+(33, 15, '2020-03-28', 0, NULL),
+(34, 16, '2020-07-17', 0, NULL),
+(35, 16, '2020-07-18', 0, NULL),
+(37, 16, '2020-07-27', 0, NULL),
+(38, 16, '2020-07-28', 0, NULL),
+(39, 16, '2020-07-29', 0, NULL),
+(40, 16, '2020-07-30', 0, NULL),
+(41, 16, '2020-07-31', 0, NULL),
+(42, 16, '2020-08-01', 0, NULL),
+(43, 16, '2020-08-02', 0, NULL),
+(44, 15, '2020-04-03', 0, NULL),
+(45, 15, '2020-04-10', 0, NULL),
+(46, 15, '2020-04-17', 0, NULL),
+(47, 15, '2020-04-24', 0, NULL),
+(48, 15, '2020-05-01', 0, NULL),
+(49, 15, '2020-05-08', 0, NULL),
+(50, 15, '2020-05-15', 0, NULL),
+(51, 15, '2020-05-22', 0, NULL),
+(52, 15, '2020-05-29', 0, NULL),
+(53, 15, '2020-06-05', 0, NULL),
+(54, 15, '2020-06-12', 0, NULL),
+(55, 15, '2020-06-19', 0, NULL),
+(56, 15, '2020-06-26', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -131,8 +153,8 @@ CREATE TABLE IF NOT EXISTS `idee_ville` (
 
 DROP TABLE IF EXISTS `notif_spectacle`;
 CREATE TABLE IF NOT EXISTS `notif_spectacle` (
-  `nbMin` int(11) NOT NULL DEFAULT '100',
-  `nbRappel` int(11) NOT NULL DEFAULT '50',
+  `nbMin` int(11) NOT NULL DEFAULT 100,
+  `nbRappel` int(11) NOT NULL DEFAULT 50,
   `mailNbInt` text NOT NULL,
   `objNbInt` tinytext NOT NULL,
   `mailIdeeVille` text NOT NULL,
@@ -152,16 +174,16 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `idRole` int(11) NOT NULL AUTO_INCREMENT,
   `nom` text NOT NULL,
-  `droits` json NOT NULL,
+  `droits` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`droits`)),
   PRIMARY KEY (`idRole`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `role`
 --
 
 INSERT INTO `role` (`idRole`, `nom`, `droits`) VALUES
-(8, 'admin', '{\"video\": \"1\", \"annonce\": \"1\", \"spectacle\": \"1\", \"utilisateurs\": \"1\"}');
+(8, 'admin', '{\"video\":\"1\",\"spectacle\":\"1\",\"utilisateurs\":\"1\",\"annonce\":\"1\"}');
 
 -- --------------------------------------------------------
 
@@ -194,14 +216,15 @@ CREATE TABLE IF NOT EXISTS `spectacle` (
   `ville` tinytext NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `spectacle`
 --
 
 INSERT INTO `spectacle` (`idSpectacle`, `ville`, `description`) VALUES
-(15, 'Paris', 'Spectacle 2020');
+(15, 'Paris', 'Spectacle 2020'),
+(16, 'Lille', 'Tournée JSPC 2021');
 
 -- --------------------------------------------------------
 
@@ -221,6 +244,17 @@ CREATE TABLE IF NOT EXISTS `spectacle_user` (
   KEY `idSpectacle` (`idSpectacle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `spectacle_user`
+--
+
+INSERT INTO `spectacle_user` (`idDate`, `idU`, `idSpectacle`, `notif`) VALUES
+(31, 2, 16, 2),
+(34, 1, 16, 0),
+(41, 1, 16, 0),
+(43, 1, 15, 0),
+(46, 3, 16, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -236,8 +270,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `passe` text NOT NULL,
   `superadmin` tinyint(1) NOT NULL,
   `code` tinyint(1) NOT NULL,
-  `banni` tinyint(1) NOT NULL DEFAULT '0',
-  `choice` tinyint(1) NOT NULL DEFAULT '1',
+  `banni` tinyint(1) NOT NULL DEFAULT 0,
+  `choice` tinyint(1) NOT NULL DEFAULT 1,
   `hashCode` text NOT NULL,
   PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
