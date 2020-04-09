@@ -9,7 +9,6 @@ if(valider("view","GET")=="role") {
 ?>
 Vous n'avez pas accés à cette page
 <?php } else {
-	//echo getDroit("video");
 	$roles = getRoles();
 	?>
 
@@ -20,7 +19,7 @@ Vous n'avez pas accés à cette page
 		<div>
 			<div class="row">
 				<div class="col-5 offset-3 list-role">
-					Nom du rôle
+					Nom du rôle <?php echo getDroit("video"); ?>
 				</div>
 				<div class="col-2 text-right list-role">
 				</div>      
