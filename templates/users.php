@@ -29,6 +29,7 @@ Vous n'avez pas accés à cette page
 				<div class="col-sm-10">
 					<input type="email" class="form-control" id="inputEmail">
 				</div>
+				<div id="verifMail" class='offset-sm-2 text-danger'></div>
 			</div>
 			<div class="form-group row">
 				<label for="inputFirstName" class="col-sm-2 col-form-label">Prénom</label>
@@ -52,6 +53,7 @@ Vous n'avez pas accés à cette page
 					<div class="col-sm-10 divForm">
 						<input type="password" class="form-control" id="inputPassword">
 					</div>
+					<div id="verifPasse" class=' offset-sm-2 text-danger'></div>
 				</div>
 				<div class="form-group row" id="pass">
 					<span class="offset-sm-2 font-weight-light text-info pointer changepass">Ne pas changer le mot de passe</span>
