@@ -1,6 +1,14 @@
 <script src='js/spectaclesUsers.js'></script>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <br/>
+
+<div id="descriptionSpectacles">
+  Vous pouvez vous déclarer <i>intéressé</i> pour des dates en attente.<br/>
+  Si une date en attente intéresse assez de personnes, elle pourra passer de <i>en attente</i> à <i>validée</i>.<br/>
+  Vous pourrez alors accéder au site de vente de billets concernant cette date.<br/>
+
+</div>
+<br/>
 <label for="selectTri">Trier par :</label>
 <select id="selectTri" class="form-control">
   <option value="nbInscrits">Nombre d'inscrits</option>

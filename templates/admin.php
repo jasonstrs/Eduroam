@@ -11,7 +11,7 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
 <div class="containerAdmin">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="gererSpectacles-tab" data-toggle="tab" href="#gererSpectacles" role="tab" aria-controls="gererSpectacles" aria-selected="true">Gestion des Spectacles</a>
+            <a class="nav-link" id="gererSpectacles-tab" data-toggle="tab" href="#gererSpectacles" role="tab" aria-controls="gererSpectacles" aria-selected="true">Gestion des Spectacles</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="statsSpectacles-tab" data-toggle="tab" href="#statsSpectacles" role="tab" aria-controls="statsSpectacles" aria-selected="false">Statistiques des Spectacles</a>
@@ -27,7 +27,7 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="gererSpectacles" role="tabpanel" aria-labelledby="gererSpectacles-tab">
+        <div class="tab-pane fade" id="gererSpectacles" role="tabpanel" aria-labelledby="gererSpectacles-tab">
             <?php include("planiSpectacles.php"); ?>
         </div>
 
@@ -51,19 +51,44 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
 <?php } else {
 echo "Vous n'avez pas accés à cette page";
 } 
-/* 
+
 if($volet = valider("volet","GET")){
-    $idVolet = "#".$volet;
-    $idTabVolet = "#".$volet."-tab";
     ?>
-        <script>
+    <script>
+        $("#containerAdmin").ready(function(){
+            var volet='<?=$volet?>';
+            console.log(volet);
             $(".nav-link").removeClass('active');
             $(".tab-pane").removeClass('show').removeClass("active");
-            $().addClass("active");
-            $().addClass("show active");
-        </script>
+            $("#"+volet+"-tab").addClass("active");
+            $("#"+volet).addClass("show active");
+        });
+            
+    </script>
+    <?php
+
+}
+else{
+    ?>
+    <script>
+        $("#containerAdmin").ready(function(){
+            var volet='<?=$volet?>';
+            console.log(volet);
+            $(".nav-link").removeClass('active');
+            $(".tab-pane").removeClass('show').removeClass("active");
+            $("#gererSpectacles-tab").addClass("active");
+            $("#gererSpectacles").addClass("show active");
+        });
+            
+    </script>
     <?php
 }
- */
 
 ?>
+<script>
+$(".nav-link").click(function(){
+    var id=$(this).attr("id");
+    idPanneau = id.substring(0,id.length-4);
+    history.pushState('','','index.php?view=admin&volet='+idPanneau);
+});
+</script>

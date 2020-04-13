@@ -90,7 +90,7 @@ function inscriptionDates(choix,tabDates){
         },
         success:function(){
             console.log("succès");
-            /* window.location.reload(); */
+            window.location.reload();
         }
     }
     $.ajax(requete);

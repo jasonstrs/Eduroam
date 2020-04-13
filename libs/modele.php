@@ -364,14 +364,14 @@ function nbDatesUser($choix,$id){
 		case "validees":
 			//Dates validées
 			$SQL="SELECT COUNT(*) FROM `date_spectacle` d WHERE valide = 1 AND d.idDate NOT IN 
-			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = 2 AND d.idDate = su.idDate AND d.valide=1)";
+			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=1)";
 			/* SELECT idDate FROM spectacle_user WHERE idU = 2 */
 /* SELECT d.idDate FROM `date_spectacle` d,spectacle_user su WHERE valide = 1 AND d.idDate NOT IN (SELECT idDate FROM spectacle_user WHERE idU = 2) */		
 		break;
 		case "attente":
 			//Dates en attente
 			$SQL="SELECT COUNT(*) FROM `date_spectacle` d WHERE valide = 0 AND d.idDate NOT IN 
-			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = 2 AND d.idDate = su.idDate AND d.valide=0)";
+			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=0)";
 		break;
 		case "mesValidees":
 			//Dates validées user
