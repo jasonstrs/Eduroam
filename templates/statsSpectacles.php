@@ -1,6 +1,10 @@
 <script src='js/statsSpectacles.js'></script>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <br/>
+
+
+
+
 <label for="selectTri">Trier par :</label>
 <select id="selectTri" class="form-control">
   <option value="nbInscrits">Nombre d'inscrits</option>

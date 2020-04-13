@@ -50,4 +50,20 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
 
 <?php } else {
 echo "Vous n'avez pas accés à cette page";
-} ?>
+} 
+/* 
+if($volet = valider("volet","GET")){
+    $idVolet = "#".$volet;
+    $idTabVolet = "#".$volet."-tab";
+    ?>
+        <script>
+            $(".nav-link").removeClass('active');
+            $(".tab-pane").removeClass('show').removeClass("active");
+            $().addClass("active");
+            $().addClass("show active");
+        </script>
+    <?php
+}
+ */
+
+?>

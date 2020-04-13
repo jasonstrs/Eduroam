@@ -86,19 +86,24 @@
             if($choix = valider("val","POST"))
             if($idU = valider("idU","POST")){
                 $tab["rep"] = nbDatesUser($choix,$idU);
-                $tab["valid"]=intval($choix);
+                $tab["valid"]=$choix;
                 echo(json_encode($tab));
             }
         break;
         case "chargerDates":
             $tab = array();
+
+            //Tri par nombre d'inscrits par défaut
             if(!($tri = valider("tri","POST")))$tri = "nbInscrits";
+            if(!($idU = valider("idU","POST")))$id=false;
+            //Si on a une valeur de valid
             if($valid = valider("val","POST")){
-                if($valid==2)$valid=0;
-                $tab["rep"] = chargerDates($valid,$tri);
+                $tab["rep"] = chargerDates($valid,$tri,$idU);
                 foreach($tab["rep"] as $key => $date){
                     $tab["rep"][$key]["nbInscrits"] = nbInscritsDate($date["idDate"]);
                 }  
+                
+                //tri du tableau ssi on veut le rier par nb d'inscrits
                 if($tri == "nbInscrits"){
                     //On trie le tableau en fonction du nombre d'inscrits
                     function cmp($a, $b){
@@ -109,10 +114,23 @@
                     }
                     usort($tab["rep"],'cmp');  
                 }    
+
+
                 $tab["valid"]=$valid;
                 echo(json_encode($tab));
             }
         break;
+        case "userInteresseDates":
+        
+            if($idU = valider("idU","POST"))
+            if($choix = valider("valeur","POST"))
+            if(isset($_POST["dates"]) && !($_POST["dates"] == "")){
+                $dates = $_POST["dates"];
+                userInteresseDates($choix,$idU,$dates);
+            }
+        
+        break;
+        
     }
     
     
