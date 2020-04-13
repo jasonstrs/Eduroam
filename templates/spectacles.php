@@ -23,7 +23,7 @@
       </h5>
     </div>
 
-    <div id="collapseOne" class="collapse statsSpectaclesCollapse" aria-labelledby="headingOne" data-parent="#accordionUser">
+    <div id="collapseOne" class="collapse userSpectaclesCollapse" aria-labelledby="headingOne" data-parent="#accordionUser">
       <div class="card-body">
       </div>
     </div>
@@ -39,9 +39,8 @@
         <span class="nbDates" id="nbDatesValidees">Chargement <img src="./ressources/loading.gif" /></span>
       </h5>
     </div>
-    <div id="collapseTwo" class="collapse statsSpectaclesCollapse" aria-labelledby="headingTwo" data-parent="#accordionUser">
+    <div id="collapseTwo" class="collapse userSpectaclesCollapse" aria-labelledby="headingTwo" data-parent="#accordionUser">
       <div class="card-body">
-        Cliquer sur une date pour accéder à la vente de billets.
       </div>
     </div>
   </div>
@@ -69,7 +68,7 @@
         <button class="btn btn-link">
           Vos dates validées 
         </button>
-        <i>Cliquer pour développer</i>
+        <i>Cliquer pour développer, cliquer sur une date pour accéder au site de vente</i>
         <span class="nbDates" id="nbVosDatesValidees">Chargement <img src="./ressources/loading.gif" /></span>
       </h5>
     </div>
@@ -85,4 +84,10 @@
 <?php
 $idUser = valider("idUser","SESSION");
 ?>
-<input type="hidden" name="idUser" id="valIdUser" value="<?php echo $idUser ?>">
+<script>
+  sessionStorage.setItem("idU",<?php echo $idUser?>);
+</script>
+
+
+
+<div id="infosDatesSelectionnees">abc</div>
