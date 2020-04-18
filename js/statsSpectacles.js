@@ -1,4 +1,19 @@
+function modifLien(idDate,val){
+    $.ajax({
+        method:"POST",
+        url:"./minControleur/dataSpectacle.php",
+        data:{
+            action:"modifLien",
+            valeur:val,
+        },
+        success:function(oRep){
+            
+        },
+        error:function(oRep){
 
+        }
+    });
+}
 
 /**
  * Récupère le nombre de dates
@@ -54,7 +69,7 @@ function chargerDatesStats(valide){
             if(tab.valid == "validees"){
                 id="#collapseTwo";
                 classeTab="table table-hover pointer";
-                var finTab="<th>Supprimer</th>"
+                var finTab="<th>Lien <i class='far fa-question-circle' data-toggle='tooltip' data-placement='top' title='Cliquez sur un lien pour le rendre modifiable.Appuyez sur Entrée pour confirmer, ou Echape pour annuler' ></i></th><th>Supprimer</th>"
             }
             if(tab.rep.length == 0 ){
                 $(id).html(" <i>Aucune date</i>");
@@ -66,10 +81,16 @@ function chargerDatesStats(valide){
              * 
              */
             var table = $("<table/>").addClass(classeTab);
-            table.append($("<thead/>").html('<tr><th>Description</th><th>Ville</th><th>Date</th><th>nbInscrits</th>'+finTab+'</tr>'));
+            table.append($("<thead/>").html('<tr><th>Description</th><th>Ville</th><th>Date</th><th>Nombre d\'Inscrits</th>'+finTab+'</tr>'));
             var tbody=$("<tbody/>");
             tab["rep"].forEach(element => {
-                var currLigne=$("<tr/>");
+                var currLigne=$("<tr/>").data(element);
+                if(element.lien != ""){
+                    //Si le lien est renseigné, on peut cliquer sur la ligne pour rediriger vers le site de vente.
+                    /* currLigne.click(function(){window.open(element.lien,"_blank")}); */
+                }
+                else element.lien="<i>Pas de lien renseigné</i>";
+
                 currLigne
                 .append($("<td/>").html(element.description))
                 .append($("<td/>").html(element.ville))
@@ -83,6 +104,7 @@ function chargerDatesStats(valide){
                     var     contenu = "Valider cette date : <B>"+$(this).data("date")+"</B> du spectacle <B>"+$(this).data("desc")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
                             contenu += "Les gens interessés reçevront un mail leur confirmant la validation. <br>( Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a> )<br><br>";
                             contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)<br>";
+                            contenu += "<font color='red'>Attention ! Entrer une adresse complète ( http(s)://... ), sinon le lien ne fonctionnera pas !!</font><br>";
                     var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
                         $("<div/>").addClass('modal-dialog modal-lg').attr("role","document").append(
                             $("<div/>").addClass("modal-content").append(
@@ -131,6 +153,9 @@ function chargerDatesStats(valide){
                     //Affichage du modal
                     $("#modalValiderDate").modal();
                 }));
+                else if(tab.valid == "validees"){
+                    currLigne.append($("<td/>").addClass("lienModifiable").html(element.lien).data(element));
+                }
                 currLigne.append($("<td/>").addClass("suppDateStats").html("<i class='fas fa-trash-alt'></i>").data(element).click(function(){
                     /**
                      * 
@@ -172,9 +197,7 @@ function chargerDatesStats(valide){
                 }));
                 
                 
-                if(tab.valid == "validees"){
-                    //Si on veut les dates validées
-                }
+                
                 tbody.append(currLigne);
             });
             table.append(tbody);
@@ -203,6 +226,28 @@ $("#accordionStats").ready(function(){
         console.log($(this).val());
         chargerDatesStats("attente");
         chargerDatesStats("validees");
+    });
+
+
+    $(document).on("click",".lienModifiable",function(){
+        $(this).data("prevVal",$(this).html());
+        var donnees = $(this).parent().data();
+        var valeur = $(this).html();
+        $(this).replaceWith($("<input/>").attr({"type":"text"}).addClass("form form-control inputTextLien").val(valeur).data(donnees).on("keydown",function(contexte){
+            console.log($(this));
+            var donnees = $(this).data();
+            var valeur = $(this).val();
+            console.log(valeur);
+            if(contexte.originalEvent.key == "Enter"){
+                $(this).replaceWith($("<td/>").addClass("lienModifiable").html(valeur).data(donnees));
+                modifLien(donnees.idDate,valeur);
+                console.log(donnees);
+            }
+            else if(contexte.originalEvent.key == "Escape"){
+                $(this).replaceWith($("<td/>").addClass("lienModifiable").html(donnees.prevVal).data(donnees));
+                console.log($(this).data());
+            }
+        }));
     });
 });
 

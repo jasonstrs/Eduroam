@@ -415,6 +415,12 @@ function userInteresseDates($choix,$idU,$dates){
 	}
 }
 
+
+function recupToutesLesDates(){
+	$SQL = "SELECT idDate,dateSpectacle FROM date_spectacle";
+	return parcoursRs(SQLSelect($SQL));
+}
+
 /**
  * 
  * 			FIN FONCTIONS POUR LES SPECTACLES

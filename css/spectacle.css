@@ -25,7 +25,7 @@ input[type="text"]{
     background-color:rgb(236, 236, 236);
     box-shadow:1px 1px 1px rgba(0, 0, 0, 0.432);;
     z-index:0;
-    padding-bottom:100px;
+    padding-bottom:40px;
 }
 
 .lead .gras{
@@ -289,4 +289,9 @@ table{
     background-color:white;
     font-weight:bolder;
     padding:10px;
+}
+
+.lienModifiable > i{
+    padding:0;
+    display:inline;
 }

@@ -130,6 +130,21 @@
             }
         
         break;
+        case "suppDatesPassees":
+            $today = date("Y-m-d");
+            $tab = recupToutesLesDates();
+            $i=0;
+            foreach ($tab as $value) {
+                if($value["dateSpectacle"]<$today){
+                    supprimerDate($value["idDate"]);
+                    $i++;
+                }
+            }
+            echo $i;
+        
+        break;
+        case "modifLien":
+        break;
         
     }
     

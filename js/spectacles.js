@@ -1,3 +1,25 @@
+function suppDatesPassees(btn){
+    $(btn).attr("disabled",true);
+    $(btn).append(loader.clone().css({"height":$(btn).height(),"width":$(btn).height()}));
+    $.ajax({
+        method:"POST",
+        url:"./minControleur/dataSpectacle.php",
+        data:{
+            action:"suppDatesPassees",
+        },
+        success:function(oRep){
+            $("#boutonSuppDatesPassees").children().last().remove();
+            $("#boutonSuppDatesPassees").attr("disabled",false);
+            $("#boutonSuppDatesPassees").html("<B>"+oRep+"</B> Dates supprimées ! Rechargez la page pour constater les changements !");
+        },
+        error : function(oRep){
+            $("#boutonSuppDatesPassees").html("Erreur lors de la suppression !");
+        } 
+    });
+}
+
+
+
 /**
  * Envoie une requête AJAX pour récupérer les villes où un spectacle est prévu
  * le nombre de dates possibles, et le nombre d'inscrits.

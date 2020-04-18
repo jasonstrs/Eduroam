@@ -30,7 +30,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="js/jquery-3.4.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
-	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/moment.js"></script>

@@ -54,6 +54,10 @@
             <br><div id="selectionDesDates"></div>
             <br><button type="button" id="boutonValiderDates" class="btn btn-outline-primary methodeChoixDates" data-toggle="modal" data-target="#modalConfirmDates">Valider ces dates</button>
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <button class="btn btn-outline-danger btn-block" id="boutonSuppDatesPassees" onclick="suppDatesPassees(this);">Supprimer toutes les dates passées</button>
     
 </div>
 <?php } ?>
