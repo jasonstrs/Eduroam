@@ -621,4 +621,28 @@ function unbanUser($idU) {
 	SQLUpdate($SQL);
 }
 
+/**
+ * Fonctions qui gère les séries
+ */
+
+function getSeries() {
+	$SQL = "SELECT * FROM serie";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function addSeries($nom) {
+	$SQL = "INSERT INTO serie VALUES('0','$nom')";
+	SQLUpdate($SQL);
+	$SQL2 = "SELECT id_serie FROM serie ORDER BY id_serie DESC";
+	$rs = SQLGetChamp($SQL2);
+	return $rs;
+}
+
+function deleteSerie($id) {
+	$SQL = "DELETE FROM serie WHERE id_serie = $id";
+	return SQLDelete($SQL);
+}
+
 ?>
