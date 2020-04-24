@@ -1,9 +1,10 @@
-function modifLien(idDate,val){
+function modifLien(id,val){
     $.ajax({
         method:"POST",
         url:"./minControleur/dataSpectacle.php",
         data:{
             action:"modifLien",
+            idDate:id,
             valeur:val,
         },
         success:function(oRep){
@@ -101,7 +102,7 @@ function chargerDatesStats(valide){
                      *                                      CREATION DU MODAL DE VALIDATION DE DATE                                                 
                      */
                     var id = "modalValiderDate";
-                    var     contenu = "Valider cette date : <B>"+$(this).data("date")+"</B> du spectacle <B>"+$(this).data("desc")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
+                    var     contenu = "Valider cette date : <B>"+traduireDate($(this).data("dateSpectacle"))+"</B> du spectacle <B>"+$(this).data("description")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
                             contenu += "Les gens interessés reçevront un mail leur confirmant la validation. <br>( Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a> )<br><br>";
                             contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)<br>";
                             contenu += "<font color='red'>Attention ! Entrer une adresse complète ( http(s)://... ), sinon le lien ne fonctionnera pas !!</font><br>";
@@ -230,22 +231,22 @@ $("#accordionStats").ready(function(){
 
 
     $(document).on("click",".lienModifiable",function(){
-        $(this).data("prevVal",$(this).html());
-        var donnees = $(this).parent().data();
-        var valeur = $(this).html();
+        /* $(this).data("prevVal",$(this).html()); */
+        var donnees = $(this).data();
+        var valeur = $(this).text();
+        if(valeur == "Pas de lien renseigné")valeur="";
         $(this).replaceWith($("<input/>").attr({"type":"text"}).addClass("form form-control inputTextLien").val(valeur).data(donnees).on("keydown",function(contexte){
-            console.log($(this));
             var donnees = $(this).data();
             var valeur = $(this).val();
-            console.log(valeur);
+            if(valeur == "")valeur  = "Pas de lien renseigné";
             if(contexte.originalEvent.key == "Enter"){
+                $(this).data("lien",valeur);
                 $(this).replaceWith($("<td/>").addClass("lienModifiable").html(valeur).data(donnees));
-                modifLien(donnees.idDate,valeur);
-                console.log(donnees);
+                if(valeur != "Pas de lien renseigné")modifLien(donnees.idDate,valeur);
+                
             }
             else if(contexte.originalEvent.key == "Escape"){
-                $(this).replaceWith($("<td/>").addClass("lienModifiable").html(donnees.prevVal).data(donnees));
-                console.log($(this).data());
+                $(this).replaceWith($("<td/>").addClass("lienModifiable").html(donnees.lien).data(donnees));
             }
         }));
     });

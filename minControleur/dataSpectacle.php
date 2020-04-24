@@ -144,6 +144,9 @@
         
         break;
         case "modifLien":
+            if($lien = valider("valeur"))
+                if($idDate = valider("idDate"))
+                    return modifLien($idDate,$lien);
         break;
         
     }

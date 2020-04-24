@@ -95,7 +95,7 @@ function afficherResumeVilles(rep){
                          *                                      CREATION DU MODAL DE VALIDATION DE DATE                                                 
                          */
                         var id = "modalValiderDate";
-                        var     contenu = "Valider cette date : <B>"+$(this).data("date")+"</B> du spectacle <B>"+$(this).data("desc")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
+                        var     contenu = "Valider cette date : <B>"+traduireDate($(this).data("date"))+"</B> du spectacle <B>"+$(this).data("desc")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
                                 contenu += "Les gens interessés reçevront un mail leur confirmant la validation. <br>( Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a> )<br><br>";
                                 contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)<br>";
                         var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(

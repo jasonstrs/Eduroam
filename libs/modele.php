@@ -415,6 +415,10 @@ function userInteresseDates($choix,$idU,$dates){
 	}
 }
 
+function modifLien($idDate,$lien){
+	$SQL = "UPDATE date_spectacle SET lien = '$lien' WHERE idDate = $idDate";
+	return SQLUpdate($SQL);
+}
 
 function recupToutesLesDates(){
 	$SQL = "SELECT idDate,dateSpectacle FROM date_spectacle";
