@@ -24,7 +24,7 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">Vidéos</a>
-        </li>
+        </li>        
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade" id="gererSpectacles" role="tabpanel" aria-labelledby="gererSpectacles-tab">
@@ -43,7 +43,7 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
             <?php include("users.php"); ?>
         </div>
         <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
-           qsdqsdz
+            <?php include("videoAdmin.php"); ?>
         </div>
     </div>
 </div>

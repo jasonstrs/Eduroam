@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 09 avr. 2020 à 11:33
--- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.3.12
+-- Généré le :  ven. 24 avr. 2020 à 11:24
+-- Version du serveur :  5.7.24
+-- Version de PHP :  7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS `date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) DEFAULT 0,
-  `lien` text DEFAULT NULL,
+  `valide` int(11) DEFAULT '0',
+  `lien` text,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
@@ -153,8 +153,8 @@ CREATE TABLE IF NOT EXISTS `idee_ville` (
 
 DROP TABLE IF EXISTS `notif_spectacle`;
 CREATE TABLE IF NOT EXISTS `notif_spectacle` (
-  `nbMin` int(11) NOT NULL DEFAULT 100,
-  `nbRappel` int(11) NOT NULL DEFAULT 50,
+  `nbMin` int(11) NOT NULL DEFAULT '100',
+  `nbRappel` int(11) NOT NULL DEFAULT '50',
   `mailNbInt` text NOT NULL,
   `objNbInt` tinytext NOT NULL,
   `mailIdeeVille` text NOT NULL,
@@ -174,7 +174,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `idRole` int(11) NOT NULL AUTO_INCREMENT,
   `nom` text NOT NULL,
-  `droits` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`droits`)),
+  `droits` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idRole`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
@@ -184,6 +184,39 @@ CREATE TABLE IF NOT EXISTS `role` (
 
 INSERT INTO `role` (`idRole`, `nom`, `droits`) VALUES
 (8, 'admin', '{\"video\":\"1\",\"spectacle\":\"1\",\"utilisateurs\":\"1\",\"annonce\":\"1\"}');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `serie`
+--
+
+DROP TABLE IF EXISTS `serie`;
+CREATE TABLE IF NOT EXISTS `serie` (
+  `id_serie` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` text NOT NULL,
+  PRIMARY KEY (`id_serie`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `serie`
+--
+
+INSERT INTO `serie` (`id_serie`, `nom`) VALUES
+(14, 'Hors-Série');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `serie_regex`
+--
+
+DROP TABLE IF EXISTS `serie_regex`;
+CREATE TABLE IF NOT EXISTS `serie_regex` (
+  `id_serie` int(11) NOT NULL,
+  `regex` text NOT NULL,
+  PRIMARY KEY (`id_serie`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -270,8 +303,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `passe` text NOT NULL,
   `superadmin` tinyint(1) NOT NULL,
   `code` tinyint(1) NOT NULL,
-  `banni` tinyint(1) NOT NULL DEFAULT 0,
-  `choice` tinyint(1) NOT NULL DEFAULT 1,
+  `banni` tinyint(1) NOT NULL DEFAULT '0',
+  `choice` tinyint(1) NOT NULL DEFAULT '1',
   `hashCode` text NOT NULL,
   PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -283,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `banni`, `choice`, `hashCode`) VALUES
 (1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, 0, 1, '0'),
 (2, 'tata@gmail.com', 'TATA', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0'),
-(3, 'clementboyaval@gmail.com', 'Clément', 'Boyaval', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
+(3, 'clementboyaval@gmail.com', 'BOYAVAL', 'Clément', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
 
 -- --------------------------------------------------------
 
