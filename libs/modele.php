@@ -433,6 +433,7 @@ function recupToutesLesDates(){
  */
 
 function addVideo($id, $date, $title, $description, $thumbnails) {
+	$title = str_replace("&#39","&#039",$title);
 	$SQL = "INSERT INTO video VALUES('0','$id','$date','$title','$description','$thumbnails','1')";
 	SQLUpdate($SQL);
 }
@@ -463,14 +464,29 @@ function deleteUnchecked() {
 	SQLUpdate($SQL);
 }
 
-function getVideos($search='', $page='', $limite, $notID='', $apres, $avant) {
-	setlocale(LC_TIME, "fr_FR");
+function getVideos($search='', $page='', $limite, $notID='', $apres, $avant, $serie="-1") {
+	//setlocale(LC_TIME, "fr_FR"); //Inutile enfaite je pense
 	$offset = ($page!= '') ? "OFFSET ".$page*$limite : "" ;
 	$notID = ($notID!= '') ? "AND videoId NOT LIKE '".$notID."'" : "" ;
 	$apres = ($apres!= '') ? "AND publishedAt >'".$apres."'" : "" ;
 	$avant = ($avant!= '') ? "AND publishedAt <'".$avant."'" : "" ;
-	//echo $page;
-	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $notID $apres $avant ORDER BY publishedAt DESC LIMIT $limite $offset";
+	//echo $serie;
+	if($serie=="-1")
+		$serieFilter = "";
+	else {
+		$regexs = getSerieRegex($serie);
+		//print_r($regexs);
+		$serieFilter ="AND (";
+		foreach ($regexs as $regex) {
+			$serieFilter.="REPLACE(title, ' ', '') LIKE REPLACE('%".$regex["regex"]."%', ' ', '') OR ";
+		}
+		$serieFilter = substr($serieFilter, 0, -3);
+		$serieFilter .= ")";
+		/* echo $serieFilter;
+		echo htmlspecialchars("'", ENT_QUOTES); */
+		
+	}
+	$SQL = "SELECT * FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $serieFilter $notID $apres $avant ORDER BY publishedAt DESC LIMIT $limite $offset";
 	//echo $SQL;
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
@@ -501,8 +517,23 @@ function getDateById($id) {
 	return $rs; 
 }
 
-function getVideosCount($search) {
-	$SQL = "SELECT COUNT(*) FROM video WHERE title LIKE '%$search%' OR description LIKE '%$search%'"; 
+function getVideosCount($search, $avant, $apres, $serie="-1") {
+	$apres = ($apres!= '') ? "AND publishedAt >'".$apres."'" : "" ;
+	$avant = ($avant!= '') ? "AND publishedAt <'".$avant."'" : "" ;
+	if($serie=="-1")
+		$serieFilter = "";
+	else {
+		$regexs = getSerieRegex($serie);
+		//print_r($regexs);
+		$serieFilter ="AND (";
+		foreach ($regexs as $regex) {
+			$serieFilter.="REPLACE(title, ' ', '') LIKE REPLACE('%".$regex["regex"]."%', ' ', '') OR ";
+		}
+		$serieFilter = substr($serieFilter, 0, -3);
+		$serieFilter .= ")";
+	}
+	//$SQL = "SELECT COUNT(*) FROM video WHERE title LIKE '%$search%' OR description LIKE '%$search%'"; 
+	$SQL = "SELECT COUNT(*) FROM video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $serieFilter $apres $avant";
 	$rs = SQLGetChamp($SQL);
 	return $rs;
 }
@@ -641,7 +672,53 @@ function addSeries($nom) {
 }
 
 function deleteSerie($id) {
+	deleteRegexViaSerie($id);
 	$SQL = "DELETE FROM serie WHERE id_serie = $id";
+	return SQLDelete($SQL);
+}
+
+function getFirstSerie() {
+	$SQL = "SELECT id_serie FROM serie ORDER BY id_serie";
+	return SQLGetChamp($SQL);
+}
+
+function getFirstSerieRegex() {
+	$first=getFirstSerie();
+	$SQL = "SELECT * FROM serie_regex WHERE id_serie='$first'";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getSerieRegex($id) {
+	$SQL = "SELECT * FROM serie_regex WHERE id_serie='$id'";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function addRegex($id, $regex) {
+	$regex = htmlspecialchars($regex, ENT_QUOTES | ENT_HTML401);
+	$SQL = "INSERT INTO serie_regex VALUES('0','$id','$regex')";
+	SQLUpdate($SQL);
+	$SQL2 = "SELECT id_regex FROM serie_regex ORDER BY id_regex DESC";
+	$rs = SQLGetChamp($SQL2);
+	return $rs;
+}
+
+function editRegex($id, $regex){
+	$regex = htmlspecialchars($regex, ENT_QUOTES | ENT_HTML401);
+	$SQL = "UPDATE serie_regex SET regex='$regex' WHERE id_regex=$id";
+	SQLUpdate($SQL);
+}
+
+function deleteRegex($id) {
+	$SQL = "DELETE FROM serie_regex WHERE id_regex = $id;";
+	return SQLDelete($SQL);
+}
+
+function deleteRegexViaSerie($id) {
+	$SQL = "DELETE FROM serie_regex WHERE id_serie = $id;";
 	return SQLDelete($SQL);
 }
 

@@ -32,7 +32,10 @@ switch($action){
   
     case 'count' : 
         $search = valider("search","POST");
-        echo getVideosCount($search);
+        $avant = valider("avant", "POST");
+        $apres = valider("apres", "POST");
+        $serie = valider("serie", "POST");
+        echo getVideosCount($search, $avant, $apres, $serie);
 	break;
 
 }

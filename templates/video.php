@@ -6,8 +6,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
     die("");
 }
 
-$search=valider("search","GET");
-
+$search = valider("search","GET");
+$series = getSeries();
 ?>
     <link rel="stylesheet" href="css/video.css">
     <div class="page-header">
@@ -20,7 +20,7 @@ $search=valider("search","GET");
                     <input type="hidden" id="hiddenpage" name="hiddenpage" value="1"/>
                     <input type="hidden" id="nbserie" name="hiddenpage" value="1"/>
                     <div class="input-group mb-3">
-                        <input id="search" type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="search" value="<?php echo $search ?>">
+                        <input id="search" type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="search" value="<?php echo stripslashes($search) ?>">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="search-button">
                                <img src="./ressources/icons/search.svg" alt="" title="search">
@@ -40,6 +40,15 @@ $search=valider("search","GET");
                                 <div class="col-md-6">
                                     Posté avant le : <br/>
                                     <input class="form-control date" type="text" name="jour" id="posteAvant" size=7 readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <span style="text-align:left;">Série : </span>
+                                    <select id="selectSerie" class="form-control">
+                                        <option value="-1">Selectionner une série</option>
+                                        <?php foreach ($series as $serie) { ?>
+                                        <option value="<?php echo $serie['id_serie']?>"><?php echo $serie['nom']?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
