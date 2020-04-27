@@ -11,6 +11,7 @@
     $apres = valider('apres');
     $avant = valider('avant');
     $notID = valider('notID');
+    $serie = valider('serie');
     $videoParPage = valider('videoParPage');
     if($type=="watchvideo") {
         $videos = getVideosByDateSup($date, $notID, $videoParPage);
@@ -19,7 +20,7 @@
         }
     }
     else {
-        $videos = getVideos($search, $page, $videoParPage, $notID, $apres, $avant);
+        $videos = getVideos($search, $page, $videoParPage, $notID, $apres, $avant, $serie);
     }
 	foreach ($videos as $video) { ?>
     <li id='<?php echo $video["id"]; ?>' class="media item">

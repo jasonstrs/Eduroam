@@ -1,12 +1,21 @@
 function tplawesome(e,t){res=e;for(var n=0;n<t.length;n++){res=res.replace(/\{\{(.*?)\}\}/g,function(e,r){return t[n][r]})}return res}
 
+function escapeHtml(text) {
+	return text
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
+  }
+
 $(function() {
 	insertSearch();
 	resetVideoHeight();
 	$(window).on("resize", resetVideoHeight);
 
 	$("#search-button").on( "click", function( event ) {
-		location.href='index.php?view=video&search='+$("#search").val();
+		location.href='index.php?view=video&search='+escapeHtml($("#search").val());
 	});
 
 	$("#search").keydown(function(event) {

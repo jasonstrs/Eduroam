@@ -1,3 +1,21 @@
 .hidden {
     display: none;
 }
+
+.regex {
+    margin:0;
+}
+
+.editRegex {
+    margin:0;
+    width: 100%;
+    border: 0px;
+}
+
+.editRegex:focus {
+    outline: none;
+}
+
+.selectedRegex {
+    background-color: cornflowerblue;
+}

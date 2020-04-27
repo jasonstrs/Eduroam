@@ -21,6 +21,31 @@ switch($action){
         $id = valider("id","POST");
         deleteSerie($id);
     break;
+
+    case 'getRegex' : 
+        $id = valider("id","POST");
+        //echo "test ?";
+        //print_r(getSerieRegex($id));
+        //echo json_enconde(getSerieRegex($id));
+        echo json_encode(getSerieRegex($id));
+    break;
+
+    case 'addRegex' : 
+        $serie = valider("serie","POST");
+        $regex = valider("regex","POST");
+        echo addRegex($serie, $regex);
+    break;
+    
+    case 'editRegex' : 
+        $id = valider("id","POST");
+        $regex = valider("regex","POST");
+        echo editRegex($id, $regex);
+	break;
+
+    case 'deleteRegex' : 
+        $id = valider("id","POST");
+        deleteRegex($id);
+    break;
 }
 
 /* Resultat du print_r($videos) lorsque l'on demande 5 résultat à l'API Youtube

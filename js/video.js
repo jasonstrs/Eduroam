@@ -15,10 +15,33 @@ $(function() {
 
 	$("#posteAvant").change(function(){
 		insertSearch();
+		resetPagination();
 	});
 	
 	$("#posteApres").change(function(){
 		insertSearch();
+		resetPagination();
+	});
+
+	$("#selectSerie").change(function(){
+		insertSearch();
+		resetPagination();
+	});
+
+	$("#posteAvant").click(function(){
+		$(this).val("");
+		insertSearch();
+		resetPagination();
+	});
+	
+	$("#posteApres").click(function(){
+		$(this).val("");
+		insertSearch();
+		resetPagination();
+	});
+
+	$("#search").keyup(function(e){
+		if(e.keyCode==13) $("#search-button").click();
 	});
 
 	$("form").on("submit", function(e) {
@@ -27,7 +50,7 @@ $(function() {
 		$("#pageToken").val("");
 		insertSearch();
 		if($("#search").val())
-			history.pushState("", "",  "index.php?view=video&search="+$("#search").val());
+			history.pushState("", "",  "index.php?view=video&search="+escapeHtml($("#search").val()));
 		else 
 			history.pushState("", "",  "index.php?view=video");
 		
@@ -66,12 +89,22 @@ function init() {
 	});
 }
 
+function escapeHtml(text) {
+	return text
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
+  }
+
 function insertSearch() {
 	$("#results").load("./templates/videosearch.php", {
-		search : $("#search").val(),
+		search : escapeHtml($("#search").val()),
 		page : $('#hiddenpage').val()-1,
 		avant : $("#posteAvant").val(),
 		apres : $("#posteApres").val(),
+		serie : $("#selectSerie").val(),
 		videoParPage : nbVid,
 		type : "video",
 	});
@@ -91,13 +124,13 @@ function countVideos() {
 	$.ajax({
 		type: "POST",
 		url: "./minControleur/dataVideo.php",
-		data: {"action":"count", "search":$("#search").val()},
+		data: {"action":"count", "search":escapeHtml($("#search").val()), "avant":$("#posteAvant").val(), "apres":$("#posteApres").val(), "serie":$("#selectSerie").val(),},
 		dataType : 'text',
 		async: false, //On met en synchrone sinon la requête arrive trop tard pour être réutilisée par la fonction pagination()
 	   
 	   
 		success : function(data){
-			//console.log(data);
+			console.log(data);
 			$("#nbserie").val(data);
 		},
 	   
