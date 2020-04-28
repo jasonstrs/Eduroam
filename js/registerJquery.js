@@ -171,7 +171,6 @@ $(document).on("keyup","#email,#inputPassword",function(contexte){
                 break;
 
                 case 'success' :
-                   console.log("cas3");
                    location.replace("index.php?view=accueil");
                 break;
 
