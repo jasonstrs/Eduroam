@@ -1,3 +1,15 @@
+function chargerToutesLesDates(ville){
+        nbDates("attente",ville);
+        nbDates("validees",ville);
+        nbDates("mesAttentes",ville);
+        nbDates("mesValidees",ville);
+        chargerDatesUsers("attente",ville);
+        chargerDatesUsers("validees",ville);
+        chargerDatesUsers("mesAttentes",ville);
+        chargerDatesUsers("mesValidees",ville);
+}
+
+
 /**
  * Récupère le nombre de dates
  * valide : 1 -> dates validées
@@ -5,13 +17,14 @@
  *          3 -> en attente & user interessé
  *          4 -> validé & user interessé
  */
-function nbDates(valide){
+function nbDates(valide,choixVille){
     $.ajax({
         method:"POST",
         url:"./minControleur/dataSpectacle.php",
         data:{
             action:"nbDatesUser",
             val:valide,
+            ville : choixVille,
             idU:sessionStorage.getItem("idU")
         },
         success:function(oRep){
@@ -88,8 +101,11 @@ function inscriptionDates(choix,tabDates){
             dates:JSON.stringify(tabDates),
             idU:sessionStorage.getItem("idU")
         },
-        success:function(){
-            console.log("succès");
+        success:function(oRep){
+            var rep = JSON.parse(oRep);
+            console.log(rep);
+            if(rep["choix"] == 1)Cookies.set("succes",rep["nb"]+" date(s) ajoutées à <B>Vos Dates en Attente</B>");
+            else if(rep["choix"] == 2)Cookies.set("succes",rep["nb"]+" date(s) retirées de <B>Vos Dates en Attente</B>");
             window.location.reload();
         }
     }
@@ -103,7 +119,8 @@ function inscriptionDates(choix,tabDates){
  *          3 -> Vos dates validées
  *          4 -> Vos dates en attente
  */
-function chargerDatesUsers(valide){
+function chargerDatesUsers(valide,choixVille){
+    
     $.ajax({
         method:"POST",
         url:"./minControleur/dataSpectacle.php",
@@ -111,6 +128,7 @@ function chargerDatesUsers(valide){
             action:"chargerDates",
             val:valide,
             tri:$("#selectTri").val(),
+            ville : choixVille,
             idU:sessionStorage.getItem("idU")
         },
         success:function(oRep){
@@ -308,10 +326,8 @@ $("#accordionUser").ready(function(){
     nbDates("mesValidees");
     chargerDatesUsers("mesValidees");
     $("#selectTri").change(function(){
-        chargerDatesUsers("attente");
-        chargerDatesUsers("validees");
-        chargerDatesUsers("mesAttentes");
-        chargerDatesUsers("mesValidees");
+        var ville = $("#txtRechercheVilleUser").val();
+        chargerToutesLesDates(ville);
     });
     
     $(".card-header").click(function(){
@@ -325,6 +341,11 @@ $("#accordionUser").ready(function(){
         $(".ligneTab").each(function(){
             $(this).data("selec",0).css({"background-color":$(this).data("couleurNonS"),"color":"#212529"});
         });
+    });
+
+    $("#btnRechercheVilleUser").click(function(){
+        var ville = $("#txtRechercheVilleUser").val();
+        chargerToutesLesDates(ville);
     });
 });
 

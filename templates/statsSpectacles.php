@@ -5,6 +5,7 @@
 
 
 
+
 <label for="selectTri">Trier par :</label>
 <select id="selectTri" class="form-control">
   <option value="nbInscrits">Nombre d'inscrits</option>
