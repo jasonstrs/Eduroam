@@ -1,7 +1,18 @@
+<?php
+    // Si la page est appelée directement par son adresse, on redirige en passant par la page index
+    if (basename($_SERVER["PHP_SELF"]) != "index.php")
+    {
+        header("Location:../index.php?view=accueil");
+        die("");
+    }
+?>
+
 <script src='js/spectaclesUsers.js'></script>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <br/>
-
+<?php
+  lireInfos();
+?>
 <div id="descriptionSpectacles">
   Vous pouvez vous déclarer <i>intéressé</i> pour des dates en attente.<br/>
   Si une date en attente intéresse assez de personnes, elle pourra passer de <i>en attente</i> à <i>validée</i>.<br/>
@@ -18,6 +29,11 @@
 </select>
 <br/>
 
+Rechercher les spectacles dans votre ville : <br>
+<form class="form-inline">
+	<input id="txtRechercheVilleUser" type="text" class="form-control mb-2 mr-sm-3" placeholder="Entrez votre ville"/>
+	<div id="btnRechercheVilleUser" class="btn btn-outline-primary mb-2 pointer" >Rechercher</div>
+</form>
 <div id="accordionUser">
 
   <div class="card " >

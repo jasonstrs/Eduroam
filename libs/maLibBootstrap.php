@@ -1,5 +1,48 @@
 <?php
 
+/**
+ * Permet de lire les cookies succes,info et error, d'afficher leur contenu si ils existent, puis de les supprimer
+ */
+function lireInfos(){
+	if($succes = valider("succes","COOKIE")){
+	?>
+	<script>
+		$(document).ready(function(){
+			var contenu = "<?php echo $succes ?>";
+			$(".container").prepend(alerteB.clone(1).html(contenu).addClass("alert-success").append(boutonFermerAlerteB));
+			Cookies.clear("succes");
+		})
+	</script>
+	<?php
+	
+	}
+	if($info = valider("info","COOKIE")){
+	?>
+	<script>
+		$(document).ready(function(){
+			var contenu = "<?php echo $info ?>";
+			$(".container").prepend(alerteB.clone(1).html(contenu).addClass("alert-warning").append(boutonFermerAlerteB));
+			Cookies.clear("info");
+		})
+	</script>
+	<?php
+	
+	}
+	if($erreur = valider("erreur","COOKIE")){
+	?>
+	<script>
+		$(document).ready(function(){
+			var contenu = "<?php echo $erreur ?>";
+			$(".container").prepend(alerteB.clone(1).html(contenu).addClass("alert-danger").append(boutonFermerAlerteB));
+			Cookies.clear("erreur");
+		})
+	</script>
+	<?php
+	
+	}
+}
+
+
 
 /*
 Ce fichier définit diverses fonctions permettant de faciliter la production de mises en formes complexes

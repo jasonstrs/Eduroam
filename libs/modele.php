@@ -267,6 +267,7 @@ function validerDate($id,$lien){
 
 
 function nbDates($valid){
+	
 	switch($valid){
 		case "attente":
 			$valid=0;
@@ -282,8 +283,9 @@ function nbDates($valid){
 	return SQLGetChamp($SQL);
 }
 
-function chargerDates($valid,$tri,$id){
-	
+function chargerDates($valid,$tri,$id,$ville){
+
+	if($ville != "")$ville = "AND s.ville LIKE '$ville'";
 
 	$order="ORDER BY ";
 	switch($tri){
@@ -309,11 +311,11 @@ function chargerDates($valid,$tri,$id){
 		switch($valid){
 			case "validees":
 				$SQL = "SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
-				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=1 $order";
+				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=1 $ville $order";
 			break;
 			case "attente":
 				$SQL = "SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
-				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=0 $order";
+				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=0 $ville $order";
 			break;
 		}
 	}
@@ -323,7 +325,7 @@ function chargerDates($valid,$tri,$id){
 			case "validees":
 				//Dates validées
 				$SQL="SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
-				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=1 
+				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND  d.valide=1 $ville 
 				AND d.idDate NOT IN (SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=1) 
 				$order";
 
@@ -332,7 +334,7 @@ function chargerDates($valid,$tri,$id){
 			case "attente":
 				//Dates en attente
 				$SQL="SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
-				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=0
+				FROM spectacle s, date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=0 $ville
 				AND d.idDate NOT IN (SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=0) 
 				$order";
 			break;
@@ -340,13 +342,13 @@ function chargerDates($valid,$tri,$id){
 			case "mesValidees":
 				//Vos dates validées
 				$SQL="SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
-				FROM spectacle s, date_spectacle d, spectacle_user su WHERE su.idU=$id AND su.idDate=d.idDate AND d.idSpectacle = s.idSpectacle AND d.valide=1 $order";
+				FROM spectacle s, date_spectacle d, spectacle_user su WHERE su.idU=$id $ville AND su.idDate=d.idDate AND d.idSpectacle = s.idSpectacle AND d.valide=1 $order";
 			break;
 
 			case "mesAttentes":
 				//Vos dates en attente
 				$SQL="SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
-				FROM spectacle s, date_spectacle d, spectacle_user su WHERE su.idU=$id AND su.idDate=d.idDate AND d.idSpectacle = s.idSpectacle AND d.valide=0 $order";
+				FROM spectacle s, date_spectacle d, spectacle_user su WHERE su.idU=$id $ville AND su.idDate=d.idDate AND d.idSpectacle = s.idSpectacle AND d.valide=0 $order";
 			break;
 		}
 	}
@@ -358,29 +360,29 @@ function nbInscritsDate($idDate){
 	return SQLGetChamp($SQL);
 }
 
-function nbDatesUser($choix,$id){
-
+function nbDatesUser($choix,$id,$ville){
+	if($ville != "")$ville = "AND s.ville = '$ville'";
 	switch($choix){
 		case "validees":
 			//Dates validées
-			$SQL="SELECT COUNT(*) FROM `date_spectacle` d WHERE valide = 1 AND d.idDate NOT IN 
-			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=1)";
+			$SQL="SELECT COUNT(*) FROM `date_spectacle` d,spectacle s WHERE d.idSpectacle = s.idSpectacle AND valide = 1 AND d.idDate NOT IN 
+			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=1) $ville";
 			/* SELECT idDate FROM spectacle_user WHERE idU = 2 */
 /* SELECT d.idDate FROM `date_spectacle` d,spectacle_user su WHERE valide = 1 AND d.idDate NOT IN (SELECT idDate FROM spectacle_user WHERE idU = 2) */		
 		break;
 		case "attente":
 			//Dates en attente
-			$SQL="SELECT COUNT(*) FROM `date_spectacle` d WHERE valide = 0 AND d.idDate NOT IN 
-			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=0)";
+			$SQL="SELECT COUNT(*) FROM `date_spectacle` d,spectacle s WHERE d.idSpectacle = s.idSpectacle AND valide = 0 AND d.idDate NOT IN 
+			(SELECT su.idDate FROM spectacle_user su,date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=0) $ville";
 		break;
 		case "mesValidees":
 			//Dates validées user
-			$SQL="SELECT COUNT(*) FROM date_spectacle ds, spectacle_user su WHERE su.idU=$id AND su.idDate = ds.idDate AND valide=0";
+			$SQL="SELECT COUNT(*) FROM date_spectacle ds, spectacle_user su,spectacle s WHERE ds.idSpectacle = s.idSpectacle AND su.idU=$id AND su.idDate = ds.idDate AND valide=0 $ville";
 			
 		break;
 		case "mesAttentes":
 			//Dates en attente user
-			$SQL="SELECT COUNT(*) FROM date_spectacle ds, spectacle_user su WHERE su.idU=$id AND su.idDate = ds.idDate AND valide=1";
+			$SQL="SELECT COUNT(*) FROM date_spectacle ds, spectacle_user su,spectacle s WHERE ds.idSpectacle = s.idSpectacle AND su.idU=$id AND su.idDate = ds.idDate AND valide=1 $ville";
 		break;
 	}
 
@@ -392,7 +394,7 @@ function nbDatesUser($choix,$id){
 function userInteresseDates($choix,$idU,$dates){
 	
 	$dates = json_decode($dates,TRUE);
-
+	$i=0;
 	if($choix == 1){
 		//Intéressé
 		foreach ($dates as $value) {
@@ -403,6 +405,7 @@ function userInteresseDates($choix,$idU,$dates){
 			
 			$SQL = "INSERT INTO spectacle_user VALUES ($idDate,$idU,$idSpectacle,$notif)";
 			SQLInsert($SQL);
+			$i++;
 		}
 	}
 	else if($choix == 2){
@@ -411,8 +414,10 @@ function userInteresseDates($choix,$idU,$dates){
 			$idDate = $value["idDate"];
 			$SQL = "DELETE FROM spectacle_user WHERE idDate=$idDate AND idU=$idU";
 			SQLUpdate($SQL);
+			$i++;
 		}
 	}
+	return $i;
 }
 
 function modifLien($idDate,$lien){

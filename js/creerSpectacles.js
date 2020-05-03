@@ -10,7 +10,10 @@ function suppDatesPassees(btn){
         success:function(oRep){
             $("#boutonSuppDatesPassees").children().last().remove();
             $("#boutonSuppDatesPassees").attr("disabled",false);
-            $("#boutonSuppDatesPassees").html("<B>"+oRep+"</B> Dates supprimées ! Rechargez la page pour constater les changements !");
+            var type = "succes";
+            if(oRep == 0)type="erreur";
+            Cookies.set(type,"<B>"+oRep+"</B> Dates passées ont été supprimées !");
+            window.location.reload();
         },
         error : function(oRep){
             $("#boutonSuppDatesPassees").html("Erreur lors de la suppression !");
@@ -125,8 +128,8 @@ function afficherResumeVilles(rep){
                                                     "lien":$("#txtLienValidDate").val()
                                                 },
                                                 success:function(oRep){
-                                                    console.log("Date validée");
                                                     $("#modalValiderDate").modal('dispose');
+                                                    Cookies.set("succes","Date validée avec succès !");
                                                     document.location.reload();
                                                 }
                                             })
@@ -160,14 +163,13 @@ function afficherResumeVilles(rep){
                                 "idDate":$(this).data("idDate"),
                             },
                             success:function(oRep){
-
-                                console.log("Date supprimée");
                                 $("#modalSupprDate").modal('dispose');
+                                Cookies.set("succes","Suppression réussie !");
                                 document.location.reload();
                             }
                         }
                         contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
-                        contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
+                        contenuModal += "<br>Date : <b>"+traduireDate($(this).data("date"))+"</b>";
                         contenuModal += "<br>Voulez vous <B>supprimer cette date</B> ? ";
 
                         

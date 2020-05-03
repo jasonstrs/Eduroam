@@ -192,3 +192,6 @@ function assignerDateMoment(_date,_moment){
     _moment.set({"year":parseInt(tab[0]),"month":parseInt(tab[1]-1),"date":parseInt(tab[2])});
     return _moment;
 }
+
+var alerteB = $("<div/>").addClass("alert alert-dismissible fade show").attr("role","alert");
+var boutonFermerAlerteB = $("<button/>").addClass("close").attr({"data-dismiss":"alert","aria-label":"close"}).append($("<span/>").attr("aria-hidden",true).html("&times;"));

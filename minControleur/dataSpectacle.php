@@ -83,9 +83,10 @@
         break;
         case "nbDatesUser":
             $tab = array();
+            if(!($ville = valider("ville","POST")))$ville="";
             if($choix = valider("val","POST"))
             if($idU = valider("idU","POST")){
-                $tab["rep"] = nbDatesUser($choix,$idU);
+                $tab["rep"] = nbDatesUser($choix,$idU,$ville);
                 $tab["valid"]=$choix;
                 echo(json_encode($tab));
             }
@@ -96,9 +97,10 @@
             //Tri par nombre d'inscrits par défaut
             if(!($tri = valider("tri","POST")))$tri = "nbInscrits";
             if(!($idU = valider("idU","POST")))$id=false;
+            if(!($ville = valider("ville","POST")))$ville="";
             //Si on a une valeur de valid
             if($valid = valider("val","POST")){
-                $tab["rep"] = chargerDates($valid,$tri,$idU);
+                $tab["rep"] = chargerDates($valid,$tri,$idU,$ville);
                 foreach($tab["rep"] as $key => $date){
                     $tab["rep"][$key]["nbInscrits"] = nbInscritsDate($date["idDate"]);
                 }  
@@ -121,13 +123,16 @@
             }
         break;
         case "userInteresseDates":
-        
+            $rep = array();
+            $rep["choix"] = 0;
             if($idU = valider("idU","POST"))
             if($choix = valider("valeur","POST"))
             if(isset($_POST["dates"]) && !($_POST["dates"] == "")){
+                $rep["choix"] = $choix;
                 $dates = $_POST["dates"];
-                userInteresseDates($choix,$idU,$dates);
+                $rep["nb"] = userInteresseDates($choix,$idU,$dates);
             }
+            echo json_encode($rep);
         
         break;
         case "suppDatesPassees":
@@ -145,8 +150,16 @@
         break;
         case "modifLien":
             if($lien = valider("valeur"))
-                if($idDate = valider("idDate"))
-                    return modifLien($idDate,$lien);
+            if(isset($_POST['prev_val']))
+                if($idDate = valider("idDate")){
+                    $prev = $_POST["prev_val"];
+                    modifLien($idDate,$lien);
+                    $rep = array();
+                    $rep["ancien"] = $prev;
+                    $rep["nouveau"] = $lien;
+                    echo json_encode($rep);
+
+                }
         break;
         
     }
