@@ -6,12 +6,15 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
     die("");
 }
 
-if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
+if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {
+
+  lireInfos();
+?>
 <link rel="stylesheet" type="text/css" href="./css/admin.css"/>
 <div class="containerAdmin">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="gererSpectacles-tab" data-toggle="tab" href="#gererSpectacles" role="tab" aria-controls="gererSpectacles" aria-selected="true">Gestion des Spectacles</a>
+            <a class="nav-link" id="creerSpectacles-tab" data-toggle="tab" href="#creerSpectacles" role="tab" aria-controls="creerSpectacles" aria-selected="true">Création des Spectacles</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="statsSpectacles-tab" data-toggle="tab" href="#statsSpectacles" role="tab" aria-controls="statsSpectacles" aria-selected="false">Statistiques des Spectacles</a>
@@ -27,8 +30,8 @@ if (valider("connecte","SESSION") && valider("admin","SESSION")==1) {?>
         </li>        
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade" id="gererSpectacles" role="tabpanel" aria-labelledby="gererSpectacles-tab">
-            <?php include("planiSpectacles.php"); ?>
+        <div class="tab-pane fade" id="creerSpectacles" role="tabpanel" aria-labelledby="creerSpectacles-tab">
+            <?php include("creerSpectacles.php"); ?>
         </div>
 
         <div class="tab-pane fade" id="statsSpectacles" role="tabpanel" aria-labelledby="statsSpectacles-tab">
@@ -76,8 +79,8 @@ else{
             console.log(volet);
             $(".nav-link").removeClass('active');
             $(".tab-pane").removeClass('show').removeClass("active");
-            $("#gererSpectacles-tab").addClass("active");
-            $("#gererSpectacles").addClass("show active");
+            $("#creerSpectacles-tab").addClass("active");
+            $("#creerSpectacles").addClass("show active");
         });
             
     </script>

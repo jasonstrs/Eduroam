@@ -34,6 +34,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/moment.js"></script>
+	<script src="js/Cookies.js"></script>
 
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

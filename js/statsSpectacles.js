@@ -1,4 +1,6 @@
-function modifLien(id,val){
+function modifLien(id,val,prev){
+    console.log(val);
+    console.log(prev);
     $.ajax({
         method:"POST",
         url:"./minControleur/dataSpectacle.php",
@@ -6,9 +8,13 @@ function modifLien(id,val){
             action:"modifLien",
             idDate:id,
             valeur:val,
+            prev_val : prev
         },
         success:function(oRep){
-            
+            var rep = JSON.parse(oRep);
+            $(".alert").remove();
+            $("#myTabContent").prepend(alerteB.css("margin-top","10px").clone(1).html("Lien modifié : '"+rep["ancien"]+"' -> '"+rep['nouveau']+"'").addClass("alert-success")
+            .append(boutonFermerAlerteB));
         },
         error:function(oRep){
 
@@ -178,8 +184,8 @@ function chargerDatesStats(valide){
                             document.location.reload();
                         }
                     }
-                    contenuModal = "Spectacle : <b>"+$(this).data("desc")+"</b> à <b>"+$(this).data("ville")+"</b>";
-                    contenuModal += "<br>Date : <b>"+$(this).data("date")+"</b>";
+                    contenuModal = "Spectacle : <b>"+$(this).data("description")+"</b> à <b>"+$(this).data("ville")+"</b>";
+                    contenuModal += "<br>Date : <b>"+traduireDate($(this).data("dateSpectacle"))+"</b>";
                     contenuModal += "<br>Voulez vous <B>supprimer cette date</B> ? ";
 
                     
@@ -240,9 +246,10 @@ $("#accordionStats").ready(function(){
             var valeur = $(this).val();
             if(valeur == "")valeur  = "Pas de lien renseigné";
             if(contexte.originalEvent.key == "Enter"){
+                var prev = $(this).data("lien");
                 $(this).data("lien",valeur);
                 $(this).replaceWith($("<td/>").addClass("lienModifiable").html(valeur).data(donnees));
-                if(valeur != "Pas de lien renseigné")modifLien(donnees.idDate,valeur);
+                if(valeur != "Pas de lien renseigné")modifLien(donnees.idDate,valeur,prev);
                 
             }
             else if(contexte.originalEvent.key == "Escape"){
