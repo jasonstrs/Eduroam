@@ -104,8 +104,8 @@ function inscriptionDates(choix,tabDates){
         success:function(oRep){
             var rep = JSON.parse(oRep);
             console.log(rep);
-            if(rep["choix"] == 1)Cookies.set("succes",rep["nb"]+" date(s) ajoutées à <B>Vos Dates en Attente</B>");
-            else if(rep["choix"] == 2)Cookies.set("succes",rep["nb"]+" date(s) retirées de <B>Vos Dates en Attente</B>");
+            if(rep["choix"] == 1)Cookies.set("succes",rep["nb"]+" date(s) ajoutée(s) à Vos Dates en Attente");
+            else if(rep["choix"] == 2)Cookies.set("succes",rep["nb"]+" date(s) retirée(s)♠ de Vos Dates en Attente");
             window.location.reload();
         }
     }
