@@ -30,10 +30,8 @@
 <br/>
 
 Rechercher les spectacles dans votre ville : <br>
-<form class="form-inline">
-	<input id="txtRechercheVilleUser" type="text" class="form-control mb-2 mr-sm-3" placeholder="Entrez votre ville"/>
-	<div id="btnRechercheVilleUser" class="btn btn-outline-primary mb-2 pointer" >Rechercher</div>
-</form>
+<input id="txtRechercheVilleUser" type="text" class="form-control mb-2 mr-sm-3" placeholder="Entrez votre ville"/>
+<div id="btnRechercheVilleUser" class="btn btn-outline-primary mb-2 pointer" >Rechercher</div>
 <div id="accordionUser">
 
   <div class="card " >
