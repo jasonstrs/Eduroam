@@ -83,12 +83,12 @@ function proteger($str)
 		$nextTab = array();
 		foreach($str as $cle => $val)
 		{
-			$nextTab[$cle] = addslashes($val);
+			$nextTab[$cle] = htmlspecialchars(addslashes($val));
 		}
 		return $nextTab;
 	}
 	else 	
-		return addslashes ($str);
+		return htmlspecialchars(addslashes ($str));
 	//return str_replace("'","''",$str); 	//utile pour les serveurs de bdd Crosoft
 }
 

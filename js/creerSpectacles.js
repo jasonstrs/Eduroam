@@ -12,7 +12,7 @@ function suppDatesPassees(btn){
             $("#boutonSuppDatesPassees").attr("disabled",false);
             var type = "succes";
             if(oRep == 0)type="erreur";
-            Cookies.set(type,"<B>"+oRep+"</B> Dates passées ont été supprimées !");
+            Cookies.set(type,oRep+" Dates passées ont été supprimées !");
             window.location.reload();
         },
         error : function(oRep){
