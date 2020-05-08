@@ -106,7 +106,6 @@ function cacherMsg(){
 
 // Connexion
 $(document).on('click','input[value="Connexion"]',function(){
-    console.log("Connexion");
     cacherMsg();
     var email = $("#email").val();
     var passe = $("#inputPassword").val();
@@ -154,7 +153,6 @@ $(document).on("keyup","#email,#inputPassword",function(contexte){
         url: "./minControleur/dataConnexion.php",
         data: {"email":email,"passe":passe,"checked":check,"action":'Connexion'},
         success: function(oRep){
-           console.log(oRep);
            switch(oRep){
                case 'incorrect' :
                    $("#log").show();
@@ -165,7 +163,6 @@ $(document).on("keyup","#email,#inputPassword",function(contexte){
                    $("#log").show();
                    $("#log").html("Veuillez confirmer votre email avant de vous connecter. ");
                    $("#log").append($("<span class='newMail clic'>Recevoir un mail de confirmation ?</span>").click(function(){
-                       console.log("envoyer un mail pour recevoir une nouvelle confirmation");
                        sendMailConfirm(email);
                    }));
                 break;
@@ -186,7 +183,6 @@ $(document).on("keyup","#email,#inputPassword",function(contexte){
 
 // Inscription
 $(document).on('click','input[value="Inscription"]',function(){
-    console.log("Inscription");
     var email = $("#emailInscription").val();
     var passe = $("#inputPasswordInscription").val();
     var nom = $("#nom").val();
@@ -199,7 +195,6 @@ $(document).on('click','input[value="Inscription"]',function(){
             url: "./minControleur/dataConnexion.php",
             data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom,"action":'Inscription'},
             success: function(oRep){
-                console.log(oRep);
                 if (oRep == 'Success'){
                     $("#mainInscription").hide();
                     $("#mainConnexion").hide();
@@ -209,6 +204,11 @@ $(document).on('click','input[value="Inscription"]',function(){
                     $("#inscription").attr("disabled",false);
                     $("#verifMailInscription").show();
                     $("#verifMailInscription").html("Adresse mail déjà existante.");
+                } else { // Exist
+                    $("#inscription").attr("disabled",false);
+                    $(".alert").remove();
+                    $("#mainInscription").prepend("<div class='center alert alert-danger alert-dismissible fade show' role='alert'>Veuillez saisir des données correctes !<button type=\"button\" " + 
+                    "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
                 }
             },
         dataType: "text"

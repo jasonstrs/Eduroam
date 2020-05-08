@@ -50,8 +50,16 @@ session_start();
                 $passe = sha1(md5(valider("passe","POST")));
                 $nom = valider("nom","POST");
                 $prenom=valider("prenom","POST");
+
+                /**
+                 * On cherche à vérifier si les données saisies sont bien correctes !
+                 */
+                if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom)
+                || !preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#i",valider("passe","POST")) ||
+                !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))
+                    echo "Error";
                 
-                if (verifExistMail($email)){
+                else if (verifExistMail($email)){
                     echo "Exist";
                 } else {
                     $hashCode = md5(uniqid(rand(), true));
@@ -111,15 +119,19 @@ session_start();
 
         case 'modificationPasse' :
             $hash = valider("hash","POST");
-            $passe = sha1(md5(valider("passe","POST")));
-            $id = getIdViaHash($hash);
-            
-            if ($id) {
-                changePass($id,$passe);
-                changeHash($hash,$id,md5(uniqid(rand(), true)));
-                echo 'SUCCESS';
-            } else {
+            if(!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#i",valider("passe","POST")))
                 echo 'ERROR';
+            else {
+                $passe = sha1(md5(valider("passe","POST")));
+                $id = getIdViaHash($hash);
+                
+                if ($id) {
+                    changePass($id,$passe);
+                    changeHash($hash,$id,md5(uniqid(rand(), true)));
+                    echo 'SUCCESS';
+                } else {
+                    echo 'ERROR';
+                }
             }
         break;
 

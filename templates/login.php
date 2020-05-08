@@ -26,7 +26,7 @@ if (valider("mail","GET")){ // si on clic sur le nouveau mail de confirmation
     echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
       Adresse mail inexistante ou déjà confirmée.
     </div>";
-  } else if (valider("mail","GET") == "success"){ // SUCCÉS
+  } else if (valider("mail","GET") == "success"){ // SUCCESS
     echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
          Adresse mail confirmée. Vous pouvez désormais vous connecter !
          </div>";
@@ -36,7 +36,7 @@ if (valider("mail","GET")){ // si on clic sur le nouveau mail de confirmation
 if (valider("pass","GET")){ // si on demande à changer de MDP
   if (valider("pass","GET") == "fail"){ // ERREUR
     echo "<div class=\"alert alert-danger\" role=\"alert\" style='text-align:center;'>
-      Lien erroné, le mot de passe n'a pas pu être changé.
+      Lien erroné ou mauvaises données saisies, le mot de passe n'a pas pu être changé.
     </div>";
   } else if (valider("pass","GET") == "success"){ //SUCCES
     echo "<div class=\"alert alert-success\" role=\"alert\" style='text-align:center;'>
@@ -86,5 +86,5 @@ if (valider("pass","GET")){ // si on demande à changer de MDP
 </div>
 
 
-  <div class="alert alert-success" role="alert" style="display:none" id="envoiMail">
+  <div class="alert alert-success mt-3" role="alert" style="display:none" id="envoiMail">
   </div>
