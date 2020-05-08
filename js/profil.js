@@ -138,7 +138,8 @@ function validationChangement(refInput){
         action="nom";
     }
     else { // on effectue la verification NOM
-        flag = verificationPrenom(contenu,refInput);
+        //flag = verificationPrenom(contenu,refInput);
+        flag=1;
         action="prénom";
     }
 

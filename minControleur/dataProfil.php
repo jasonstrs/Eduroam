@@ -27,9 +27,13 @@
         break;
 
         case 'mot de passe' :
-            $pass = sha1(md5(valider("contenu","POST")));
-            changePass($id,$pass);
-            echo 'Success';
+            if(preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#",valider("contenu","POST"))){
+                $pass = sha1(md5(valider("contenu","POST")));
+                changePass($id,$pass);
+                echo 'Success';
+            } else
+                echo "Error";
+            
         break;
 
         case 'changeValue' :
@@ -39,15 +43,21 @@
         break;
 
         case 'prénom' :
-            $prenom = valider("contenu","POST");
-            changeFirstName($id,$prenom);
-            echo 'Success';
+            if (preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#",valider("contenu","POST"))){
+                $prenom = valider("contenu","POST");
+                changeFirstName($id,$prenom);
+                echo 'Success';
+            } else 
+                echo 'Error';
         break;
 
         case 'nom' :
-            $nom = valider("contenu","POST");
-            changeName($id,$nom);
-            echo 'Success';
+            if (preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#",valider("contenu","POST"))){
+                $nom = valider("contenu","POST");
+                changeName($id,$nom);
+                echo 'Success';
+            } else
+                echo 'Error';
         break;
 
         default :
