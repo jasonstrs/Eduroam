@@ -54,7 +54,6 @@ function afficherModif(){
  */
 
 function modifierChamps(ref){
-    console.log(ref);
     var input = $(ref).prev();
     var contenu = $(input).val();
     // on stocke le contenu initial dans le parent
@@ -133,13 +132,12 @@ function validationChangement(refInput){
         flag = verificationPassWord(contenu,refInput);
         action="mot de passe";
     }
-    else if ($(refInput).is("#inputName")){  // on effectue la verification PRENOM
+    else if ($(refInput).is("#inputName")){  // on effectue la verification NOM
         flag = verificationNom(contenu,refInput);
         action="nom";
     }
-    else { // on effectue la verification NOM
-        //flag = verificationPrenom(contenu,refInput);
-        flag=1;
+    else { // on effectue la verification PRENOM
+        flag = verificationPrenom(contenu,refInput);
         action="prénom";
     }
 
@@ -190,8 +188,21 @@ function modificationBDD(action,contenu){
                 "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
             } else { // ERREUR
                 $(".container").prepend("<div class='center alert alert-danger alert-dismissible fade show' role='alert'>Votre <strong>"
-                +action+"</strong> n'a pas pu être modifié. Veuillez contacter la maintenance pour plus d'information.<button type=\"button\" " + 
+                +action+"</strong> n'a pas pu être modifié.<button type=\"button\" " + 
                 "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
+                switch(action) { // on remet l'ancien contenu
+                    case 'prénom' :
+                        $("#inputFirstName").val($("#inputFirstName").parent().data("contenu"));
+                    break;
+                    case 'nom' :
+                        $("#inputName").val($("#inputName").parent().data("contenu"));
+                    break;
+                    case 'mot de passe' :
+                        $("#inputPassword").val($("#inputPassword").parent().data("contenu"));
+                    break;
+                    default :
+                        console.log('Veuillez contacter la maintenance');
+                }
             }
         },
     dataType: "text"
