@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 27 avr. 2020 à 16:58
--- Version du serveur :  5.7.24
--- Version de PHP :  7.3.1
+-- Généré le :  jeu. 07 mai 2020 à 18:43
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,11 +25,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `article`
+-- Structure de la table `eduroam_article`
 --
 
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE IF NOT EXISTS `article` (
+DROP TABLE IF EXISTS `eduroam_article`;
+CREATE TABLE IF NOT EXISTS `eduroam_article` (
   `idArticle` int(11) NOT NULL AUTO_INCREMENT,
   `idU` int(11) NOT NULL,
   `dateArticle` date NOT NULL,
@@ -42,11 +42,11 @@ CREATE TABLE IF NOT EXISTS `article` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `choix_sondage`
+-- Structure de la table `eduroam_choix_sondage`
 --
 
-DROP TABLE IF EXISTS `choix_sondage`;
-CREATE TABLE IF NOT EXISTS `choix_sondage` (
+DROP TABLE IF EXISTS `eduroam_choix_sondage`;
+CREATE TABLE IF NOT EXISTS `eduroam_choix_sondage` (
   `idChoix` int(11) NOT NULL AUTO_INCREMENT,
   `idSondage` int(11) NOT NULL,
   `choix` text NOT NULL,
@@ -58,11 +58,11 @@ CREATE TABLE IF NOT EXISTS `choix_sondage` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `choix_user`
+-- Structure de la table `eduroam_choix_user`
 --
 
-DROP TABLE IF EXISTS `choix_user`;
-CREATE TABLE IF NOT EXISTS `choix_user` (
+DROP TABLE IF EXISTS `eduroam_choix_user`;
+CREATE TABLE IF NOT EXISTS `eduroam_choix_user` (
   `idU` int(11) NOT NULL,
   `idChoix` int(11) NOT NULL,
   PRIMARY KEY (`idU`,`idChoix`),
@@ -72,11 +72,11 @@ CREATE TABLE IF NOT EXISTS `choix_user` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `crowd_funding`
+-- Structure de la table `eduroam_crowd_funding`
 --
 
-DROP TABLE IF EXISTS `crowd_funding`;
-CREATE TABLE IF NOT EXISTS `crowd_funding` (
+DROP TABLE IF EXISTS `eduroam_crowd_funding`;
+CREATE TABLE IF NOT EXISTS `eduroam_crowd_funding` (
   `idCrowdF` int(11) NOT NULL AUTO_INCREMENT,
   `lienUlule` text NOT NULL,
   PRIMARY KEY (`idCrowdF`)
@@ -85,58 +85,68 @@ CREATE TABLE IF NOT EXISTS `crowd_funding` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `date_spectacle`
+-- Structure de la table `eduroam_date_spectacle`
 --
 
-DROP TABLE IF EXISTS `date_spectacle`;
-CREATE TABLE IF NOT EXISTS `date_spectacle` (
+DROP TABLE IF EXISTS `eduroam_date_spectacle`;
+CREATE TABLE IF NOT EXISTS `eduroam_date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) DEFAULT '0',
-  `lien` text,
+  `valide` int(11) DEFAULT 0,
+  `lien` text DEFAULT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `date_spectacle`
+-- Déchargement des données de la table `eduroam_date_spectacle`
 --
 
-INSERT INTO `date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
-(31, 15, '2020-03-19', 0, NULL),
-(33, 15, '2020-03-28', 0, NULL),
+INSERT INTO `eduroam_date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
 (34, 16, '2020-07-17', 0, NULL),
 (35, 16, '2020-07-18', 0, NULL),
 (37, 16, '2020-07-27', 0, NULL),
 (38, 16, '2020-07-28', 0, NULL),
 (39, 16, '2020-07-29', 0, NULL),
 (40, 16, '2020-07-30', 0, NULL),
-(41, 16, '2020-07-31', 0, NULL),
+(41, 16, '2020-07-31', 1, 'https://www.google.com'),
 (42, 16, '2020-08-01', 0, NULL),
-(43, 16, '2020-08-02', 0, NULL),
-(44, 15, '2020-04-03', 0, NULL),
-(45, 15, '2020-04-10', 0, NULL),
-(46, 15, '2020-04-17', 0, NULL),
-(47, 15, '2020-04-24', 0, NULL),
-(48, 15, '2020-05-01', 0, NULL),
-(49, 15, '2020-05-08', 0, NULL),
-(50, 15, '2020-05-15', 0, NULL),
+(43, 16, '2020-08-02', 1, 'https://twitter.com'),
+(50, 15, '2020-05-15', 1, ''),
 (51, 15, '2020-05-22', 0, NULL),
 (52, 15, '2020-05-29', 0, NULL),
 (53, 15, '2020-06-05', 0, NULL),
 (54, 15, '2020-06-12', 0, NULL),
 (55, 15, '2020-06-19', 0, NULL),
-(56, 15, '2020-06-26', 0, NULL);
+(56, 15, '2020-06-26', 0, NULL),
+(64, 18, '2022-04-01', 0, NULL),
+(65, 18, '2022-04-08', 0, NULL),
+(66, 18, '2022-04-15', 0, NULL),
+(67, 18, '2022-04-22', 0, NULL),
+(68, 18, '2022-04-29', 0, NULL),
+(69, 18, '2022-05-06', 0, NULL),
+(70, 18, '2022-05-13', 0, NULL),
+(71, 18, '2022-05-20', 0, NULL),
+(72, 18, '2022-05-27', 0, NULL),
+(73, 18, '2022-06-03', 0, NULL),
+(74, 18, '2022-06-10', 0, NULL),
+(75, 18, '2022-06-17', 0, NULL),
+(76, 18, '2022-06-24', 0, NULL),
+(77, 18, '2022-07-01', 0, NULL),
+(78, 18, '2022-07-08', 0, NULL),
+(79, 18, '2022-07-15', 0, NULL),
+(80, 18, '2022-07-22', 0, NULL),
+(81, 18, '2022-07-29', 0, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `idee_ville`
+-- Structure de la table `eduroam_idee_ville`
 --
 
-DROP TABLE IF EXISTS `idee_ville`;
-CREATE TABLE IF NOT EXISTS `idee_ville` (
+DROP TABLE IF EXISTS `eduroam_idee_ville`;
+CREATE TABLE IF NOT EXISTS `eduroam_idee_ville` (
   `id_idee_ville` int(11) NOT NULL AUTO_INCREMENT,
   `idU` int(11) NOT NULL,
   `nomVille` text NOT NULL,
@@ -148,13 +158,13 @@ CREATE TABLE IF NOT EXISTS `idee_ville` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `notif_spectacle`
+-- Structure de la table `eduroam_notif_spectacle`
 --
 
-DROP TABLE IF EXISTS `notif_spectacle`;
-CREATE TABLE IF NOT EXISTS `notif_spectacle` (
-  `nbMin` int(11) NOT NULL DEFAULT '100',
-  `nbRappel` int(11) NOT NULL DEFAULT '50',
+DROP TABLE IF EXISTS `eduroam_notif_spectacle`;
+CREATE TABLE IF NOT EXISTS `eduroam_notif_spectacle` (
+  `nbMin` int(11) NOT NULL DEFAULT 100,
+  `nbRappel` int(11) NOT NULL DEFAULT 50,
   `mailNbInt` text NOT NULL,
   `objNbInt` tinytext NOT NULL,
   `mailIdeeVille` text NOT NULL,
@@ -167,79 +177,84 @@ CREATE TABLE IF NOT EXISTS `notif_spectacle` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `role`
+-- Structure de la table `eduroam_role`
 --
 
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE IF NOT EXISTS `role` (
+DROP TABLE IF EXISTS `eduroam_role`;
+CREATE TABLE IF NOT EXISTS `eduroam_role` (
   `idRole` int(11) NOT NULL AUTO_INCREMENT,
   `nom` text NOT NULL,
   `droits` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idRole`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `role`
+-- Déchargement des données de la table `eduroam_role`
 --
 
-INSERT INTO `role` (`idRole`, `nom`, `droits`) VALUES
-(8, 'admin', '{\"video\":\"1\",\"spectacle\":\"1\",\"utilisateurs\":\"1\",\"annonce\":\"1\"}');
+INSERT INTO `eduroam_role` (`idRole`, `nom`, `droits`) VALUES
+(8, 'admin', '{\"video\":\"1\",\"spectacle\":\"1\",\"utilisateurs\":\"1\",\"annonce\":\"1\"}'),
+(9, 'zebi', '{\"video\":\"1\",\"spectacle\":\"0\",\"utilisateurs\":\"0\",\"annonce\":\"0\"}');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `serie`
+-- Structure de la table `eduroam_serie`
 --
 
-DROP TABLE IF EXISTS `serie`;
-CREATE TABLE IF NOT EXISTS `serie` (
+DROP TABLE IF EXISTS `eduroam_serie`;
+CREATE TABLE IF NOT EXISTS `eduroam_serie` (
   `id_serie` int(11) NOT NULL AUTO_INCREMENT,
   `nom` text NOT NULL,
   PRIMARY KEY (`id_serie`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `serie`
+-- Déchargement des données de la table `eduroam_serie`
 --
 
-INSERT INTO `serie` (`id_serie`, `nom`) VALUES
+INSERT INTO `eduroam_serie` (`id_serie`, `nom`) VALUES
 (22, 'Hors-Série'),
 (23, 'Vive la France'),
-(25, 'J\'suis pas content saison 6');
+(25, 'J\'suis pas content saison 6'),
+(26, 'J\'SUIS PAS CONTENT (Tous)'),
+(27, 'Marlène');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `serie_regex`
+-- Structure de la table `eduroam_serie_regex`
 --
 
-DROP TABLE IF EXISTS `serie_regex`;
-CREATE TABLE IF NOT EXISTS `serie_regex` (
+DROP TABLE IF EXISTS `eduroam_serie_regex`;
+CREATE TABLE IF NOT EXISTS `eduroam_serie_regex` (
   `id_regex` int(11) NOT NULL AUTO_INCREMENT,
   `id_serie` int(11) NOT NULL,
   `regex` text NOT NULL,
   PRIMARY KEY (`id_regex`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `serie_regex`
+-- Déchargement des données de la table `eduroam_serie_regex`
 --
 
-INSERT INTO `serie_regex` (`id_regex`, `id_serie`, `regex`) VALUES
+INSERT INTO `eduroam_serie_regex` (`id_regex`, `id_serie`, `regex`) VALUES
 (20, 25, 'J&#039;suis pas content ! #S06'),
 (8, 22, 'Hors-Série'),
 (10, 23, 'Vive la France'),
 (21, 25, 'J&#039;suis pas content ! #06S'),
-(18, 25, 'J&#039;suis pas content ! S06');
+(18, 25, 'J&#039;suis pas content ! S06'),
+(22, 26, 'J&#039;SUIS PAS CONTENT'),
+(24, 27, 'Marlène');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sondage`
+-- Structure de la table `eduroam_sondage`
 --
 
-DROP TABLE IF EXISTS `sondage`;
-CREATE TABLE IF NOT EXISTS `sondage` (
+DROP TABLE IF EXISTS `eduroam_sondage`;
+CREATE TABLE IF NOT EXISTS `eduroam_sondage` (
   `idSondage` int(11) NOT NULL AUTO_INCREMENT,
   `idU` int(11) NOT NULL,
   `intitule` text NOT NULL,
@@ -254,33 +269,34 @@ CREATE TABLE IF NOT EXISTS `sondage` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `spectacle`
+-- Structure de la table `eduroam_spectacle`
 --
 
-DROP TABLE IF EXISTS `spectacle`;
-CREATE TABLE IF NOT EXISTS `spectacle` (
+DROP TABLE IF EXISTS `eduroam_spectacle`;
+CREATE TABLE IF NOT EXISTS `eduroam_spectacle` (
   `idSpectacle` int(11) NOT NULL AUTO_INCREMENT,
   `ville` tinytext NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `spectacle`
+-- Déchargement des données de la table `eduroam_spectacle`
 --
 
-INSERT INTO `spectacle` (`idSpectacle`, `ville`, `description`) VALUES
+INSERT INTO `eduroam_spectacle` (`idSpectacle`, `ville`, `description`) VALUES
 (15, 'Paris', 'Spectacle 2020'),
-(16, 'Lille', 'Tournée JSPC 2021');
+(16, 'Lille', 'Tournée JSPC 2021'),
+(18, 'Paris', 'Vive la France 2022');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `spectacle_user`
+-- Structure de la table `eduroam_spectacle_user`
 --
 
-DROP TABLE IF EXISTS `spectacle_user`;
-CREATE TABLE IF NOT EXISTS `spectacle_user` (
+DROP TABLE IF EXISTS `eduroam_spectacle_user`;
+CREATE TABLE IF NOT EXISTS `eduroam_spectacle_user` (
   `idDate` int(11) NOT NULL,
   `idU` int(11) NOT NULL,
   `idSpectacle` int(11) NOT NULL,
@@ -292,24 +308,28 @@ CREATE TABLE IF NOT EXISTS `spectacle_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `spectacle_user`
+-- Déchargement des données de la table `eduroam_spectacle_user`
 --
 
-INSERT INTO `spectacle_user` (`idDate`, `idU`, `idSpectacle`, `notif`) VALUES
-(31, 2, 16, 2),
+INSERT INTO `eduroam_spectacle_user` (`idDate`, `idU`, `idSpectacle`, `notif`) VALUES
 (34, 1, 16, 0),
+(34, 2, 16, 1),
+(40, 2, 16, 1),
 (41, 1, 16, 0),
+(41, 2, 16, 1),
+(42, 2, 16, 1),
 (43, 1, 15, 0),
-(46, 3, 16, 0);
+(43, 2, 16, 1),
+(56, 2, 15, 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `eduroam_user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+DROP TABLE IF EXISTS `eduroam_user`;
+CREATE TABLE IF NOT EXISTS `eduroam_user` (
   `idU` int(11) NOT NULL AUTO_INCREMENT,
   `email` tinytext NOT NULL,
   `nom` tinytext NOT NULL,
@@ -317,29 +337,29 @@ CREATE TABLE IF NOT EXISTS `user` (
   `passe` text NOT NULL,
   `superadmin` tinyint(1) NOT NULL,
   `code` tinyint(1) NOT NULL,
-  `banni` tinyint(1) NOT NULL DEFAULT '0',
-  `choice` tinyint(1) NOT NULL DEFAULT '1',
+  `banni` tinyint(1) NOT NULL DEFAULT 0,
+  `choice` tinyint(1) NOT NULL DEFAULT 1,
   `hashCode` text NOT NULL,
   PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `user`
+-- Déchargement des données de la table `eduroam_user`
 --
 
-INSERT INTO `user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `banni`, `choice`, `hashCode`) VALUES
+INSERT INTO `eduroam_user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `banni`, `choice`, `hashCode`) VALUES
 (1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, 0, 1, '0'),
-(2, 'tata@gmail.com', 'TATA', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0'),
+(2, 'tata@gmail.com', 'TATANom', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0'),
 (3, 'clementboyaval@gmail.com', 'BOYAVAL', 'Clément', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user_role`
+-- Structure de la table `eduroam_user_role`
 --
 
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE IF NOT EXISTS `user_role` (
+DROP TABLE IF EXISTS `eduroam_user_role`;
+CREATE TABLE IF NOT EXISTS `eduroam_user_role` (
   `idU` int(11) NOT NULL,
   `idRole` int(11) NOT NULL,
   PRIMARY KEY (`idU`,`idRole`),
@@ -347,20 +367,20 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `user_role`
+-- Déchargement des données de la table `eduroam_user_role`
 --
 
-INSERT INTO `user_role` (`idU`, `idRole`) VALUES
+INSERT INTO `eduroam_user_role` (`idU`, `idRole`) VALUES
 (3, 8);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `video`
+-- Structure de la table `eduroam_video`
 --
 
-DROP TABLE IF EXISTS `video`;
-CREATE TABLE IF NOT EXISTS `video` (
+DROP TABLE IF EXISTS `eduroam_video`;
+CREATE TABLE IF NOT EXISTS `eduroam_video` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `videoId` text NOT NULL,
   `publishedAt` date NOT NULL,
@@ -369,13 +389,13 @@ CREATE TABLE IF NOT EXISTS `video` (
   `thumbnails` text NOT NULL,
   `checked` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1226 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1229 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `video`
+-- Déchargement des données de la table `eduroam_video`
 --
 
-INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
+INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
 (820, 'vgHbT1qtuZ0', '2020-04-26', 'Macron VS Ikea, Pernaut VS Dissidence &amp; O&#039;Petit VS QI ! (J&#039;SUIS PAS CONTENT ! #S06E14)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/vgHbT1qtuZ0/default.jpg', 0),
 (821, 'HGD_TPuIY5A', '2020-04-25', 'CORONAVIRUS : C&#039;est l&#039;histoire d&#039;un chien, d&#039;une abeille &amp; d&#039;un âne (J&#039;SUIS PAS CONTENT ! #S06E13)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/HGD_TPuIY5A/default.jpg', 0),
 (822, 'I_YMgNaEVOk', '2020-04-15', 'CORONAVIRUS : Macron a parlé, Estrosi a menti &amp; le MEDEF nous dresse ! (J&#039;SUIS PAS CONTENT ! S06E12)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/I_YMgNaEVOk/default.jpg', 0),
@@ -525,7 +545,7 @@ INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `th
 (966, 'rjVB6D1xRUI', '2018-09-12', 'J&#039;SUIS PAS CONTENT ! #180 : Mélenchon humilié, Gégé fatigué &amp; Bergé ramassée...', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/rjVB6D1xRUI/default.jpg', 0),
 (967, 'ekRHx38lV6s', '2018-09-08', 'TOP 10 des politiciens que vous détestez le plus ! [Feat. Tatiana Ventôse] (ISVG #01)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/ekRHx38lV6s/default.jpg', 0),
 (968, 'DDVHszfL3JI', '2018-09-06', 'J&#039;SUIS PAS CONTENT ! #179 :  De Rugy ministre, Darmanin persiste &amp; Assemblée Kawai !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/DDVHszfL3JI/default.jpg', 0);
-INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
+INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
 (969, 'Mbo8QEFWmpo', '2018-09-05', 'J&#039;SUIS PAS CONTENT ! #178 : Trump VS Migrants, Les Experts 2.0 &amp; Cartes postales du progrès !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/Mbo8QEFWmpo/default.jpg', 0),
 (970, '-0935gWxUhM', '2018-09-04', 'J&#039;SUIS PAS CONTENT ! #177 : Hulot démissione, Darmanin mitone et Dragon Ball déconne !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/-0935gWxUhM/default.jpg', 0),
 (971, 'QiOghEKtf5g', '2018-08-13', 'J&#039;SUIS PAS CONTENT ! #176 : Hollande 2022, Tata Christiane is back &amp; Kaaris VS Booba !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/QiOghEKtf5g/default.jpg', 0),
@@ -552,7 +572,6 @@ INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `th
 (992, 'MCRYn1Uoc0A', '2018-05-31', 'Message TRES IMPORTANT : cette chaine risque de FERMER. Lien vers une chaine de secours', 'LIEN VERS LA CHAÎNE DE SECOURS : https://www.youtube.com/channel/UC9QvVwHqRLpQF0TXsTQSWhg · Pour ceux qui veulent lire les nouvelles CGU ...', 'https://i.ytimg.com/vi/MCRYn1Uoc0A/default.jpg', 0),
 (993, '7ZHY4CHG7VE', '2018-05-28', 'J&#039;SUIS PAS CONTENT ! #158 : Macron en BANLIEUE &amp; Collomb le GÂTEUX !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/7ZHY4CHG7VE/default.jpg', 0),
 (994, '5S0giRYUOT4', '2018-05-23', 'J&#039;SUIS PAS CONTENT ! #157 : SNCF en grève, Quenelles au Cannabis &amp; Corruption des Elus !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/5S0giRYUOT4/default.jpg', 0),
-(995, 'r6Y2czfcTUc', '2018-05-21', 'J&#039;SUIS PAS CONTENT ! #156 :  Urbanisme inclusif, Combine à Collomb &amp; Journalisme engagé !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/r6Y2czfcTUc/default.jpg', 0),
 (996, 'ZaTvpB46HiY', '2018-05-19', 'J&#039;SUIS PAS CONTENT ! #155 : Tuto pour pécho, Fuite des cerveaux &amp; Barbie extrème !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/ZaTvpB46HiY/default.jpg', 0),
 (997, 'SXxIJ5dzqLg', '2018-05-17', 'J&#039;SUIS PAS CONTENT ! #154 : Fin du monde, Eurovision &amp; Warhammer israelien !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/SXxIJ5dzqLg/default.jpg', 0),
 (998, 'UwHG9nwoaTs', '2018-05-15', 'J&#039;SUIS PAS CONTENT ! #153 : Examens annulés, Coquerel gazé &amp; Echarpe magique !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content Réseaux sociaux : · D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/UwHG9nwoaTs/default.jpg', 0),
@@ -672,10 +691,10 @@ INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `th
 (1112, '8-Qwxm2lutM', '2017-03-30', 'J&#039;SUIS PAS CONTENT ! #71 : Macron en Guyane, Trahison de Valls &amp; Ségolène Lannister !', 'Pour réserver pour le Pas Content Comedy Club : · https://www.weezevent.com/pas-content-comedy-club-31-03-2017 Retrouve-nous sur : · T W I T T E R ...', 'https://i.ytimg.com/vi/8-Qwxm2lutM/default.jpg', 0),
 (1113, 'Zze8zOJPfxY', '2017-03-28', 'GREG TABIBIAN dans J&#039;SUIS PAS CONTENT ! (les 10 premières minutes)', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa • D I S C O R D ...', 'https://i.ytimg.com/vi/Zze8zOJPfxY/default.jpg', 0),
 (1114, 'YIUCmAN5EUQ', '2017-03-27', 'J&#039;SUIS PAS CONTENT ! #70 : Attentat de Londres, attentat d&#039;Orly &amp; Etat d&#039;urgence mon kiki !', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • • D I S C O R D : https://discord.gg/RaksmAn Y O U T U B E ...', 'https://i.ytimg.com/vi/YIUCmAN5EUQ/default.jpg', 0),
-(1115, 'tbGyeglGipY', '2017-03-22', 'J&#039;SUIS PAS CONTENT ! #69 : Macron, le PNJ de l’enfer… (VS Asselineau &amp; le 18-25)', 'Pour réserver ta place pour ce Vendredi à Toulouse : https://www.weezevent.com/greg-tabibian-dans-j-suis-pas-content Retrouve-nous sur : · T W I T T E R ...', 'https://i.ytimg.com/vi/tbGyeglGipY/default.jpg', 0);
-INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
+(1115, 'tbGyeglGipY', '2017-03-22', 'J&#039;SUIS PAS CONTENT ! #69 : Macron, le PNJ de l’enfer… (VS Asselineau &amp; le 18-25)', 'Pour réserver ta place pour ce Vendredi à Toulouse : https://www.weezevent.com/greg-tabibian-dans-j-suis-pas-content Retrouve-nous sur : · T W I T T E R ...', 'https://i.ytimg.com/vi/tbGyeglGipY/default.jpg', 0),
 (1116, 'B_Kkt3gETjk', '2017-03-21', 'J&#039;SUIS PAS CONTENT ! #68 : Débat Présidentiel, arnaque Macron &amp; féminisme contrarié !', 'Pour réserver ta place pour ce Vendredi à Toulouse ...', 'https://i.ytimg.com/vi/B_Kkt3gETjk/default.jpg', 0),
-(1117, 'qxms2kNaCZc', '2017-03-20', 'J&#039;SUIS PAS CONTENT ! #67 : Manif de Mélenchon, Manif de Fillon !', 'Pour réserver ta place pour ce Vendredi à Toulouse ...', 'https://i.ytimg.com/vi/qxms2kNaCZc/default.jpg', 0),
+(1117, 'qxms2kNaCZc', '2017-03-20', 'J&#039;SUIS PAS CONTENT ! #67 : Manif de Mélenchon, Manif de Fillon !', 'Pour réserver ta place pour ce Vendredi à Toulouse ...', 'https://i.ytimg.com/vi/qxms2kNaCZc/default.jpg', 0);
+INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
 (1118, 'i8fv50huT4g', '2017-03-13', 'J&#039;SUIS PAS CONTENT ! #66 : PSG Humilié, Indécence socialiste &amp; Porno pour tous ! [Quickie 21]', 'Pour réserver pour la tournée : NANTES : http://www.billetreduc.com/182021/evt.htm ROUEN : http://www.billetreduc.com/182225/evt.htm LILLE ...', 'https://i.ytimg.com/vi/i8fv50huT4g/default.jpg', 0),
 (1119, 'TJWRv_zic9o', '2017-03-10', 'Résa tournée disponible, Comedy club surprise &amp; Vlogs ! (la vidéo du jeudi #10)', 'Pour réserver pour le comedy club, ce soir 21h30 : http://www.billetreduc.com/173019/evt.htm · Pour réserver pour la tournée : NANTES ...', 'https://i.ytimg.com/vi/TJWRv_zic9o/default.jpg', 0),
 (1120, 'F4DuPZu-CiE', '2017-02-28', 'J&#039;SUIS PAS CONTENT ! #64 : Ferme ta gueule Macron ! [Quickie #19]', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/F4DuPZu-CiE/default.jpg', 0),
@@ -693,7 +712,6 @@ INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `th
 (1132, 'Ar0x9PefcAU', '2016-11-08', 'J&#039;SUIS PAS CONTENT ! #52 : Wifi terroriste, Manuel Valls &amp; Haute... ? [Quickie #09]', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/Ar0x9PefcAU/default.jpg', 0),
 (1133, 'zfOcVBnz_q0', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #15 - Les voeux 2015 de François Hollande...', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/zfOcVBnz_q0/default.jpg', 0),
 (1134, 'k_eHPKovL2w', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #02 - Une bande de clowns terrorise la France !', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/k_eHPKovL2w/default.jpg', 0),
-(1135, 'Vbs4XkujCoQ', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #12 - France, Qatar et Coupe du monde...', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/Vbs4XkujCoQ/default.jpg', 0),
 (1136, '8kKmV3TwpC8', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #11 - Mimolette en CHAPKA, Antifas au COMBAT !', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/8kKmV3TwpC8/default.jpg', 0),
 (1137, 'cB0DiyXp_uU', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #07 - Merkel VS Poutine (et Mimolette...)', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/cB0DiyXp_uU/default.jpg', 0),
 (1138, 'w7KnmYrlors', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #13 - Nicolas et Fatima !', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/w7KnmYrlors/default.jpg', 0),
@@ -782,64 +800,66 @@ INSERT INTO `video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `th
 (1221, '21t-DhakAtc', '2015-03-02', 'J&#039;SUIS PAS CONTENT ! #23 - 49.3 nuances de gré (ou de force...) [feat. Mawin &amp; Le Débrancheur]', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/21t-DhakAtc/default.jpg', 0),
 (1222, 'PPSaCO9j63Y', '2015-02-20', 'J&#039;SUIS PAS CONTENT ! #22 - Case prison, sans papiers et &quot;bons&quot; musulmans', 'Comment enlever la désactivation des annotations (faire le procédé inverse) ...', 'https://i.ytimg.com/vi/PPSaCO9j63Y/default.jpg', 0),
 (1223, '2OROHBiCAG0', '2015-02-11', 'J&#039;SUIS PAS CONTENT ! #21 - Gad Elmaleh, fraude fiscale et Enfoirés...', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/2OROHBiCAG0/default.jpg', 0),
-(1224, 'wafbP6_7gfI', '2015-02-06', 'J&#039;SUIS PAS CONTENT ! #20 - DSK en procès et terrorisme juvénile...', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/wafbP6_7gfI/default.jpg', 0),
-(1225, 'RwNHrJFEPBw', '2015-02-03', 'J&#039;SUIS PAS CONTENT ! #19 - Concours de connerie : Najat VS Ségolène', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/RwNHrJFEPBw/default.jpg', 0);
+(1225, 'RwNHrJFEPBw', '2015-02-03', 'J&#039;SUIS PAS CONTENT ! #19 - Concours de connerie : Najat VS Ségolène', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/RwNHrJFEPBw/default.jpg', 0),
+(1226, '8uxCnfXrmIA', '2017-06-28', 'J&#039;SUIS PAS CONTENT ! #93 [Quickie] : Valls quitte le PS !!! (&amp; démocratie de perlimpinpin)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/8uxCnfXrmIA/default.jpg', 0),
+(1227, 'BaTMj1dFodo', '2017-06-23', 'J&#039;SUIS PAS CONTENT ! #92 :  Big Data, Bayrou en &quot;off&quot; &amp; Robots sexuels ! [feat. JR Lombard]', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/BaTMj1dFodo/default.jpg', 0),
+(1228, 'Aab4VsCWm2E', '2016-01-28', 'VLOG #39 - Dieudonné retenu à Hong Kong : que s&#039;est-il vraiment passé ? (?????????? )', 'Petit réaction à chaud afin de débunker les complotistes ! Dieudonné est actuellement retenu à Hong Kong. Mais que s\'est-il vraiment passé ??? ?#?vlog? ?#?jspc? ...', 'https://i.ytimg.com/vi/Aab4VsCWm2E/default.jpg', 0);
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `article`
+-- Contraintes pour la table `eduroam_article`
 --
-ALTER TABLE `article`
-  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_article`
+  ADD CONSTRAINT `eduroam_article_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `choix_sondage`
+-- Contraintes pour la table `eduroam_choix_sondage`
 --
-ALTER TABLE `choix_sondage`
-  ADD CONSTRAINT `choix_sondage_ibfk_1` FOREIGN KEY (`idSondage`) REFERENCES `sondage` (`idSondage`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_choix_sondage`
+  ADD CONSTRAINT `eduroam_choix_sondage_ibfk_1` FOREIGN KEY (`idSondage`) REFERENCES `eduroam_sondage` (`idSondage`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `choix_user`
+-- Contraintes pour la table `eduroam_choix_user`
 --
-ALTER TABLE `choix_user`
-  ADD CONSTRAINT `choix_user_ibfk_1` FOREIGN KEY (`idChoix`) REFERENCES `choix_sondage` (`idChoix`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `choix_user_ibfk_2` FOREIGN KEY (`idU`) REFERENCES `user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_choix_user`
+  ADD CONSTRAINT `eduroam_choix_user_ibfk_1` FOREIGN KEY (`idChoix`) REFERENCES `eduroam_choix_sondage` (`idChoix`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `eduroam_choix_user_ibfk_2` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `date_spectacle`
+-- Contraintes pour la table `eduroam_date_spectacle`
 --
-ALTER TABLE `date_spectacle`
-  ADD CONSTRAINT `date_spectacle_ibfk_1` FOREIGN KEY (`idSpectacle`) REFERENCES `spectacle` (`idSpectacle`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_date_spectacle`
+  ADD CONSTRAINT `eduroam_date_spectacle_ibfk_1` FOREIGN KEY (`idSpectacle`) REFERENCES `eduroam_spectacle` (`idSpectacle`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `idee_ville`
+-- Contraintes pour la table `eduroam_idee_ville`
 --
-ALTER TABLE `idee_ville`
-  ADD CONSTRAINT `idee_ville_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_idee_ville`
+  ADD CONSTRAINT `eduroam_idee_ville_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `sondage`
+-- Contraintes pour la table `eduroam_sondage`
 --
-ALTER TABLE `sondage`
-  ADD CONSTRAINT `sondage_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_sondage`
+  ADD CONSTRAINT `eduroam_sondage_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `spectacle_user`
+-- Contraintes pour la table `eduroam_spectacle_user`
 --
-ALTER TABLE `spectacle_user`
-  ADD CONSTRAINT `spectacle_user_ibfk_1` FOREIGN KEY (`idSpectacle`) REFERENCES `spectacle` (`idSpectacle`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `spectacle_user_ibfk_2` FOREIGN KEY (`idU`) REFERENCES `user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `spectacle_user_ibfk_3` FOREIGN KEY (`idDate`) REFERENCES `date_spectacle` (`idDate`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_spectacle_user`
+  ADD CONSTRAINT `eduroam_spectacle_user_ibfk_1` FOREIGN KEY (`idSpectacle`) REFERENCES `eduroam_spectacle` (`idSpectacle`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `eduroam_spectacle_user_ibfk_2` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `eduroam_spectacle_user_ibfk_3` FOREIGN KEY (`idDate`) REFERENCES `eduroam_date_spectacle` (`idDate`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `user_role`
+-- Contraintes pour la table `eduroam_user_role`
 --
-ALTER TABLE `user_role`
-  ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`idRole`) REFERENCES `role` (`idRole`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eduroam_user_role`
+  ADD CONSTRAINT `eduroam_user_role_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `eduroam_user_role_ibfk_2` FOREIGN KEY (`idRole`) REFERENCES `eduroam_role` (`idRole`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
