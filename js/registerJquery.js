@@ -195,12 +195,21 @@ $(document).on('click','input[value="Inscription"]',function(){
             url: "./minControleur/dataConnexion.php",
             data: {"email":email,"passe":passe,"nom":nom,"prenom":prenom,"action":'Inscription'},
             success: function(oRep){
-                if (oRep == 'Success'){
+                console.log(oRep);
+                if (oRep == 1){
                     $("#mainInscription").hide();
                     $("#mainConnexion").hide();
                     $("#envoiMail").show();
-                    $("#envoiMail").html("<h4 class=\"alert-heading\">Inscription terminée</h4><p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !</p>");
-                } else if (oRep == 'Exist'){
+                    $("#envoiMail").html("<h4 style='margin-top:100px;' class=\"alert-heading\">Inscription terminée</h4><p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !<br/>(Si vous ne le trouvez pas, vérifiez vos spams!</p>");
+                }
+                else if(oRep == 0){
+                    $("#mainInscription").hide();
+                    $("#mainConnexion").hide();
+                    $("#envoiMail").show();
+                    $("#envoiMail").html("<h4 style='margin-top:100px;' class=\"alert-danger\"><p>Echec lors de l'envoi de l'email de confirmation.<br/>Réessayez plus tard<br/>Si cette erreur persiste, contactez u nadministrateur</p>");
+
+                } 
+                else if (oRep == 'Exist'){
                     $("#inscription").attr("disabled",false);
                     $("#verifMailInscription").show();
                     $("#verifMailInscription").html("Adresse mail déjà existante.");

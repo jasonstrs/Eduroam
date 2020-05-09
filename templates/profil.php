@@ -31,9 +31,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
             </div>
         </div>
         <div class="form-group row" id="pass">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Mot de passe</label>
+            <label for="modifierPass" class="col-sm-2 col-form-label">Mot de passe</label>
             <div class="col-sm-10 divForm">
-                <input type="password" class="form-control" id="inputPassword">
+                <input type="text" class="form-control" id="modifierPass">
             </div>
         </div>
         

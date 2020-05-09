@@ -69,7 +69,7 @@ switch($action){
 }
 
 if ($flag)
-    header("Location:". $url ."/Eduroam/index.php?view=login&".$add."=".$qs); // sinon on renvoie
+    header("Location:". $url ."/ig2i-projet-Eduroam/index.php?view=login&".$add."=".$qs); // sinon on renvoie
 
 
 ?>

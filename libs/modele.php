@@ -48,7 +48,6 @@ function getChoice($id) {
 
 function getNom($id)
 {
-	
 	$SQL="SELECT nom FROM eduroam_user WHERE idU='$id'";
 	return SQLGetChamp($SQL);
 }
@@ -578,13 +577,13 @@ function getDroitByRole($idRole, $droit) {
 }
 
 function getDroitByUser($idUser, $droit) {
-	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(role.droits, '$.$droit')) FROM eduroam_role, eduroam_user_role WHERE role.idRole=user_role.idRole AND user_role.idU=$idUser;"; 
+	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(eduroam_role.droits, '$.$droit')) FROM eduroam_role, eduroam_user_role WHERE eduroam_role.idRole=eduroam_user_role.idRole AND eduroam_user_role.idU=$idUser;"; 
 	$rs = SQLGetChamp($SQL);
 	return $rs;
 }
 
 function getDroit($droit) {
-	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(role.droits, '$.$droit')) FROM eduroam_role, eduroam_user_role WHERE role.idRole=user_role.idRole AND user_role.idU=".valider("idUser","SESSION").";"; 
+	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(eduroam_role.droits, '$.$droit')) FROM eduroam_role, eduroam_user_role WHERE eduroam_role.idRole=eduroam_user_role.idRole AND eduroam_user_role.idU=".valider("idUser","SESSION").";"; 
 	$rs = SQLGetChamp($SQL);
 	return $rs;
 }
@@ -662,7 +661,7 @@ function unbanUser($idU) {
 }
 
 /**
- * Fonctions qui gère les séries
+ * Fonctions qui gèrent les séries
  */
 
 function getSeries() {
