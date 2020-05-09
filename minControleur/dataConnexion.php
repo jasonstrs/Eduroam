@@ -56,9 +56,10 @@ session_start();
                 } else {
                     $hashCode = md5(uniqid(rand(), true));
                     $id =createUser($email,$nom,$prenom,$passe,$hashCode);
-                    $lien = $url . '/Eduroam/controleur.php?action=verificationMail&hash='.$hashCode;
-                    envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
-                    echo "Success";
+                    $lien = $url . '/ig2i-projet-Eduroam/controleur.php?action=verificationMail&hash='.$hashCode;
+                    $rep = maiLinscription($email,$nom,$prenom,$lien);
+                    if($rep)echo 1;
+                    else echo 0;
                 }   
             } else { // sécurité
                 header("Location:../index.php?view=accueil");
@@ -96,9 +97,11 @@ session_start();
                         $hashCode = hashCode($id);
                         $prenom = getPrenom($id);
                         $nom = getNom($id);
-                        $lien = $url . '/Eduroam/controleur.php?action=verificationMail&hash='.$hashCode;
-                        envoiMail($email,"Finaliser votre inscription",$nom,$prenom,$lien);
-                        echo "success";
+                        $lien = $url . '/ig2i-projet-Eduroam/controleur.php?action=verificationMail&hash='.$hashCode;
+                        $rep = mailInscription($email,$nom,$prenom,$lien);
+                        echo($rep);
+                        if($rep) echo "succes";
+                        else echo "echec";
                         
                     }
                 } else {

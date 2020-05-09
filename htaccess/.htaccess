@@ -1,4 +1,0 @@
-AuthName "Site en maintenance"
-AuthType Basic
-AuthUserFile "/home/gregtabiqf/www/ig2i-projet-Eduroam/.htpasswd"
-Require valid-user

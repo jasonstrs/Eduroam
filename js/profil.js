@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#inputEmail").attr("disabled",true);
     $("#inputFirstName").attr("disabled",true);
-    $("#inputPassword").attr("disabled",true);
+    $("#modifierPass").attr("disabled",true);
     $("#inputName").attr("disabled",true);
     
     $.ajax({
@@ -75,7 +75,7 @@ function ajoutImgValidation(refInput){
         validationChangement(refInput);
     }));
 
-    $(refParent).append($("<img src='./ressources/icons/X.svg' class='img_profil clic'>").click(function(){
+    $(refParent).append($("<img src='./ressources/icons/x.svg' class='img_profil clic'>").click(function(){
         // lancement d'une fonction de retour en arrière !
         retourArriere(refInput);
     }));
@@ -129,7 +129,7 @@ function validationChangement(refInput){
     var contenu = $(refInput).val();
     var flag=0;
     var action="";
-    if ($(refInput).is("#inputPassword")){ // on effectue la verification MOT DE PASSE
+    if ($(refInput).is("#modifierPass")){ // on effectue la verification MOT DE PASSE
         flag = verificationPassWord(contenu,refInput);
         action="mot de passe";
     }
@@ -148,7 +148,7 @@ function validationChangement(refInput){
             // On crée la fonction de vérification
             var test = function(refInput){
                 
-                if ($("#inputPassword").val() == $(refInput).val()){ // si deux mots de passe identiques
+                if ($("#modifierPass").val() == $(refInput).val()){ // si deux mots de passe identiques
                     // CHGMT BDD
                     modificationBDD(action,contenu);
                     return 1;
@@ -161,7 +161,7 @@ function validationChangement(refInput){
                 }
             }
             creerModalVerif("passWd","Confirmer votre mot de passe","Modifier","btn-outline-secondary","password","Saisir mot de passe",
-            test,function(){retourArriere($("#inputPassword"))}
+            test,function(){retourArriere($("#modifierPass"))}
             ,1);
             $("#passWd").modal();
 

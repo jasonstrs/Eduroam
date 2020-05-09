@@ -107,3 +107,101 @@ function envoiMailPass($email,$subject,$nom,$prenom,$lien){
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
+
+/**
+ * Vérifie les infos entrées avant d'envoyer le mail
+ */
+function envoyerMail($to,$sujet,$message,$tabHeaders){
+    return mail($to,$sujet,$message,implode("\r\n",$tabHeaders));
+}
+
+/**
+ * Mail contenant un lien permettant de finaliser l'inscription d'un membre.
+ */
+function mailInscription($to,$nom,$prenom,$lien){
+    $sujet = "Finalisation de l'inscription ! ";
+    $message="
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset=\"UTF-8\">
+            <style>
+                button{
+                    border:3px rgb(255,0,50) outline;
+                    background-color:red;
+                    color:white;
+                    text-align:center;
+                    max-width:30%;
+                }
+            </style>
+        </head>
+        <body>
+        <div>
+            <p>Bonjour $prenom $nom !</p>
+            <b>Avant de commencer...</b>
+            <p>Veuillez valider votre adresse mail afin de pouvoir vous connecter</p>
+            <a href='". $lien ."'>
+                <button>
+                    Veuillez cliquer ici pour confirmer votre adresse e-mail.
+                </button>
+            </a>
+        </div>
+        </body>
+    </html>
+    ";
+
+    // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+    $headers[] = 'MIME-Version: 1.0';
+    $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+    // En-têtes additionnels
+    $headers[] = 'From: JSPC <noreply.jspc@example.com>';
+
+    return envoyerMail($to,$sujet,$message,$headers);
+}
+
+
+/*   
+    // Plusieurs destinataires
+     $to  = 'johny@example.com, sally@example.com'; // notez la virgule
+
+     // Sujet
+     $subject = 'Calendrier des anniversaires pour Août';
+
+     // message
+     $message = '
+     <html>
+      <head>
+       <title>Calendrier des anniversaires pour Août</title>
+      </head>
+      <body>
+       <p>Voici les anniversaires à venir au mois d\'Août !</p>
+       <table>
+        <tr>
+         <th>Personne</th><th>Jour</th><th>Mois</th><th>Année</th>
+        </tr>
+        <tr>
+         <td>Josiane</td><td>3</td><td>Août</td><td>1970</td>
+        </tr>
+        <tr>
+         <td>Emma</td><td>26</td><td>Août</td><td>1973</td>
+        </tr>
+       </table>
+      </body>
+     </html>
+     ';
+
+     // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+     $headers[] = 'MIME-Version: 1.0';
+     $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+     // En-têtes additionnels
+     $headers[] = 'To: Mary <mary@example.com>, Kelly <kelly@example.com>';
+     $headers[] = 'From: Anniversaire <anniversaire@example.com>';
+     $headers[] = 'Cc: anniversaire_archive@example.com';
+     $headers[] = 'Bcc: anniversaire_verif@example.com';
+
+     // Envoi
+     mail($to, $subject, $message, implode("\r\n", $headers)); 
+     
+*/

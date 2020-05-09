@@ -16,7 +16,7 @@ h3 {
     margin-right: 5px;
 }
 
-#inputFirstName,#inputName,#inputPassword,#inputEmail {
+#inputFirstName,#inputName,#modifierPass,#inputEmail {
     display: inline-block;
     width: 90%;
 }
