@@ -82,9 +82,9 @@ session_start();
                     $hashCode = hashCode($id);
                     $prenom = getPrenom($id);
                     $nom = getNom($id);
-                    $lien = $url . '/Eduroam/controleur.php?action=verificationPassword&hash='.$hashCode;
-                    envoiMailPass($email,"Mot de passe",$nom,$prenom,$lien);
-                    echo "success";
+                    $lien = $url . '/ig2i-projet-Eduroam/controleur.php?action=verificationPassword&hash='.$hashCode;
+                    $rep = mailChangerPass($email,$nom,$prenom,$lien);
+                    echo $rep;
                     
                 } else {
                     echo "incorrect";

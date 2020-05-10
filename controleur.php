@@ -59,7 +59,7 @@ switch($action){
             session_start();
             $_SESSION['hashModifPass']=$hash;
             
-            header("Location:../Eduroam/index.php?view=changementPasse");
+            header("Location:../ig2i-projet-Eduroam/index.php?view=changementPasse");
 
         } else { // probleme de HASH
             $qs="fail";

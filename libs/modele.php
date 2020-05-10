@@ -571,7 +571,7 @@ function editRole($idRole, $nom, $droits){
 }
 
 function getDroitByRole($idRole, $droit) {
-	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(droits, '$.$droit')) FROM `eduroam_role` WHERE idRole=$idRole;"; 
+	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(droits, '$.$droit')) FROM eduroam_role WHERE idRole=$idRole;"; 
 	$rs = SQLGetChamp($SQL);
 	return $rs;
 }

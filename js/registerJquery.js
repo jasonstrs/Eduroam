@@ -256,7 +256,7 @@ function getNewPass(){
          data: {"email":email,"action":"PassWord"},
          success: function(oRep){
              switch(oRep){
-                 case 'success' :
+                 case "1" :
                      $("#keyPass").hide();
                      $("#envoiMail").show();
                      $("#envoiMail").html("<h4 class=\"alert-heading\">Mail envoyé !</h4><p>Un email vient d'être envoyé à l'adresse <b>" + email +"</b>. Veuillez suivre les instructions afin de modifier votre mot de passe !</p>");
