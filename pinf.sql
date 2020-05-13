@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 07 mai 2020 à 18:43
--- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.3.12
+-- Généré le :  mer. 13 mai 2020 à 14:35
+-- Version du serveur :  5.7.24
+-- Version de PHP :  7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,6 +25,32 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `eduroam_accueil`
+--
+
+DROP TABLE IF EXISTS `eduroam_accueil`;
+CREATE TABLE IF NOT EXISTS `eduroam_accueil` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` text NOT NULL,
+  `id_annonce` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `eduroam_accueil`
+--
+
+INSERT INTO `eduroam_accueil` (`id`, `type`, `id_annonce`) VALUES
+(2, 'sondage', 1),
+(3, 'sondage', 6),
+(5, 'annonce', 4),
+(8, 'annonce', 6),
+(9, 'annonce', 7),
+(10, 'annonce', 8);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `eduroam_article`
 --
 
@@ -33,11 +59,20 @@ CREATE TABLE IF NOT EXISTS `eduroam_article` (
   `idArticle` int(11) NOT NULL AUTO_INCREMENT,
   `idU` int(11) NOT NULL,
   `dateArticle` date NOT NULL,
-  `titre` text NOT NULL,
   `contenu` longtext NOT NULL,
   PRIMARY KEY (`idArticle`),
   KEY `article_idU` (`idU`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `eduroam_article`
+--
+
+INSERT INTO `eduroam_article` (`idArticle`, `idU`, `dateArticle`, `contenu`) VALUES
+(4, 3, '2020-05-13', '&lt;p&gt;&lt;span class=&quot;ql-size-huge&quot;&gt;Nouveau Site&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Blabla blabla&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Toussa toussa&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mieux que Style-Addict !&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Merci bye bye&lt;/p&gt;'),
+(6, 3, '2020-05-13', '&lt;p&gt;dsdsdsd&lt;/p&gt;'),
+(7, 3, '2020-05-13', '&lt;p&gt;zdqsdzdqsdz&lt;/p&gt;'),
+(8, 3, '2020-05-13', '&lt;p&gt;qsdzqsdz&lt;/p&gt;');
 
 -- --------------------------------------------------------
 
@@ -50,10 +85,21 @@ CREATE TABLE IF NOT EXISTS `eduroam_choix_sondage` (
   `idChoix` int(11) NOT NULL AUTO_INCREMENT,
   `idSondage` int(11) NOT NULL,
   `choix` text NOT NULL,
-  `ouvert` tinyint(1) NOT NULL,
   PRIMARY KEY (`idChoix`),
   KEY `choix_sondage_idSondage` (`idSondage`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `eduroam_choix_sondage`
+--
+
+INSERT INTO `eduroam_choix_sondage` (`idChoix`, `idSondage`, `choix`) VALUES
+(1, 1, 'Pain au chocolat'),
+(2, 1, 'Chocolatine'),
+(3, 1, 'Chocobarre'),
+(4, 6, 'Crayon de bois'),
+(5, 6, 'Crayon gris'),
+(6, 6, 'Crayon à papier');
 
 -- --------------------------------------------------------
 
@@ -68,6 +114,14 @@ CREATE TABLE IF NOT EXISTS `eduroam_choix_user` (
   PRIMARY KEY (`idU`,`idChoix`),
   KEY `idChoix` (`idChoix`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `eduroam_choix_user`
+--
+
+INSERT INTO `eduroam_choix_user` (`idU`, `idChoix`) VALUES
+(3, 1),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -93,8 +147,8 @@ CREATE TABLE IF NOT EXISTS `eduroam_date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) DEFAULT 0,
-  `lien` text DEFAULT NULL,
+  `valide` int(11) DEFAULT '0',
+  `lien` text,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
 ) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
@@ -163,8 +217,8 @@ CREATE TABLE IF NOT EXISTS `eduroam_idee_ville` (
 
 DROP TABLE IF EXISTS `eduroam_notif_spectacle`;
 CREATE TABLE IF NOT EXISTS `eduroam_notif_spectacle` (
-  `nbMin` int(11) NOT NULL DEFAULT 100,
-  `nbRappel` int(11) NOT NULL DEFAULT 50,
+  `nbMin` int(11) NOT NULL DEFAULT '100',
+  `nbRappel` int(11) NOT NULL DEFAULT '50',
   `mailNbInt` text NOT NULL,
   `objNbInt` tinytext NOT NULL,
   `mailIdeeVille` text NOT NULL,
@@ -258,13 +312,19 @@ CREATE TABLE IF NOT EXISTS `eduroam_sondage` (
   `idSondage` int(11) NOT NULL AUTO_INCREMENT,
   `idU` int(11) NOT NULL,
   `intitule` text NOT NULL,
-  `nbChoix` int(11) NOT NULL,
   `cacherResultats` tinyint(1) NOT NULL,
-  `dateDebut` date NOT NULL,
-  `dateFin` date NOT NULL,
-  PRIMARY KEY (`idSondage`),
-  UNIQUE KEY `sondage_idU` (`idU`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `dateFin` date DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`idSondage`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `eduroam_sondage`
+--
+
+INSERT INTO `eduroam_sondage` (`idSondage`, `idU`, `intitule`, `cacherResultats`, `dateFin`, `date`) VALUES
+(1, 3, 'Pain au chocolat ou chocolatine ?', 1, NULL, '2020-05-12'),
+(6, 3, '??', 1, '2020-05-12', '2020-05-12');
 
 -- --------------------------------------------------------
 
@@ -337,8 +397,8 @@ CREATE TABLE IF NOT EXISTS `eduroam_user` (
   `passe` text NOT NULL,
   `superadmin` tinyint(1) NOT NULL,
   `code` tinyint(1) NOT NULL,
-  `banni` tinyint(1) NOT NULL DEFAULT 0,
-  `choice` tinyint(1) NOT NULL DEFAULT 1,
+  `banni` tinyint(1) NOT NULL DEFAULT '0',
+  `choice` tinyint(1) NOT NULL DEFAULT '1',
   `hashCode` text NOT NULL,
   PRIMARY KEY (`idU`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -371,7 +431,8 @@ CREATE TABLE IF NOT EXISTS `eduroam_user_role` (
 --
 
 INSERT INTO `eduroam_user_role` (`idU`, `idRole`) VALUES
-(3, 8);
+(3, 8),
+(1, 9);
 
 -- --------------------------------------------------------
 
@@ -389,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `eduroam_video` (
   `thumbnails` text NOT NULL,
   `checked` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1229 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1233 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `eduroam_video`
@@ -400,7 +461,6 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (821, 'HGD_TPuIY5A', '2020-04-25', 'CORONAVIRUS : C&#039;est l&#039;histoire d&#039;un chien, d&#039;une abeille &amp; d&#039;un âne (J&#039;SUIS PAS CONTENT ! #S06E13)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/HGD_TPuIY5A/default.jpg', 0),
 (822, 'I_YMgNaEVOk', '2020-04-15', 'CORONAVIRUS : Macron a parlé, Estrosi a menti &amp; le MEDEF nous dresse ! (J&#039;SUIS PAS CONTENT ! S06E12)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/I_YMgNaEVOk/default.jpg', 0),
 (823, 'wyAGvwxd5A8', '2020-04-13', 'CORONAVIRUS : France VS Reste du monde VS Libertés ! (J&#039;SUIS PAS CONTENT ! #Hors-Série)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/wyAGvwxd5A8/default.jpg', 0),
-(824, '0-rBJPrdH7c', '2020-03-28', 'CORONAVIRUS: Top 3 des FDP, Cymès mes fesses &amp; Chloroquine autorisée ! (J&#039;SUIS PAS CONTENT! #S06E11)', 'Pour précommander le jeu VIVE LA FRANCE : https://fr.ulule.com/vive-la-france-jeu/ · Pour me soutenir sur T I P E E E ...', 'https://i.ytimg.com/vi/0-rBJPrdH7c/default.jpg', 0),
 (825, '8pKKKPkS0kY', '2020-03-21', 'CORONAVIRUS: Sibeth la mytho, Policiers trahis &amp; Assemblée riquiqui ! (J&#039;SUIS PAS CONTENT ! #S06E10)', 'Pour pré commander le jeu de cartes \"Vive la France\" : https://fr.ulule.com/vive-la-france-jeu/ · Pour me soutenir sur T I P E E E ...', 'https://i.ytimg.com/vi/8pKKKPkS0kY/default.jpg', 0),
 (826, 'CJDPml4VVn4', '2020-03-19', 'CORONAVIRUS : réponses aux critiques (vlog)', 'L\'épisode d\'hier : https://www.youtube.com/watch?v=p-GBTt_Qa4Y&t=223s · Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content ...', 'https://i.ytimg.com/vi/CJDPml4VVn4/default.jpg', 0),
 (827, 'p-GBTt_Qa4Y', '2020-03-19', 'CORONAVIRUS, MENSONGES &amp; TRAHISONS (J&#039;suis pas content ! #Hors-Série)', 'LIEN ULULE POUR PRECOMMANDER LE JEU VIVE LA FRANCE : https://fr.ulule.com/vive-la-france-jeu/ · Pour me soutenir sur T I P E E E ...', 'https://i.ytimg.com/vi/p-GBTt_Qa4Y/default.jpg', 0),
@@ -544,9 +604,9 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (965, 'o3jVV-uSIkg', '2018-09-13', 'J&#039;SUIS PAS CONTENT ! #181 : FERRAND président, WAUQUIEZ est chaud &amp; ARISTOTE en marche !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/o3jVV-uSIkg/default.jpg', 0),
 (966, 'rjVB6D1xRUI', '2018-09-12', 'J&#039;SUIS PAS CONTENT ! #180 : Mélenchon humilié, Gégé fatigué &amp; Bergé ramassée...', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/rjVB6D1xRUI/default.jpg', 0),
 (967, 'ekRHx38lV6s', '2018-09-08', 'TOP 10 des politiciens que vous détestez le plus ! [Feat. Tatiana Ventôse] (ISVG #01)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/ekRHx38lV6s/default.jpg', 0),
-(968, 'DDVHszfL3JI', '2018-09-06', 'J&#039;SUIS PAS CONTENT ! #179 :  De Rugy ministre, Darmanin persiste &amp; Assemblée Kawai !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/DDVHszfL3JI/default.jpg', 0);
+(968, 'DDVHszfL3JI', '2018-09-06', 'J&#039;SUIS PAS CONTENT ! #179 :  De Rugy ministre, Darmanin persiste &amp; Assemblée Kawai !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/DDVHszfL3JI/default.jpg', 0),
+(969, 'Mbo8QEFWmpo', '2018-09-05', 'J&#039;SUIS PAS CONTENT ! #178 : Trump VS Migrants, Les Experts 2.0 &amp; Cartes postales du progrès !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/Mbo8QEFWmpo/default.jpg', 0);
 INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
-(969, 'Mbo8QEFWmpo', '2018-09-05', 'J&#039;SUIS PAS CONTENT ! #178 : Trump VS Migrants, Les Experts 2.0 &amp; Cartes postales du progrès !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/Mbo8QEFWmpo/default.jpg', 0),
 (970, '-0935gWxUhM', '2018-09-04', 'J&#039;SUIS PAS CONTENT ! #177 : Hulot démissione, Darmanin mitone et Dragon Ball déconne !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/-0935gWxUhM/default.jpg', 0),
 (971, 'QiOghEKtf5g', '2018-08-13', 'J&#039;SUIS PAS CONTENT ! #176 : Hollande 2022, Tata Christiane is back &amp; Kaaris VS Booba !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/QiOghEKtf5g/default.jpg', 0),
 (972, 'BjSYtptmZeg', '2018-08-12', 'J&#039;SUIS PAS CONTENT ! #175 :  Faux Compte à Schiappa, Monde qui change &amp; Macron humaniste !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 • T W I T T E R ...', 'https://i.ytimg.com/vi/BjSYtptmZeg/default.jpg', 0),
@@ -693,9 +753,9 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1114, 'YIUCmAN5EUQ', '2017-03-27', 'J&#039;SUIS PAS CONTENT ! #70 : Attentat de Londres, attentat d&#039;Orly &amp; Etat d&#039;urgence mon kiki !', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • • D I S C O R D : https://discord.gg/RaksmAn Y O U T U B E ...', 'https://i.ytimg.com/vi/YIUCmAN5EUQ/default.jpg', 0),
 (1115, 'tbGyeglGipY', '2017-03-22', 'J&#039;SUIS PAS CONTENT ! #69 : Macron, le PNJ de l’enfer… (VS Asselineau &amp; le 18-25)', 'Pour réserver ta place pour ce Vendredi à Toulouse : https://www.weezevent.com/greg-tabibian-dans-j-suis-pas-content Retrouve-nous sur : · T W I T T E R ...', 'https://i.ytimg.com/vi/tbGyeglGipY/default.jpg', 0),
 (1116, 'B_Kkt3gETjk', '2017-03-21', 'J&#039;SUIS PAS CONTENT ! #68 : Débat Présidentiel, arnaque Macron &amp; féminisme contrarié !', 'Pour réserver ta place pour ce Vendredi à Toulouse ...', 'https://i.ytimg.com/vi/B_Kkt3gETjk/default.jpg', 0),
-(1117, 'qxms2kNaCZc', '2017-03-20', 'J&#039;SUIS PAS CONTENT ! #67 : Manif de Mélenchon, Manif de Fillon !', 'Pour réserver ta place pour ce Vendredi à Toulouse ...', 'https://i.ytimg.com/vi/qxms2kNaCZc/default.jpg', 0);
+(1117, 'qxms2kNaCZc', '2017-03-20', 'J&#039;SUIS PAS CONTENT ! #67 : Manif de Mélenchon, Manif de Fillon !', 'Pour réserver ta place pour ce Vendredi à Toulouse ...', 'https://i.ytimg.com/vi/qxms2kNaCZc/default.jpg', 0),
+(1118, 'i8fv50huT4g', '2017-03-13', 'J&#039;SUIS PAS CONTENT ! #66 : PSG Humilié, Indécence socialiste &amp; Porno pour tous ! [Quickie 21]', 'Pour réserver pour la tournée : NANTES : http://www.billetreduc.com/182021/evt.htm ROUEN : http://www.billetreduc.com/182225/evt.htm LILLE ...', 'https://i.ytimg.com/vi/i8fv50huT4g/default.jpg', 0);
 INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `description`, `thumbnails`, `checked`) VALUES
-(1118, 'i8fv50huT4g', '2017-03-13', 'J&#039;SUIS PAS CONTENT ! #66 : PSG Humilié, Indécence socialiste &amp; Porno pour tous ! [Quickie 21]', 'Pour réserver pour la tournée : NANTES : http://www.billetreduc.com/182021/evt.htm ROUEN : http://www.billetreduc.com/182225/evt.htm LILLE ...', 'https://i.ytimg.com/vi/i8fv50huT4g/default.jpg', 0),
 (1119, 'TJWRv_zic9o', '2017-03-10', 'Résa tournée disponible, Comedy club surprise &amp; Vlogs ! (la vidéo du jeudi #10)', 'Pour réserver pour le comedy club, ce soir 21h30 : http://www.billetreduc.com/173019/evt.htm · Pour réserver pour la tournée : NANTES ...', 'https://i.ytimg.com/vi/TJWRv_zic9o/default.jpg', 0),
 (1120, 'F4DuPZu-CiE', '2017-02-28', 'J&#039;SUIS PAS CONTENT ! #64 : Ferme ta gueule Macron ! [Quickie #19]', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/F4DuPZu-CiE/default.jpg', 0),
 (1121, 'RbNiMMiiAFs', '2017-02-24', 'J&#039;SUIS PAS CONTENT ! #63 : Affaire Théo, FN &amp; Dragon Ball ! [Quickie #18]', 'Pour réserver pour la tournée : · http://mercipublic.com/artist/greg-tabibian/ Retrouve-nous sur : Discord : https://discord.gg/R5J9f27 · T W I T T E R ...', 'https://i.ytimg.com/vi/RbNiMMiiAFs/default.jpg', 0),
@@ -704,7 +764,6 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1124, '_MlKm6e5zWI', '2017-01-25', 'J&#039;SUIS PAS CONTENT... sur scène ! c&#039;est parti pour la tournée !', 'PRECISION importante : le spectable n\'est PAS une reprise de mes vidéos j\'suis pas content ! C\'est un spectacle totalement différent :) · Pour pré-réserver ...', 'https://i.ytimg.com/vi/_MlKm6e5zWI/default.jpg', 0),
 (1125, '_Pdh8KB6uFI', '2017-01-23', 'J&#039;SUIS PAS CONTENT ! #60 : Polanski mon kiki, Prédicat mon caca ! [Quickie #15]', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/_Pdh8KB6uFI/default.jpg', 0),
 (1126, 'fuyAey-u5m4', '2017-01-19', 'J&#039;SUIS PAS CONTENT ! #59 : La ptite giflette à Manu ! [Quickie #14]', 'o Lien de la pétition : · http://www.mesopinions.com/petition/social/legion-honneur-nolan-18-ans-gifle/27431 o Retrouve-nous sur : · T W I T T E R ...', 'https://i.ytimg.com/vi/fuyAey-u5m4/default.jpg', 0),
-(1127, 'f1GIZHlIQ5w', '2017-01-11', 'J&#039;SUIS PAS CONTENT ! #58 : Bonne année mon CUL ! [Quickie #13]', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/f1GIZHlIQ5w/default.jpg', 0),
 (1128, 'J4mIXL6cJWI', '2016-12-27', 'J&#039;SUIS PAS CONTENT ! #57 : Les Chtis Kdos de Manuel Valls ! (et Mimolette...) [Quickie #12]', 'Retrouve-nous sur : Discord : https://discord.gg/R5J9f27 · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E ...', 'https://i.ytimg.com/vi/J4mIXL6cJWI/default.jpg', 0),
 (1129, '9WyVpUrjHoQ', '2016-12-08', 'J&#039;SUIS PAS CONTENT! #56: Hollande renonce, Najat s&#039;enfonce, Fillon défonce &amp; YT Drama???? [ft. Pavalek]', 'Retrouve-nous sur : Discord : https://discord.gg/R5J9f27 · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E ...', 'https://i.ytimg.com/vi/9WyVpUrjHoQ/default.jpg', 0),
 (1130, '3Z8mjP5PXeo', '2016-11-15', 'J&#039;SUIS PAS CONTENT ! #54 (Feat. Raptor Dissident) : Flics en manif, Nuit debout &amp; Président teubé...', 'Retrouve-nous sur : Discord : https://discord.gg/R5J9f27 · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E ...', 'https://i.ytimg.com/vi/3Z8mjP5PXeo/default.jpg', 0),
@@ -759,7 +818,6 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1180, 'mY949ROPKus', '2016-01-13', 'VLOG #33 - La dernière vidéo de la chaine ? (?????????? )', 'Petit vlog improvisé à l\'occasion de la loi actuellement en cours de vote à l\'Assemblée ce mercredi, dans le silence médiatique le plus total. Tourné avec les ...', 'https://i.ytimg.com/vi/mY949ROPKus/default.jpg', 0),
 (1181, '7bV-2gLRYyY', '2015-12-27', 'VLOG #32 - La nouvelle réforme électo-anale ! (?????????? )', 'Vidéo originalement postée le 24/12/2015. J\'avais pas prévu de refaire un VLOG avant la fin de l\'année mais là… c\'est du lourd… C\'est mon petit cadeau de ...', 'https://i.ytimg.com/vi/7bV-2gLRYyY/default.jpg', 0),
 (1182, '7uSuui9Tjkw', '2015-12-25', 'J&#039;SUIS PAS CONTENT ! #35 ?+ infos importantes !?', 'o LIEN POUR VOIR L\'EPISODE VIA DAILYMOTION : http://goo.gl/ENA7I5 N\'hésitez pas à vous abonner à la newsletter de mon site internet afin de ne rien ...', 'https://i.ytimg.com/vi/7uSuui9Tjkw/default.jpg', 0),
-(1183, '37cfq8bfOnY', '2015-12-05', 'VLOG #31 - La dénonciation enfin de retour en France ! Youpi !!! (?????????? )', 'Nouveau Vlog !!! et pour une fois, une BONNE nouvelle à l\'intérieur !!! Youpi !!! ?#?jspc? ?#?vlog31? ?#?heureslesplussombres? o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/37cfq8bfOnY/default.jpg', 0),
 (1184, 'xETwdIblofQ', '2015-12-04', 'Le point sur la chaine (première partie) : Vlogs et prochain JSPC', 'Lien des épisodes de VLOG : https://www.youtube.com/playlist?list=PLMliZY3QWQlJO5fRHX-Ofw3AXlMfBUIjl Lien de la page facebook JSPC-TV (chaine d\'info ...', 'https://i.ytimg.com/vi/xETwdIblofQ/default.jpg', 0),
 (1185, '0LQSs9Jta-E', '2015-12-04', 'VLOG #25 - Etat d&#039;urgence et Cop 21 [REUPLOAD 29/11/2015]', 'o Vidéo originalement postée sur Facebook le : 29/11/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/0LQSs9Jta-E/default.jpg', 0),
 (1186, 'kfdU18KEVgA', '2015-12-04', 'VLOG #14 - Jambon vs Terrorisme [REUPLOAD 16/11/2015]', 'o Vidéo originalement postée sur Facebook le : o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/kfdU18KEVgA/default.jpg', 0),
@@ -803,7 +861,11 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1225, 'RwNHrJFEPBw', '2015-02-03', 'J&#039;SUIS PAS CONTENT ! #19 - Concours de connerie : Najat VS Ségolène', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/RwNHrJFEPBw/default.jpg', 0),
 (1226, '8uxCnfXrmIA', '2017-06-28', 'J&#039;SUIS PAS CONTENT ! #93 [Quickie] : Valls quitte le PS !!! (&amp; démocratie de perlimpinpin)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/8uxCnfXrmIA/default.jpg', 0),
 (1227, 'BaTMj1dFodo', '2017-06-23', 'J&#039;SUIS PAS CONTENT ! #92 :  Big Data, Bayrou en &quot;off&quot; &amp; Robots sexuels ! [feat. JR Lombard]', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/BaTMj1dFodo/default.jpg', 0),
-(1228, 'Aab4VsCWm2E', '2016-01-28', 'VLOG #39 - Dieudonné retenu à Hong Kong : que s&#039;est-il vraiment passé ? (?????????? )', 'Petit réaction à chaud afin de débunker les complotistes ! Dieudonné est actuellement retenu à Hong Kong. Mais que s\'est-il vraiment passé ??? ?#?vlog? ?#?jspc? ...', 'https://i.ytimg.com/vi/Aab4VsCWm2E/default.jpg', 0);
+(1228, 'Aab4VsCWm2E', '2016-01-28', 'VLOG #39 - Dieudonné retenu à Hong Kong : que s&#039;est-il vraiment passé ? (?????????? )', 'Petit réaction à chaud afin de débunker les complotistes ! Dieudonné est actuellement retenu à Hong Kong. Mais que s\'est-il vraiment passé ??? ?#?vlog? ?#?jspc? ...', 'https://i.ytimg.com/vi/Aab4VsCWm2E/default.jpg', 0),
+(1229, '7cj0aJfFfSU', '2020-05-10', 'DES CONS FINEMENT (J&#039;suis pas content ! #S06E15)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/7cj0aJfFfSU/default.jpg', 0),
+(1230, 'r6Y2czfcTUc', '2018-05-21', 'J&#039;SUIS PAS CONTENT ! #156 :  Urbanisme inclusif, Combine à Collomb &amp; Journalisme engagé !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/r6Y2czfcTUc/default.jpg', 0),
+(1231, 'b3E0lbo744E', '2017-06-04', 'Attentat de Londres : je m&#039;en &quot;bats les couilles&quot; (réaction)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/b3E0lbo744E/default.jpg', 0),
+(1232, 'wafbP6_7gfI', '2015-02-06', 'J&#039;SUIS PAS CONTENT ! #20 - DSK en procès et terrorisme juvénile...', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/wafbP6_7gfI/default.jpg', 0);
 
 --
 -- Contraintes pour les tables déchargées
@@ -839,12 +901,6 @@ ALTER TABLE `eduroam_date_spectacle`
 --
 ALTER TABLE `eduroam_idee_ville`
   ADD CONSTRAINT `eduroam_idee_ville_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `eduroam_sondage`
---
-ALTER TABLE `eduroam_sondage`
-  ADD CONSTRAINT `eduroam_sondage_ibfk_1` FOREIGN KEY (`idU`) REFERENCES `eduroam_user` (`idU`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `eduroam_spectacle_user`
