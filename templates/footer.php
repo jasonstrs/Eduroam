@@ -35,7 +35,7 @@
 
 
 
-<nav id="footer" class="navbar fixed-bottom navbar-expand-lg navbar-light" style="background-color : #c8912a">
+<nav id="footer" class="navbar navbar-expand-lg navbar-light" style="background-color : #c8912a">
 
       	<ul class="navbar-nav mx-auto mt-2 mt-lg-0">
       		<li class="nav-item">

@@ -15,7 +15,7 @@ $series = getSeries();
     </div> <br/>
     <div class="lead">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-8 offset-md-2">
                 <form action="#" class="menu p-4" autocomplete="off">
                     <input type="hidden" id="hiddenpage" name="hiddenpage" value="1"/>
                     <input type="hidden" id="nbserie" name="hiddenpage" value="1"/>

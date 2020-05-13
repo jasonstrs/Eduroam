@@ -63,7 +63,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 		}
 		.navbar {
 			z-index:99;
-			position:fixed; 
+			/* position:fixed;  */
 			background-color: #c8912a;
 			width : 100%;
 		}
@@ -207,7 +207,8 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			</li>
 		
 			
-			<?php if (valider("connecte","SESSION") && valider("admin","SESSION")==1) { ?>
+			<?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "spectacle")
+			|| getDroitByUser(valider("idUser","SESSION"), "utilisateurs") || getDroitByUser(valider("idUser","SESSION"), "video"))) { ?>
 				<li class="nav-item">
           			<a class="nav-link" href="index.php?view=admin"><b>Administration</b></a>
         		</li>

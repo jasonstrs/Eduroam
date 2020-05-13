@@ -227,7 +227,7 @@ function callApi(nToken) {
         $("#actualiserProgress").attr("aria-valuenow", 100/nbPage*progress);
         $("#actualiserProgress").css("width", 100/nbPage*progress+"%");
 		if(results.items.length==0) {
-			console.log("Fini par items.length");
+			//console.log("Fini par items.length");
 			endApi();
 		}
 		else {

@@ -1,10 +1,182 @@
 <?php 
+if (basename($_SERVER["PHP_SELF"]) != "index.php")
+{
+	header("Location:../index.php?view=accueil");
+	die("");
+}
 
-
+$nbAccueils=countAccueils();
 ?>
 
+<style>
 
-<a href="./index.php?view=planiSpectacles">Créer un spectacle</a>
+	.hidden {
+		display: none;
+	}
+
+	.wrapper{
+		margin:7px;
+
+	}	
+	.gauche{
+		margin-left: -15%;
+		width:45%;
+		float:left;
+	}
+	.video{
+		height:50%;
+		width:100%;
+		position:relative;
+	}
+	.twitos{
+		height:100%;
+		width:100%;
+		overflow:scroll;
+		overflow-x:hidden;
+		position:relative;
+		margin-top:5%;
+	}
+	.fil{
+		/* height:100%; */
+		width:72%;
+		margin-left: 3%;
+		margin-right: -15%;
+		border-left-style: solid;
+		border-color: grey;
+		border-width: 0.5px;
+		/* overflow-x:hidden; */
+		position:relative;
+		float:left;
+	}
+
+	.unArticle{
+		width:95%;
+		border-bottom-style: solid;
+		border-bottom-color: lightgrey;
+		border-bottom-width: 1px;
+		margin:4%;
+		padding-top: 3em;
+		padding-bottom: 3em;
+	}
+
+	.unSondage{
+		width:95%;
+		border-bottom-style: solid;
+		border-bottom-color: lightgrey;
+		border-bottom-width: 1px;
+		margin:4%;
+		padding-top: 3em;
+		padding-bottom: 3em;
+	}
+
+	.card-header{
+		font-weight: bold;
+		font-size: large;
+	}
+
+	.fermer, .date, .admin {
+		font-weight: normal;
+		font-size: small;
+		color: darkgrey;
+	}
+
+	.date {
+		float:right;
+	}
+
+	.soumettre {
+		margin-bottom:0.8em;
+	}
+
+	.progress{
+		background-color: #ffeabd;
+	}
+
+	.ql-size-small {
+		font-size: 0.75em;
+	}
+	.ql-size-large {
+		font-size: 1.5em;
+	}
+	.ql-size-huge {
+		font-size: 2.5em;
+	}
+
+	.ql-font-serif {
+		font-family: Georgia, Times New Roman, serif;
+	}
+	.ql-font-monospace {
+		font-family: Monaco, Courier New, monospace;
+	}
+
+</style>
+
+<link rel="stylesheet" href="css/quill/quill.snow.css"/>
+
+	<!-- Modal -->
+	<div class="modal fade" id="confirmSupprModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<input type="hidden" id="toSuppr" value="0">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Confirmer la suppression</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			Voulez vous vraiment supprimer cette annonce ?
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+			<button type="button" class="btn btn-primary" id="confirmSuppr">Supprimer</button>
+		</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="groupe">
+		<div class="gauche">
+			<div class = "wrapper video">
+			<iframe id="video" class="w100" width="100%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div class = "wrapper twitos" data-spy="scroll" data-offset="0">
+				<a class="twitter-timeline"
+				  href="https://twitter.com/gregtabibian">
+				Tweets by @gregtabibian
+				</a>
+			</div>
+		</div>
+		
+
+
+		<div class="wrapper fil">
+			<input type="hidden" id="nbResults" value="<?php echo $nbAccueils ?>">
+			<?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { ?>
+			<a class="btn bg-warning dropdown-toggle offset-10" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<b>Ajouter</b>
+			</a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<a class="dropdown-item" href="index.php?view=creerArticle">Annonce</a>
+				<a class="dropdown-item" href="index.php?view=creerSondage">Sondage</a>
+			</div>
+			<?php } ?>
+			<div id="pageAccueil">
+			</div>
+			<p  class="ml-3" style="text-align:left;">
+				<a href="#" class="hidden" id="previous">Page précédente</a>
+				<span style="float:right;">
+				<a href="#" id="next">Page suivante</a>
+				</span>
+			</p>
+			
+		</div>
+	</div>	
+	
+
+<script src="js/accueil.js"></script>
+
+
 
 <!--<a class="twitter-timeline" href="https://twitter.com/Jasonstrs?ref_src=twsrc%5Etfw">Tweets by Jasonstrs</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 -->

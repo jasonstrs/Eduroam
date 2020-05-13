@@ -472,6 +472,12 @@ function deleteUnchecked() {
 	SQLUpdate($SQL);
 }
 
+function getLastVideos() {
+	$SQL = "SELECT videoId FROM eduroam_video ORDER BY publishedAt DESC";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
 function getVideos($search='', $page='', $limite, $notID='', $apres, $avant, $serie="-1") {
 	//setlocale(LC_TIME, "fr_FR"); //Inutile enfaite je pense
 	$offset = ($page!= '') ? "OFFSET ".$page*$limite : "" ;
@@ -571,21 +577,27 @@ function editRole($idRole, $nom, $droits){
 }
 
 function getDroitByRole($idRole, $droit) {
-	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(droits, '$.$droit')) FROM eduroam_role WHERE idRole=$idRole;"; 
+	$SQL = "SELECT droits FROM eduroam_role WHERE idRole=$idRole;"; 
 	$rs = SQLGetChamp($SQL);
-	return $rs;
+	$rs = json_decode($rs, true);
+	//print_r($rs);
+	return $rs["$droit"];
 }
 
 function getDroitByUser($idUser, $droit) {
-	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(eduroam_role.droits, '$.$droit')) FROM eduroam_role, eduroam_user_role WHERE eduroam_role.idRole=eduroam_user_role.idRole AND eduroam_user_role.idU=$idUser;"; 
+	$SQL = "SELECT eduroam_role.droits FROM eduroam_role, eduroam_user_role WHERE eduroam_role.idRole=eduroam_user_role.idRole AND eduroam_user_role.idU=$idUser;"; 
 	$rs = SQLGetChamp($SQL);
-	return $rs;
+	$rs = json_decode($rs, true);
+	//print_r($rs);
+	return $rs[$droit];
 }
 
 function getDroit($droit) {
-	$SQL = "SELECT JSON_UNQUOTE(JSON_EXTRACT(eduroam_role.droits, '$.$droit')) FROM eduroam_role, eduroam_user_role WHERE eduroam_role.idRole=eduroam_user_role.idRole AND eduroam_user_role.idU=".valider("idUser","SESSION").";"; 
+	$SQL = "SELECT eduroam_role.droits FROM eduroam_role, eduroam_user_role WHERE eduroam_role.idRole=eduroam_user_role.idRole AND eduroam_user_role.idU=".valider("idUser","SESSION").";"; 
 	$rs = SQLGetChamp($SQL);
-	return $rs;
+	$rs = json_decode($rs, true);
+	//print_r($rs);
+	return $rs[$droit];
 }
 
 function getRoles() {
@@ -728,6 +740,127 @@ function deleteRegex($id) {
 function deleteRegexViaSerie($id) {
 	$SQL = "DELETE FROM eduroam_serie_regex WHERE id_serie = $id;";
 	return SQLDelete($SQL);
+}
+
+/* Annonces */
+
+function addAccueil($type, $id) {
+	$SQL = "INSERT INTO eduroam_accueil VALUES('0', '$type', '$id')";
+	SQLUpdate($SQL);
+}
+
+function addAnnonce($contenu, $user) {
+	$SQL = "INSERT INTO eduroam_article VALUES('0','$user', CURRENT_DATE,'$contenu')";
+	SQLUpdate($SQL);
+	$SQL2 = "SELECT idArticle FROM eduroam_article ORDER BY idArticle DESC";
+	$rs = SQLGetChamp($SQL2);
+	addAccueil("annonce", $rs);
+}
+
+function editAnnonce($id, $contenu){
+	$SQL = "UPDATE eduroam_article SET contenu='$contenu' WHERE idArticle='$id'";
+	echo $SQL;
+	SQLUpdate($SQL);
+}
+
+function addSondage($intitule, $user, $hideResult, $endDate) {
+	$SQL = "INSERT INTO eduroam_sondage VALUES('0', '$user', '$intitule', '$hideResult', $endDate, CURRENT_DATE)";
+	SQLUpdate($SQL);
+	$SQL2 = "SELECT idSondage FROM eduroam_sondage ORDER BY idSondage DESC";
+	$rs = SQLGetChamp($SQL2);
+	addAccueil("sondage", $rs);
+	return $rs;
+}
+
+function addChoix($idSondage, $question) {
+	$SQL = "INSERT INTO eduroam_choix_sondage VALUES('0', '$idSondage', '$question')";
+	SQLUpdate($SQL);
+}
+
+function getAccueils($offset) {
+	$SQL = "SELECT * FROM eduroam_accueil ORDER BY id DESC LIMIT 5 OFFSET $offset";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function countAccueils() {
+	$SQL = "SELECT COUNT(*) FROM eduroam_accueil";
+	$rs = SQLGetChamp($SQL);
+	return $rs; 
+}
+
+function getAccueilById($id) {
+	$SQL = "SELECT * FROM eduroam_accueil WHERE id=$id";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getAnnonceById($id) {
+	$SQL = "SELECT * FROM eduroam_article WHERE idArticle=$id";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getSondageById($id) {
+	$SQL = "SELECT * FROM eduroam_sondage WHERE idSondage=$id";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getChoix($id) {
+	$SQL = "SELECT * FROM eduroam_choix_sondage WHERE idSondage=$id";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getReponseCountBySondage($id) {
+	$SQL = "SELECT COUNT(eduroam_choix_user.idU) FROM eduroam_choix_user, eduroam_choix_sondage WHERE eduroam_choix_user.idChoix = eduroam_choix_sondage.idChoix AND eduroam_choix_sondage.idSondage = $id";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function getReponseCountByChoix($id) {
+	$SQL = "SELECT COUNT(*) FROM eduroam_choix_user WHERE idChoix = $id";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function hasVoted($idU, $idSondage) {
+	$SQL = "SELECT COUNT(eduroam_choix_user.idU) FROM eduroam_choix_user, eduroam_choix_sondage WHERE eduroam_choix_user.idChoix = eduroam_choix_sondage.idChoix AND eduroam_choix_sondage.idSondage = $idSondage AND eduroam_choix_user.idU = $idU";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
+function addVote($idU, $idChoix) {
+	$SQL = "INSERT INTO eduroam_choix_user VALUES('$idU', '$idChoix')";
+	SQLUpdate($SQL);
+}
+
+function removeAnnonce($id) {
+	$SQL = "DELETE FROM eduroam_article WHERE idArticle='$id'";
+	SQLDelete($SQL);
+}
+
+function removeSondage($id) {
+	$SQL = "DELETE FROM eduroam_sondage WHERE idSondage='$id'";
+	SQLDelete($SQL);
+}
+
+
+function removeAccueil($id) {
+	$accueil = getAccueilById($id);
+	if($accueil[0]["type"]=="sondage") {
+		removeSondage($accueil[0]["id_annonce"]);
+	} else {
+		removeAnnonce($accueil[0]["id_annonce"]);
+	}
+	$SQL = "DELETE FROM eduroam_accueil WHERE id=$id";
+	SQLDelete($SQL);
 }
 
 ?>
