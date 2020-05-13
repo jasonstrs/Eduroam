@@ -17,7 +17,7 @@
                     <?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { ?>
                     <span class="admin"><a id="suppr<?php echo $accueil["id"]?>" href="#confirmSupprModal" data-toggle="modal" class="suppr">Supprimer</a> - <a href="index.php?view=editArticle&id=<?php echo $accueil["id_annonce"]?>">Modifier</a></span>
                     <?php } ?>
-                    <span class="date">Publié le <?php echo $annonce[0]["dateArticle"]; ?></span>
+                    <span class="date">Publié le <?php echo date("d/m/Y",strtotime($annonce[0]["dateArticle"])); ?></span>
                 </div>
             </div>
         <?php }
@@ -69,7 +69,7 @@
                         <?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { ?>
                         <span class="admin"><a id="suppr<?php echo $accueil["id"]?>" href="#confirmSupprModal" data-toggle="modal" class="suppr">Supprimer</a></span>
                         <?php } ?>
-                        <span class="date">Publié le <?php echo $sondage[0]["date"]; ?></span>
+                        <span class="date">Publié le <?php echo date("d/m/Y", strtotime($sondage[0]["date"])); ?></span>
                     </div>
                 </div>
             </div>

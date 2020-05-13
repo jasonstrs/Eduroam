@@ -120,7 +120,7 @@
 			data: {"action":"addSondage", "intitule":$("#intitule").val(), "reponses":reponses, "hideResult":hideResult, "dateEnd":dateEnd},
 			success: function(oRep){
 				console.log(oRep);
-				document.location.href="http://localhost/eduroam/index.php?view=accueil";
+				document.location.href="index.php?view=accueil";
 			},
 			dataType: "text"
 		});

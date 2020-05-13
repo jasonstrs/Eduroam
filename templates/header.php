@@ -99,9 +99,20 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
             }
         }
 
+
         $(function() {
-        	$("#collapse-navbar").click(function(){
-        		if ($('#logo').css("height")=="100px")
+			var delay = false;
+        	$("#collapse-navbar").on('click', function (event) { 
+				if(delay) return false;
+        		collapseIcon();
+				delay = true;
+				setTimeout(function(){
+					delay = false;					
+				}, 200);
+        	})
+
+			function collapseIcon() {
+				if ($('#logo').css("height")=="100px")
         		{
         		    $('#logo').css({
         				height : '50px',
@@ -115,9 +126,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	        			"transition-duration" : "all 0.7s"
 					});
         		}
-
-
-        	})
+			}
 		});
 		
 		window.twttr = (function(d, s, id) {

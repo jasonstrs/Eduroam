@@ -71,7 +71,7 @@
 			data: {"action":"addAnnonce", "contenu":$(".ql-editor").html()},
 			success: function(oRep){
 				console.log(oRep);
-				document.location.href="http://localhost/eduroam/index.php?view=accueil";
+				document.location.href="index.php?view=accueil";
 			},
 			dataType: "text"
 		});
