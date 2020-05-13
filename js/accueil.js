@@ -47,11 +47,19 @@ $(function() {
 					let pourcentage;
 					if(oRep[0]==0 || oRep[i]==0) pourcentage=0;
 					else pourcentage = Math.round((oRep[i]/oRep[0])*100);
-					$(this).append(`
-					<div class="progress">
-						<div class="progress-bar bg-warning" role="progressbar" style="width: `+pourcentage+`%" aria-valuenow="`+pourcentage+`>" aria-valuemin="0" aria-valuemax="100">`+pourcentage+`%</div>
-					</div>
-					`)
+					if(pourcentage!=0)
+						$(this).append(`
+						<div class="progress">
+							<div class="progress-bar bg-warning" role="progressbar" style="width: `+pourcentage+`%" aria-valuenow="`+pourcentage+`>" aria-valuemin="0" aria-valuemax="100">`+pourcentage+`%</div>
+						</div>
+						`)
+					else 
+						$(this).append(`
+						<div class="progress">
+							<span style='margin-left:20px; color: #fff;'>`+pourcentage+`%</span>
+							<div class="progress-bar bg-warning" role="progressbar" style="width: `+pourcentage+`%" aria-valuenow="`+pourcentage+`>" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						`)
 					i++;
 				});
 			},

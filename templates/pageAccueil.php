@@ -54,7 +54,8 @@
                             else $pourcentage= round(($nbVote/$total)*100);
                             ?>
                             <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $pourcentage?>%;" aria-valuenow="<?php echo $pourcentage?>" aria-valuemin="0" aria-valuemax="100"><?php echo $pourcentage?>%</div>
+                                <?php if($pourcentage ==0) echo "<span style='margin-left:20px; color: #fff;'>".$pourcentage."%</span>"?>
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $pourcentage?>%;" aria-valuenow="<?php echo $pourcentage?>" aria-valuemin="0" aria-valuemax="100"><?php if($pourcentage !=0) echo $pourcentage."%"?></div>
                             </div>
                         <?php }
                         $first = false; ?>
