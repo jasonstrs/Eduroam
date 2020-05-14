@@ -32,6 +32,12 @@
 		cursor:pointer;
 		font-weight: bold;
 	} 
+
+	footer {
+    clear: both;
+    position: relative;
+    height: 40px;
+}
 	
 </style>
 

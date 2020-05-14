@@ -83,6 +83,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			display:none;
 		}
 
+		body {
+			height: 100%;
+			min-height:100%;
+		}
+
 
 		
 
@@ -162,7 +167,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 
 <!-- Wrap all page content here -->
-<div id="wrap">
+<div style="min-height: calc(100vh - 40px);">
   <!-- Fixed navbar -->
 
 	<nav class="navbar navbar-expand-lg navbar-light">
