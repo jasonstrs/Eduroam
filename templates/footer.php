@@ -6,7 +6,7 @@
 		header("Location:../index.php");
 		die("");
 	}
-
+	
 ?>
 
 
@@ -16,38 +16,35 @@
 <!-- fin du wrap (dans le header) -->
 </div>
 
-<script>window.twttr = (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0],
-    t = window.twttr || {};
-  if (d.getElementById(id)) return t;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
-  fjs.parentNode.insertBefore(js, fjs);
+<style>
+	#containFooter {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
 
-  t._e = [];
-  t.ready = function(f) {
-    t._e.push(f);
-  };
+	p {
+		margin: 0;
+		padding: 0.5rem;
+	}
+	a:hover {
+		cursor:pointer;
+		font-weight: bold;
+	} 
+	
+</style>
 
-  return t;
-}(document, "script", "twitter-wjs"));</script>
 
 
-
-<nav id="footer" class="navbar navbar-expand-lg navbar-light" style="background-color : #c8912a">
-
-      	<ul class="navbar-nav mx-auto mt-2 mt-lg-0">
-      		<li class="nav-item">
-		        <span class="navbar-text  mx-5">adresse email à modifier</span>
-		    </li>
-	        <li class="nav-item">
-				<img class="mx-2" src="ressources/tipeee.png" height="30px" width="auto"/>
-				<img class="mx-2" src="ressources/twitter.png" height="30px" width="auto"/>
-				<img class="mx-2" src="ressources/facebook.png" height="30px" width="auto"/>
-				<img class="mx-2" src="ressources/discord.png" height="30px" width="auto"/>
-			</li>
-		</ul>
+<nav id="foot" class="navbar navbar-expand-lg navbar-light" style="background-color : #c8912a;padding:0;">
+		<div id="containFooter">
+			<p>© Grégory Tabibian 2020 | <a>Mentions légales</a>
+			<?php if (valider("connecte","SESSION")) {
+					$MAIL = valider("email","SESSION");
+					echo "<p><i>".$MAIL."</i></p>";
+			} ?>
+		</div>
 </nav>
 
 

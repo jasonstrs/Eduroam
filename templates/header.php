@@ -16,7 +16,9 @@ if (valider("view","GET")!="accueil" &&
 }
 
 include_once "libs/modele.php";
-// Pose qq soucis avec certains serveurs...
+
+$VIEW = valider("view","GET");
+
 echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -158,7 +160,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 <!-- **** B O D Y **** -->
 <body>
 
-<!-- style inspiré de http://www.bootstrapzero.com/bootstrap-template/sticky-footer --> 
 
 <!-- Wrap all page content here -->
 <div id="wrap">
@@ -174,17 +175,17 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
+        <li class="nav-item <?php if ($VIEW=="accueil" || $VIEW=="") {echo "active"; }?>">
           <a class="nav-link" href="index.php?view=accueil"><b>Accueil </b><span class="sr-only">(current)</span></a>
         </li>
 		
        	
 
             <?php if (valider("connecte","SESSION")) { ?>
-				<li class="nav-item">
+				<li class="nav-item <?php if ($VIEW=="spectacles") {echo "active"; }?>">
           			<a class="nav-link" href="index.php?view=spectacles"><b>Spectacles</b></a>
         		</li>
-        		<li class="nav-item">
+        		<li class="nav-item <?php if ($VIEW=="profil") {echo "active"; }?>">
           			<a class="nav-link" href="index.php?view=profil"><b>Profil</b></a>
         		</li>
 			<?php } ?>
@@ -192,7 +193,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 
             <?php if (valider("connecte","SESSION")) { ?>
-        		<li class="nav-item">
+        		<li class="nav-item <?php if ($VIEW=="video") {echo "active"; }?>">
           			<a class="nav-link" href="index.php?view=video"><b>Vidéo</b></a>
         		</li>
 			<?php } ?>
@@ -218,25 +219,14 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			
 			<?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "spectacle")
 			|| getDroitByUser(valider("idUser","SESSION"), "utilisateurs") || getDroitByUser(valider("idUser","SESSION"), "video"))) { ?>
-				<li class="nav-item">
+				<li class="nav-item <?php if ($VIEW=="admin") {echo "active"; }?>">
           			<a class="nav-link" href="index.php?view=admin"><b>Administration</b></a>
         		</li>
-				<!-- <div class="dropdown navbar-nav">
-				  <a class="nav-link text-decoration-none" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<b>Administration</b>
-				  </a>
-				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color: #c8912a">
-				  	<a class="dropdown-item orange" href="index.php?view=gererrole"><b>Gérer les rôles</b></a>
-					<a class="dropdown-item orange" href="index.php?view=creerrole"><b>Créer un nouveau rôle</b></a>
-					<a class="dropdown-item orange" href="index.php?view=gereruser"><b>Gérer les utilisateurs</b></a>
-					<a class="dropdown-item orange" href="index.php?view=planiSpectacles"><b>Planification des spectacles</b></a>
-				  </div>
-				</div> -->
 			<?php } ?>
 
 
 	        	<?php if (!valider("connecte","SESSION")) { ?>
-					<li class="nav-item">
+					<li class="nav-item  <?php if ($VIEW=="login") {echo "active"; }?>">
 						<a class="nav-link" href="index.php?view=login"><b>Se connecter</b></a>
 					</li>		
 				<?php } ?>
@@ -249,8 +239,6 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				<?php } ?>
 
 			</ul>
-
-
   </div>
   
 
