@@ -20,7 +20,6 @@ $(document).ready(function(){
 
 
     $("#btn-Discord").click(function(){
-        console.log(blur);
         if($(".containerBlur").length == 0){
             $("body").prepend(blur.clone(1));
             $(".blur").append(widgetDiscord.clone(1));

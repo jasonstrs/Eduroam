@@ -28,7 +28,7 @@
 		margin: 0;
 		padding: 0.5rem;
 	}
-	a:hover {
+	#foot a:hover {
 		cursor:pointer;
 		font-weight: bold;
 	} 
@@ -45,7 +45,7 @@
 
 <nav id="foot" class="navbar navbar-expand-lg navbar-light" style="background-color : #c8912a;padding:0;">
 		<div id="containFooter">
-			<p>© Grégory Tabibian 2020 | <a>Mentions légales</a>
+			<p>© Grégory Tabibian 2020 | <a href="index.php?view=mentionsLegales">Mentions légales</a>
 			<?php if (valider("connecte","SESSION")) {
 					$MAIL = valider("email","SESSION");
 					echo "<p><i>".$MAIL."</i></p>";

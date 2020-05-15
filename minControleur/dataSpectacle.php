@@ -54,10 +54,12 @@
                    $idSpec = creerSpectacle($ville,$desc); //On crée le spectacle et on récupère son id
                 }
             }
+            $i=0;
             foreach($dates as $currDate){
                 if($currDate != "")
-                    echo "ID ajout : ".ajouterDateSpectacle($idSpec,$currDate);
+                    if(ajouterDateSpectacle($idSpec,$currDate))$i++;
             }
+            echo $i;
         break;
         case "supprDate":
             if($date  = valider("idDate","POST"))
