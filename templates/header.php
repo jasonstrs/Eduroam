@@ -164,6 +164,31 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 <!-- **** B O D Y **** -->
 <body>
+<script>
+	$(window).on('resize', function(){
+	  var win = $(this); //this = window
+      	if (win.width() >= 996) 
+		  $("body").css("font-size","1rem"); 
+		else 
+			$("body").css("font-size","0.9rem");       
+});
+</script>
+
+<style>
+@media screen and (min-width: 996px) 
+{
+    body {
+		font-size:1rem;
+	}
+}
+
+@media screen and (max-width: 995px) 
+{
+    body {
+		font-size:0.9rem;
+	}
+}
+</style>
 
 
 <!-- Wrap all page content here -->
@@ -225,7 +250,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 			<?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "spectacle")
 			|| getDroitByUser(valider("idUser","SESSION"), "utilisateurs") || getDroitByUser(valider("idUser","SESSION"), "video"))) { ?>
 				<li class="nav-item <?php if ($VIEW=="admin") {echo "active"; }?>">
-          			<a class="nav-link" href="index.php?view=admin"><b>Administration</b></a>
+          			<a class="nav-link" href="index.php?view=admin"><b>Admin</b></a>
         		</li>
 			<?php } ?>
 
