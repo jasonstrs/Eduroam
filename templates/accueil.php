@@ -12,19 +12,7 @@ $nbAccueils=countAccueils();
 <link rel="stylesheet" href="css/accueil.css"/>
 
 <style>
-#mainDiv {
-	display: flex;
-	width: 100%;
-	justify-content: space-around;
-}
 
-#gaucheM {
-	width: 55%;
-}
-
-#droiteM {
-	width: 35%;
-}
 
 #divTwitter {
 	width: 100%;
@@ -36,9 +24,36 @@ $nbAccueils=countAccueils();
 	text-align: center;
 }
 
-/* 530 px */
+@media screen and (min-width: 770px) 
+{
+    #mainDiv {
+		display: flex;
+		width: 100%;
+		justify-content: space-around;
+	}
+
+	#gaucheM {
+		width: 55%;
+	}
+
+	#droiteM {
+		width: 35%;
+	}
+}
+
+
 
 </style>
+
+<script>
+	/*$(window).on('resize', function(){
+	  var win = $(this); //this = window
+      	if (win.width() >= 690) 
+		  $("body").css("font-size","1rem"); 
+		else 
+			$("body").css("font-size","0.9rem");       
+});*/
+</script>
 
 
 	<!-- Modal -->
