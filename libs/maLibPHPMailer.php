@@ -127,11 +127,7 @@ function mailInscription($to,$nom,$prenom,$lien){
             <meta charset=\"UTF-8\">
             <style>
                 button{
-                    border:3px rgb(255,0,50) outline;
-                    background-color:red;
-                    color:white;
-                    text-align:center;
-                    max-width:30%;
+                   
                 }
             </style>
         </head>
@@ -141,8 +137,12 @@ function mailInscription($to,$nom,$prenom,$lien){
             <b>Avant de commencer...</b>
             <p>Veuillez valider votre adresse mail afin de pouvoir vous connecter</p>
             <a href='". $lien ."'>
-                <button>
-                    Veuillez cliquer ici pour confirmer votre adresse e-mail.
+                <button style=' border:3px rgb(255,0,50) outline;
+                background-color:red;
+                color:white;
+                text-align:center;
+                max-width:30%;'>
+                    Confirmer
                 </button>
             </a>
         </div>
@@ -155,7 +155,7 @@ function mailInscription($to,$nom,$prenom,$lien){
     $headers[] = 'Content-type: text/html; charset=UTF-8';
 
     // En-têtes additionnels
-    $headers[] = 'From: JSPC <noreply.jspc@example.com>';
+    $headers[] = 'From:Site Web JSPC <noreply.jspc@example.com>';
 
     return envoyerMail($to,$sujet,$message,$headers);
 }

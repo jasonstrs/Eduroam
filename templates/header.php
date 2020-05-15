@@ -37,6 +37,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 	<script src="js/main.js"></script>
 	<script src="js/moment.js"></script>
 	<script src="js/Cookies.js"></script>
+	<script src="js/header.js"></script>
 
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -241,9 +242,11 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 				href="https://twitter.com/gregtabibian"
 				data-size="large" data-show-count="false">
 				Follow @gregtabibian</a>
-				<img src="ressources/discord.png" height="40px" width="40px"/>
 
-				<img src="ressources/tipeee.png" height="40px" width="40px" />
+				<img src="ressources/discord.png" id="btn-Discord" class="pointer" height="40px" width="40px"/>
+				<a href="https://fr.tipeee.com/j-suis-pas-content" target="_blank">
+					<img src="ressources/tipeee.png" id="btn-Tipeee" class="pointer" height="40px" width="40px" />
+				</a>
 			</li>
 		
 			

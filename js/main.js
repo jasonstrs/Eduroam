@@ -1,3 +1,16 @@
+/**
+ *                                                      VARIABLES MODIFIABLES
+ */
+
+// Widget Discord
+var idServeurDiscord = "621357918234869781";
+var largeurWidgetDiscord = "350px";
+var hauteurWidgetDiscord  = "500px";
+
+/**
+ *                                                      FIN VARIABLES MODIFIABLES
+ */
+
 $(document).ready(function(){
     //console.log("On charge les dates en fr");
     moment.locale("fr");
@@ -140,7 +153,6 @@ function traduireDate(date){
     tab = date.split("-");
     ndate=tab[2]+"/"+tab[1]+"/"+tab[0];
     return ndate;
-
 }
 
 
