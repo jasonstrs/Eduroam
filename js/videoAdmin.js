@@ -24,7 +24,7 @@ $(function(){
     });
     
     $("#newSerie").on( "click", function( event ) {
-        console.log("test ?")
+        //console.log("test ?")
         $("#series").hide();
         $("#createSerie").show();
         $("#regex").hide();
@@ -38,7 +38,7 @@ $(function(){
             data: {"action":"delete", "id":id},
             dataType : 'text',
             success : function(data){
-                console.log(data);
+                //console.log(data);
                 $("#selectSerie").children('option[value="'+id+'"]').remove();
                 if($("#selectSerie").children("option").length==0) {
                     $("#noSerie").show();
@@ -91,7 +91,7 @@ $(function(){
     $(document).on("click",".regex", function(){
         $(".selectedRegex").removeClass("selectedRegex");
         $(this).addClass("selectedRegex");
-        console.log("test")
+        //console.log("test")
     });
 
     $('body').click(function(evt){    
@@ -106,14 +106,19 @@ $(function(){
 
     let editRegex = $(`<input type="text" class="editRegex"></input>`);
     editRegex.on("blur", function(){
-        console.log("On pert le focus")
+        //console.log("On pert le focus")
         saveRegex($(this));
     });
     editRegex.on("keyup", function(e){
+        //console.log(e.keyCode);
         if(e.keyCode==27) {
-            if($(this).hasClass("newRegex")); {
+            if($(this).hasClass("newRegex")) {
                 $(this).off('blur');
                 $(this).remove();
+            }
+            else {
+                let $new = $(`<p class="regex" id="regex`+$(this).data("id")+`">`+$(this).data("val")+`</p>`);
+                $(this).replaceWith($new);
             }
         } 
         if(e.keyCode==13) {
@@ -126,7 +131,8 @@ $(function(){
         let editingRegex = editRegex.clone(true);
         editingRegex.val($.trim($(this).text()));
         editingRegex.data("id", $(this).attr("id").substr(5));
-        console.log(editingRegex.data("id"));
+        editingRegex.data("val", $(this).text());
+        //console.log(editingRegex.data("id"));
         $(this).replaceWith(editingRegex);
         editingRegex.focus();
     });
@@ -138,7 +144,7 @@ $(function(){
             data: {"action":"getRegex", "id":$(this).val()},
             dataType : 'json',
             success : function(data){
-                console.log(data);
+                //console.log(data);
                 $(".regex").remove();
                 for(let i = 0; i<data.length; i++) 
                     $("#regexTab").append(`<p class="regex" id="regex`+data[i].id_regex+`"> `+data[i].regex+` </p>`);
@@ -161,12 +167,12 @@ $(function(){
                 data: {"action":"deleteRegex", "id":id},
                 dataType : 'text',
                 success : function(data){
-                    console.log(data);
+                    //console.log(data);
                     $(".selectedRegex").remove();
                 },
             });
         }
-        else console.log("erreur");
+        else //console.log("erreur");
     });
 })
 
@@ -182,7 +188,7 @@ function saveRegex($ref) {
                 data: {"action":"addRegex", "serie":$("#selectSerie").val(), "regex":val},
                 dataType : 'text',
                 success : function(data){
-                    console.log(data);
+                    //console.log(data);
                     $new.attr("id","regex"+data);
                 },
             });
@@ -197,7 +203,7 @@ function saveRegex($ref) {
                 data: {"action":"editRegex", "id":id, "regex":val},
                 dataType : 'text',
                 success : function(data){
-                    console.log(data);
+                    //console.log(data);
                 },
             });
         }
@@ -219,7 +225,7 @@ function callApi(nToken) {
 	});
 	// execute the request
 	request.execute(function(response) {
-		console.log(response);
+		//console.log(response);
 		var flag = 0;
         var results = response.result;
         nbPage=results.pageInfo.totalResults/results.pageInfo.resultsPerPage;
@@ -236,7 +242,7 @@ function callApi(nToken) {
 				url: "./minControleur/dataVideo.php",
 				data: {"action":"add", "videos":response},
 				success: function(oRep){
-					console.log(oRep);
+					//console.log(oRep);
 					nextToken = oRep;
 					if (typeof response.nextPageToken !== "undefined") {
 						nextToken = response.nextPageToken;
@@ -244,7 +250,7 @@ function callApi(nToken) {
 						callApi(nextToken);
 					}
 					else {
-						console.log("Fini par nextPageToken");
+						//console.log("Fini par nextPageToken");
 						endApi();
 					}
 				},
@@ -266,7 +272,7 @@ function endApi() {
 		url: "./minControleur/dataVideo.php",
 		data: {"action":"check"},
 		success: function(oRep){
-            console.log("Fini.")
+            //console.log("Fini.")
             $('#actualiserModal').modal('hide')
 		},
 		dataType: "text"
