@@ -39,6 +39,10 @@ $nbAccueils=countAccueils();
 	#droiteM {
 		width: 35%;
 	}
+
+	h3{
+		margin-top:1rem;
+	}
 }
 
 
@@ -117,10 +121,6 @@ $nbAccueils=countAccueils();
 
 	<div id="mainDiv">
 		<div id="gaucheM">
-			<h3 class="center">Consulter la dernière vidéo</h3>
-			<div class = "wrapper video center">
-				<iframe id="video" class="w100" width="80%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
-			</div>
 			<input type="hidden" id="nbResults" value="<?php echo $nbAccueils ?>">
 			<?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { ?>
 			<a class="btn bg-warning dropdown-toggle offset-10" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -146,6 +146,10 @@ $nbAccueils=countAccueils();
 				href="https://twitter.com/gregtabibian">
 				Tweets by @gregtabibian
 				</a>
+			</div>
+			<h3 class="center">Consulter la dernière vidéo</h3>
+			<div class = "wrapper video center">
+				<iframe id="video" class="w100" width="80%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>
