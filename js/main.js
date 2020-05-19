@@ -51,7 +51,6 @@ var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dia
  * 
  */
 function creerModal(id,titre,contenu,confirmation,couleur,requete){
-    console.log(requete);
 var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
                 $("<div/>").addClass('modal-dialog').attr("role","document").append(
                     $("<div/>").addClass("modal-content").append(
@@ -82,7 +81,6 @@ var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dia
                     )
                 )
             ).on("hidden.bs.modal",function(e){
-                console.log("On supprime le modal");
                 $(this).remove();
             });
 
@@ -136,7 +134,6 @@ function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder
                         )
                     )
                 ).on("hidden.bs.modal",function(e){
-                    console.log("On supprime le modal");
                     $(this).remove();
                     function_echec();
                 });
@@ -205,5 +202,5 @@ function assignerDateMoment(_date,_moment){
     return _moment;
 }
 
-var alerteB = $("<div/>").addClass("alert alert-dismissible fade show").attr("role","alert");
+var alerteB = $("<div/>").addClass("alert alert-dismissible fade show").attr("role","alert").css({"width":"100%","text-align":"center","margin-top":"20px"});
 var boutonFermerAlerteB = $("<button/>").addClass("close").attr({"data-dismiss":"alert","aria-label":"close"}).append($("<span/>").attr("aria-hidden",true).html("&times;"));

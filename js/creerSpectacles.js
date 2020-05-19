@@ -620,4 +620,8 @@ $(document).ready(function(){
         
     });
 
+    $("#replier").click(function(){
+        $("#choisirDates").slideUp(400);
+    });
+
 });

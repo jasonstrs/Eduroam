@@ -17,6 +17,7 @@ if (valider("view","GET")!="accueil" &&
 
 include_once "libs/modele.php";
 
+
 $VIEW = valider("view","GET");
 
 echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
@@ -267,7 +268,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
 		        <?php if (valider("connecte","SESSION")) { ?>
 					<li class="nav-item">
-						<a class="nav-link" href="minControleur/dataConnexion?action=logout"><b>Se déconnecter</b></a>
+						<a class="nav-link" href="minControleur/dataConnexion.php?action=logout"><b>Se déconnecter</b></a>
 					</li>
 				<?php } ?>
 

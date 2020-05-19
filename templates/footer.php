@@ -28,9 +28,15 @@
 		margin: 0;
 		padding: 0.5rem;
 	}
+
+	#foot a{
+		color:black;
+	}
+
 	#foot a:hover {
 		cursor:pointer;
 		font-weight: bold;
+		text-decoration:none;
 	} 
 
 	footer {

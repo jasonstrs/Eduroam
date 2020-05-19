@@ -60,6 +60,25 @@
                 echo 'Error';
         break;
 
+        case "modifNbJoursMail":
+            $rep=array();
+            if($val = valider("nb","POST"))
+            if($idU = valider("idU","POST")){
+
+                if($val>14 || $val<1){
+                    $rep["success"]=false;
+                    $rep["erreur"]="Valeur entrée incorrecte";
+                    echo json_encode($rep);
+                    return;
+                }
+                
+                $res = modifNbJoursMail($val,$idU);
+                if($res == 1 && getNbJoursMail($idU) == $val)$rep["success"]="1";
+                else $rep["success"]="0";
+                echo json_encode($rep);
+            }
+        break;
+
         default :
             echo "ERROR";
     }

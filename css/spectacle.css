@@ -85,7 +85,25 @@ input[type="text"]{
 }
 
 #choisirDates{
+    position:relative;
     display:none;
+}
+
+#choisirDates #replier{
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size:2rem;
+}
+
+@keyframes arrow-up{
+    0%{top:10px;}
+    50%{top:5px;}
+    100%{top:10px;}
+}
+
+#choisirDates #replier:hover{
+    animation: arrow-up 0.3s;
 }
 
 .contDate{
@@ -139,6 +157,7 @@ input[type="text"]{
     border-radius:5px;
     background-color:rgb(161, 161, 161);
     margin-top:5px;
+    margin-bottom:5px;
     transition: all 0.5s;
 }
 
@@ -236,6 +255,17 @@ table{
 .suppDateStats:hover{
     cursor:pointer;
     background-color:red;
+    color:white;
+}
+
+.archiverDate{
+    color:orange;
+    text-align:center;
+}
+
+.archiverDate:hover{
+    cursor:pointer;
+    background-color:orange;
     color:white;
 }
 

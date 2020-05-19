@@ -32,7 +32,9 @@
       </div>
     </div>
   </div>
-  <div class="card " >
+
+
+  <div class="card" >
     <div class="card-header pointer" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
       <h5 class="mb-0 nonSelectionnable">
         <button class="btn btn-link collapsed" >
@@ -45,6 +47,24 @@
     <div id="collapseTwo" class="collapse statsSpectaclesCollapse" aria-labelledby="headingTwo" data-parent="#accordionStats">
       <div class="card-body">
         Cliquer sur une date pour accéder à la vente de billets.
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card" >
+    <div class="card-header pointer" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+      <h5 class="mb-0 nonSelectionnable">
+        <button class="btn btn-link collapsed" >
+          Dates archivées
+        </button>
+        <i>Cliquer pour développer</i>
+        <span class="nbDates" id="nbDatesArchivees">Chargement <img src="./ressources/loading.gif" /></span>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse statsSpectaclesCollapse" aria-labelledby="headingThree" data-parent="#accordionStats">
+      <div class="card-body">
+        
       </div>
     </div>
   </div>

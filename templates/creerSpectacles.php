@@ -37,7 +37,8 @@
         
     </div> 
     <div id="choisirDates">
-        <br><span class="gras"></span>
+        <div id="replier"><i class="fas fa-angle-up pointer"></i></div>
+        <span class="gras"></span>
         <?php
             echo "Ville : ";
             mkInput("text","nomVilleBis",""
