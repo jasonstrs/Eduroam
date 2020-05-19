@@ -11,7 +11,11 @@ $(function() {
 	function search() {
 		$("#pageAccueil").load("./templates/pageAccueil.php", {
 			page : page,
+		},
+		()=>{ // on lance cette fonction quand le load est complété !
+			checkVideo();
 		});
+		
 	}
 
 	$("#next").click(function(){
@@ -91,4 +95,59 @@ $(function() {
 function resetVideoHeight() {
 	//console.log("On resize");
 	$(".video").css("height", $("#video").width() * 9/16);
+}
+
+function checkVideo(){
+	var heightG = $("#gaucheM").height();
+	var heightD = countDivDroite();
+	var diffHeight = heightG - heightD;
+	console.log(diffHeight);
+	
+	while (diffHeight > 180 && !checkModeResponsive()) { // on peut ajouter une vidéo si >180 et pas mode responsive
+		insertRandomVideo();
+		diffHeight-=180; // on regarde si on peut encore ajouter
+		console.log(diffHeight);
+	} 
+}
+
+function insertRandomVideo() {
+	$.ajax({
+		type: "POST",
+		url: "./minControleur/dataAccueil.php",
+		data: {"action":"getRandomVideo"},
+		success: function(oRep){
+			var div = `<div class = "wrapper center mt-4 newVideo" style="width:100%">
+							<iframe id="video" class="w100" width="80%" height="" src="//www.youtube.com/embed/` + oRep +`" frameborder="0" allowfullscreen></iframe>
+						</div>`;
+			$("#droiteM").append(div);
+		},
+		dataType: "json"
+	});
+}
+
+function countDivDroite(){
+	var sum=0;
+	$("#droiteM > *").each(function(){
+		sum+=$(this).outerHeight(true);
+	});
+	return sum;
+}
+
+
+$(window).resize(function() {
+	setTimeout(function() {
+		var flag = checkModeResponsive();
+		if (!flag) // on est pas en mode responsive
+			checkVideo(); // on regarde si on peut insérer une video
+	}, 2000);
+
+});
+
+function checkModeResponsive(){
+	var width = $(window).width();
+	if (width < 752){ // on supprime les nouvelles vidéos car mode responsive
+		$(".newVideo").remove();
+		return true;
+	}
+	return false;
 }

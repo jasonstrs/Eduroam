@@ -1,102 +1,131 @@
-<style>
+.hidden {
+	display: none;
+}
 
-	.hidden {
-		display: none;
+.wrapper{
+	margin:7px;
+
+}	
+.gauche{
+	margin-left: -15%;
+	width:45%;
+	float:left;
+}
+.video{
+	height:50%;
+	width:100%;
+	position:relative;
+}
+.twitos{
+	height:100%;
+	width:100%;
+	overflow:scroll;
+	overflow-x:hidden;
+	position:relative;
+	margin-top:5%;
+}
+.fil{
+	/* height:100%; */
+	width:72%;
+	margin-left: 3%;
+	margin-right: -15%;
+	border-left-style: solid;
+	border-color: grey;
+	border-width: 0.5px;
+	/* overflow-x:hidden; */
+	position:relative;
+	float:left;
+}
+
+.unArticle{
+	width:95%;
+	border-bottom-style: solid;
+	border-bottom-color: lightgrey;
+	border-bottom-width: 1px;
+	margin:4%;
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+
+.unSondage{
+	width:95%;
+	border-bottom-style: solid;
+	border-bottom-color: lightgrey;
+	border-bottom-width: 1px;
+	margin:4%;
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+
+.card-header{
+	font-weight: bold;
+	font-size: large;
+}
+
+.fermer, .date, .admin {
+	font-weight: normal;
+	font-size: small;
+	color: darkgrey;
+}
+
+.date {
+	float:right;
+}
+
+.soumettre {
+	margin-bottom:0.8em;
+}
+
+.progress{
+	background-color: #ffeabd;
+}
+
+.ql-size-small {
+	font-size: 0.75em;
+}
+.ql-size-large {
+	font-size: 1.5em;
+}
+.ql-size-huge {
+	font-size: 2.5em;
+}
+
+.ql-font-serif {
+	font-family: Georgia, Times New Roman, serif;
+}
+.ql-font-monospace {
+	font-family: Monaco, Courier New, monospace;
+}
+
+#divTwitter {
+	width: 100%;
+	margin-top:0px;
+	overflow-y: auto;
+	height: 40rem;
+}
+.center {
+	text-align: center;
+}
+
+@media screen and (min-width: 770px) 
+{
+	#mainDiv {
+		display: flex;
+		width: 100%;
+		justify-content: space-around;
 	}
 
-	.wrapper{
-		margin:7px;
-
-	}	
-	.gauche{
-		margin-left: -15%;
-		width:45%;
-		float:left;
-	}
-	.video{
-		height:50%;
-		width:100%;
-		position:relative;
-	}
-	.twitos{
-		height:100%;
-		width:100%;
-		overflow:scroll;
-		overflow-x:hidden;
-		position:relative;
-		margin-top:5%;
-	}
-	.fil{
-		/* height:100%; */
-		width:72%;
-		margin-left: 3%;
-		margin-right: -15%;
-		border-left-style: solid;
-		border-color: grey;
-		border-width: 0.5px;
-		/* overflow-x:hidden; */
-		position:relative;
-		float:left;
+	#gaucheM {
+		width: 55%;
 	}
 
-	.unArticle{
-		width:95%;
-		border-bottom-style: solid;
-		border-bottom-color: lightgrey;
-		border-bottom-width: 1px;
-		margin:4%;
-		padding-top: 3em;
-		padding-bottom: 3em;
+	#droiteM {
+		width: 35%;
 	}
 
-	.unSondage{
-		width:95%;
-		border-bottom-style: solid;
-		border-bottom-color: lightgrey;
-		border-bottom-width: 1px;
-		margin:4%;
-		padding-top: 3em;
-		padding-bottom: 3em;
+	h3{
+		margin-top:1rem;
 	}
-
-	.card-header{
-		font-weight: bold;
-		font-size: large;
-	}
-
-	.fermer, .date, .admin {
-		font-weight: normal;
-		font-size: small;
-		color: darkgrey;
-	}
-
-	.date {
-		float:right;
-	}
-
-	.soumettre {
-		margin-bottom:0.8em;
-	}
-
-	.progress{
-		background-color: #ffeabd;
-	}
-
-	.ql-size-small {
-		font-size: 0.75em;
-	}
-	.ql-size-large {
-		font-size: 1.5em;
-	}
-	.ql-size-huge {
-		font-size: 2.5em;
-	}
-
-	.ql-font-serif {
-		font-family: Georgia, Times New Roman, serif;
-	}
-	.ql-font-monospace {
-		font-family: Monaco, Courier New, monospace;
-	}
-
-</style>
+}
+	
+	

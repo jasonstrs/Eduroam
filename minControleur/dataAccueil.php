@@ -57,6 +57,11 @@ switch($action){
         $idAnnonce = valider("idAnnonce","POST");
         if(valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce")) removeAccueil($idAnnonce);
     break;
+
+    case 'getRandomVideo' : 
+        $randomVideo = getRandomVideo();
+        echo json_encode($randomVideo);
+    break;
     
 }
 

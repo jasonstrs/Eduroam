@@ -14,51 +14,9 @@ $nbAccueils=countAccueils();
 <style>
 
 
-#divTwitter {
-	width: 100%;
-	margin-top:0px;
-	overflow-y: auto;
-	height: 40rem;
-}
-.center {
-	text-align: center;
-}
-
-@media screen and (min-width: 770px) 
-{
-    #mainDiv {
-		display: flex;
-		width: 100%;
-		justify-content: space-around;
-	}
-
-	#gaucheM {
-		width: 55%;
-	}
-
-	#droiteM {
-		width: 35%;
-	}
-
-	h3{
-		margin-top:1rem;
-	}
-}
-
 
 
 </style>
-
-<script>
-	/*$(window).on('resize', function(){
-	  var win = $(this); //this = window
-      	if (win.width() >= 690) 
-		  $("body").css("font-size","1rem"); 
-		else 
-			$("body").css("font-size","0.9rem");       
-});*/
-</script>
-
 
 	<!-- Modal -->
 	<div class="modal fade" id="confirmSupprModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -81,43 +39,6 @@ $nbAccueils=countAccueils();
 		</div>
 	</div>
 	</div>
-
-	<!--<div class="groupe">
-		<div class="gauche">
-			<div class = "wrapper video">
-			<iframe id="video" class="w100" width="100%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
-			</div>
-			<div class = "wrapper twitos" data-spy="scroll" data-offset="0">
-				<a class="twitter-timeline"
-				  href="https://twitter.com/gregtabibian">
-				Tweets by @gregtabibian
-				</a>
-			</div>
-		</div>
-		
-
-
-		<div class="wrapper fil">
-			<input type="hidden" id="nbResults" value="<?php echo $nbAccueils ?>">
-			<?php /*if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { */?>
-			<a class="btn bg-warning dropdown-toggle offset-10" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<b>Ajouter</b>
-			</a>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-				<a class="dropdown-item" href="index.php?view=creerArticle">Annonce</a>
-				<a class="dropdown-item" href="index.php?view=creerSondage">Sondage</a>
-			</div>
-			<?php /*}*/ ?>
-			<div id="pageAccueil">
-			</div>
-			<p  class="ml-3" style="text-align:left;">
-				<a href="#" class="hidden" id="previous">Page précédente</a>
-				<span style="float:right;">
-				<a href="#" id="next">Page suivante</a>
-				</span>
-			</p>
-		</div>
-	</div>	-->
 
 	<div id="mainDiv">
 		<div id="gaucheM">
@@ -147,7 +68,7 @@ $nbAccueils=countAccueils();
 				Tweets by @gregtabibian
 				</a>
 			</div>
-			<h3 class="center">Consulter la dernière vidéo</h3>
+			<h3 class="center mt-4 mb-3">Quelques vidéos</h3>
 			<div class = "wrapper video center">
 				<iframe id="video" class="w100" width="80%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
 			</div>
@@ -156,8 +77,3 @@ $nbAccueils=countAccueils();
 	
 
 <script src="js/accueil.js"></script>
-
-
-
-<!--<a class="twitter-timeline" href="https://twitter.com/Jasonstrs?ref_src=twsrc%5Etfw">Tweets by Jasonstrs</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
--->

@@ -478,6 +478,12 @@ function getLastVideos() {
 	return $rs;
 }
 
+function getRandomVideo(){
+	$SQL = "SELECT videoId FROM eduroam_video ORDER BY RAND() LIMIT 1";
+	$rs = SQLGetChamp($SQL);
+	return $rs;
+}
+
 function getVideos($search='', $page='', $limite, $notID='', $apres, $avant, $serie="-1") {
 	//setlocale(LC_TIME, "fr_FR"); //Inutile enfaite je pense
 	$offset = ($page!= '') ? "OFFSET ".$page*$limite : "" ;
