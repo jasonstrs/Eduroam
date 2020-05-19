@@ -500,6 +500,7 @@ $(document).ready(function(){
             success:function(oRep){
                 console.log("Spectacle Créé");
                 $("#modalConfirmerDate").modal('dispose');
+                Cookies.set("succes",oRep+" date(s) ajoutée(s) !");
                 document.location.reload();
             }
         }
@@ -617,6 +618,10 @@ $(document).ready(function(){
 
         }
         
+    });
+
+    $("#replier").click(function(){
+        $("#choisirDates").slideUp(400);
     });
 
 });

@@ -3,6 +3,7 @@
     include_once "../libs/maLibSQL.pdo.php";
     include_once "../libs/maLibSecurisation.php";
     include_once "../libs/modele.php";
+    include_once "../libs/maLibMails.php";
 
 
     if(!($action = valider("action"))){
@@ -15,7 +16,8 @@
          */
         case "chargerVilles" :
             if(!($nom = valider("nom")))$nom="";
-            echo json_encode(selectVilles($nom));
+            $rep = selectVilles($nom);            
+            echo json_encode($rep);
         break;
         case "verifVilleNom":
             $tab = array();
@@ -54,28 +56,49 @@
                    $idSpec = creerSpectacle($ville,$desc); //On crée le spectacle et on récupère son id
                 }
             }
+            $i=0;
             foreach($dates as $currDate){
                 if($currDate != "")
-                    echo "ID ajout : ".ajouterDateSpectacle($idSpec,$currDate);
+                    if(ajouterDateSpectacle($idSpec,$currDate))$i++;
             }
+            echo $i;
         break;
         case "supprDate":
             if($date  = valider("idDate","POST"))
-                supprimerDate($date);
+                echo supprimerDate($date);
         break;
         case "supprSpectacle":
             if($date  = valider("id","POST"))
-                supprimerSpectacle($date);
+                echo supprimerSpectacle($date);
+        break;
+        case "archiverDate":
+            if($date  = valider("idDate","POST"))
+                echo archiverDate($date);
         break;
         case "validDate":
             if(!($lien = valider("lien","POST")))$lien = "";
-            if($date  = valider("idDate","POST"))
-                validerDate($date,$lien);
+            if($date  = valider("idDate","POST")){
+                $rep = array();
+                $valide = validerDate($date,$lien);
+                if($valide == 0){
+                    $rep["success"]=$valide;
+                    echo json_encode($rep);
+                    return;
+                }
+                $tabUsers = trouverUsersDateValidee($date);
+                $i=0;
+                foreach($tabUsers as $user){
+                    if(mailSpectacleValide($user))
+                        $i++;
+                }
+                $rep["nbMails"] = $i;
+                $rep["success"]=$valide;
+                echo json_encode($rep);
+            }
         break;
         case "nbDates":
             $tab = array();
             if($valid = valider("val","POST")){
-                if($valid==2)$valid=0;
                 $tab["rep"] = nbDates($valid);
                 $tab["valid"]=$valid;
                 echo(json_encode($tab));

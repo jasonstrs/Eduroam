@@ -40,11 +40,13 @@ function nbDates(valide){
             var tab = JSON.parse(oRep);
             var id="#nbDatesEnAttente";
             if(tab.valid == "validees")id="#nbDatesValidees";
+            if(tab.valid == "archivees")id="#nbDatesArchivees";
             $(id).html(tab.rep);
         },
         error:function(oRep){
             var id="#nbDatesEnAttente";
             if(oRep.valid == 1)id="#nbDatesValidees"
+            
             $(id).html("Erreur");
         }
     });
@@ -72,12 +74,19 @@ function chargerDatesStats(valide){
             //Classe du tableau (Les cellules du tableau des dates valides doivent pouvoir être cliquables)
             var classeTab="table table-striped";
             //Actions réalisables sur les dates (Valider/Supprimer pour les non validées, Archiver/Supprimer pour les validées)
-            var finTab="<th>Valider</th><th>Supprimer</th>"
+            var finTab="<th>Valider</th><th>Supprimer</th>";
+
             if(tab.valid == "validees"){
                 id="#collapseTwo";
                 classeTab="table table-hover pointer";
-                var finTab="<th>Lien <i class='far fa-question-circle' data-toggle='tooltip' data-placement='top' title='Cliquez sur un lien pour le rendre modifiable.Appuyez sur Entrée pour confirmer, ou Echape pour annuler' ></i></th><th>Supprimer</th>"
+                var finTab="<th>Lien</th><th>Archiver</th><th>Supprimer</th>"
             }
+            else if(tab.valid == "archivees"){
+                id="#collapseThree"
+                finTab="<th>Supprimer</th>";
+            }
+
+
             if(tab.rep.length == 0 ){
                 $(id).html(" <i>Aucune date</i>");
                 return;
@@ -139,8 +148,10 @@ function chargerDatesStats(valide){
                                                 "lien":$("#txtLienValidDate").val()
                                             },
                                             success:function(oRep){
-                                                console.log("Date validée");
+                                                var rep = JSON.parse(oRep);
                                                 $("#modalValiderDate").modal('dispose');
+                                                if(rep.success !=0)Cookies.set("succes","Date validée, "+rep["nbMails"]+" mails envoyés");
+                                                else Cookies.set("error","Erreur lors de la validation de la date");
                                                 document.location.reload();
                                             }
                                         })
@@ -162,6 +173,47 @@ function chargerDatesStats(valide){
                 }));
                 else if(tab.valid == "validees"){
                     currLigne.append($("<td/>").addClass("lienModifiable").html(element.lien).data(element));
+                    currLigne.append($("<td/>").addClass("archiverDate").html("<i class='fas fa-archive'></i>").data(element).click(function(){
+                        /**
+                         * 
+                         *                                       MODAL ARCHIVER DATE
+                         * 
+                         */ 
+                        requete = {
+                            method:"POST",
+                            url:"./minControleur/dataSpectacle.php",
+                            data:{
+                                "action":"archiverDate",
+                                "idSpectacle":$(this).data("idSpectacle"),
+                                "idDate":$(this).data("idDate"),
+                            },
+                            success:function(oRep){
+    
+                                console.log("Date archivée");
+                                $("#modalSupprDate").modal('dispose');
+                                Cookies.set("succes","Date archivée");
+                                document.location.reload();
+                            }
+                        }
+                        contenuModal = "Spectacle : <b>"+$(this).data("description")+"</b> à <b>"+$(this).data("ville")+"</b>";
+                        contenuModal += "<br>Date : <b>"+traduireDate($(this).data("dateSpectacle"))+"</b>";
+                        contenuModal += "<br>Voulez vous <B>archiver cette date</B> ? ";
+                        contenuModal += "<br><span style='color:red'><i class='fas fa-exclamation-triangle'></i> Uniquement si le spectacle a vraiment eu lieu. </span>";
+    
+                        
+    
+                        creerModal("modalSupprDate","Archiver cette date?",contenuModal,"Archiver","btn btn-outline-warning",requete);
+    
+                        /**
+                         * 
+                         *                                        FIN MODAL ARCHIVER DATE
+                         * 
+                         */
+    
+                         //Affichage du modal.
+    
+                        $("#modalSupprDate").modal();
+                    }));
                 }
                 currLigne.append($("<td/>").addClass("suppDateStats").html("<i class='fas fa-trash-alt'></i>").data(element).click(function(){
                     /**
@@ -181,6 +233,7 @@ function chargerDatesStats(valide){
 
                             console.log("Date supprimée");
                             $("#modalSupprDate").modal('dispose');
+                            Cookies.set("succes","Date supprimée");
                             document.location.reload();
                         }
                     }
@@ -229,10 +282,13 @@ $("#accordionStats").ready(function(){
     chargerDatesStats("attente");
     nbDates("validees");
     chargerDatesStats("validees");
+    nbDates("archivees");
+    chargerDatesStats("archivees");
     $("#selectTri").change(function(){
         console.log($(this).val());
         chargerDatesStats("attente");
         chargerDatesStats("validees");
+        chargerDatesStats("archivees");
     });
 
 

@@ -7,6 +7,13 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 ?>
 
+<?php
+$idUser = valider("idUser","SESSION");
+?>
+<script>
+  sessionStorage.setItem("idU",<?php echo $idUser?>);
+</script>
+
   <script src='./js/profil.js'></script>
   <link rel="stylesheet" type="text/css" href="./css/profil.css">
   
@@ -33,7 +40,16 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
         <div class="form-group row" id="pass">
             <label for="modifierPass" class="col-sm-2 col-form-label">Mot de passe</label>
             <div class="col-sm-10 divForm">
-                <input type="text" class="form-control" id="modifierPass">
+                <input type="password" class="form-control" id="modifierPass" autocomplete=false>
+            </div>
+        </div>
+        <br/><hr/>
+        <div id="separation">Paramètres de Notifications pour les spectacles</div> <br/>
+
+        <div class="form-group row" id="nbJoursMail">
+            <label for="choisirNbJours" class="col-sm-2 col-form-label">Espacement des mails</label>
+            <div class="col-sm-10">
+                <input type="number" min=1 max=14 placeholder="(en jours)" value="<?php echo getNbJoursMail(valider("idUser","SESSION")); ?>" class="form-control" id="choisirNbJours">
             </div>
         </div>
         

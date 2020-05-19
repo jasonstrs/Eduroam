@@ -90,7 +90,6 @@ else{
     <script>
         $("#containerAdmin").ready(function(){
             var volet='<?=$volet?>';
-            console.log(volet);
             $(".nav-link").removeClass('active');
             $(".tab-pane").removeClass('show').removeClass("active");
             $("#creerSpectacles-tab").addClass("active");

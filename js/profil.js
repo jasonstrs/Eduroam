@@ -1,3 +1,46 @@
+var aideNbJours = $("<span/>").append($("<i/>").attr("id","aideNbJours").addClass("fas fa-question-circle pointer").css({"font-size":"1.5rem","margin-left":"10px","color":"rgb(0, 132, 255)"})).click(function(){
+    contenuModal = "Pour éviter que vous ne receviez trop de mails concernant les spectacles, vous pouvez choisir le nombre de jours minimum entre 2 notifications par mail.";
+    contenuModal += "<br><br>Le minimum est 1 jour, le maximum est 14 jours. ";
+    contenuModal += "<br><br>Si vous ne souhaitez plus recevoir de mails concernant les spectacles, décochez la case ci-dessous.";
+
+    
+
+    creerModal("modalNbJours","Réduction des envois de mails",contenuModal,"Compris !","btn btn-outline-primary none",{});
+    $("#modalNbJours").modal();
+    return false;
+});
+
+var validerNbJours = $("<span/>").append($("<i/>").attr("id","validerNbJours").addClass("fas fa-check-circle pointer").css({"font-size":"1.5rem","margin-left":"10px","color":"green"})).click(function(){
+    $(".alert").remove();
+    $("#validerNbJours").replaceWith(aideNbJours.clone(1));
+
+    var nb = $("#choisirNbJours").val();
+    var idU = sessionStorage.getItem("idU");
+
+    $.ajax({
+        type: "POST",
+        url: "./minControleur/dataProfil.php",
+        data: {
+            "action":"modifNbJoursMail",
+            "nb":nb,
+            "idU":idU
+        },
+        success: function(oRep){
+            console.log(oRep);
+            var rep = oRep;
+            if(rep.success == "0"){
+                $("#nbJoursMail").append(alerteB.clone(1).addClass("alert-danger alert-block").html("Erreur lors de la modification").append(boutonFermerAlerteB.clone(1)));
+            }
+            else{
+                $("#nbJoursMail").append(alerteB.clone(1).addClass("alert-success alert-block").html("Modification réussie ! ").append(boutonFermerAlerteB.clone(1)));
+            }
+        },
+        dataType: "json"
+    });
+
+    return false;
+});
+
 $(document).ready(function(){
     $("#inputEmail").attr("disabled",true);
     $("#inputFirstName").attr("disabled",true);
@@ -26,6 +69,12 @@ $(document).ready(function(){
         },
     dataType: "json"
     });
+
+    $("#choisirNbJours").change(function(){
+        $("#aideNbJours").replaceWith(
+            $(validerNbJours.clone(1))
+        );        
+    });
 })
 
 function afficherNotif(choice){
@@ -46,11 +95,12 @@ function afficherModif(){
         // lancement d'une fonction de modification !
         modifierChamps(this);
     }));
+    $("#nbJoursMail>.col-sm-10").append(aideNbJours.clone(1));
 }
 
 /**
  * Fonction qui permet de passer en mode édition
- * @param {Référence sur le champs de modification} ref 
+ * @param {Obj} ref Référence sur le champ de modification
  */
 
 function modifierChamps(ref){

@@ -16,7 +16,7 @@ h3 {
     margin-right: 5px;
 }
 
-#inputFirstName,#inputName,#modifierPass,#inputEmail {
+.form-group input {
     display: inline-block;
     width: 90%;
 }
@@ -24,3 +24,4 @@ h3 {
 .center {
     text-align: center;
 }
+

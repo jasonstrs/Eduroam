@@ -1,6 +1,6 @@
 
 .item {
-	margin-bottom: 15px; 
+	margin-bottom: 5px; 
 	list-style: none;
 }
 .item-txt {
@@ -32,10 +32,6 @@
     color: black;
 }
 
-.lead {
-    text-align: center;
-}
-
 .pagination {
     font-size: 1rem;
     font-weight: 400;
@@ -56,4 +52,13 @@
 
 .hidden {
     display: none;
+}
+
+.media{
+    padding:10px;
+}
+
+.media:hover{
+    background-color:rgb(219, 219, 219);
+    cursor:pointer;
 }

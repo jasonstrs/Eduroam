@@ -162,11 +162,53 @@ function verifExistMail($email){
  * Renvoie 0 si l'utilisateur ne veut pas de notif, 1 sinon
  */
 function getNotifUser($idU){
-	$SQL = "SELECT choice FROM eduroam_user WHERE idU=$idU";
+	$SQL = "SELECT choice FROM eduroam_user WHERE idU='$idU'";
 	return(SQLGetChamp($SQL));
 }
 
+/**
+ * Récupère le nombre de jours entre chaque mail défini par l'utilisateur
+ */
+function getNbJoursMail($idU){
+	$SQL = "SELECT nbJoursMail FROM eduroam_user WHERE idU='$idU'";
+	return(SQLGetChamp($SQL));
+}
 
+/**
+ * Modifie le nombre de jours entre chaque mail de l'utilisateur
+ */
+function modifNbJoursMail($val,$idU){
+	if($val>14 || $val<1)return false;
+	$SQL = "UPDATE eduroam_user SET nbJoursMail='$val' WHERE idU='$idU'";
+	return SQLUpdate($SQL);
+}
+
+function  getLastMail($idU){
+	$SQL = "SELECT lastMail FROM eduroam_user WHERE idU='$idU'";
+	return SQLGetChamp(($SQL));
+}
+
+/**
+ * Vérifie si il n'est pas trop tôt pour envoyer un mail à l'utilisateur
+ * en fonction du nombre de jours à attendre entre chaque mail, défini par l'utilisateur.
+ */
+function mailPossible($id){
+	$nbJours = date_create(getNbJoursMail($id));
+	$lastMail = date_create(getLastMail($id));
+	$now = date_create(date("Y-m-d"));
+	$nextMail = date_add($lastMail,$nbJours." days");
+
+	$diff = date_diff($now,$nextMail);
+	//On fait la différence entre la date actuelle et la date à laquelle on pourra envoyer un mail.
+	//Donc si la différence est négative, on ne peut pas encore envoyer de mail.
+	if($diff < 0) return 0;
+	else return 1;
+}
+
+function setLastMail($to,$now){
+	$SQL = "UPDATE eduroam_user SET lastMail='$now' WHERE email='$to'";
+	return SQLUpdate($SQL);
+}
 
 /**
  * 
@@ -203,7 +245,7 @@ function selectVilles(){
 		$SQLNbSpecVille = "SELECT COUNT(*) FROM eduroam_spectacle WHERE ville=\"".$ligne['ville']."\"";
 		$SQLNbSpecVille = SQLGetChamp($SQLNbSpecVille);
 
-		$SQLGetDates = "SELECT * FROM eduroam_date_spectacle WHERE idSpectacle=".$ligne['idSpectacle']." AND valide='0'";
+		$SQLGetDates = "SELECT * FROM eduroam_date_spectacle WHERE idSpectacle=".$ligne['idSpectacle']." AND valide='0' ORDER BY dateSpectacle";
 		$SQLGetDates = parcoursRs(SQLSelect($SQLGetDates));
 
 		for( $i=0 ; $i < sizeof($SQLGetDates) ; $i++ ){
@@ -254,6 +296,11 @@ function supprimerDate($idDate){
 	return SQLDelete($SQL);
 }
 
+function archiverDate($idDate){
+	$SQL = "UPDATE eduroam_date_spectacle SET valide=2 WHERE idDate = $idDate";
+	return SQLUpdate($SQL);
+}
+
 function supprimerSpectacle($id){
 	$SQL = "DELETE FROM eduroam_spectacle WHERE idSpectacle = $id";
 	return SQLDelete($SQL);
@@ -273,6 +320,9 @@ function nbDates($valid){
 		break;
 		case "validees":
 			$valid=1;
+		break;
+		case "archivees":
+			$valid=2;
 		break;
 		default:
 			return json_encode(array("success" => 0));
@@ -315,6 +365,10 @@ function chargerDates($valid,$tri,$id,$ville){
 			case "attente":
 				$SQL = "SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
 				FROM eduroam_spectacle s, eduroam_date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=0 $ville $order";
+			break;
+			case "archivees":
+				$SQL = "SELECT d.idSpectacle,d.idDate,d.dateSpectacle,d.lien,s.description,s.ville 
+				FROM eduroam_spectacle s, eduroam_date_spectacle d WHERE d.idSpectacle = s.idSpectacle AND d.valide=2 $ville $order";
 			break;
 		}
 	}
@@ -427,6 +481,27 @@ function modifLien($idDate,$lien){
 function recupToutesLesDates(){
 	$SQL = "SELECT idDate,dateSpectacle FROM eduroam_date_spectacle";
 	return parcoursRs(SQLSelect($SQL));
+}
+
+/**
+ * Renvoie un tableau contenant les adresses mail de tous les utilisateurs
+ * qui sont interessés à la date $date, et qui sont élligibles à recevoir des mails.
+ */
+function trouverUsersDateValidee($date){
+
+	$SQL = "SELECT u.idU AS idU,u.email AS email FROM eduroam_user u,eduroam_spectacle_user su WHERE su.idDate='$date' AND su.idU=u.idU";
+	$rep = parcoursRs(SQLSelect($SQL));
+	$rep_finale = array();
+	foreach($rep as $user){
+		$currId = $user["idU"];
+		if(getNotifUser($currId) == 0)continue;
+		$lastMail = getLastMail($currId);
+
+		if($lastMail == NULL || mailPossible($currId)) array_push($rep_finale,$user["email"]);
+	}
+
+	return $rep_finale;
+
 }
 
 /**
