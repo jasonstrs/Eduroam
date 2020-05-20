@@ -62,15 +62,15 @@ $nbAccueils=countAccueils();
 			</p>
 		</div>
 		<div id="droiteM">
+			<h3 class="center mt-4 mb-3" id="titleVideo">Dernière vidéo</h3>
+			<div class = "wrapper video center">
+				<iframe id="video" class="w100" width="80%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
+			</div>
 			<div id="divTwitter" class = "wrapper" data-spy="scroll" data-offset="0">
 				<a class="twitter-timeline"
 				href="https://twitter.com/gregtabibian">
 				Tweets by @gregtabibian
 				</a>
-			</div>
-			<h3 class="center mt-4 mb-3">Quelques vidéos</h3>
-			<div class = "wrapper video center">
-				<iframe id="video" class="w100" width="80%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>

@@ -101,16 +101,15 @@ function checkVideo(){
 	var heightG = $("#gaucheM").height();
 	var heightD = countDivDroite();
 	var diffHeight = heightG - heightD;
-	console.log(diffHeight);
 	
 	while (diffHeight > 180 && !checkModeResponsive()) { // on peut ajouter une vidéo si >180 et pas mode responsive
 		insertRandomVideo();
 		diffHeight-=180; // on regarde si on peut encore ajouter
-		console.log(diffHeight);
 	} 
 }
 
 function insertRandomVideo() {
+	$("#titleVideo").html('Quelques vidéos');
 	$.ajax({
 		type: "POST",
 		url: "./minControleur/dataAccueil.php",
@@ -119,7 +118,7 @@ function insertRandomVideo() {
 			var div = `<div class = "wrapper center mt-4 newVideo" style="width:100%">
 							<iframe id="video" class="w100" width="80%" height="" src="//www.youtube.com/embed/` + oRep +`" frameborder="0" allowfullscreen></iframe>
 						</div>`;
-			$("#droiteM").append(div);
+			$("#divTwitter").before(div);
 		},
 		dataType: "json"
 	});
@@ -147,6 +146,7 @@ function checkModeResponsive(){
 	var width = $(window).width();
 	if (width < 752){ // on supprime les nouvelles vidéos car mode responsive
 		$(".newVideo").remove();
+		$("#titleVideo").html('Dernière vidéo');
 		return true;
 	}
 	return false;
