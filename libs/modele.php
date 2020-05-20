@@ -53,7 +53,10 @@ function getNom($id)
 }
 
 /**
- * Retourne le id
+ * Récupère l'id d'un utilisateur grâce à son hash code
+ *
+ * @param string $hash
+ * @return int l'id de l'utilisateur
  */
 function getIdViaHash($hash)
 {
@@ -62,6 +65,13 @@ function getIdViaHash($hash)
 	return SQLGetChamp($SQL);
 }
 
+
+/**
+ * Récupère l'id de l'utilisateur grâce à son email
+ *
+ * @param string $email
+ * @return int l'id de l'utilisateur
+ */
 function getIdViaMail($email)
 {
 	
@@ -70,31 +80,39 @@ function getIdViaMail($email)
 }
 
 /**
- * Verif si l'utilisateur a confirmé son mail
- * Return 1 si c'est validé
+ * Verifie si l'utilisateur a confirmé son mail (même fonction que isConfirm(), mais en passant par le mail)
+ *
+ * @param int $idUser l'Id de l'utilisateur
+ * @return boolean 1 si la modification a eu lieu, 0 sinon
  */
 function isConfirm($idUser)
 {
-	// vérifie si l'utilisateur a validé son mail
 	$SQL ="SELECT code FROM eduroam_user WHERE idU='$idUser'";
 	if(SQLGetChamp($SQL))return 1;
 	return 0; 
 }
 
+
 /**
- * Verif si l'utilisateur a confirmé son mail
- * Return 1 si c'est validé
+ * Verifie si l'utilisateur a confirmé son mail (même fonction que isConfirm(), mais en passant par le mail)
+ *
+ * @param string $email
+ * @return boolean 1 si la modification a eu lieu, 0 sinon
  */
 function isConfirmViaMail($email)
 {
-	// vérifie si l'utilisateur a validé son mail
+
 	$SQL ="SELECT code FROM eduroam_user WHERE email='$email'";
 	if(SQLGetChamp($SQL))return 1;
 	return 0; 
 }
 
 /**
- * L'utilisateur vient de changer son mdp
+ * Change le mot de passe d'un utilisateur
+ *
+ * @param int $id
+ * @param string $newPasse Nouveau mot de passe (déja hashé)
+ * @return int||false 1 si le mot de passe a été modifié, 0 sinon, false si erreur
  */
 function changePass ($id,$newPasse) {
 	$SQL = "UPDATE eduroam_user SET passe='$newPasse' WHERE idU='$id'";
@@ -102,7 +120,11 @@ function changePass ($id,$newPasse) {
 }
 
 /**
- * L'utilisateur vient de changer son choix de recevoir des mails
+ * Change le nom d'un utilisateur
+ *
+ * @param int $id
+ * @param boolean $choice 1 si l'utilisateur veut recevoir des notifs, 0 sinon
+ * @return int||false 1 si le choix a été modifié, 0 sinon, false si erreur
  */
 function changeValue ($id,$choice) {
 	$SQL = "UPDATE eduroam_user SET choice='$choice' WHERE idU='$id'";
@@ -110,7 +132,11 @@ function changeValue ($id,$choice) {
 }
 
 /**
- * L'utilisateur vient de changer son prenom
+ * Change le prénom d'un utilisateur
+ *
+ * @param int $id
+ * @param string $new Nouveau prénom
+ * @return int||false 1 si le prénom a été modifié, 0 sinon, false si erreur
  */
 function changeFirstName ($id,$new) {
 	$SQL = "UPDATE eduroam_user SET prenom='$new' WHERE idU='$id'";
@@ -118,7 +144,11 @@ function changeFirstName ($id,$new) {
 }
 
 /**
- * L'utilisateur vient de changer son nom
+ * Change le nom d'un utilisateur
+ *
+ * @param int $id
+ * @param string $new Nouveau nom
+ * @return int||false 1 si le nom a été modifié, 0 sinon, false si erreur
  */
 function changeName ($id,$new) {
 	$SQL = "UPDATE eduroam_user SET nom='$new' WHERE idU='$id'";
@@ -126,7 +156,12 @@ function changeName ($id,$new) {
 }
 
 /**
- * On change le hashCode d'un user
+ * Modifie le hash d'un utilisateur
+ *
+ * @param string $oldHash
+ * @param int $id
+ * @param string $newHash
+ * @return int||false 1 si le hash a été modifié, 0 sinon, false si erreur
  */
 function changeHash($oldHash,$id,$newHash){
 	$SQL="UPDATE eduroam_user SET hashCode='$newHash' WHERE hashCode='$oldHash' AND idU='$id'";
@@ -134,15 +169,26 @@ function changeHash($oldHash,$id,$newHash){
 }
 	
 /**
- * L'utilisateur vient de confirmer son adresse
+ * Confirme l'adresse mail de l'utilisateur
+ *
+ * @param int $id l'Id de l'utilisateur
+ * @return int||false 1 si l'utilisateur a été vérifié, 0 sinon, false si erreur
  */
 function confirmAdress ($id) {
 	$SQL = "UPDATE eduroam_user SET code=1 WHERE idU='$id'";
 	SQLUpdate($SQL);
 }
 
+
 /**
  * Créer un utilisateur
+ *
+ * @param string $email
+ * @param string $nom
+ * @param string $prenom
+ * @param strng $passe
+ * @param string $hashCode
+ * @return int||false 1 si l'utilisateur a été crée, 0 sinon, false si erreur
  */
 function createUser($email,$nom,$prenom,$passe,$hashCode){
 	$SQL = "INSERT INTO eduroam_user(email,nom,prenom,passe,superadmin,code,hashCode) VALUES('$email','$nom','$prenom','$passe','0','0','$hashCode') ";
@@ -151,7 +197,11 @@ function createUser($email,$nom,$prenom,$passe,$hashCode){
 
 /**
  * Renvoie true si l'adresse mail est deja dans la BDD
+ *
+ * @param string $email Mail de l'utilisateur
+ * @return 1 si l'utilisateur est déja dans la BDD, 0 sinon
  */
+
 function verifExistMail($email){
 	$SQL = "SELECT COUNT(*) FROM eduroam_user WHERE email='$email'";
 	if(SQLGetChamp($SQL))return 1;
@@ -159,15 +209,22 @@ function verifExistMail($email){
 }
 
 /**
- * Renvoie 0 si l'utilisateur ne veut pas de notif, 1 sinon
+ * Vérifie si l'utilisateur accepte de recevoir des mails
+ *
+ * @param int $idU Id de l'utilisateur
+ * @return 1 si l'utilisateur accepte de recevoir des mails, 0 sinon
  */
 function getNotifUser($idU){
 	$SQL = "SELECT choice FROM eduroam_user WHERE idU='$idU'";
 	return(SQLGetChamp($SQL));
 }
 
+
 /**
  * Récupère le nombre de jours entre chaque mail défini par l'utilisateur
+ *
+ * @param int $idU Id de l'utilisateur
+ * @return void
  */
 function getNbJoursMail($idU){
 	$SQL = "SELECT nbJoursMail FROM eduroam_user WHERE idU='$idU'";
@@ -176,6 +233,10 @@ function getNbJoursMail($idU){
 
 /**
  * Modifie le nombre de jours entre chaque mail de l'utilisateur
+ *
+ * @param int $val Le nombre de jours choisi par l'utilisateur
+ * @param int $idU l'Id de l'utilisateur
+ * @return int||false Le nombre de champs modifiés ou false si pb
  */
 function modifNbJoursMail($val,$idU){
 	if($val>14 || $val<1)return false;
@@ -183,28 +244,48 @@ function modifNbJoursMail($val,$idU){
 	return SQLUpdate($SQL);
 }
 
+
+/**
+ * Récupère la date du dernier mail envoyé à cet utilisateur
+ *
+ * @param int $idU Id de l'utilisateur
+ * @return dateTime date au format yyyy-mm-dd
+ */
 function  getLastMail($idU){
 	$SQL = "SELECT lastMail FROM eduroam_user WHERE idU='$idU'";
 	return SQLGetChamp(($SQL));
 }
 
+
 /**
  * Vérifie si il n'est pas trop tôt pour envoyer un mail à l'utilisateur
  * en fonction du nombre de jours à attendre entre chaque mail, défini par l'utilisateur.
+ *
+ * @param int $id Id de l'utilisateur
+ * @return 1 si on peut lui envoyer un mail, 0 sinon
  */
 function mailPossible($id){
-	$nbJours = date_create(getNbJoursMail($id));
+	if(getLastMail($id) == NULL)return 1;
+
+	$nbJours = getNbJoursMail($id);
 	$lastMail = date_create(getLastMail($id));
 	$now = date_create(date("Y-m-d"));
-	$nextMail = date_add($lastMail,$nbJours." days");
+	$nextMail = date_add($lastMail,date_interval_create_from_date_string($nbJours." days"));
 
-	$diff = date_diff($now,$nextMail);
+/* 	die(tprint(array($nbJours,$lastMail,$now,$nextMail,$now < $nextMail)));
+ */
 	//On fait la différence entre la date actuelle et la date à laquelle on pourra envoyer un mail.
 	//Donc si la différence est négative, on ne peut pas encore envoyer de mail.
-	if($diff < 0) return 0;
+	if($now < $nextMail) return 0;
 	else return 1;
 }
-
+/**
+ * Modifie le champ lastMail avec la date du jour.
+ *
+ * @param [string] $to email de l'utilisateur
+ * @param [dateTime] $now date du jour au format yyyy-mm-dd
+ * @return [int] Nombre de modifs (1 si tout s'est bien déroulé)
+ */
 function setLastMail($to,$now){
 	$SQL = "UPDATE eduroam_user SET lastMail='$now' WHERE email='$to'";
 	return SQLUpdate($SQL);
@@ -233,6 +314,25 @@ function setLastMail($to,$now){
                 nb : nombre de personnes pour cette date
 			]
 */
+/**
+ * Charge les spectacles présents dans la BDD
+ *
+ * Renvoie la structure suivante : 
+ *			 {id : id du spectacle,
+ *           desc : description du spectacle,
+ *           ville : ville où va avoir lieu le spectacle,
+ *           nbSpecVille : nombre de spectacles pour cette ville,
+ *           nbDates : nombre de dates total,
+ *           nbInteresses : nombre de personnes interessées,
+ *           dates : [
+ *               idSpectacle,
+ *               idDate,
+ *               date,
+ *               nb : nombre de personnes pour cette date
+ *			]}
+ * 
+ * @return JSON
+ */
 function selectVilles(){
 	$reponse = array();
 	$SQL = "SELECT idSpectacle,ville,description FROM eduroam_spectacle";
@@ -269,9 +369,11 @@ function selectVilles(){
 	
 }
 
-
 /**
- * Renvoie true si la ville N'EST PAS dans la base de données
+ * Vérifie si la ville est déja dans la base de donnéees
+ *
+ * @param string $nom Nom de la ville
+ * @return boolean true si la ville n'est pas encore dans la base de données, false sinon
  */
 function verifVilleNom($nom){
 	$SQL = "SELECT COUNT(*) FROM eduroam_spectacle WHERE ville='$nom'";
@@ -280,38 +382,81 @@ function verifVilleNom($nom){
 }
 
 
-
+/**
+ * Crée un spectacle
+ *
+ * @param string $ville
+ * @param string $description
+ * @return int l'id du spectacle
+ */
 function creerSpectacle($ville,$description){
 	$SQL = "INSERT INTO eduroam_spectacle (ville,description) VALUES ('$ville','$description')";
 	return SQLInsert($SQL);
 }
 
+/**
+ * Ajoute une date à un spectacle
+ *
+ * @param int $id Id du spectacle
+ * @param date $date Date à ajouter (format yyyy-mm-dd)
+ * @return int l'Id de la date ajoutée
+ */
 function ajouterDateSpectacle($id,$date){
 	$SQL = "INSERT INTO eduroam_date_spectacle (idSpectacle,dateSpectacle) VALUES ($id,'$date')";
 	return SQLInsert($SQL);
 }
 
+/**
+ * Supprime une date
+ *
+ * @param int $idDate Id de la date
+ * @return boolean 1 si la suppression a eu lieu, 0 sinon, false si problème
+ */
 function supprimerDate($idDate){
 	$SQL = "DELETE FROM eduroam_date_spectacle WHERE idDate = $idDate";
 	return SQLDelete($SQL);
 }
 
+/**
+ * Archive une date
+ *
+ * @param int $idDate Id de la date
+ * @return boolean 1 si l'archivage a eu lieu, 0 sinon, false si problème
+ */
 function archiverDate($idDate){
 	$SQL = "UPDATE eduroam_date_spectacle SET valide=2 WHERE idDate = $idDate";
 	return SQLUpdate($SQL);
 }
 
+/**
+ * Supprime un spectacle
+ *
+ * @param int $id Id du spectacle
+ * @return boolean 1 si la suppression a eu lieu, 0 sinon, false si problème
+ */
 function supprimerSpectacle($id){
 	$SQL = "DELETE FROM eduroam_spectacle WHERE idSpectacle = $id";
 	return SQLDelete($SQL);
 }
 
+/**
+ * Valide une date
+ *
+ * @param int $id
+ * @param string $lien Lien du site de vente de billets
+ * @return boolean 1 si la validation a eu lieu, 0 sinon, false si problème
+ */
 function validerDate($id,$lien){
 	$SQL = "UPDATE eduroam_date_spectacle SET valide='1',lien='$lien' WHERE idDate='$id'";
 	return SQLUpdate($SQL);
 }
 
-
+/**
+ * Compte le nombre de dates dans un certain contexte, passé en paramètre
+ *
+ * @param string $valid Contexte dans lequel on veut compter les dates
+ * @return int Le nombre de dates voulu
+ */
 function nbDates($valid){
 	
 	switch($valid){
@@ -332,6 +477,15 @@ function nbDates($valid){
 	return SQLGetChamp($SQL);
 }
 
+/**
+ * Charge les dates dans un contexte voulu
+ *
+ * @param string $valid Contexte
+ * @param string $tri Ordre de tri
+ * @param int $id Id de l'utilisateur
+ * @param string $ville
+ * @return Array Les dates voulues
+ */
 function chargerDates($valid,$tri,$id,$ville){
 
 	if($ville != "")$ville = "AND s.ville LIKE '$ville'";
@@ -408,11 +562,25 @@ function chargerDates($valid,$tri,$id,$ville){
 	return parcoursRs(SQLSelect($SQL));
 }
 
+/**
+ * Récupère le nombre d'inscrits pour une date
+ *
+ * @param int $idDate
+ * @return int Le nombre d'inscrits
+ */
 function nbInscritsDate($idDate){
 	$SQL="SELECT COUNT(*) FROM eduroam_spectacle_user WHERE idDate='$idDate'";
 	return SQLGetChamp($SQL);
 }
 
+/**
+ * Récupère le nombre de dates en fonction du contexte passé, et de l'utilisateur courant
+ *
+ * @param string $choix Contexte
+ * @param int $id Id de l'utilisateur
+ * @param string $ville On peut préciser une ville si besoin
+ * @return int Le nombre de dates
+ */
 function nbDatesUser($choix,$id,$ville){
 	if($ville != "")$ville = "AND s.ville = '$ville'";
 	switch($choix){
@@ -420,8 +588,6 @@ function nbDatesUser($choix,$id,$ville){
 			//Dates validées
 			$SQL="SELECT COUNT(*) FROM `eduroam_date_spectacle` d,eduroam_spectacle s WHERE d.idSpectacle = s.idSpectacle AND valide = 1 AND d.idDate NOT IN 
 			(SELECT su.idDate FROM eduroam_spectacle_user su,eduroam_date_spectacle d WHERE idU = $id AND d.idDate = su.idDate AND d.valide=1) $ville";
-			/* SELECT idDate FROM spectacle_user WHERE idU = 2 */
-/* SELECT d.idDate FROM `date_spectacle` d,spectacle_user su WHERE valide = 1 AND d.idDate NOT IN (SELECT idDate FROM spectacle_user WHERE idU = 2) */		
 		break;
 		case "attente":
 			//Dates en attente
@@ -443,7 +609,14 @@ function nbDatesUser($choix,$id,$ville){
 
 }
 
-
+/**
+ * Déclarer un utilisateur comme interessé pour des dates
+ *
+ * @param boolean $choix 1 => L'utilisateur s'intéresse aux dates, 0 => il se désinteresse
+ * @param int $idU
+ * @param Array $dates Les dates choisies par l'utilisateur
+ * @return int le nombre de modifications
+ */
 function userInteresseDates($choix,$idU,$dates){
 	
 	$dates = json_decode($dates,TRUE);
@@ -455,10 +628,9 @@ function userInteresseDates($choix,$idU,$dates){
 			$idDate = $value["idDate"];
 			$idSpectacle = $value["idSpectacle"];
 			$notif = getNotifUser($idU);
-			
 			$SQL = "INSERT INTO eduroam_spectacle_user VALUES ($idDate,$idU,$idSpectacle,$notif)";
-			SQLInsert($SQL);
-			$i++;
+			if(SQLInsert($SQL)) 
+				$i++;
 		}
 	}
 	else if($choix == 2){
@@ -466,18 +638,30 @@ function userInteresseDates($choix,$idU,$dates){
 		foreach ($dates as $value) {
 			$idDate = $value["idDate"];
 			$SQL = "DELETE FROM eduroam_spectacle_user WHERE idDate=$idDate AND idU=$idU";
-			SQLUpdate($SQL);
-			$i++;
+			if(SQLUpdate($SQL))
+				$i++;
 		}
 	}
 	return $i;
 }
 
+/**
+ * Modifie le lien vers le site de billets pour une date
+ *
+ * @param int $idDate
+ * @param string $lien
+ * @return 1 si la modif a eu lieu, 0 sinon, false si pb
+ */
 function modifLien($idDate,$lien){
 	$SQL = "UPDATE eduroam_date_spectacle SET lien = '$lien' WHERE idDate = $idDate";
 	return SQLUpdate($SQL);
 }
 
+/**
+ * Récupère toutes les dates existantes dans la BDD
+ *
+ * @return Array toutes les dates
+ */
 function recupToutesLesDates(){
 	$SQL = "SELECT idDate,dateSpectacle FROM eduroam_date_spectacle";
 	return parcoursRs(SQLSelect($SQL));
@@ -486,6 +670,9 @@ function recupToutesLesDates(){
 /**
  * Renvoie un tableau contenant les adresses mail de tous les utilisateurs
  * qui sont interessés à la date $date, et qui sont élligibles à recevoir des mails.
+ *
+ * @param date $date Date au format yyyy-mm-dd
+ * @return Array les utilisateurs qui recevront un mail
  */
 function trouverUsersDateValidee($date){
 
@@ -497,7 +684,7 @@ function trouverUsersDateValidee($date){
 		if(getNotifUser($currId) == 0)continue;
 		$lastMail = getLastMail($currId);
 
-		if($lastMail == NULL || mailPossible($currId)) array_push($rep_finale,$user["email"]);
+		if(mailPossible($currId)) array_push($rep_finale,$user["email"]);
 	}
 
 	return $rep_finale;

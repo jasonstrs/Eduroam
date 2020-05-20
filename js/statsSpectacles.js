@@ -161,7 +161,6 @@ function chargerDatesStats(valide){
                             )
                         )
                     ).on("hidden.bs.modal",function(e){
-                        console.log("On supprime le modal");
                         $(this).remove();
                     });
                     $("body").append(modal);

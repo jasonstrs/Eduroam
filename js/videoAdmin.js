@@ -172,7 +172,7 @@ $(function(){
                 },
             });
         }
-        else //console.log("erreur");
+        else console.log("erreur");
     });
 })
 

@@ -96,7 +96,7 @@ function mailSpectacleValide($to){
             <p>Bonjour $to !</p>
             <b>Une date qui vous intéressait vient d'être confirmée ! </b>
             <p>Connectez-vous sur le site, et accédez à la section <b>Spectacles > Vos Dates Validées</b></p> 
-            <p>Cliquez sur la date voulue pour accéder au site de vente de billets. Si le lien n'est pas disponible, contactez u nadministrateur.</p> 
+            <p>Cliquez sur la date voulue pour accéder au site de vente de billets. Si le lien n'est pas disponible, contactez un administrateur.</p> 
         </div>
         </body>
     </html>

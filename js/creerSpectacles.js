@@ -498,9 +498,9 @@ $(document).ready(function(){
                 "desc":desc
             },
             success:function(oRep){
-                console.log("Spectacle Créé");
                 $("#modalConfirmerDate").modal('dispose');
-                Cookies.set("succes",oRep+" date(s) ajoutée(s) !");
+                if(oRep == 0) Cookies.set("error","Erreur, aucune date ajoutée, si le problème persiste, contactez un administrateur.");
+                else Cookies.set("succes",oRep+" date(s) ajoutée(s) !");
                 document.location.reload();
             }
         }

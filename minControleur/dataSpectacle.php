@@ -19,6 +19,9 @@
             $rep = selectVilles($nom);            
             echo json_encode($rep);
         break;
+        /**
+         * On vérifie si la ville entrée est dans la BDD
+         */
         case "verifVilleNom":
             $tab = array();
             
@@ -41,15 +44,11 @@
              */
             $nouv = 0;
             if(!($dates = valider("dates","POST"))){
-                header("Location:../index.php?view=planiSpectacle");
-                die("");
+                header("Location:../index.php?view=creerSpectacle");
+                die("Dates entrées incorrectes");
             }
             if(!($idSpec = valider("idSpectacle","POST")))$nouv = 1;
-            if($nouv == 0){
-                //Si on ajoute une date à un spectacle existant
-
-            }
-            else{
+            if($nouv != 0){            
                 //Si on crée entièrement un spectacle
                 if($ville = valider("ville","POST"))
                 if($desc = valider("desc","POST")){
@@ -61,11 +60,14 @@
                 if($currDate != "")
                     if(ajouterDateSpectacle($idSpec,$currDate))$i++;
             }
+            //On renvoie le nombre de modifications
             echo $i;
         break;
         case "supprDate":
             if($date  = valider("idDate","POST"))
                 echo supprimerDate($date);
+            else 
+                echo 0;
         break;
         case "supprSpectacle":
             if($date  = valider("id","POST"))
@@ -92,7 +94,7 @@
                         $i++;
                 }
                 $rep["nbMails"] = $i;
-                $rep["success"]=$valide;
+                $rep["success"] = $valide;
                 echo json_encode($rep);
             }
         break;
