@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 13 mai 2020 à 14:35
--- Version du serveur :  5.7.24
--- Version de PHP :  7.3.1
+-- Généré le :  mer. 20 mai 2020 à 17:04
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,8 +44,6 @@ INSERT INTO `eduroam_accueil` (`id`, `type`, `id_annonce`) VALUES
 (2, 'sondage', 1),
 (3, 'sondage', 6),
 (5, 'annonce', 4),
-(8, 'annonce', 6),
-(9, 'annonce', 7),
 (10, 'annonce', 8);
 
 -- --------------------------------------------------------
@@ -70,9 +68,7 @@ CREATE TABLE IF NOT EXISTS `eduroam_article` (
 
 INSERT INTO `eduroam_article` (`idArticle`, `idU`, `dateArticle`, `contenu`) VALUES
 (4, 3, '2020-05-13', '&lt;p&gt;&lt;span class=&quot;ql-size-huge&quot;&gt;Nouveau Site&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Blabla blabla&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Toussa toussa&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mieux que Style-Addict !&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Merci bye bye&lt;/p&gt;'),
-(6, 3, '2020-05-13', '&lt;p&gt;dsdsdsd&lt;/p&gt;'),
-(7, 3, '2020-05-13', '&lt;p&gt;zdqsdzdqsdz&lt;/p&gt;'),
-(8, 3, '2020-05-13', '&lt;p&gt;qsdzqsdz&lt;/p&gt;');
+(8, 3, '2020-05-13', '&lt;p&gt;&lt;u class=&quot;ql-size-huge ql-font-serif&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/u&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Aliquam egestas nulla ac&lt;span style=&quot;background-color: rgb(0, 102, 204);&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: rgb(0, 102, 204); color: rgb(255, 255, 255);&quot;&gt;tortor ullamcorper condimentum&lt;/span&gt;. Maecenas sed commodo elit. Pellentesque placerat lorem eu &lt;span style=&quot;color: rgb(230, 0, 0);&quot;&gt;efficitur consectetur.&lt;/span&gt; Morbi ultrices congue tortor non posuere. Donec ultricies ac felis at tempor. Donec lacinia vel tellus fringilla imperdiet. Proin ultricies justo sit amet urna porta laoreet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Vivamus tincidunt nunc nisl, eu egestas neque rhoncus in. Duis maximus massa ut aliquam dapibus. Duis dictum urna porta, vehicula nisi quis, cursus lacus. Integer blandit ante sed placerat varius. Ut commodo libero diam, at dignissim massa dignissim sed. Suspendisse vel elit et ex aliquam maximus. Mauris vitae rutrum massa. In rutrum porta mollis. Pellentesque in nisi lobortis, vulputate dui ut, lobortis ante. Morbi risus lacus, egestas vitae ultricies quis, laoreet malesuada elit. Suspendisse tellus ipsum, porta non lorem non, ultricies vehicula nulla.&lt;/p&gt;');
 
 -- --------------------------------------------------------
 
@@ -120,8 +116,10 @@ CREATE TABLE IF NOT EXISTS `eduroam_choix_user` (
 --
 
 INSERT INTO `eduroam_choix_user` (`idU`, `idChoix`) VALUES
+(1, 3),
+(2, 1),
 (3, 1),
-(1, 3);
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -147,51 +145,51 @@ CREATE TABLE IF NOT EXISTS `eduroam_date_spectacle` (
   `idDate` int(11) NOT NULL AUTO_INCREMENT,
   `idSpectacle` int(11) NOT NULL,
   `dateSpectacle` date NOT NULL,
-  `valide` int(11) DEFAULT '0',
-  `lien` text,
+  `valide` int(11) DEFAULT 0,
+  `lien` text DEFAULT NULL,
   PRIMARY KEY (`idDate`),
   KEY `date_spectacle_idSpectacle` (`idSpectacle`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `eduroam_date_spectacle`
 --
 
 INSERT INTO `eduroam_date_spectacle` (`idDate`, `idSpectacle`, `dateSpectacle`, `valide`, `lien`) VALUES
-(34, 16, '2020-07-17', 0, NULL),
+(34, 16, '2020-07-17', 2, ''),
 (35, 16, '2020-07-18', 0, NULL),
 (37, 16, '2020-07-27', 0, NULL),
 (38, 16, '2020-07-28', 0, NULL),
 (39, 16, '2020-07-29', 0, NULL),
-(40, 16, '2020-07-30', 0, NULL),
-(41, 16, '2020-07-31', 1, 'https://www.google.com'),
-(42, 16, '2020-08-01', 0, NULL),
-(43, 16, '2020-08-02', 1, 'https://twitter.com'),
-(50, 15, '2020-05-15', 1, ''),
+(40, 16, '2020-07-30', 1, ''),
+(42, 16, '2020-08-01', 1, ''),
 (51, 15, '2020-05-22', 0, NULL),
-(52, 15, '2020-05-29', 0, NULL),
-(53, 15, '2020-06-05', 0, NULL),
-(54, 15, '2020-06-12', 0, NULL),
+(52, 15, '2020-05-29', 1, ''),
+(54, 15, '2020-06-12', 1, ''),
 (55, 15, '2020-06-19', 0, NULL),
-(56, 15, '2020-06-26', 0, NULL),
+(56, 15, '2020-06-26', 1, ''),
 (64, 18, '2022-04-01', 0, NULL),
 (65, 18, '2022-04-08', 0, NULL),
 (66, 18, '2022-04-15', 0, NULL),
-(67, 18, '2022-04-22', 0, NULL),
-(68, 18, '2022-04-29', 0, NULL),
-(69, 18, '2022-05-06', 0, NULL),
-(70, 18, '2022-05-13', 0, NULL),
-(71, 18, '2022-05-20', 0, NULL),
-(72, 18, '2022-05-27', 0, NULL),
-(73, 18, '2022-06-03', 0, NULL),
-(74, 18, '2022-06-10', 0, NULL),
-(75, 18, '2022-06-17', 0, NULL),
-(76, 18, '2022-06-24', 0, NULL),
-(77, 18, '2022-07-01', 0, NULL),
-(78, 18, '2022-07-08', 0, NULL),
+(67, 18, '2022-04-22', 1, ''),
+(68, 18, '2022-04-29', 1, ''),
+(69, 18, '2022-05-06', 1, ''),
+(70, 18, '2022-05-13', 1, ''),
+(71, 18, '2022-05-20', 1, ''),
+(72, 18, '2022-05-27', 1, ''),
+(73, 18, '2022-06-03', 1, ''),
+(74, 18, '2022-06-10', 1, ''),
+(75, 18, '2022-06-17', 1, ''),
+(76, 18, '2022-06-24', 1, ''),
+(77, 18, '2022-07-01', 1, ''),
+(78, 18, '2022-07-08', 1, ''),
 (79, 18, '2022-07-15', 0, NULL),
-(80, 18, '2022-07-22', 0, NULL),
-(81, 18, '2022-07-29', 0, NULL);
+(80, 18, '2022-07-22', 1, ''),
+(81, 18, '2022-07-29', 1, ''),
+(82, 15, '2020-05-29', 0, NULL),
+(86, 15, '2020-05-15', 0, NULL),
+(87, 15, '2020-05-22', 0, NULL),
+(88, 15, '2020-05-29', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -217,8 +215,8 @@ CREATE TABLE IF NOT EXISTS `eduroam_idee_ville` (
 
 DROP TABLE IF EXISTS `eduroam_notif_spectacle`;
 CREATE TABLE IF NOT EXISTS `eduroam_notif_spectacle` (
-  `nbMin` int(11) NOT NULL DEFAULT '100',
-  `nbRappel` int(11) NOT NULL DEFAULT '50',
+  `nbMin` int(11) NOT NULL DEFAULT 100,
+  `nbRappel` int(11) NOT NULL DEFAULT 50,
   `mailNbInt` text NOT NULL,
   `objNbInt` tinytext NOT NULL,
   `mailIdeeVille` text NOT NULL,
@@ -375,12 +373,18 @@ INSERT INTO `eduroam_spectacle_user` (`idDate`, `idU`, `idSpectacle`, `notif`) V
 (34, 1, 16, 0),
 (34, 2, 16, 1),
 (40, 2, 16, 1),
-(41, 1, 16, 0),
-(41, 2, 16, 1),
 (42, 2, 16, 1),
-(43, 1, 15, 0),
-(43, 2, 16, 1),
-(56, 2, 15, 1);
+(54, 1, 15, 1),
+(54, 2, 15, 1),
+(56, 2, 15, 1),
+(67, 4, 18, 1),
+(68, 2, 18, 1),
+(69, 4, 18, 1),
+(70, 4, 18, 1),
+(71, 4, 18, 1),
+(72, 4, 18, 1),
+(74, 4, 18, 1),
+(80, 2, 18, 1);
 
 -- --------------------------------------------------------
 
@@ -397,20 +401,23 @@ CREATE TABLE IF NOT EXISTS `eduroam_user` (
   `passe` text NOT NULL,
   `superadmin` tinyint(1) NOT NULL,
   `code` tinyint(1) NOT NULL,
-  `banni` tinyint(1) NOT NULL DEFAULT '0',
-  `choice` tinyint(1) NOT NULL DEFAULT '1',
+  `banni` tinyint(1) NOT NULL DEFAULT 0,
+  `choice` tinyint(1) NOT NULL DEFAULT 1,
   `hashCode` text NOT NULL,
+  `nbJoursMail` int(11) NOT NULL DEFAULT 1 COMMENT 'Nombre de jours minimum à attendre entre chaque notifications de validation de spectacle par mail',
+  `lastMail` datetime DEFAULT NULL,
   PRIMARY KEY (`idU`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `eduroam_user`
 --
 
-INSERT INTO `eduroam_user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `banni`, `choice`, `hashCode`) VALUES
-(1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, 0, 1, '0'),
-(2, 'tata@gmail.com', 'TATANom', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0'),
-(3, 'clementboyaval@gmail.com', 'BOYAVAL', 'Clément', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4');
+INSERT INTO `eduroam_user` (`idU`, `email`, `nom`, `prenom`, `passe`, `superadmin`, `code`, `banni`, `choice`, `hashCode`, `nbJoursMail`, `lastMail`) VALUES
+(1, 'toto@gmail.com', 'TOTO', 'toto', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 0, 1, 0, 1, '0', 1, NULL),
+(2, 'tata@gmail.com', 'TATANom', 'tata', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0', 4, '2020-05-19 00:00:00'),
+(3, 'clementboyaval@gmail.com', 'BOYAVAL', 'Clément', '0ea97408e22da28e7c02244c20287d49077951fc', 1, 1, 0, 1, '1ab57a44a6f2ff1a4c85221559bd90d4', 10, NULL),
+(4, 'simon.vandevoir@gmail.com', 'VANDEVOIR', 'Simon', '0ced5f8206650e18dfae568c7cb802d4ba84a224', 1, 1, 0, 1, '0ced5f8206650e18dfae568c7cb802d4ba84a224', 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -431,8 +438,8 @@ CREATE TABLE IF NOT EXISTS `eduroam_user_role` (
 --
 
 INSERT INTO `eduroam_user_role` (`idU`, `idRole`) VALUES
-(3, 8),
-(1, 9);
+(1, 9),
+(3, 8);
 
 -- --------------------------------------------------------
 
@@ -450,7 +457,7 @@ CREATE TABLE IF NOT EXISTS `eduroam_video` (
   `thumbnails` text NOT NULL,
   `checked` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1233 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1240 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `eduroam_video`
@@ -812,7 +819,6 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1174, 'DQsB3fxorkI', '2016-03-08', 'VLOG #40 : Réponse à Jean Vincent Placé... #OnVautMieuxQueCa (?????????? )', 'En attendant la manif de demain, et après un petit mois d\'absence, je suis de retour !!!', 'https://i.ytimg.com/vi/DQsB3fxorkI/default.jpg', 0),
 (1175, '1BE8kKjYoDE', '2016-02-07', 'Les &quot;PAS CONTENTS&quot; : Dur dur d&#039;être un conspi !!! (bonus jspc#36)', 'Vous avez été nombreux à le demander : voici donc le clip de \"dur dur d\'être un conspi\", la chanson présente dans l\'épisode 36 de JSPC ! Pour voir l\'épisode ...', 'https://i.ytimg.com/vi/1BE8kKjYoDE/default.jpg', 0),
 (1176, '48BRmLwUdZw', '2016-01-27', 'VLOG #38 -  Taubira démissionne ! (hommage à tata Christiane) (?????????? )', 'Et oui, Christiane Taubira à quitté le gouvernement ce matin ! Certains m\'ont reprochés d\'être un peu trop vulgaire dans les derniers vlogs. Place à la poésie ...', 'https://i.ytimg.com/vi/48BRmLwUdZw/default.jpg', 0),
-(1177, 'DxBLH3BiqHA', '2016-01-23', 'VLOG #37 - Le projet de loi débile de deux députés socialistes... (?????????? )', 'o Article mentionné dan la vidéo : http://www.numerama.com/politique/139435-un-amendement-pour-interdire-les-liens-hypertextes.html o Retrouve-nous sur ...', 'https://i.ytimg.com/vi/DxBLH3BiqHA/default.jpg', 0),
 (1178, 'K4ksP3273BI', '2016-01-19', 'VLOG #35 - La liberté d&#039;exprè-fion selon Manuel Valls (?????????? ) !', 'Petit rappel : pour ceux qui veulent se changer les idées, rire et réfléchir (et qui sont sur Paris), vous êtes conviés à la cinquième édition du PAS CONTENT ...', 'https://i.ytimg.com/vi/K4ksP3273BI/default.jpg', 0),
 (1179, 'MJXEtLUZM5A', '2016-01-14', 'VLOG #34 - MEGA Lol Bébé CHAT #XPTDR SWAGG (?????????? )', 'o Retrouve-nous sur facebook : https://www.facebook.com/pascontenttv/?ref=tn_tnmn.', 'https://i.ytimg.com/vi/MJXEtLUZM5A/default.jpg', 0),
 (1180, 'mY949ROPKus', '2016-01-13', 'VLOG #33 - La dernière vidéo de la chaine ? (?????????? )', 'Petit vlog improvisé à l\'occasion de la loi actuellement en cours de vote à l\'Assemblée ce mercredi, dans le silence médiatique le plus total. Tourné avec les ...', 'https://i.ytimg.com/vi/mY949ROPKus/default.jpg', 0),
@@ -825,7 +831,6 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1188, 'GQHUg6qf5fQ', '2015-12-04', 'VLOG #17 : Après les attentats, ce qui nous attend dans trois mois ! [REUPLOAD 18/11/2015]', 'o Vidéo originalement postée sur Facebook le : 18/11/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/GQHUg6qf5fQ/default.jpg', 0),
 (1189, '4QiGrQJybhM', '2015-12-04', 'VLOG #28 : Alerte Info !!! Prise d&#039;otages à Roubaix !!! [REUPLOAD 01/12/2015]', 'o Vidéo originalement postée sur Facebook le : 01/12/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/4QiGrQJybhM/default.jpg', 0),
 (1190, 'vYOmzCRBJZw', '2015-12-04', 'VLOG #21 - Sommes-nous vraiment en démocratie ? 2/2 [REUPLOAD 23/11/2015]', 'o Vidéo originalement postée sur Facebook le : 23/11/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/vYOmzCRBJZw/default.jpg', 0),
-(1191, 'aTBRxmpUuIg', '2015-12-04', 'VLOG #09 - Réponse à Julien Dray [REUPLOAD 21/10/2015]', 'Date originale de publication : 21/10/2015 Les socialistes ça ose tout : c\'est même à ça qu\'on les reconnait... Même sortir Julien Dray du placard, pour l\'envoyer ...', 'https://i.ytimg.com/vi/aTBRxmpUuIg/default.jpg', 0),
 (1192, 'QCDkgEOV9Lg', '2015-12-04', 'VLOG #30 - Réaction à l&#039;interview de Karim Benzema [REUPLOAD 03/12/2015]', 'o Vidéo originalement postée sur Facebook le : 03/12/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/QCDkgEOV9Lg/default.jpg', 0),
 (1193, 'C696luPiveU', '2015-12-04', 'VLOG #27 - Alerte Info !!!  Nouvelle prise d&#039;otages en France !!! [REUPLOAD 01/12/2015]', 'o Vidéo originalement postée sur Facebook le : 01/12/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/C696luPiveU/default.jpg', 0),
 (1194, 'lv5ROd05gQo', '2015-12-04', 'VLOG #29 -  Etat d&#039;urgence dans ton cul ! [REUPLOAD 03/12/2015]', 'o Vidéo originalement postée sur Facebook le : 03/12/2015 o Toutes nos excuses pour la perte de qualité occasionnée ! o Retrouve-nous sur facebook ...', 'https://i.ytimg.com/vi/lv5ROd05gQo/default.jpg', 0),
@@ -859,13 +864,17 @@ INSERT INTO `eduroam_video` (`id`, `videoId`, `publishedAt`, `title`, `descripti
 (1222, 'PPSaCO9j63Y', '2015-02-20', 'J&#039;SUIS PAS CONTENT ! #22 - Case prison, sans papiers et &quot;bons&quot; musulmans', 'Comment enlever la désactivation des annotations (faire le procédé inverse) ...', 'https://i.ytimg.com/vi/PPSaCO9j63Y/default.jpg', 0),
 (1223, '2OROHBiCAG0', '2015-02-11', 'J&#039;SUIS PAS CONTENT ! #21 - Gad Elmaleh, fraude fiscale et Enfoirés...', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/2OROHBiCAG0/default.jpg', 0),
 (1225, 'RwNHrJFEPBw', '2015-02-03', 'J&#039;SUIS PAS CONTENT ! #19 - Concours de connerie : Najat VS Ségolène', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/RwNHrJFEPBw/default.jpg', 0),
-(1226, '8uxCnfXrmIA', '2017-06-28', 'J&#039;SUIS PAS CONTENT ! #93 [Quickie] : Valls quitte le PS !!! (&amp; démocratie de perlimpinpin)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/8uxCnfXrmIA/default.jpg', 0),
 (1227, 'BaTMj1dFodo', '2017-06-23', 'J&#039;SUIS PAS CONTENT ! #92 :  Big Data, Bayrou en &quot;off&quot; &amp; Robots sexuels ! [feat. JR Lombard]', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/BaTMj1dFodo/default.jpg', 0),
-(1228, 'Aab4VsCWm2E', '2016-01-28', 'VLOG #39 - Dieudonné retenu à Hong Kong : que s&#039;est-il vraiment passé ? (?????????? )', 'Petit réaction à chaud afin de débunker les complotistes ! Dieudonné est actuellement retenu à Hong Kong. Mais que s\'est-il vraiment passé ??? ?#?vlog? ?#?jspc? ...', 'https://i.ytimg.com/vi/Aab4VsCWm2E/default.jpg', 0),
 (1229, '7cj0aJfFfSU', '2020-05-10', 'DES CONS FINEMENT (J&#039;suis pas content ! #S06E15)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/7cj0aJfFfSU/default.jpg', 0),
 (1230, 'r6Y2czfcTUc', '2018-05-21', 'J&#039;SUIS PAS CONTENT ! #156 :  Urbanisme inclusif, Combine à Collomb &amp; Journalisme engagé !', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/VYDpV5R • T W I T T E R ...', 'https://i.ytimg.com/vi/r6Y2czfcTUc/default.jpg', 0),
-(1231, 'b3E0lbo744E', '2017-06-04', 'Attentat de Londres : je m&#039;en &quot;bats les couilles&quot; (réaction)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux sociaux : T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K ...', 'https://i.ytimg.com/vi/b3E0lbo744E/default.jpg', 0),
-(1232, 'wafbP6_7gfI', '2015-02-06', 'J&#039;SUIS PAS CONTENT ! #20 - DSK en procès et terrorisme juvénile...', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/wafbP6_7gfI/default.jpg', 0);
+(1232, 'wafbP6_7gfI', '2015-02-06', 'J&#039;SUIS PAS CONTENT ! #20 - DSK en procès et terrorisme juvénile...', 'J\'suis pas content ! Le nouveau Podcast satyrique présenté par Simplet ! Rejoins nous sur Facebook ...', 'https://i.ytimg.com/vi/wafbP6_7gfI/default.jpg', 0),
+(1233, 'R1jbCizOxP8', '2020-05-15', 'LOI AVIA : La Revanche des Blokémon ! [Feat. Eddy Pero] (J&#039;SUIS PAS CONTENT ! #Hors-Série)', 'Pour me soutenir sur T I P E E E : https://www.tipeee.com/j-suis-pas-content · Réseaux Sociaux : D I S C O R D : https://discord.gg/R5J9f27 T W I T T E R ...', 'https://i.ytimg.com/vi/R1jbCizOxP8/default.jpg', 0),
+(1234, 'rNgwL9lXM8g', '2018-02-01', 'ISVG #00 : Je vais vous donner envie de voter !', 'NOTES IMPORTANTES : J\'ai modifié le sondage pour que vous puissiez indiquer TROIS noms. Cela évitera les réponses trop similaires et donnera un peu d\'air ...', 'https://i.ytimg.com/vi/rNgwL9lXM8g/default.jpg', 0),
+(1235, 'f1GIZHlIQ5w', '2017-01-11', 'J&#039;SUIS PAS CONTENT ! #58 : Bonne année mon CUL ! [Quickie #13]', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/f1GIZHlIQ5w/default.jpg', 0),
+(1236, 'Vbs4XkujCoQ', '2016-11-03', 'J&#039;SUIS PAS CONTENT ! #12 - France, Qatar et Coupe du monde...', 'Retrouve-nous sur : · T W I T T E R : https://goo.gl/7rYM6E • F A C E B O O K : https://goo.gl/LUkciS • Y O U T U B E : https://goo.gl/iOTGSa · Pour me soutenir ...', 'https://i.ytimg.com/vi/Vbs4XkujCoQ/default.jpg', 0),
+(1237, 'uJI24em45aw', '2020-05-16', 'CHANSON : Blokémon ! Enervez-les tous ! [Extrait du dernier épisode de JSPC]', 'INTERPRÉTE : Eddy Pero : https://www.youtube.com/user/Eddyperoguitars · PAROLES : Greg Tabibian ·RÉALISATION DU CLIP : Jahbulon · Lien de ...', 'https://i.ytimg.com/vi/uJI24em45aw/default.jpg', 0),
+(1238, '0-rBJPrdH7c', '2020-03-28', 'CORONAVIRUS: Top 3 des FDP, Cymès mes fesses &amp; Chloroquine autorisée ! (J&#039;SUIS PAS CONTENT! #S06E11)', 'Pour précommander le jeu VIVE LA FRANCE : https://fr.ulule.com/vive-la-france-jeu/ · Pour me soutenir sur T I P E E E ...', 'https://i.ytimg.com/vi/0-rBJPrdH7c/default.jpg', 0),
+(1239, 'aTBRxmpUuIg', '2015-12-04', 'VLOG #09 - Réponse à Julien Dray [REUPLOAD 21/10/2015]', 'Date originale de publication : 21/10/2015 Les socialistes ça ose tout : c\'est même à ça qu\'on les reconnait... Même sortir Julien Dray du placard, pour l\'envoyer ...', 'https://i.ytimg.com/vi/aTBRxmpUuIg/default.jpg', 0);
 
 --
 -- Contraintes pour les tables déchargées
