@@ -1,5 +1,5 @@
 <?php
-    /* session_start(); */
+    session_start();
     include_once "../libs/maLibUtils.php";
     include_once "../libs/maLibSQL.pdo.php";
     include_once "../libs/maLibSecurisation.php";
@@ -9,7 +9,12 @@ if(!($action = valider("action","POST"))){
     header("Location:../index.php?view=accueil");
 }
 
-$action = valider("action","POST");
+
+
+if( !($idU = valider("idUser","SESSION")))die("Non connecte");
+$hash = valider("hash","SESSION");
+if(!isSuperAdmin($idU,$hash) && !getDroitByUser($idU,"utilisateurs"))die("Pas les droits");
+
 switch($action){
 
 	case 'add' : 

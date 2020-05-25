@@ -22,17 +22,17 @@
     else {
         $videos = getVideos($search, $page, $videoParPage, $notID, $apres, $avant, $serie);
     }
-	foreach ($videos as $video) { ?>
+    foreach ($videos as $video) { ?>
+    <a href="index.php?view=watchvideo&id=<?php echo $video["videoId"]; ?>">
     <li id='<?php echo $video["id"]; ?>' class="media item">
         <div class="item-img"> 
-            <a href="index.php?view=watchvideo&id=<?php echo $video["videoId"]; ?>">
+            
                 <img src="<?php echo $video["thumbnails"]; ?>"">
-            </a>
+            
         </div>
         <div class="media-body item-txt"> 
-            <a href="index.php?view=watchvideo&id=<?php echo $video["videoId"]; ?>"">
+            
                 <span> <?php echo $video["title"]; ?> </span>
-            </a>
         </div>
     </li>
 

@@ -78,12 +78,14 @@ function afficherResumeVilles(rep){
             )
             )
         ;        
-        $("#listeVilles").append(currVille);
+        
         var data = currVille.data("ville");
         var currDesc = $("<div/>").addClass("descVille");
         var contenuModal;
         var requete;
+        
         if(data["dates"]["length"] == 0) currDesc.append($("<div/>").html("<I><B>Aucune date pour ce spectacle</B></I>").css("margin","10px"));
+        else $("#listeVilles").append(currVille);
         data["dates"].forEach(date => {
             currDesc.append(
                 //Bouton pour supprimer une date
@@ -188,6 +190,7 @@ function afficherResumeVilles(rep){
             var spectacle = $(this).parent().parent().data("ville");
             console.log(spectacle);
             var contenuModal = "Voulez vous vraiment supprimer le spectacle \""+spectacle.desc+"\" à "+spectacle.ville+"?";
+            contenuModal += "<br>Si il possède des dates archivées, le spectacle ne sera pas supprimé, mais toutes les dates non-archivées le seront (il n'apparaîtra plus sur cette page).";
             var requete ={
                 method:"POST",
                 url:"./mincontroleur/dataSpectacle.php",
@@ -196,8 +199,10 @@ function afficherResumeVilles(rep){
                     id:spectacle.id
                 },
                 success:function(oRep){
-                    console.log("Spectacle supprimé");
                     $("#modalSupprSpectacle").modal('dispose');
+                    if(oRep == 0)Cookies.set("erreur","Erreur lors de la suppression");
+                    if(oRep == 1)Cookies.set("succes","Le spectacle a été supprimé");
+                    if(oRep == 2)Cookies.set("info","Le spectacle possédait des dates archivées. Toutes les autres dates ont été supprimées.");
                     document.location.reload();
                 }
                 

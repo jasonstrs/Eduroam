@@ -430,13 +430,27 @@ function archiverDate($idDate){
 
 /**
  * Supprime un spectacle
+ * Si aucune date archivée, on supprimer juste le spectacle
+ * Si des dates sont archivées, on supprime toutes les autres
  *
  * @param int $id Id du spectacle
- * @return boolean 1 si la suppression a eu lieu, 0 sinon, false si problème
+ * @return int 0 ou false si erreur, 1 si le spectacle a été supprimé, 2 si ses dates non archivées ont été supprimées
  */
 function supprimerSpectacle($id){
-	$SQL = "DELETE FROM eduroam_spectacle WHERE idSpectacle = $id";
-	return SQLDelete($SQL);
+	$rep = 0;
+	if(SQLGetChamp("SELECT COUNT(*) FROM eduroam_date_spectacle WHERE valide=2 AND idSpectacle='$id'") == 0){
+		//Aucune date de ce spectacle n'est archivée : on peut le supprimer
+		$SQL = "DELETE FROM eduroam_spectacle WHERE idSpectacle = $id";
+		$rep = 1;
+	}
+	else{
+		//Des dates sont archivées. On supprime juste les dates non archivées
+		$SQL = "DELETE FROM eduroam_date_spectacle WHERE idSpectacle='$id' AND valide=0 OR valide=1";
+		$rep = 2;
+	}
+	
+	SQLDelete($SQL);
+	return $rep;
 }
 
 /**
@@ -1032,7 +1046,7 @@ function editAnnonce($id, $contenu){
 }
 
 function addSondage($intitule, $user, $hideResult, $endDate) {
-	$SQL = "INSERT INTO eduroam_sondage VALUES('0', '$user', '$intitule', '$hideResult', $endDate, CURRENT_DATE)";
+	$SQL = "INSERT INTO eduroam_sondage VALUES('0', '$user', '$intitule', '$hideResult', '$endDate', CURRENT_DATE)";
 	SQLUpdate($SQL);
 	$SQL2 = "SELECT idSondage FROM eduroam_sondage ORDER BY idSondage DESC";
 	$rs = SQLGetChamp($SQL2);

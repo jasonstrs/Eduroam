@@ -39,7 +39,7 @@ var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dia
 
 /**
  * Fonction permettant de créer un modal bootstrap
- * /!\ Crée un modal "simple" => Que du texte pour le titre, 1 seul bouton de confirmatio net un d'annulation dans le footer
+ * /!\ Crée un modal "simple" => Que du texte pour le titre, 1 seul bouton de confirmation et un d'annulation dans le footer
  * Ne pas utiliser cette fonction pour créer des modal plus complexes
  * @param {string} id Permet de donner un id au modal, afin de pouvoir le déclencher avec un bouton
  * <button type="button" class="btn btn-primary" data-toggle="modal" data-target="id">
@@ -202,5 +202,11 @@ function assignerDateMoment(_date,_moment){
     return _moment;
 }
 
+/**
+ * Modele jQuery pour une alerte Bootstrap
+ */
 var alerteB = $("<div/>").addClass("alert alert-dismissible fade show").attr("role","alert").css({"width":"100%","text-align":"center","margin-top":"20px"});
+/**
+ * Modele jQuery pour la croix qui ferme une alerte Bootstrap
+ */
 var boutonFermerAlerteB = $("<button/>").addClass("close").attr({"data-dismiss":"alert","aria-label":"close"}).append($("<span/>").attr("aria-hidden",true).html("&times;"));

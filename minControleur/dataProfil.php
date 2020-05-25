@@ -11,7 +11,7 @@
         die("");
     }
     
-    $id = valider("idUser","SESSION");
+    if( !($id = valider("idUser","SESSION")))die("Non connecté");
 
     switch($action){
         case 'getParams' :

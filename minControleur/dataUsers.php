@@ -9,6 +9,10 @@ if(!($action = valider("action","POST"))){
     header("Location:../index.php?view=accueil");
 }
 
+if( !($idU = valider("idUser","SESSION")))die("Non connecte");
+$hash = valider("hash","SESSION");
+if(!isSuperAdmin($idU,$hash) && !getDroitByUser($idU,"utilisateurs"))die("Pas les droits");
+
 $action = valider("action","POST");
 switch($action){
 

@@ -116,7 +116,7 @@ $(document).on("click",".editingNew", function(){
 			url: "./minControleur/dataRole.php",
 			data: {"action":"add", "nom":$("#name").val(), "droits":{"video": video, "spectacle": spectacle, "utilisateurs": user, "annonce": annonce,}},
 			success: function(oRep){
-				//console.log("Wtf mon bro ?");
+				if(oRep == "Pas les droits" || oRep == "Non connecte")return;
 				updateRole(parseInt(oRep), $("#name").val(), video, spectacle, user, annonce)
 			},
 			dataType: "text"
