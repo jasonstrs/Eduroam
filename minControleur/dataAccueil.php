@@ -10,7 +10,7 @@ if(!($action = valider("action","POST"))){
 }
 
 $action = valider("action","POST");
-if(!($idU = valider(("idUser"),"SESSION")))die("Non connecté");
+if(!($idU = valider(("idUser"),"SESSION")))$idU=-1;
 $hash = valider(("hash"),"SESSION");
 /**
  * Fonction administrateur
@@ -49,11 +49,6 @@ if(getDroitByUser($idU, "spectacle") || isSuperAdmin($idU,$hash)){
             $idAnnonce = valider("idAnnonce","POST");
             if(valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce")) removeAccueil($idAnnonce);
         break;
-
-        case 'getRandomVideo' : 
-            $randomVideo = getRandomVideo();
-            echo json_encode($randomVideo);
-        break;
         
     }
 }
@@ -76,9 +71,13 @@ if(valider("idUser","SESSION")){
         break;
     }
 }
-else{
-    die("Vous n'etes pas connecté");
+switch($action){
+    case 'getRandomVideo' : 
+        $randomVideo = getRandomVideo();
+        echo json_encode($randomVideo);
+    break;
 }
+
 
 
 

@@ -39,7 +39,7 @@ $nbAccueils=countAccueils();
 		</div>
 	</div>
 	</div>
-
+	<div class="lead" style="text-align:left">
 	<div id="mainDiv">
 		<div id="gaucheM">
 			<input type="hidden" id="nbResults" value="<?php echo $nbAccueils ?>">
@@ -74,6 +74,6 @@ $nbAccueils=countAccueils();
 			</div>
 		</div>
 	</div>
-	
+	</div>
 
 <script src="js/accueil.js"></script>

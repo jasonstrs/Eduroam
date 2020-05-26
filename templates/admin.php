@@ -6,6 +6,9 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
     die("");
 }
 
+$idU = valider("idUser","SESSION");
+$hash = valider("hash","SESSION");
+
 if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "spectacle")
 || getDroitByUser(valider("idUser","SESSION"), "utilisateurs") || getDroitByUser(valider("idUser","SESSION"), "video"))) {
 
@@ -35,7 +38,14 @@ if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitB
             <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">Vidéos</a>
         </li>
         <?php } ?>
+        <?php if(isSuperAdmin($idU,$hash) || valider("admin","SESSION")==1) { ?>
+        <li class="nav-item">
+            <a class="nav-link" id="style-tab" data-toggle="tab" href="#style" role="tab" aria-controls="style" aria-selected="false">Style</a>
+        </li>
+        <?php } ?>
     </ul>
+
+
     <div class="tab-content" id="myTabContent">
         <?php if(getDroitByUser(valider("idUser","SESSION"), "spectacle") || valider("admin","SESSION")==1) { ?>
         <div class="tab-pane fade" id="creerSpectacles" role="tabpanel" aria-labelledby="creerSpectacles-tab">
@@ -60,6 +70,12 @@ if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitB
         <?php if(getDroitByUser(valider("idUser","SESSION"), "video") || valider("admin","SESSION")==1) { ?>
         <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
             <?php include("videoAdmin.php"); ?>
+        </div>
+        <?php } ?>
+
+        <?php if(isSuperAdmin($idU,$hash) || valider("admin","SESSION")==1) { ?>
+        <div class="tab-pane fade" id="style" role="tabpanel" aria-labelledby="style-tab">
+            <?php include("adminStyle.php"); ?>
         </div>
         <?php } ?>
     </div>

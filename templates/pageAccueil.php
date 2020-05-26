@@ -30,15 +30,27 @@
             $total = getReponseCountBySondage($accueil["id_annonce"]);
             ?>
             <div class="unSondage <?php if($firtAnnonce) echo "pt-1" ?>">
-                <div class="card-header"><?php echo $sondage[0]["intitule"]; 
+                <div class="card-header"><?php 
+                    if(valider("connecte","SESSION"))echo $sondage[0]["intitule"]; 
+                    else echo $sondage[0]["intitule"]." <span style='color:darkgrey;'>- Connectez-vous pour répondre à ce sondage.</span>";
                 if($date1>$date2) echo "<span class='fermer'> - Ce sondage est fermé </span>" ?></div>
                 <input type="hidden" id="hidden<?php echo $sondage[0]["idSondage"];?>" value="<?php echo $sondage[0]["cacherResultats"]; ?>" >
                 <div id="reponse<?php echo $sondage[0]["idSondage"]; ?>" class="card-body text-dark">
                     <?php foreach($choix as $rep) { ?>
                     <div class="reponse">
-                        <?php if(valider("connecte","SESSION") && (!hasVoted(valider("idUser","SESSION"), $sondage[0]["idSondage"]) && $date1<$date2)) { ?>
+                        <?php if(valider("connecte","SESSION") && (!hasVoted(valider("idUser","SESSION"), $sondage[0]["idSondage"]) && $date1<$date2)) {
+                            //Si on est connecté et que l'on a pas voté ?>
                             <div class="form-check" id="choix<?php echo $rep["idChoix"]; ?>">
                                 <input name="<?php echo $sondage[0]["idSondage"]; ?>" class="form-check-input" type="radio" id="check<?php echo $rep["idChoix"]; ?>" <?php if($first) echo "checked"; ?>>
+                                <label class="form-check-label" for="check<?php echo $rep["idChoix"]; ?>">
+                                    <?php echo $rep["choix"]; ?>
+                                </label>
+                            </div>
+                        <?php }
+                        else if(!valider("connecte","SESSION") && $date1<$date2) { 
+                            //Si on est pas connecté?>
+                            <div class="form-check" id="choix<?php echo $rep["idChoix"]; ?>">
+                                <input name="<?php echo $sondage[0]["idSondage"]; ?>" class="form-check-input" type="radio" id="check<?php echo $rep["idChoix"]; ?>" <?php if($first) echo "checked"; ?> disabled>
                                 <label class="form-check-label" for="check<?php echo $rep["idChoix"]; ?>">
                                     <?php echo $rep["choix"]; ?>
                                 </label>
@@ -55,7 +67,7 @@
                             ?>
                             <div class="progress">
                                 <?php if($pourcentage ==0) echo "<span style='margin-left:20px; color: #fff;'>".$pourcentage."%</span>"?>
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $pourcentage?>%;" aria-valuenow="<?php echo $pourcentage?>" aria-valuemin="0" aria-valuemax="100"><?php if($pourcentage !=0) echo $pourcentage."%"?></div>
+                                <div class="progress-bar bg-warning" role="progressbar" style="width:<?php echo $pourcentage?>%;" aria-valuenow="<?php echo $pourcentage?>" aria-valuemin="0" aria-valuemax="100"><?php if($pourcentage !=0) echo $pourcentage."%"?></div>
                             </div>
                         <?php }
                         $first = false; ?>
