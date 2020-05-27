@@ -9,6 +9,9 @@
 
 <script src='js/spectaclesUsers.js'></script>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
+
+<div class="lead taLeft">
+<h3 class="gras center">Spectacles</h3>
 <br/>
 <?php
   lireInfos();
@@ -101,7 +104,7 @@ Rechercher les spectacles dans votre ville : <br>
     </div>
   </div>
 </div>
-
+</div>
 
 <?php
 $idUser = valider("idUser","SESSION");

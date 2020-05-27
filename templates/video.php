@@ -10,10 +10,11 @@ $search = valider("search","GET");
 $series = getSeries();
 ?>
     <link rel="stylesheet" href="css/video.css">
-    <div class="page-header">
-      <h1>Vidéos</h1>
-    </div>
     <div class="lead">
+        <div class="page-header">
+        <h1>Vidéos</h1>
+        </div>
+        <br/>
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <form action="#" class="menu p-4" autocomplete="off">

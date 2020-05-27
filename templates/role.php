@@ -14,7 +14,8 @@ Vous n'avez pas accés à cette page
 	?>
 
 	<link rel="stylesheet" href="css/role.css">
-
+	<div class="lead">
+	<h3 class="gras center">Rôles</h3><br/>
 	<div id="roleContainer" class="mt-5">
 		
 		<div>
@@ -97,6 +98,7 @@ Vous n'avez pas accés à cette page
 			</div>
 		</div>
 
+	</div>
 	</div>
 
 

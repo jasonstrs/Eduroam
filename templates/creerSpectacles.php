@@ -11,13 +11,10 @@
 ?>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 <script src='js/creerSpectacles.js'></script>
-<h3>
-    <div id="titre">
-        Gestion des spectacles
-    </div>
-</h3>
+<div class="lead center">
+    <h3 id="titre">Création/Gestion des spectacles</h3>
 
-<div class="lead">
+
     <div id="entrerVille">
         <span class="gras">Entrer une ville où créer un Spectacle : </span><br>
         <?php 

@@ -11,6 +11,7 @@ Vous n'avez pas accés à cette page
 <?php } else { ?>
 
 	<link rel="stylesheet" href="css/users.css">
+	<div class="lead">
 	<div id="containerUser"></div>
 	<div class="mt-2">
 		<p>Nombre d'utilisateurs inscrits : <?php echo countUsers();?></p>
@@ -80,6 +81,7 @@ Vous n'avez pas accés à cette page
 			<button id="banUser" type="button" class="btn btn-outline-secondary  offset-sm-1">Bannir</button>
 			<button id="unbanUser" type="button" class="btn btn-outline-secondary  offset-sm-1">Débannir</button>
 		</div>
+	</div>
 	</div>
 	<script src='js/users.js'></script>
 <?php } ?>

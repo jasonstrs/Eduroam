@@ -256,7 +256,7 @@ function chargerDatesUsers(valide,choixVille){
                             });
                         }
 
-                        $("#infosDatesSelectionnees").css("display","none"); //Permet de corriger un pb d'affichage
+                        //$("#infosDatesSelectionnees").css("display","none"); //Permet de corriger un pb d'affichage
                         /**
                          * Si il y a des dates à afficher, on en affiche le nombre, et les actions possibles.
                          */
@@ -305,6 +305,7 @@ function chargerDatesUsers(valide,choixVille){
  * AU CHARGEMENT DE LA PAGE
  */
 $("#accordionUser").ready(function(){
+    $("#infosDatesSelectionnees").css("display","none");
     console.log("L'accordéon User est chargé");
     /**
      * Chargement des dates en attente
@@ -347,6 +348,13 @@ $("#accordionUser").ready(function(){
 
     $("#btnRechercheVilleUser").click(function(){
         var ville = $("#txtRechercheVilleUser").val();
+        datesSelec = new Array();
+        $("#infosDatesSelectionnees").animate({
+            opacity:0,
+            bottom:"150px"
+        },200,function(){
+            $("#infosDatesSelectionnees").empty().css("display","none");
+        });
         chargerToutesLesDates(ville);
     });
 });

@@ -16,9 +16,10 @@ $idUser = valider("idUser","SESSION");
 
   <script src='./js/profil.js'></script>
   <link rel="stylesheet" type="text/css" href="./css/profil.css">
-  
+  <div class="lead">
   <div id="mainProfil">
         <h3>Voici votre profil</h3>
+        <br/>
         <div class="form-group row">
             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
@@ -53,4 +54,5 @@ $idUser = valider("idUser","SESSION");
             </div>
         </div>
         
+  </div>
   </div>

@@ -13,7 +13,7 @@ Vous n'avez pas accés à cette page
 	$regexs = getFirstSerieRegex();?>
 
 	<link rel="stylesheet" href="css/videoAdmin.css">
-
+	<div class="lead">
 	<div class="modal fade" id="actualiserModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -30,7 +30,7 @@ Vous n'avez pas accés à cette page
 	</div>
 
 
-
+	
 	<div class="mt-2">
 		<div class="row">
 			<div class="col-md-6 offset-md-5">
@@ -75,6 +75,7 @@ Vous n'avez pas accés à cette page
 				<button id="suppId" type="button" class="btn btn-outline-secondary offset-sm-1">Supprimer</button>
 			</div>
 		</div>
+	</div>
 	</div>
 
 

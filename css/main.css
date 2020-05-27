@@ -23,9 +23,8 @@ html{
 }
 
 .lead {
-    text-align: center;
     background-color:rgb(245, 245, 245);
-    padding:5px;
+    padding:15px;
     padding-top:20px;
     box-shadow:5px 5px 5px rgba(0, 0, 0, 0.37);
     margin-bottom:10px;
@@ -37,4 +36,8 @@ html{
 
 .none{
     display:none;
+}
+
+.taLeft{
+    text-align:left;
 }

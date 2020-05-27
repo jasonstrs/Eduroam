@@ -1,10 +1,9 @@
 <script src='js/statsSpectacles.js'></script>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
+
+<div class="lead">
+<h3 class="gras center">Statistiques des Spectacles</h3>
 <br/>
-
-
-
-
 
 <label for="selectTri">Trier par :</label>
 <select id="selectTri" class="form-control">
@@ -68,4 +67,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
