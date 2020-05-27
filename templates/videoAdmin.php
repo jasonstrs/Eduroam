@@ -13,7 +13,8 @@ Vous n'avez pas accés à cette page
 	$regexs = getFirstSerieRegex();?>
 
 	<link rel="stylesheet" href="css/videoAdmin.css">
-	<div class="lead">
+	<div class="lead h-75">
+	<h3 class="gras center">Gestion des Vidéos</h3><br/>
 	<div class="modal fade" id="actualiserModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

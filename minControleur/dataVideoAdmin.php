@@ -3,7 +3,9 @@ include_once "../libs/maLibUtils.php";
 include_once "../libs/maLibSQL.pdo.php";
 include_once "../libs/maLibSecurisation.php";
 include_once "../libs/modele.php";
-include_once "../libs/maLibPHPMailer.php";
+include_once "../libs/maLibMails.php";
+
+session_start();
 
 if(!($action = valider("action","POST"))){
 		header("Location:../index.php?view=accueil");
