@@ -49,7 +49,7 @@
 
 
 
-<nav id="foot" class="navbar navbar-expand-lg navbar-light" style="background-color : #c8912a;padding:0;">
+<nav id="foot" class="navbar navbar-expand-lg navbar-light navBars" style="background-color : #c8912a;padding:0;" >
 		<div id="containFooter">
 			<p>© Grégory Tabibian 2020 | <a href="index.php?view=mentionsLegales">Mentions légales</a>
 			<?php if (valider("connecte","SESSION")) {

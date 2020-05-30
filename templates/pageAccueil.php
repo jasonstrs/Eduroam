@@ -26,6 +26,7 @@
             $choix = getChoix($accueil["id_annonce"]);
             $date1 = new DateTime("now");
             $date2 = new DateTime($sondage[0]["dateFin"]);
+            $strDate2 = $date2->format("d/m/Y");
             $first = true;
             $total = getReponseCountBySondage($accueil["id_annonce"]);
             ?>
@@ -33,7 +34,10 @@
                 <div class="card-header"><?php 
                     if(valider("connecte","SESSION"))echo $sondage[0]["intitule"]; 
                     else echo $sondage[0]["intitule"]." <span style='color:darkgrey;'>- Connectez-vous pour répondre à ce sondage.</span>";
-                if($date1>$date2) echo "<span class='fermer'> - Ce sondage est fermé </span>" ?></div>
+                
+                if($date1>$date2) echo "<span class='fermer'> - Ce sondage est fermé depuis le $strDate2 </span>";
+                ?></div>
+                
                 <input type="hidden" id="hidden<?php echo $sondage[0]["idSondage"];?>" value="<?php echo $sondage[0]["cacherResultats"]; ?>" >
                 <div id="reponse<?php echo $sondage[0]["idSondage"]; ?>" class="card-body text-dark">
                     <?php foreach($choix as $rep) { ?>
