@@ -4,6 +4,8 @@
     include_once "../libs/maLibSQL.pdo.php";
     include_once "../libs/maLibSecurisation.php";
     include_once "../libs/modele.php";
+    session_start();
+
     
 if(!($action = valider("action","POST"))){
     header("Location:../index.php?view=accueil");

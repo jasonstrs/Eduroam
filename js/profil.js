@@ -95,6 +95,7 @@ function afficherModif(){
         // lancement d'une fonction de modification !
         modifierChamps(this);
     }));
+    $("#aideNbJours").remove();
     $("#nbJoursMail>.col-sm-10").append(aideNbJours.clone(1));
 }
 

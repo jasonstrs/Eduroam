@@ -51,10 +51,11 @@
                  * Pour le savoir, on  vérifie si l'idSpectacle renvoyé n'est pas null
                  */
                 $nouv = 0;
-                if(!($dates = valider("dates","POST"))){
+                if(!isset($_POST["dates"]) || empty($_POST["dates"])){
                     header("Location:../index.php?view=creerSpectacle");
                     die("Dates entrées incorrectes");
                 }
+                $dates = $_POST["dates"];
                 if(!($idSpec = valider("idSpectacle","POST")))$nouv = 1;
                 if($nouv != 0){            
                     //Si on crée entièrement un spectacle

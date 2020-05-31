@@ -26,6 +26,7 @@ html{
     background-color:rgb(245, 245, 245);
     padding:15px;
     padding-top:20px;
+    padding-bottom:30px;
     box-shadow:5px 5px 5px rgba(0, 0, 0, 0.37);
     margin-bottom:10px;
 }
@@ -40,4 +41,12 @@ html{
 
 .taLeft{
     text-align:left;
+}
+
+.fond{
+    position:relative;
+    padding-top:40px;
+    width:100%;
+    min-height:calc(100vh - 101px);
+    padding-bottom:20px;
 }

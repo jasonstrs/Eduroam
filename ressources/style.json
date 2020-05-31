@@ -1,1 +1,1 @@
-{"leadColor":"#F5F5F5","navColor":"#c8912a","background":{"type":"color","color":"#FFFFFF"}}
+{"background-type":"color","content":[{"targetElt":".fond","targetProp":"background-color","value":"#ffffff","id":"inputBackColor"},{"targetElt":".navbar","targetProp":"background-color","value":"#c8912a","id":"backColorHeadFoot"},{"targetElt":".navbar","targetProp":"color","value":"#000000","id":"colorHeadFoot"},{"targetElt":".lead","targetProp":"background-color","value":"#d4d4d4","id":"backColorLead"},{"targetElt":".lead","targetProp":"color","value":"#000000","id":"colorLead"}]}

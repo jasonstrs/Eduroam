@@ -278,5 +278,5 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
   </nav>
   <!-- Begin page content -->
-  <br>
-<div class="container"> 
+  <div class="fond">
+	<div class="container"> 

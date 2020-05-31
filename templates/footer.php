@@ -9,7 +9,7 @@
 	
 ?>
 
-
+</div>
 </div>
 <!-- fin du content --> 
 
@@ -30,7 +30,7 @@
 	}
 
 	#foot a{
-		color:black;
+		color:inherit;
 	}
 
 	#foot a:hover {

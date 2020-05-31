@@ -14,7 +14,16 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 	include_once "libs/maLibBootstrap.php";
 	include_once "libs/maLibForms.php";
 
-	echo "<head><link rel='stylesheet' media='screen' type='text/css' href='css/style.css'/></head>";
+	echo "	<head>
+				<link rel='stylesheet' media='screen' type='text/css' href='css/style.css'/>
+				"./*"<script type='text/javascript'>
+					console.log = function(){};
+					function handleErrors(){return true;}
+					window.onerror=handleErrors;
+					window.onwarning=handleErrors;
+					
+				</script>".*/"
+			</head>";
 	//ok
 	// on récupère le paramètre view éventuel 
 	$view = valider("view"); 
@@ -69,6 +78,69 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 	
 ?>
 
+<?php
+
+if(file_exists("ressources/style.json")){
+	
+	//Si on a un fichier de configuration existant, on le charge.
+
+	$json = file_get_contents("ressources/style.json");
+	$tab = json_decode($json,TRUE);
+
+	//die(tprint($tab));
+	
+
+}
+
+if(isset($tab["background-type"])){
+	$type = $tab["background-type"];
+	if($type == "image"){
+		?>
+			<script>$(document).ready(function(){$("#backgroundImage").trigger("click")})</script>
+		<?php
+	}
+	else if($type == "color"){
+		?>
+			<script>$(document).ready(function(){
+				$("#backgroundColor").trigger("click");
+			})
+			</script>
+		<?php
+	}
+}
+foreach($tab["content"] as $val){
+	?>
+	<script>
+		var elt = "<?php echo $val["targetElt"] ?>";
+		var prop = "<?php echo $val["targetProp"] ?>";
+		var val = "<?php echo $val["value"] ?>";
+		var id = "#<?php echo $val["id"] ?>";
+		if(id == "#inputBackColor"){
+			
+			$("#backgroundColor").trigger("click");
+			$("#inputBackColor").attr("value",val);
+			
+		}
+		/* TODO : TROUVER UN MOYEN DE CHARGER LES VALEURS DE BACKGROUND */
+		$(elt).css(prop,val);
+		
+		$(id).attr("value",val);
+	</script>
+
+
+	<?php
+}
+
+
+if($type == "image"){
+	?>
+		<script>$(".fond").css("background-image","url(ressources/backImg/backImage)")</script>
+	<?php
+}
+
+
+
+?>
 
 
 

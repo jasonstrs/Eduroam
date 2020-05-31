@@ -13,7 +13,7 @@
  * Lorsque l'on teste, il faut tester avec un ===
  * @param string $nom
  * @param string $type
- * @return string|boolean
+ * @return string|boolean|array
  */
 function valider($nom,$type="REQUEST")
 {	

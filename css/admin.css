@@ -1,2 +1,8 @@
-.containerAdmin{
+.nav-tabs .nav-link{
+    background-color:rgba(255, 255, 255, 0.685);
+}
+
+.nav-tabs .nav-link:hover{
+    border-color:rgba(255, 255, 255, 0.685);
+    background-color:rgba(255, 255, 255, 0.849)
 }
