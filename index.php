@@ -80,6 +80,10 @@ Les formulaires de toutes les vues générées enverront leurs données vers la 
 
 <?php
 
+/**
+ * chargement du style
+ */
+
 if(file_exists("ressources/style.json")){
 	
 	//Si on a un fichier de configuration existant, on le charge.
@@ -89,42 +93,16 @@ if(file_exists("ressources/style.json")){
 
 	//die(tprint($tab));
 	
-
-}
-
-if(isset($tab["background-type"])){
-	$type = $tab["background-type"];
-	if($type == "image"){
-		?>
-			<script>$(document).ready(function(){$("#backgroundImage").trigger("click")})</script>
-		<?php
-	}
-	else if($type == "color"){
-		?>
-			<script>$(document).ready(function(){
-				$("#backgroundColor").trigger("click");
-			})
-			</script>
-		<?php
-	}
-}
 foreach($tab["content"] as $val){
 	?>
 	<script>
+		
 		var elt = "<?php echo $val["targetElt"] ?>";
 		var prop = "<?php echo $val["targetProp"] ?>";
 		var val = "<?php echo $val["value"] ?>";
 		var id = "#<?php echo $val["id"] ?>";
-		if(id == "#inputBackColor"){
-			
-			$("#backgroundColor").trigger("click");
-			$("#inputBackColor").attr("value",val);
-			
-		}
-		/* TODO : TROUVER UN MOYEN DE CHARGER LES VALEURS DE BACKGROUND */
 		$(elt).css(prop,val);
 		
-		$(id).attr("value",val);
 	</script>
 
 
@@ -138,6 +116,7 @@ if($type == "image"){
 	<?php
 }
 
+}
 
 
 ?>

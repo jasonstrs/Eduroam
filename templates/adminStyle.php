@@ -33,7 +33,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	<label for="colorHeadFoot">Couleur du fond</label><br/>
 	<input name="colorHeadFoot" class="modif" id="backColorHeadFoot" targetProp="background-color" targetElt=".navbar" type="color"/>
 	<br/>
-	<label for="colorTxtHeadFoot">Couleur du texte du footer (pour le header, voir 'couleur des liens')</label><br/>
+	<label for="colorTxtHeadFoot">Couleur du texte du footer</label><br/>
 	<input name="colorTxtHeadFoot" class="modif" id="colorHeadFoot" targetProp="color" targetElt=".navbar" type="color"/>
 	
 	<hr/>
@@ -53,6 +53,63 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 	<button class="btn btn-outline-danger" id="annulerChange">Annuler</button>
 
 </div>
+
+<?php
+if(file_exists("ressources/style.json")){
+	
+	//Si on a un fichier de configuration existant, on le charge.
+
+	$json = file_get_contents("ressources/style.json");
+	$tab = json_decode($json,TRUE);
+
+	//die(tprint($tab));
+	
+	if(isset($tab["background-type"])){
+		$type = $tab["background-type"];
+		if($type == "image"){
+			?>
+				<script>$(document).ready(function(){$("#backgroundImage").trigger("click")})</script>
+			<?php
+		}
+		else if($type == "color"){
+			?>
+				<script>$(document).ready(function(){
+					$("#backgroundColor").trigger("click");
+				})
+				</script>
+			<?php
+		}
+	}
+
+
+	foreach($tab["content"] as $val){
+		?>
+		<script>
+			var elt = "<?php echo $val["targetElt"] ?>";
+			var prop = "<?php echo $val["targetProp"] ?>";
+			var val = "<?php echo $val["value"] ?>";
+			var id = "#<?php echo $val["id"] ?>";
+			
+			/* TODO : TROUVER UN MOYEN DE CHARGER LES VALEURS DE BACKGROUND */
+			if($(id).length == 0){
+				if(id == "#inputBackColor"){
+					var inputBackColor = val;
+				}
+				if(id == "#selectChoixSize"){
+					var selectChoixSize = val;
+				}
+				if(id == "#selectChoixRepeat"){
+					var selectChoixRepeat = val;
+				}
+			}
+
+			$(id).attr("value",val);
+		</script>
+
+
+		<?php
+	}
+}
 
 
 

@@ -1,4 +1,39 @@
+var inputBackColor = undefined;
+var selectChoixSize = undefined;
+var selectChoixRepeat = undefined;
+
 $("#leadAdminStyle").ready(function(){
+    
+    (function($) {
+        var origAppend = $.fn.append;
+    
+        $.fn.append = function () {
+            return origAppend.apply(this, arguments).trigger("append");
+        };
+    })(jQuery);
+    
+    /**
+     * Quand on charge les valeurs dans les input, certains ne sont pas encore sur la page.
+     * Il faut donc sauvegarder leur valeur, et leur affecter dès qu'ils sont ajoutés à la page
+     * => on bind une fonction sur l'évènement 'append' dans la div 'selectBackValue', dans laquelle se trouvent tous les input concernés.
+     */
+    $("#selectBackValues").bind("append", function() {
+        var scr = $("#selectChoixRepeat");
+        var scs = $("#selectChoixSize");
+        var ibc = $("#inputBackColor");
+
+        if(inputBackColor !== undefined && ibc.length != 0){
+            ibc.attr("value",inputBackColor);
+        }
+        if(selectChoixSize !== undefined && scs.length != 0){
+            $("#selectChoixSize option[value='"+selectChoixSize+"'").attr("selected",true);
+        }
+        if(selectChoixRepeat !== undefined && scr.length != 0){
+            $("#selectChoixRepeat option[value='"+selectChoixRepeat+"'").attr("selected",true);
+        }
+
+    });
+    
     
     
     $(document).on("change",".modif",function(){
@@ -25,7 +60,8 @@ $("#leadAdminStyle").ready(function(){
         } 
 
         if(choix == "image"){
-            $("body").css("background-color","#FFFFFF");
+            $(".fond").css("background-color","#FFFFFF");
+            $(".fond").css("background-image","url(ressources/backImg/backImage)");
 
             var inputAddImg = $("<input/>").attr(
                 {
@@ -139,7 +175,7 @@ $("#leadAdminStyle").ready(function(){
             $("#selectBackValues").data("choix","image").append(selectRepeat.clone(1));  
 
 
-            var selectSize = jSelect.clone(1).attr({"name":"selectRepeat","id":"selectChoixRepeat","targetProp":"background-size","targetElt":".fond"})
+            var selectSize = jSelect.clone(1).attr({"name":"selectSize","id":"selectChoixSize","targetProp":"background-size","targetElt":".fond"})
                                 .append($("<option/>").attr("value","initial").html("L'image conserve sa taille initiale."))
                                 .append($("<option/>").attr("value","contain").html("L'image est affichée en entier"))
                                 .append($("<option/>").attr("value","cover").html("L'image couvre tout l'écran (une partie peut être coupée si l'image et la page n'ont pas les même proportions)"))
@@ -150,7 +186,7 @@ $("#leadAdminStyle").ready(function(){
 
         }
         else if(choix == "color"){
-            $("body").css("background-image","none");
+            $(".fond").css("background-image","none");
             var inputBackColor = $("<input/>").attr(
                 {
                     "type":"color",
