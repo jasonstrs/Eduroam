@@ -4,6 +4,7 @@
     include_once "../libs/maLibSecurisation.php";
     include_once "../libs/modele.php";
     include_once "../libs/maLibMails.php";
+    include_once "../libs/maLibExcel.php";
     session_start();
 
     if(!($action = valider("action"))){
@@ -133,6 +134,17 @@
                     }
                 }
                 echo $i;
+            
+            break;
+            case "exportToExcel":
+                if(isset($_POST["tab"]) && !empty($_POST["tab"])){
+                    $tab = $_POST["tab"];
+                    $tab = json_decode($tab,true);
+                    
+                    exportSpectaclesToExcel($tab);
+
+
+                }
             
             break;
         }

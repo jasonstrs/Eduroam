@@ -76,14 +76,18 @@ function chargerDatesStats(valide){
             //Actions réalisables sur les dates (Valider/Supprimer pour les non validées, Archiver/Supprimer pour les validées)
             var finTab="<th>Valider</th><th>Supprimer</th>";
 
+            var descTab = "Dates en attente";
+
             if(tab.valid == "validees"){
                 id="#collapseTwo";
                 classeTab="table table-hover pointer";
                 var finTab="<th>Lien</th><th>Archiver</th><th>Supprimer</th>"
+                descTab = "Dates validée";
             }
             else if(tab.valid == "archivees"){
                 id="#collapseThree"
                 finTab="<th>Supprimer</th>";
+                descTab = "Dates archivées";
             }
 
 
@@ -96,11 +100,12 @@ function chargerDatesStats(valide){
              *                                             CREATION DU TABLEAU
              * 
              */
-            var table = $("<table/>").addClass(classeTab);
+            var table = $("<table/>").addClass(classeTab).data("descTab",descTab);
             table.append($("<thead/>").html('<tr><th>Description</th><th>Ville</th><th>Date</th><th>Nombre d\'Inscrits</th>'+finTab+'</tr>'));
             var tbody=$("<tbody/>");
             tab["rep"].forEach(element => {
-                var currLigne=$("<tr/>").data(element);
+                var currLigne=$("<tr/>").data("datas",element);
+                currLigne.data("datas").dateSpectacle = traduireDate(currLigne.data("datas").dateSpectacle);
                 if(element.lien != ""){
                     //Si le lien est renseigné, on peut cliquer sur la ligne pour rediriger vers le site de vente.
                     /* currLigne.click(function(){window.open(element.lien,"_blank")}); */
@@ -110,7 +115,7 @@ function chargerDatesStats(valide){
                 currLigne
                 .append($("<td/>").html(element.description))
                 .append($("<td/>").html(element.ville))
-                .append($("<td/>").html(traduireDate(element.dateSpectacle)))
+                .append($("<td/>").html(element.dateSpectacle))
                 .append($("<td/>").html(element.nbInscrits));
                 if(tab.valid == "attente")currLigne.append($("<td/>").addClass("validDateStats").html("<i class='fas fa-check'></i>").data(element).click(function(){
                     /**                                                                                                                             
@@ -118,7 +123,7 @@ function chargerDatesStats(valide){
                      */
                     var id = "modalValiderDate";
                     var     contenu = "Valider cette date : <B>"+traduireDate($(this).data("dateSpectacle"))+"</B> du spectacle <B>"+$(this).data("description")+"</B> à <B>"+ $(this).data("ville")+"</B> ?<br/>";
-                            contenu += "Les gens interessés reçevront un mail leur confirmant la validation. <br>( Voir le mail dans <a href='#'>Administration>Spectacles>Notifications</a> )<br><br>";
+                            contenu += "Les gens interessés reçevront un mail leur confirmant la validation.<br><br>";
                             contenu += "Veuillez entrer le lien de la vente de billets : (Modifiable plus tard)<br>";
                             contenu += "<font color='red'>Attention ! Entrer une adresse complète ( http(s)://... ), sinon le lien ne fonctionnera pas !!</font><br>";
                     var modal = $("<div/>").addClass("modal fade").attr({"tabindex":"-1","role":"dialog","id":id,"aria-labelledby":id,"aria-hidden":"true"}).append(
@@ -312,6 +317,41 @@ $("#accordionStats").ready(function(){
             }
         }));
     });
+
+    $("#ExportToExcel").click(function(){
+
+        var tables = new Array();
+
+        $("table").each(function(){
+            var dates = new Array();
+            $("tr",$(this)).each(function(){
+                if($(this).data("datas") != undefined)
+                    dates.push($(this).data("datas"));
+            });
+            tables.push({"descTab":$(this).data("descTab"),"dates":dates});
+        });
+
+        console.log(tables);
+        console.log(JSON.stringify(tables));
+
+        $.ajax({
+            method:"POST",
+            url:"./minControleur/dataSpectacle.php",
+            data:{
+                action:"exportToExcel",
+                tab:JSON.stringify(tables)
+            },
+            success:function(oRep){
+                
+            },
+            error:function(oRep){
+
+            }
+        })
+
+
+    });
+
 });
 
 

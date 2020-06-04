@@ -318,3 +318,9 @@ table{
     display:inline-block;
     width:45%;
 }
+
+#ExportToExcel{
+    margin-top:20px;
+    width:30%;
+    margin-left:35%;
+}
