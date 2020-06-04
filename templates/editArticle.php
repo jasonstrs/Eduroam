@@ -29,7 +29,7 @@
 	<h1>Créer une annonce</h1>
 </div>
   
-<div id="standalone-container">
+<div id="standalone-container"  style="background-color:rgb(245,245,245)">
   <div id="toolbar-container">
     <span class="ql-formats">
       <select class="ql-font"></select>

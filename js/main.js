@@ -3,7 +3,7 @@
  */
 
 // Widget Discord
-var idServeurDiscord = "621357918234869781";
+var idServeurDiscord = "621357918234869781"; //493014627047702528
 var largeurWidgetDiscord = "350px";
 var hauteurWidgetDiscord  = "500px";
 

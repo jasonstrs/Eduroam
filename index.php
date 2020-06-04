@@ -109,11 +109,13 @@ foreach($tab["content"] as $val){
 	<?php
 }
 
-
-if($type == "image"){
-	?>
-		<script>$(".fond").css("background-image","url(ressources/backImg/backImage)")</script>
-	<?php
+if(isset($tab["background-type"])){
+	$type = $tab["background-type"];
+	if($type == "image"){
+		?>
+			<script>$(".fond").css("background-image","url(ressources/backImg/backImage)")</script>
+		<?php
+	}
 }
 
 }

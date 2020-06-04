@@ -70,7 +70,7 @@ $("#leadAdminStyle").ready(function(){
                     "class":"form-control btn btn-outline-primary pointer",
                     "targetProp":"background-image",
                     "targetElt":".fond",
-                    "value":"ressources/BackImg/backImageTmp",
+                    "value":"ressources/backImg/backImageTmp",
                     "style":"margin-bottom:10px",
                     "accept":"image/*"
                 }
@@ -257,5 +257,60 @@ $("#leadAdminStyle").ready(function(){
         })
         
     });
+
+    $("#boutonDefaut").click(function(){
+        var oDefaut = {
+            "background-type":"color",
+            "content":[
+                {
+                    "targetElt":".fond",
+                    "targetProp":"background-color",
+                    "value":"#ffffff","id":"inputBackColor"
+                },
+                {
+                    "targetElt":".navbar",
+                    "targetProp":"background-color",
+                    "value":"#c8912a","id":"backColorHeadFoot"
+                },
+                {
+                    "targetElt":".navbar",
+                    "targetProp":"color",
+                    "value":"#000000",
+                    "id":"colorHeadFoot"
+                },
+                {
+                    "targetElt":".lead",
+                    "targetProp":"background-color",
+                    "value":"#e9e9e9","id":"backColorLead"
+                },
+                {
+                    "targetElt":".lead",
+                    "targetProp":"color",
+                    "value":"#000000",
+                    "id":"colorLead"
+                }
+            ]
+        };
+
+        $.ajax({
+            url: 'minControleur/dataStyleAdmin.php', //script qui traitera l'envoi du fichier
+            type: 'POST',
+            dataType:"json",
+            data: {
+                json : oDefaut,
+                action : "validerChange"
+            },
+            success: function(rep){
+                window.location.reload();
+            },
+            error: function(rep){
+                
+            }
+        })
+
+
+
+    });
+
 });
 

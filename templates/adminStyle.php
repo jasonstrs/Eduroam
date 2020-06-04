@@ -51,6 +51,8 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 	<button class="btn btn-outline-success" id="validerChange">Enregistrer</button>
 	<button class="btn btn-outline-danger" id="annulerChange">Annuler</button>
+	<br/><br/><br/>
+	<button class="btn btn-outline-warning" id="boutonDefaut">Réinitialiser aux valeurs par défaut</button>
 
 </div>
 
