@@ -141,9 +141,13 @@
                     $tab = $_POST["tab"];
                     $tab = json_decode($tab,true);
                     
-                    exportSpectaclesToExcel($tab);
+                    $fic = exportSpectaclesToExcel($tab);
 
+                    sleep(1);
 
+                    
+                    if(file_exists($fic[1]))echo $fic[0];
+                    else echo false;
                 }
             
             break;

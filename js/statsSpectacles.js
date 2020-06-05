@@ -334,6 +334,8 @@ $("#accordionStats").ready(function(){
         console.log(tables);
         console.log(JSON.stringify(tables));
 
+        $("#leadStatsSpectacles").append(loader.clone(1).attr("id","loaderExport"));
+
         $.ajax({
             method:"POST",
             url:"./minControleur/dataSpectacle.php",
@@ -342,7 +344,24 @@ $("#accordionStats").ready(function(){
                 tab:JSON.stringify(tables)
             },
             success:function(oRep){
-                
+
+                $("#loaderExport").remove();
+
+                if(oRep == false){
+                    $("#leadStatsSpectacles").append(alerteB.clone(1).addClass("alert-danger").html("L'export a échoué, veuillez réessayer plus tard").append(boutonFermerAlerteB));
+                    return;
+                }
+
+                $("#leadStatsSpectacles").append(
+                    $("<a/>").html(
+                        "<i class='fas fa-download'></i>Export réussi, cliquez ici pour télécharger"
+                    ).attr({
+                        "href":oRep
+                    }).css({
+                        "display":"block",
+                        "text-align":"center"
+                    })
+                );
             },
             error:function(oRep){
 

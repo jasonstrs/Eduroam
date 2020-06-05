@@ -1,7 +1,7 @@
 <script src='js/statsSpectacles.js'></script>
 <link rel="stylesheet" type="text/css" href="./css/spectacle.css"/>
 
-<div class="lead">
+<div class="lead" id="leadStatsSpectacles">
   <h3 class="gras center">Statistiques des Spectacles</h3>
   <br/>
 
