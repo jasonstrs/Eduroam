@@ -55,7 +55,7 @@ session_start();
                  * On cherche à vérifier si les données saisies sont bien correctes !
                  */
                 if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom)
-                || !preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#i",valider("passe","POST")) ||
+                || !preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$#i",valider("passe","POST")) ||
                 !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))
                     echo "Error";
                 
@@ -122,7 +122,7 @@ session_start();
 
         case 'modificationPasse' :
             $hash = valider("hash","POST");
-            if(!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$#i",valider("passe","POST")))
+            if(!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$#i",valider("passe","POST")))
                 echo 'ERROR';
             else {
                 $passe = sha1(md5(valider("passe","POST")));

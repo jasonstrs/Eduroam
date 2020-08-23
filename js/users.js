@@ -308,10 +308,10 @@ $("#saveUser").click(function(){
         $("#inputEmail").addClass("is-invalid"); // l'adresse mail est invalide
 
     }
-    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test($("#inputPassword").val())) && $("#changepass").val()==1) {
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$/.test($("#inputPassword").val())) && $("#changepass").val()==1) {
         flag=0;
         $("#verifPasse").show();
-        $('#verifPasse').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');
+        $('#verifPasse').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial)');
         $("#inputPassword").addClass('is-invalid');
     }
     if(flag==1) {

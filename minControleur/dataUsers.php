@@ -34,11 +34,19 @@ switch($action){
         $email = valider("email","POST");
         $prenom = valider("prenom","POST");
         $nom = valider("nom","POST");
-        echo valider("changePass","POST");
+
+        /**
+         * On cherche à vérifier si les données saisies sont bien correctes !
+         */
+        if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom) ||
+        !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))
+            echo "Error";
+
         if(valider("changePass","POST")) {
             $password = sha1(md5(valider("password","POST")));
-            echo "On change le password";
-            echo $password;
+
+            if (!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$#i",$password))
+            
             changePass($idU,$password);
         }
         if(valider("admin","POST")=="true") {

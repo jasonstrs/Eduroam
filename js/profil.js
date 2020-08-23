@@ -267,9 +267,9 @@ function modificationBDD(action,contenu){
  */
 function verificationPassWord(contenu,refInput){
     $("#checkPass").remove();
-    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(contenu)) || contenu == ""){
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$/.test(contenu)) || contenu == ""){
         $(refInput).parent().append("<div id='checkPass' class='text-danger'></div>");
-        $('#checkPass').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule et 1 chiffre)');
+        $('#checkPass').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et un caractère spécial)');
         return 0;
     }
     return 1;
