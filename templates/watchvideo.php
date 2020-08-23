@@ -8,7 +8,6 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 
 $video = valider("id", "GET");
 $dataVideo = GetTitreVideo($video);
-
 ?>
 	<link rel="stylesheet" href="css/video.css">
 	<br/><br/>
