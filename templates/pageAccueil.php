@@ -15,7 +15,13 @@
                 <?php echo htmlspecialchars_decode($annonce[0]["contenu"]); ?>
                 <div style="text-align:left;">
                     <?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { ?>
-                    <span class="admin"><a id="suppr<?php echo $accueil["id"]?>" href="#confirmSupprModal" data-toggle="modal" class="suppr">Supprimer</a> - <a href="index.php?view=editArticle&id=<?php echo $accueil["id_annonce"]?>">Modifier</a></span>
+                    <span class="admin">
+                        <a id="suppr<?php echo $accueil["id"]?>" href="#confirmSupprModal" data-toggle="modal" class="suppr">Supprimer</a>
+                        - 
+                        <a href="index.php?view=editArticle&id=<?php echo $accueil["id_annonce"]?>">Modifier</a>
+                        -
+                        <i class="fas fa-thumbtack epingle <?php if(GetEpingle($accueil["id_annonce"])) echo(' estEpingle') ?>" id=epinlge<?php echo $accueil["id_annonce"]; ?>></i>
+                    </span>
                     <?php } ?>
                     <span class="date">Publié le <?php echo date("d/m/Y",strtotime($annonce[0]["dateArticle"])); ?></span>
                 </div>
@@ -32,7 +38,7 @@
             ?>
             <div class="unSondage <?php if($firtAnnonce) echo "pt-1" ?>">
                 <div class="card-header"><?php 
-                    if(valider("connecte","SESSION"))echo $sondage[0]["intitule"]; 
+                    if(valider("connecte","SESSION"))echo $sondage[0]["intitule"]."<font size='-1'> - ".GetNbRepSondage($sondage[0]["idSondage"])." réponse(s)</font>"; 
                     else echo $sondage[0]["intitule"]." <span style='color:darkgrey;'>- Connectez-vous pour répondre à ce sondage.</span>";
                 
                 if($date1>$date2) echo "<span class='fermer'> - Ce sondage est fermé depuis le $strDate2 </span>";
@@ -71,7 +77,7 @@
                             ?>
                             <div class="progress">
                                 <?php if($pourcentage ==0) echo "<span style='margin-left:20px; color: #fff;'>".$pourcentage."%</span>"?>
-                                <div class="progress-bar bg-warning" role="progressbar" style="width:<?php echo $pourcentage?>%;" aria-valuenow="<?php echo $pourcentage?>" aria-valuemin="0" aria-valuemax="100"><?php if($pourcentage !=0) echo $pourcentage."%"?></div>
+                                <?php echo '<div class="progress-bar bg-warning" role="progressbar" style="width:'.$pourcentage.'%;" aria-valuenow="?><?php echo $pourcentage" aria-valuemin="0" aria-valuemax="100">'?><?php if($pourcentage !=0) echo $pourcentage."%"?></div>
                             </div>
                         <?php }
                         $first = false; ?>
@@ -83,7 +89,11 @@
                     <?php } ?>
                     <div style="text-align:left;">
                         <?php if (valider("connecte","SESSION") && (valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce"))) { ?>
-                        <span class="admin"><a id="suppr<?php echo $accueil["id"]?>" href="#confirmSupprModal" data-toggle="modal" class="suppr">Supprimer</a></span>
+                        <span class="admin">
+                            <a id="suppr<?php echo $accueil["id"]?>" href="#confirmSupprModal" data-toggle="modal" class="suppr">Supprimer</a>
+                             - 
+                            <i class="fas fa-thumbtack epingle <?php if(GetEpingle($accueil["id_annonce"])) echo(' estEpingle') ?>" id=epinlge<?php echo $accueil["id_annonce"]; ?>></i>
+                        </span>
                         <?php } ?>
                         <span class="date">Publié le <?php echo date("d/m/Y", strtotime($sondage[0]["date"])); ?></span>
                     </div>
@@ -92,4 +102,4 @@
         <?php }
         $firtAnnonce = false;
     }
-    ?>
+?>

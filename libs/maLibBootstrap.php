@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Permet de lire les cookies succes,info et error, d'afficher leur contenu si ils existent, puis de les supprimer
+ * Permet de lire les cookies success,info et error, d'afficher leur contenu si ils existent, puis de les supprimer
  */
 function lireInfos(){
-	if($succes = valider("succes","COOKIE")){
+	if($succes = valider("success","COOKIE")){
 	?>
 	<script>
 		$(document).ready(function(){
 			var contenu = "<?php echo $succes ?>";
 			$(".container").prepend(alerteB.clone(1).html(contenu).addClass("alert-success").append(boutonFermerAlerteB));
-			Cookies.clear("succes");
+			Cookies.clear("success");
 		})
 	</script>
 	<?php
@@ -28,13 +28,13 @@ function lireInfos(){
 	<?php
 	
 	}
-	if($erreur = valider("erreur","COOKIE")){
+	if($erreur = valider("error","COOKIE")){
 	?>
 	<script>
 		$(document).ready(function(){
 			var contenu = "<?php echo $erreur ?>";
 			$(".container").prepend(alerteB.clone(1).html(contenu).addClass("alert-danger").append(boutonFermerAlerteB));
-			Cookies.clear("erreur");
+			Cookies.clear("error");
 		})
 	</script>
 	<?php

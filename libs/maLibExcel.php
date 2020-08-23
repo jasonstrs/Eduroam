@@ -1,9 +1,11 @@
 
 <?php
-require '..\vendor\autoload.php';
+include_once '..\vendor\autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
 
 function exportSpectaclesToExcel($tab){
     /* $spreadsheet = new Spreadsheet();
@@ -13,8 +15,8 @@ function exportSpectaclesToExcel($tab){
     $writer = new Xlsx($spreadsheet);
     $writer->save('C:\helloWorld.xlsx'); */
 
-
-    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    
+    $spreadsheet = new Spreadsheet();
 
     $spreadsheet->getProperties()
     ->setCreator("Site Web Greg Tabibian")
@@ -62,8 +64,21 @@ function exportSpectaclesToExcel($tab){
     chdir("ressources");
     chdir("ExcelExports");
     
+    $filesDir = array_diff(scandir(getcwd()),array(".",".."));
+
+    
+    while(count($filesDir) >= 12){
+        //echo(tprint($filesDir));
+        if(file_exists(getcwd().DIRECTORY_SEPARATOR.$filesDir[2])) unlink(getcwd().DIRECTORY_SEPARATOR.$filesDir[2]);
+        $filesDir = array_diff(scandir(getcwd()),array(".",".."));
+    }
+
+        
+    
+
     $spreadsheet->setActiveSheetIndex(0);
-    $nom = "ResumeSpectacle".date("dmYHms").".xlsx";
+    date_default_timezone_set('Europe/Paris');
+    $nom = "ResumeSpectacle".date("dmY-His").".xlsx";
     $path = getcwd()."\\$nom";
     $writer->save($path);
 

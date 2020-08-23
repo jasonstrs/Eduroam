@@ -226,7 +226,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
 
             <?php if (valider("connecte","SESSION")) { ?>
         		<li class="nav-item <?php if ($VIEW=="video") {echo "active"; }?>">
-          			<a class="nav-link" href="index.php?view=video"><b>Vidéo</b></a>
+          			<a class="nav-link" href="index.php?view=video"><b>Vidéos</b></a>
         		</li>
 			<?php } ?>
 

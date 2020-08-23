@@ -7,6 +7,7 @@ if (basename($_SERVER["PHP_SELF"]) != "index.php")
 }
 
 $video = valider("id", "GET");
+$dataVideo = GetTitreVideo($video);
 
 ?>
 	<link rel="stylesheet" href="css/video.css">
@@ -17,7 +18,7 @@ $video = valider("id", "GET");
 		<div class="row">
 			<div class="col-md-7">
 				<iframe id="video" class="video w100" width="100%" height="360" src="//www.youtube.com/embed/<?php echo $video ?>" frameborder="0" allowfullscreen></iframe>
-				<p id="title"></p>
+				<p id="title"><?php echo $dataVideo["title"] ?></p>
 			</div>
 			<div class="col-md-5">
 				<div class="input-group mb-3">

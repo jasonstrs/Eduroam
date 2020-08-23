@@ -67,6 +67,7 @@
 	font-weight: normal;
 	font-size: small;
 	color: darkgrey;
+	vertical-align: middle;
 }
 
 .date {
@@ -106,6 +107,19 @@
 }
 .center {
 	text-align: center;
+}
+
+.epingle{
+	font-size:1.2rem;
+}
+
+.estEpingle{
+	color:#c8912a;
+}
+
+.epingle:hover{
+	color: black;
+	cursor: pointer;
 }
 
 @media screen and (min-width: 770px) 

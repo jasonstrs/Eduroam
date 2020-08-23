@@ -10,9 +10,11 @@ function suppDatesPassees(btn){
         success:function(oRep){
             $("#boutonSuppDatesPassees").children().last().remove();
             $("#boutonSuppDatesPassees").attr("disabled",false);
-            var type = "succes";
-            if(oRep == 0)type="erreur";
-            Cookies.set(type,oRep+" Dates passées ont été supprimées !");
+            var type = "success";
+            if(oRep == 0)type="error";
+            str = delLineBreak(oRep+" Dates passées ont été supprimées !");
+            
+            Cookies.set(type,str);
             window.location.reload();
         },
         error : function(oRep){
@@ -131,7 +133,7 @@ function afficherResumeVilles(rep){
                                                 },
                                                 success:function(oRep){
                                                     $("#modalValiderDate").modal('dispose');
-                                                    Cookies.set("succes","Date validée avec succès !");
+                                                    Cookies.set("success","Date validée avec succès !");
                                                     document.location.reload();
                                                 }
                                             })
@@ -166,7 +168,7 @@ function afficherResumeVilles(rep){
                             },
                             success:function(oRep){
                                 $("#modalSupprDate").modal('dispose');
-                                Cookies.set("succes","Suppression réussie !");
+                                Cookies.set("success","Suppression réussie !");
                                 document.location.reload();
                             }
                         }
@@ -200,8 +202,8 @@ function afficherResumeVilles(rep){
                 },
                 success:function(oRep){
                     $("#modalSupprSpectacle").modal('dispose');
-                    if(oRep == 0)Cookies.set("erreur","Erreur lors de la suppression");
-                    if(oRep == 1)Cookies.set("succes","Le spectacle a été supprimé");
+                    if(oRep == 0)Cookies.set("error","Erreur lors de la suppression");
+                    if(oRep == 1)Cookies.set("success","Le spectacle a été supprimé");
                     if(oRep == 2)Cookies.set("info","Le spectacle possédait des dates archivées. Toutes les autres dates ont été supprimées.");
                     document.location.reload();
                 }
@@ -505,7 +507,7 @@ $(document).ready(function(){
             success:function(oRep){
                 $("#modalConfirmerDate").modal('dispose');
                 if(oRep == 0) Cookies.set("error","Erreur, aucune date ajoutée, si le problème persiste, contactez un administrateur.");
-                else Cookies.set("succes",oRep+" date(s) ajoutée(s) !");
+                else Cookies.set("success",oRep+" date(s) ajoutée(s) !");
                 document.location.reload();
             }
         }

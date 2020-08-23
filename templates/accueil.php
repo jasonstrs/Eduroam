@@ -55,21 +55,22 @@ $nbAccueils=countAccueils();
 			<div id="pageAccueil">
 			</div>
 			<p  class="ml-3" style="text-align:left;">
-				<a href="#" class="hidden" id="previous">Page précédente</a>
+				<a href="#" class="hidden" id="previous">< Page précédente</a>
 				<span style="float:right;">
-				<a href="#" id="next">Page suivante</a>
+				<a href="#" id="next">Page suivante ></a>
 				</span>
 			</p>
 		</div>
 		<div id="droiteM">
-			<h3 class="center mt-4 mb-3" id="titleVideo">Dernière vidéo</h3>
+			<h3 class="center mt-4 mb-3" id="titleDerniereVideo">Dernière vidéo</h3>
 			<div class = "wrapper video center">
 				<iframe id="video" class="w100" width="80%" height="100%" src="//www.youtube.com/embed/<?php echo getLastVideos(); ?>" frameborder="0" allowfullscreen></iframe>
 			</div>
+			<h3 class="center mt-4 mb-3" id="titleVideo">Vidéos aléatoires</h3>
 			<div id="divTwitter" class = "wrapper" data-spy="scroll" data-offset="0">
 				<a class="twitter-timeline"
 				href="https://twitter.com/gregtabibian">
-				Tweets by @gregtabibian
+				Tweets de @gregtabibian
 				</a>
 			</div>
 		</div>

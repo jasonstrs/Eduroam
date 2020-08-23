@@ -90,6 +90,23 @@ $(function() {
 		});
 	});
 
+	$(document).on("click",".epingle",function(){
+		var id = $(this).attr('id').substr(7);
+		var epingle = $(this);
+		$.ajax({
+			type: "POST",
+			url: "./minControleur/dataAccueil.php",
+			data: {"action":"epinlger", "id":id},
+			success: function(oRep){
+				document.location.reload();
+			},
+			dataType: "text"
+		});
+
+
+
+	});
+
 });
 
 function resetVideoHeight() {
@@ -102,6 +119,7 @@ function checkVideo(){
 	var heightD = countDivDroite();
 	var diffHeight = heightG - heightD;
 	
+
 	while (diffHeight > 180 && !checkModeResponsive()) { // on peut ajouter une vidéo si >180 et pas mode responsive
 		insertRandomVideo();
 		diffHeight-=180; // on regarde si on peut encore ajouter
@@ -109,15 +127,17 @@ function checkVideo(){
 }
 
 function insertRandomVideo() {
-	$("#titleVideo").html('Quelques vidéos');
+	$("#titleVideo").html('Vidéos aléatoires.');
 	$.ajax({
 		type: "POST",
 		url: "./minControleur/dataAccueil.php",
 		data: {"action":"getRandomVideo"},
 		success: function(oRep){
-			var div = `<div class = "wrapper center mt-4 newVideo" style="width:100%">
+			var div = `<div class = "wrapper center mt-4 newVideo" style="width:100%">							
 							<iframe id="video" class="w100" width="80%" height="" src="//www.youtube.com/embed/` + oRep +`" frameborder="0" allowfullscreen></iframe>
 						</div>`;
+
+			
 			$("#divTwitter").before(div);
 		},
 		dataType: "json"

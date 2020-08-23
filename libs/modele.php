@@ -643,8 +643,8 @@ function userInteresseDates($choix,$idU,$dates){
 			$idSpectacle = $value["idSpectacle"];
 			$notif = getNotifUser($idU);
 			$SQL = "INSERT INTO eduroam_spectacle_user VALUES ($idDate,$idU,$idSpectacle,$notif)";
-			if(SQLInsert($SQL)) 
-				$i++;
+			SQLInsert($SQL);
+			$i++;
 		}
 	}
 	else if($choix == 2){
@@ -677,7 +677,7 @@ function modifLien($idDate,$lien){
  * @return Array toutes les dates
  */
 function recupToutesLesDates(){
-	$SQL = "SELECT idDate,dateSpectacle FROM eduroam_date_spectacle";
+	$SQL = "SELECT idDate,dateSpectacle,valide FROM eduroam_date_spectacle";
 	return parcoursRs(SQLSelect($SQL));
 }
 
@@ -832,6 +832,13 @@ function getVideosCount($search, $avant, $apres, $serie="-1") {
 	$SQL = "SELECT COUNT(*) FROM eduroam_video WHERE (title LIKE '%$search%' OR description LIKE '%$search%') $serieFilter $apres $avant";
 	$rs = SQLGetChamp($SQL);
 	return $rs;
+}
+
+
+function GetTitreVideo($id)
+{
+	$SQL = "SELECT * FROM eduroam_video WHERE videoId LIKE '$id'";
+	return parcoursRS(SQLSelect($SQL))[0];
 }
 
 /**
@@ -1027,14 +1034,14 @@ function deleteRegexViaSerie($id) {
 /* Annonces */
 
 function addAccueil($type, $id) {
-	$SQL = "INSERT INTO eduroam_accueil VALUES('0', '$type', '$id')";
+	$SQL = "INSERT INTO eduroam_accueil VALUES('0', '$type', '$id','0')";
 	SQLUpdate($SQL);
 }
 
 function addAnnonce($contenu, $user) {
 	$SQL = "INSERT INTO eduroam_article VALUES('0','$user', CURRENT_DATE,'$contenu')";
 	SQLUpdate($SQL);
-	$SQL2 = "SELECT idArticle FROM eduroam_article ORDER BY idArticle DESC";
+	$SQL2 = "SELECT MAX(idArticle) FROM eduroam_article";
 	$rs = SQLGetChamp($SQL2);
 	addAccueil("annonce", $rs);
 }
@@ -1046,7 +1053,10 @@ function editAnnonce($id, $contenu){
 }
 
 function addSondage($intitule, $user, $hideResult, $endDate) {
-	$SQL = "INSERT INTO eduroam_sondage VALUES('0', '$user', '$intitule', '$hideResult', '$endDate', CURRENT_DATE)";
+	if($endDate != NULL)
+		$SQL = "INSERT INTO eduroam_sondage VALUES('0', '$user', '$intitule', '$hideResult', '$endDate', CURRENT_DATE)";
+	else
+		$SQL = "INSERT INTO eduroam_sondage VALUES('0', '$user', '$intitule', '$hideResult', NULL, CURRENT_DATE)";
 	SQLUpdate($SQL);
 	$SQL2 = "SELECT idSondage FROM eduroam_sondage ORDER BY idSondage DESC";
 	$rs = SQLGetChamp($SQL2);
@@ -1060,7 +1070,7 @@ function addChoix($idSondage, $question) {
 }
 
 function getAccueils($offset) {
-	$SQL = "SELECT * FROM eduroam_accueil ORDER BY id DESC LIMIT 5 OFFSET $offset";
+	$SQL = "SELECT * FROM eduroam_accueil ORDER BY epingle DESC,id DESC LIMIT 5 OFFSET $offset";
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
 	return $tab; 
@@ -1074,6 +1084,13 @@ function countAccueils() {
 
 function getAccueilById($id) {
 	$SQL = "SELECT * FROM eduroam_accueil WHERE id=$id";
+	$rs = SQLSelect($SQL);
+	$tab = parcoursRs($rs);
+	return $tab; 
+}
+
+function getAccueilByIdAnnonce($id) {
+	$SQL = "SELECT * FROM eduroam_accueil WHERE id_annonce=$id";
 	$rs = SQLSelect($SQL);
 	$tab = parcoursRs($rs);
 	return $tab; 
@@ -1143,6 +1160,34 @@ function removeAccueil($id) {
 	}
 	$SQL = "DELETE FROM eduroam_accueil WHERE id=$id";
 	SQLDelete($SQL);
+}
+
+function epinglerId($id){
+
+	$accueil = getAccueilByIdAnnonce($id);
+
+	if(!isset($accueil) || empty($accueil))
+		return array("success"=>false);
+
+	$epingle = 0;
+	if($accueil[0]["epingle"]==0) {
+		$epingle = 1;
+	}
+	
+
+	$SQL = "UPDATE eduroam_accueil SET epingle='$epingle' WHERE id_annonce='$id'";
+	SQLUpdate($SQL);
+
+	if(SQLGetChamp("SELECT epingle FROM eduroam_accueil WHERE id_annonce='$id'") == $epingle)
+		return array("success"=>true,"state"=>$epingle);
+}
+
+function GetEpingle($id){
+	return SQLGetChamp("SELECT epingle FROM eduroam_accueil WHERE id_annonce='$id'");
+}
+
+function GetNbRepSondage($id){
+	return SQLGetChamp("SELECT COUNT(*) FROM eduroam_choix_sondage WHERE idSondage='$id'");
 }
 
 ?>

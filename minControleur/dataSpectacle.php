@@ -128,7 +128,7 @@
                 $tab = recupToutesLesDates();
                 $i=0;
                 foreach ($tab as $value) {
-                    if($value["dateSpectacle"]<$today){
+                    if($value["dateSpectacle"]<$today && $value["valide"] != "2" ){
                         supprimerDate($value["idDate"]);
                         $i++;
                     }
@@ -209,6 +209,8 @@
                 }
             break;
             case "userInteresseDates":
+                
+
                 $rep = array();
                 $rep["choix"] = 0;
                 if($idU = valider("idU","POST"))

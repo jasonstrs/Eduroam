@@ -20,7 +20,6 @@
   Vous pouvez vous déclarer <i>intéressé</i> pour des dates en attente.<br/>
   Si une date en attente intéresse assez de personnes, elle pourra passer de <i>en attente</i> à <i>validée</i>.<br/>
   Vous pourrez alors accéder au site de vente de billets concernant cette date.<br/>
-
 </div>
 <br/>
 <label for="selectTri">Trier par :</label>
@@ -36,7 +35,7 @@ Rechercher les spectacles dans votre ville : <br>
 <input id="txtRechercheVilleUser" type="text" class="form-control mb-2 mr-sm-3" placeholder="Entrez votre ville"/>
 <div id="btnRechercheVilleUser" class="btn btn-outline-primary mb-2 pointer" >Rechercher</div>
 <div id="accordionUser">
-
+  
   <div class="card " >
     <div class="card-header pointer" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
       <h5 class="mb-0 nonSelectionnable">

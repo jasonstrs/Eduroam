@@ -36,7 +36,7 @@ if(getDroitByUser($idU, "spectacle") || isSuperAdmin($idU,$hash)){
                 $intitule = valider("intitule","POST");
                 $reponses = valider("reponses","POST");
                 $hideResult = valider("hideResult","POST");
-                if( !($dateEnd = valider("dateEnd","POST") ))$dateEnd = "null";
+                if( !($dateEnd = valider("dateEnd","POST") ))$dateEnd = NULL;
 
                 $sondage = addSondage($intitule, valider("idUser","SESSION"), $hideResult, $dateEnd);
                 foreach ($reponses as $reponse) {
@@ -48,6 +48,15 @@ if(getDroitByUser($idU, "spectacle") || isSuperAdmin($idU,$hash)){
         case 'suppr' : 
             $idAnnonce = valider("idAnnonce","POST");
             if(valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce")) removeAccueil($idAnnonce);
+        break;
+
+        case 'epinlger' : 
+            $id = valider("id","POST");
+            if(valider("admin","SESSION")==1 || getDroitByUser(valider("idUser","SESSION"), "annonce")){
+				$rep = epinglerId($id);
+
+				echo json_encode($rep) ;
+			}
         break;
         
     }

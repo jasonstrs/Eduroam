@@ -148,6 +148,8 @@ function creerModalVerif(id,titre,confirmation,couleur,type_du_input,placeholder
  */
 function traduireDate(date){
     tab = date.split("-");
+    //Si la date était déjà au bon format, on la retourne
+    if(tab.length == 1)return date;
     ndate=tab[2]+"/"+tab[1]+"/"+tab[0];
     return ndate;
 }
@@ -200,6 +202,12 @@ function assignerDateMoment(_date,_moment){
     console.log(tab);
     _moment.set({"year":parseInt(tab[0]),"month":parseInt(tab[1]-1),"date":parseInt(tab[2])});
     return _moment;
+}
+
+
+function delLineBreak(str){
+    str = str.replace("\n","");
+    return str.replace("\r","");
 }
 
 /**

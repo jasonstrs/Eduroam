@@ -155,7 +155,7 @@ function chargerDatesStats(valide){
                                             success:function(oRep){
                                                 var rep = JSON.parse(oRep);
                                                 $("#modalValiderDate").modal('dispose');
-                                                if(rep.success !=0)Cookies.set("succes","Date validée, "+rep["nbMails"]+" mails envoyés");
+                                                if(rep.success !=0)Cookies.set("success","Date validée, "+rep["nbMails"]+" mails envoyés");
                                                 else Cookies.set("error","Erreur lors de la validation de la date");
                                                 document.location.reload();
                                             }
@@ -195,7 +195,7 @@ function chargerDatesStats(valide){
     
                                 console.log("Date archivée");
                                 $("#modalSupprDate").modal('dispose');
-                                Cookies.set("succes","Date archivée");
+                                Cookies.set("success","Date archivée");
                                 document.location.reload();
                             }
                         }
@@ -237,7 +237,7 @@ function chargerDatesStats(valide){
 
                             console.log("Date supprimée");
                             $("#modalSupprDate").modal('dispose');
-                            Cookies.set("succes","Date supprimée");
+                            Cookies.set("success","Date supprimée");
                             document.location.reload();
                         }
                     }
@@ -351,17 +351,21 @@ $("#accordionStats").ready(function(){
                     $("#leadStatsSpectacles").append(alerteB.clone(1).addClass("alert-danger").html("L'export a échoué, veuillez réessayer plus tard").append(boutonFermerAlerteB));
                     return;
                 }
-
+                $("#lienTelechargerExcel").slideUp(200,function(){
+                    $(this).remove();
+                });
                 $("#leadStatsSpectacles").append(
                     $("<a/>").html(
                         "<i class='fas fa-download'></i>Export réussi, cliquez ici pour télécharger"
                     ).attr({
-                        "href":oRep
+                        "href":oRep,
+                        "id":"lienTelechargerExcel"
                     }).css({
                         "display":"block",
                         "text-align":"center"
                     })
                 );
+                
             },
             error:function(oRep){
 
