@@ -37,6 +37,13 @@
 	float:left;
 }
 
+#pageAccueil{
+	border-top-style: solid;
+	border-top-color: lightgrey;
+	border-top-width: 1px;
+	margin-top:2px;
+}
+
 .unArticle{
 	width:95%;
 	border-bottom-style: solid;
