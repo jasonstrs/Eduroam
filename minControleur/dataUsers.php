@@ -38,7 +38,7 @@ switch($action){
         /**
          * On cherche à vérifier si les données saisies sont bien correctes !
          */
-        if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom) ||
+        if (!preg_match("/^[a-zâäàéèùêëîïôöçñ\\\' \-]+$/i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom) ||
         !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))
             echo "Error";
 

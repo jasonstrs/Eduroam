@@ -52,7 +52,7 @@
         break;
 
         case 'nom' :
-            if (preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",valider("contenu","POST"))){
+            if (preg_match("/^[a-zâäàéèùêëîïôöçñ\\\' \-]+$/i",valider("contenu","POST"))){
                 $nom = valider("contenu","POST");
                 changeName($id,$nom);
                 echo 'Success';

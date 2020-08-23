@@ -37,12 +37,14 @@ Vous n'avez pas accés à cette page
 			<div class="col-sm-10 divForm" id="firstName">
 				<input type="text" class="form-control" id="inputFirstName">
 			</div>
+			<div id="verifPrenom" class='offset-sm-2 text-danger'></div>
 		</div>
 		<div class="form-group row">
 			<label for="inputName" class="col-sm-2 col-form-label">Nom</label>
 			<div class="col-sm-10 divForm" id="name">
 				<input type="text" class="form-control" id="inputName">
 			</div>
+			<div id="verifNom" class='offset-sm-2 text-danger'></div>
 		</div>
 		<div class="form-group row" id="pass">
 			<span class="offset-sm-2 font-weight-light text-info pointer changepass">Changer le mot de passe</span>

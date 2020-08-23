@@ -400,7 +400,7 @@ function verificationChamps(){
 
 function verifNom(){
     var nom = $("#nom").val();
-    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(nom)) && nom!=""){
+    if(!(/^[a-zâäàéèùêëîïôöçñ \-']+$/i.test(nom)) && nom!=""){
         $("#verifNomInscription").show();
         $("#verifNomInscription").html("Veuillez saisir un nom correct (uniquement des lettres).");
         $("#nom").addClass('is-invalid');

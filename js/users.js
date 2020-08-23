@@ -303,16 +303,23 @@ $("#saveUser").click(function(){
     let flag=1;
     if(!(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/i.test($("#inputEmail").val()))) {
         flag=0;
-        $("#verifMail").show();
         $("#verifMail").html("Veuillez saisir une adresse mail correcte.");
         $("#inputEmail").addClass("is-invalid"); // l'adresse mail est invalide
-
     }
     if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$/.test($("#inputPassword").val())) && $("#changepass").val()==1) {
         flag=0;
-        $("#verifPasse").show();
         $('#verifPasse').html('Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial)');
         $("#inputPassword").addClass('is-invalid');
+    }
+    if (!(/^[a-zâäàéèùêëîïôöçñ \-']+$/.test($("#inputName").val()))) {
+        flag=0;
+        $('#verifNom').html('Veuillez saisir un nom correct');
+        $("#inputName").addClass('is-invalid');
+    }
+    if (!(/^[a-zâäàéèùêëîïôöçñ \-]+$/.test($("#inputFirstName").val()))) {
+        flag=0;
+        $('#verifPrenom').html('Veuillez saisir un prénom correct');
+        $("#inputFirstName").addClass('is-invalid');
     }
     if(flag==1) {
         $.ajax({
