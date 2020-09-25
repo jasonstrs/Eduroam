@@ -27,7 +27,7 @@
         break;
 
         case 'mot de passe' :
-            if(preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$#i",valider("contenu","POST"))){
+            if(preg_match("'#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@\#|\'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@\#|\'<>.\^\*()%!]{8,}$#i'",valider("contenu","POST"))){
                 $pass = sha1(md5(valider("contenu","POST")));
                 changePass($id,$pass);
                 echo 'Success';
@@ -52,7 +52,7 @@
         break;
 
         case 'nom' :
-            if (preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",valider("contenu","POST"))){
+            if (preg_match("#^[a-zâäàéèùêëîïôöçñ\\\' \-]+$#i",valider("contenu","POST"))){
                 $nom = valider("contenu","POST");
                 changeName($id,$nom);
                 echo 'Success';

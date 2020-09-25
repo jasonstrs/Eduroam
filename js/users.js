@@ -321,11 +321,16 @@ $("#saveUser").click(function(){
         data: {"action": "save", "idU":$("#idUserInput").val(), "email":$("#inputEmail").val(), "prenom":$("#inputFirstName").val(), "nom":$("#inputName").val(),
             "changePass":$("#changepass").val(), "password":$("#inputPassword").val(), "admin":$("#switchAdmin").prop("checked"), "role": changeRole},
         success: function(oRep){
-            //console.log(oRep);
-            //console.log("Fait");
-            $("#dispUser").hide();
-            $("#userSearch").val("");
-            addAlert("L'utilisateur a été modifié avec succès");
+            oRep = JSON.parse(oRep);
+            if(oRep.success){
+                $("#dispUser").hide();
+                $("#userSearch").val("");
+                addAlert("L'utilisateur a été modifié avec succès");
+            }
+            else{
+                addAlertError(oRep.msg);
+            }
+            
         },
         dataType: "text"
     });
@@ -372,5 +377,14 @@ function addAlert(msg) {
     "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
     setTimeout(function(){
         $(".alert").fadeOut(500);
-    },1000)
+    },5000)
+}
+
+function addAlertError(msg) {
+    $(".alert").remove();
+    $("#containerUser").prepend("<div class='center alert alert-danger alert-dismissible fade show' role='alert'>"+msg+".<button type=\"button\" " + 
+    "class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button></div>");
+    setTimeout(function(){
+        $(".alert").fadeOut(500);
+    },5000)
 }

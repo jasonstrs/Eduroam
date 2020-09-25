@@ -33,19 +33,26 @@ switch($action){
         $idU = valider("idU","POST");
         $email = valider("email","POST");
         $prenom = valider("prenom","POST");
-        $nom = valider("nom","POST");
+        $nom = valider("nom","POST");        
 
         /**
          * On cherche à vérifier si les données saisies sont bien correctes !
          */
-        if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom) ||
+        if (!preg_match("#^[a-zâäàéèùêëîïôöçñ\\\' \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom) ||
         !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))
-            echo "Error";
+            die(json_encode(array("success"=>false,"msg"=>"Nom, Prénom ou Email incorrect")));
 
         if(valider("changePass","POST")) {
-            $password = sha1(md5(valider("password","POST")));
+            $pass = valider("password","POST");
+            $password = sha1(md5($pass));
+            
+            //!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#\|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#\|'<>.\^\*()%!]{8,}$#i",$password)
+            // @#\-_$%^&+=§!\?
 
-            if (!preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$#i",$password))
+            
+
+            if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@\#|\'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@\#|\'<>.\^\*()%!]{8,}$#i',$pass))
+                die(json_encode(array("success"=>false,"msg"=>"Veuillez saisir un mot de passe valide (8 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et un caractère spécial)")));
             
             changePass($idU,$password);
         }
@@ -66,6 +73,7 @@ switch($action){
             }
         }
         editUser($idU, $email, $prenom, $nom);
+        echo json_encode(array("success"=>true,"msg"=>"Succès"));
 
     break;
     case 'ban' : 

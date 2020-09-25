@@ -200,7 +200,7 @@ $(document).on('click','input[value="Inscription"]',function(){
                     $("#mainInscription").hide();
                     $("#mainConnexion").hide();
                     $("#envoiMail").show();
-                    $("#envoiMail").html("<h4 style='margin-top:100px;' class=\"alert-heading\">Inscription terminée</h4><p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !<br/>(Si vous ne le trouvez pas, vérifiez vos spams!</p>");
+                    $("#envoiMail").html("<h4 style='margin-top:100px;' class=\"alert-heading\">Inscription terminée</h4><p>Un email vient de vous être envoyé. Veuillez confirmer votre adresse mail avant de pouvoir vous connecter !<br/>(Si vous ne le trouvez pas, vérifiez vos spams! )</p>");
                 }
                 else if(oRep == 0){
                     $("#mainInscription").hide();
@@ -400,7 +400,7 @@ function verificationChamps(){
 
 function verifNom(){
     var nom = $("#nom").val();
-    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(nom)) && nom!=""){
+    if(!(/^[a-zâäàéèùêëîïôöçñ' \-]+$/i.test(nom)) && nom!=""){
         $("#verifNomInscription").show();
         $("#verifNomInscription").html("Veuillez saisir un nom correct (uniquement des lettres).");
         $("#nom").addClass('is-invalid');

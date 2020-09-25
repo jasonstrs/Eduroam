@@ -54,10 +54,11 @@ session_start();
                 /**
                  * On cherche à vérifier si les données saisies sont bien correctes !
                  */
-                if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$nom) || !preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom)
-                || !preg_match("#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@#|'<>.\^\*()%!]{8,}$#i",valider("passe","POST")) ||
-                !preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))
-                    echo "Error";
+                if (!preg_match("#^[a-zâäàéèùêëîïôöçñ\\\' \-]+$#i",$nom))echo "$nom";
+                if (!preg_match("#^[a-zâäàéèùêëîïôöçñ \-]+$#i",$prenom))echo "Error Prenom";
+                if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@\#|\'<>.\-\^\*()%!])[A-Za-z\d$&+,\-:;=?@\#|\'<>.\^\*()%!]{8,}$#i',valider("passe","POST")))echo "Error Password";
+                if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$#i",$email))echo "Error Mail";
+                    
                 
                 else if (verifExistMail($email)){
                     echo "Exist";

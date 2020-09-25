@@ -281,7 +281,7 @@ function verificationPassWord(contenu,refInput){
  */
 function verificationNom(contenu,refInput){
     $("#checkFirstName").remove();
-    if(!(/^[a-zâäàéèùêëîïôöçñ \-]+$/i.test(contenu)) && contenu !=""){
+    if(!(/^[a-zâäàéèùêëîïôöçñ' \-]+$/i.test(contenu)) && contenu !=""){
         $(refInput).parent().append("<div id='checkFirstName' class='text-danger'></div>");
         $("#checkFirstName").html("Veuillez saisir un nom correct (uniquement des lettres et non vide).");
         return 0;
